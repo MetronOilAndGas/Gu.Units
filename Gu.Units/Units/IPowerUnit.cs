@@ -1,4 +1,4 @@
-namespace Gu.Units.Tests
+namespace Gu.Units
 {
     public interface IPowerUnit<out T> : IUnit where T : IUnit
     {

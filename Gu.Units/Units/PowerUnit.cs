@@ -1,7 +1,8 @@
-namespace Gu.Units.Tests
+namespace Gu.Units
 {
     using System;
     using System.Collections.Generic;
+
     [Serializable]
     public struct PowerUnit<T> : IPowerUnit<T>, IEquatable<PowerUnit<T>> where T : IUnit
     {

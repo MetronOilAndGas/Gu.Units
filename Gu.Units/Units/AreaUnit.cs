@@ -1,4 +1,4 @@
-namespace Gu.Units.Tests
+namespace Gu.Units
 {
     public class AreaUnit : CompositeUnit
     {
