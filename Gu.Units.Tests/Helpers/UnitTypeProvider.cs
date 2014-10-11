@@ -1,4 +1,4 @@
-namespace Gu.Units.Tests
+namespace Gu.Units.Tests.Helpers
 {
     using System;
     using System.Collections;

@@ -46,9 +46,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Units\Area.cs" />
     <Compile Include="Units\Centimetres.generated.cs">
       <DependentUpon>UnitGenerator.txt4</DependentUpon>
     </Compile>
+    <Compile Include="Units\Length.cs" />
     <Compile Include="Units\Grams.generated.cs">
       <DependentUpon>UnitGenerator.txt4</DependentUpon>
     </Compile>

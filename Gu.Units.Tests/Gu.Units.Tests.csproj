@@ -54,9 +54,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Sandbox\AreaUnit.cs" />
+    <Compile Include="Sandbox\ArithmeticsTests.cs" />
+    <Compile Include="Sandbox\CompositeUnit.cs" />
     <Compile Include="ConverterTests.cs" />
     <Compile Include="Helpers\DummyUnit.cs" />
+    <Compile Include="Sandbox\IPowerUnit.cs" />
     <Compile Include="ParserTests.cs" />
+    <Compile Include="Sandbox\PowerUnit.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helpers\UnitTypeProvider.cs" />
   </ItemGroup>
