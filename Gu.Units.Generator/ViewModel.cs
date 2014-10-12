@@ -10,6 +10,7 @@
     public class ViewModel : INotifyPropertyChanged
     {
         private readonly ObservableCollection<MetaDataViewModel> _unitData = new ObservableCollection<MetaDataViewModel>();
+        private readonly ObservableCollection<Prefix> _prefixes = new ObservableCollection<Prefix>();
 
         private string _nameSpace;
 
@@ -28,6 +29,10 @@
                     var emptyUnit = new MetaDataViewModel(unit, UnitMetaData.Empty);
                     emptyUnit.PropertyChanged += this.EmptyOnPropertyChanged;
                     this.UnitData.Add(emptyUnit);
+                }
+                foreach (var prefix in settings.Prefixes)
+                {
+                    Prefixes.Add(prefix);
                 }
             }
             var empty = new MetaDataViewModel(ValueMetaData.Empty, UnitMetaData.Empty);
@@ -55,6 +60,11 @@
             }
         }
 
+        public ObservableCollection<Prefix> Prefixes
+        {
+            get { return _prefixes; }
+        }
+
         public string NameSpace
         {
             get
@@ -72,7 +82,7 @@
             }
         }
 
-        public static void Save(IEnumerable<MetaDataViewModel> data, string nameSpace)
+        public static void Save(IEnumerable<MetaDataViewModel> data, string nameSpace, IEnumerable<Prefix> prefixes)
         {
             var settings = new Settings();
             var nonEmpty = data.Where(x => x != null && x.UnitMetaData != null && !x.UnitMetaData.IsEmpty && !string.IsNullOrEmpty(x.ValueTypeName))
@@ -96,13 +106,13 @@
                 var unitValueMetaData = new ValueMetaData(siUnit, nameSpace, valueName, units);
                 settings.ValueTypes.Add(unitValueMetaData);
             }
-
+            settings.Prefixes.AddRange(prefixes);
             Settings.Save(settings, Settings.FullFileName);
         }
 
         public void Save()
         {
-            ViewModel.Save(UnitData, NameSpace);
+            ViewModel.Save(UnitData, NameSpace, Prefixes);
         }
 
         [NotifyPropertyChangedInvocator]

@@ -1,10 +1,18 @@
 namespace Gu.Units
 {
-    public class AreaUnit : CompositeUnit
+    public interface IAreaUnit : IValue1<I2<ILengthUnit>>
     {
-        public AreaUnit()
-            : base(new PowerUnit<ILengthUnit>(LengthUnit.Metres, 2))
+    }
+    public interface IVolumeUnit : IValue1<I3<ILengthUnit>>
+    {
+    }
+    public struct MetresSquared : IAreaUnit
+    {
+        public string Symbol { get; private set; }
+
+        public double ToSiUnit(double value)
         {
+            throw new System.NotImplementedException();
         }
     }
 }

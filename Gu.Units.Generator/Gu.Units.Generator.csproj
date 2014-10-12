@@ -74,6 +74,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Descriptors\Prefix.cs" />
+    <Compile Include="Descriptors\SiUnit.cs" />
     <Compile Include="Descriptors\TypeMetaData.cs" />
     <Compile Include="Descriptors\UnitMetaData.cs" />
     <Compile Include="Properties\Annotations.cs" />

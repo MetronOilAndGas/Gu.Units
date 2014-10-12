@@ -1,8 +1,7 @@
 ﻿
 namespace Gu.Units
 {
-    public interface ILengthUnit : IUnit
+    public interface ILengthUnit : IValue1<I1<ILengthUnit>>, IUnit
     {
-
     }
 }

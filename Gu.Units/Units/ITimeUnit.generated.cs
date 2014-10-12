@@ -1,7 +1,7 @@
 ﻿
 namespace Gu.Units
 {
-    public interface ITimeUnit : IUnit
+    public interface ITimeUnit : IValue1<I1<ITimeUnit>>, IUnit
     {
 
     }

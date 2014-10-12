@@ -36,6 +36,8 @@
             }
         }
 
+        public List<Prefix> Prefixes { get; set; }
+
         public static string NameSpace
         {
             get

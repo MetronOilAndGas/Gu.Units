@@ -23,6 +23,22 @@
             <TextBlock Text="NameSpace" />
             <TextBox MinWidth="200" Text="{Binding NameSpace}" />
         </StackPanel>
+        <TabControl>
+            <TabItem Header="Base units and prefixes">
+                <DataGrid AutoGenerateColumns="False"
+                          CanUserAddRows="False"
+                          ItemsSource="{Binding Prefixes}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding ValueTypeName}" Header="ClassName" />
+                        <DataGridCheckBoxColumn Binding="{Binding IsSiUnit}" Header="IsSiUnit" />
+                        <DataGridTextColumn Binding="{Binding UnitTypeName}" Header="UnitTypeName" />
+                        <DataGridTextColumn Binding="{Binding Symbol}" Header="Symbol" />
+                        <DataGridTextColumn Binding="{Binding Conversion}" Header="Conversion" />
+
+                    </DataGrid.Columns>
+                </DataGrid>
+            </TabItem>
+        </TabControl>
         <DataGrid AutoGenerateColumns="False"
                   CanUserAddRows="False"
                   ItemsSource="{Binding UnitData}">

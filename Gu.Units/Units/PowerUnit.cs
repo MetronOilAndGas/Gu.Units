@@ -8,6 +8,7 @@ namespace Gu.Units
     {
         private readonly T _unit;
         private readonly int _power;
+        
         public PowerUnit(T unit, int power)
         {
             if (power == 0)
@@ -17,10 +18,12 @@ namespace Gu.Units
             _unit = unit;
             _power = power;
         }
+        
         public T Unit
         {
             get { return _unit; }
         }
+       
         public int Power
         {
             get { return _power; }
@@ -30,6 +33,7 @@ namespace Gu.Units
         {
             return EqualityComparer<T>.Default.Equals(_unit, other._unit) && _power == other._power;
         }
+       
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(null, obj))
@@ -38,6 +42,7 @@ namespace Gu.Units
             }
             return obj is PowerUnit<T> && Equals((PowerUnit<T>) obj);
         }
+        
         public override int GetHashCode()
         {
             unchecked
@@ -45,10 +50,12 @@ namespace Gu.Units
                 return (EqualityComparer<T>.Default.GetHashCode(_unit)*397) ^ _power;
             }
         }
+        
         public static bool operator ==(PowerUnit<T> left, PowerUnit<T> right)
         {
             return left.Equals(right);
         }
+        
         public static bool operator !=(PowerUnit<T> left, PowerUnit<T> right)
         {
             return !left.Equals(right);
