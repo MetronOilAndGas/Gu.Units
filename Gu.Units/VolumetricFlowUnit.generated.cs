@@ -1,17 +1,18 @@
 ﻿namespace Gu.Units
 {
     using System;
+    using System.ComponentModel;
     using System.Diagnostics;
 
     /// <summary>
     /// A type for the unit <see cref="Gu.Units.VolumetricFlowUnit"/>.
 	/// Contains conversion logic.
     /// </summary>
-    [Serializable, DebuggerDisplay("1{symbol} == {ToSiUnit(1)}{CubicMetresPerSecond.symbol}")]
+    [Serializable, TypeConverter(typeof(VolumetricFlowUnitTypeConverter)), DebuggerDisplay("1{symbol} == {ToSiUnit(1)}{CubicMetresPerSecond.symbol}")]
     public struct VolumetricFlowUnit : IUnit, IUnit<VolumetricFlow>, IEquatable<VolumetricFlowUnit>
     {
         /// <summary>
-        /// The <see cref="T:Gu.Units.CubicMetresPerSecond"/> unit
+        /// The CubicMetresPerSecond unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
         public static readonly VolumetricFlowUnit CubicMetresPerSecond = new VolumetricFlowUnit(1.0, "m³/s");
@@ -26,7 +27,7 @@
         }
 
         /// <summary>
-        /// The symbol for <see cref="T:Gu.Units.CubicMetresPerSecond"/>.
+        /// The symbol for the <see cref="Gu.Units.VolumetricFlowUnit"/>.
         /// </summary>
         public string Symbol
         {
@@ -62,7 +63,7 @@
         }
 
         /// <summary>
-        /// Converts a value to <see cref="T:Gu.Units.CubicMetresPerSecond"/>.
+        /// Converts <see <paramref name="value"/> to CubicMetresPerSecond.
         /// </summary>
         /// <param name="value"></param>
         /// <returns>The converted value</returns>

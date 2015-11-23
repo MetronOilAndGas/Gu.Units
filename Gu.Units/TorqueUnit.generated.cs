@@ -1,17 +1,18 @@
 ﻿namespace Gu.Units
 {
     using System;
+    using System.ComponentModel;
     using System.Diagnostics;
 
     /// <summary>
     /// A type for the unit <see cref="Gu.Units.TorqueUnit"/>.
 	/// Contains conversion logic.
     /// </summary>
-    [Serializable, DebuggerDisplay("1{symbol} == {ToSiUnit(1)}{NewtonMetres.symbol}")]
+    [Serializable, TypeConverter(typeof(TorqueUnitTypeConverter)), DebuggerDisplay("1{symbol} == {ToSiUnit(1)}{NewtonMetres.symbol}")]
     public struct TorqueUnit : IUnit, IUnit<Torque>, IEquatable<TorqueUnit>
     {
         /// <summary>
-        /// The <see cref="T:Gu.Units.NewtonMetres"/> unit
+        /// The NewtonMetres unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
         public static readonly TorqueUnit NewtonMetres = new TorqueUnit(1.0, "N⋅m");
@@ -26,7 +27,7 @@
         }
 
         /// <summary>
-        /// The symbol for <see cref="T:Gu.Units.NewtonMetres"/>.
+        /// The symbol for the <see cref="Gu.Units.TorqueUnit"/>.
         /// </summary>
         public string Symbol
         {
@@ -62,7 +63,7 @@
         }
 
         /// <summary>
-        /// Converts a value to <see cref="T:Gu.Units.NewtonMetres"/>.
+        /// Converts <see <paramref name="value"/> to NewtonMetres.
         /// </summary>
         /// <param name="value"></param>
         /// <returns>The converted value</returns>

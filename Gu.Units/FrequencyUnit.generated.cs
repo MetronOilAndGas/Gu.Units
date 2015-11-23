@@ -1,66 +1,68 @@
 ﻿namespace Gu.Units
 {
     using System;
+    using System.ComponentModel;
     using System.Diagnostics;
 
     /// <summary>
     /// A type for the unit <see cref="Gu.Units.FrequencyUnit"/>.
 	/// Contains conversion logic.
     /// </summary>
-    [Serializable, DebuggerDisplay("1{symbol} == {ToSiUnit(1)}{Hertz.symbol}")]
+    [Serializable, TypeConverter(typeof(FrequencyUnitTypeConverter)), DebuggerDisplay("1{symbol} == {ToSiUnit(1)}{Hertz.symbol}")]
     public struct FrequencyUnit : IUnit, IUnit<Frequency>, IEquatable<FrequencyUnit>
     {
         /// <summary>
-        /// The <see cref="T:Gu.Units.Hertz"/> unit
+        /// The Hertz unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
         public static readonly FrequencyUnit Hertz = new FrequencyUnit(1.0, "Hz");
+
         /// <summary>
-        /// The <see cref="T:Gu.Units.Hertz"/> unit
+        /// The Hertz unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly FrequencyUnit Hz = Hertz;
 
         /// <summary>
-        /// The <see cref="T:Gu.Units.Millihertz"/> unit
+        /// The Millihertz unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly FrequencyUnit Millihertz = new FrequencyUnit(0.001, "mHz");
         /// <summary>
-        /// The <see cref="T:Gu.Units.Millihertz"/> unit
+        /// The <see cref="Gu.Units.Millihertz"/> unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly FrequencyUnit mHz = Millihertz;
 
         /// <summary>
-        /// The <see cref="T:Gu.Units.Kilohertz"/> unit
+        /// The Kilohertz unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly FrequencyUnit Kilohertz = new FrequencyUnit(1000, "kHz");
         /// <summary>
-        /// The <see cref="T:Gu.Units.Kilohertz"/> unit
+        /// The <see cref="Gu.Units.Kilohertz"/> unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly FrequencyUnit kHz = Kilohertz;
 
         /// <summary>
-        /// The <see cref="T:Gu.Units.Megahertz"/> unit
+        /// The Megahertz unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly FrequencyUnit Megahertz = new FrequencyUnit(1000000, "MHz");
         /// <summary>
-        /// The <see cref="T:Gu.Units.Megahertz"/> unit
+        /// The <see cref="Gu.Units.Megahertz"/> unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly FrequencyUnit MHz = Megahertz;
 
         /// <summary>
-        /// The <see cref="T:Gu.Units.Gigahertz"/> unit
+        /// The Gigahertz unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly FrequencyUnit Gigahertz = new FrequencyUnit(1000000000, "GHz");
         /// <summary>
-        /// The <see cref="T:Gu.Units.Gigahertz"/> unit
+        /// The <see cref="Gu.Units.Gigahertz"/> unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly FrequencyUnit GHz = Gigahertz;
@@ -75,7 +77,7 @@
         }
 
         /// <summary>
-        /// The symbol for <see cref="T:Gu.Units.Hertz"/>.
+        /// The symbol for the <see cref="Gu.Units.FrequencyUnit"/>.
         /// </summary>
         public string Symbol
         {
@@ -111,7 +113,7 @@
         }
 
         /// <summary>
-        /// Converts a value to <see cref="T:Gu.Units.Hertz"/>.
+        /// Converts <see <paramref name="value"/> to Hertz.
         /// </summary>
         /// <param name="value"></param>
         /// <returns>The converted value</returns>

@@ -1,22 +1,24 @@
 ﻿namespace Gu.Units
 {
     using System;
+    using System.ComponentModel;
     using System.Diagnostics;
 
     /// <summary>
     /// A type for the unit <see cref="Gu.Units.CapacitanceUnit"/>.
 	/// Contains conversion logic.
     /// </summary>
-    [Serializable, DebuggerDisplay("1{symbol} == {ToSiUnit(1)}{Farads.symbol}")]
+    [Serializable, TypeConverter(typeof(CapacitanceUnitTypeConverter)), DebuggerDisplay("1{symbol} == {ToSiUnit(1)}{Farads.symbol}")]
     public struct CapacitanceUnit : IUnit, IUnit<Capacitance>, IEquatable<CapacitanceUnit>
     {
         /// <summary>
-        /// The <see cref="T:Gu.Units.Farads"/> unit
+        /// The Farads unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
         public static readonly CapacitanceUnit Farads = new CapacitanceUnit(1.0, "F");
+
         /// <summary>
-        /// The <see cref="T:Gu.Units.Farads"/> unit
+        /// The Farads unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly CapacitanceUnit F = Farads;
@@ -31,7 +33,7 @@
         }
 
         /// <summary>
-        /// The symbol for <see cref="T:Gu.Units.Farads"/>.
+        /// The symbol for the <see cref="Gu.Units.CapacitanceUnit"/>.
         /// </summary>
         public string Symbol
         {
@@ -67,7 +69,7 @@
         }
 
         /// <summary>
-        /// Converts a value to <see cref="T:Gu.Units.Farads"/>.
+        /// Converts <see <paramref name="value"/> to Farads.
         /// </summary>
         /// <param name="value"></param>
         /// <returns>The converted value</returns>

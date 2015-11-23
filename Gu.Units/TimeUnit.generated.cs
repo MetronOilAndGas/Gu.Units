@@ -1,77 +1,79 @@
 ﻿namespace Gu.Units
 {
     using System;
+    using System.ComponentModel;
     using System.Diagnostics;
 
     /// <summary>
     /// A type for the unit <see cref="Gu.Units.TimeUnit"/>.
 	/// Contains conversion logic.
     /// </summary>
-    [Serializable, DebuggerDisplay("1{symbol} == {ToSiUnit(1)}{Seconds.symbol}")]
+    [Serializable, TypeConverter(typeof(TimeUnitTypeConverter)), DebuggerDisplay("1{symbol} == {ToSiUnit(1)}{Seconds.symbol}")]
     public struct TimeUnit : IUnit, IUnit<Time>, IEquatable<TimeUnit>
     {
         /// <summary>
-        /// The <see cref="T:Gu.Units.Seconds"/> unit
+        /// The Seconds unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
         public static readonly TimeUnit Seconds = new TimeUnit(1.0, "s");
+
         /// <summary>
-        /// The <see cref="T:Gu.Units.Seconds"/> unit
+        /// The Seconds unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly TimeUnit s = Seconds;
 
         /// <summary>
-        /// The <see cref="T:Gu.Units.Nanoseconds"/> unit
+        /// The Nanoseconds unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly TimeUnit Nanoseconds = new TimeUnit(1E-09, "ns");
         /// <summary>
-        /// The <see cref="T:Gu.Units.Nanoseconds"/> unit
+        /// The <see cref="Gu.Units.Nanoseconds"/> unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly TimeUnit ns = Nanoseconds;
 
         /// <summary>
-        /// The <see cref="T:Gu.Units.Microseconds"/> unit
+        /// The Microseconds unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly TimeUnit Microseconds = new TimeUnit(1E-06, "µs");
         /// <summary>
-        /// The <see cref="T:Gu.Units.Microseconds"/> unit
+        /// The <see cref="Gu.Units.Microseconds"/> unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly TimeUnit µs = Microseconds;
 
         /// <summary>
-        /// The <see cref="T:Gu.Units.Milliseconds"/> unit
+        /// The Milliseconds unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly TimeUnit Milliseconds = new TimeUnit(0.001, "ms");
         /// <summary>
-        /// The <see cref="T:Gu.Units.Milliseconds"/> unit
+        /// The <see cref="Gu.Units.Milliseconds"/> unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly TimeUnit ms = Milliseconds;
 
         /// <summary>
-        /// The <see cref="T:Gu.Units.Hours"/> unit
+        /// The Hours unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly TimeUnit Hours = new TimeUnit(3600, "h");
         /// <summary>
-        /// The <see cref="T:Gu.Units.Hours"/> unit
+        /// The <see cref="Gu.Units.Hours"/> unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly TimeUnit h = Hours;
 
         /// <summary>
-        /// The <see cref="T:Gu.Units.Minutes"/> unit
+        /// The Minutes unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly TimeUnit Minutes = new TimeUnit(60, "min");
         /// <summary>
-        /// The <see cref="T:Gu.Units.Minutes"/> unit
+        /// The <see cref="Gu.Units.Minutes"/> unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly TimeUnit min = Minutes;
@@ -86,7 +88,7 @@
         }
 
         /// <summary>
-        /// The symbol for <see cref="T:Gu.Units.Seconds"/>.
+        /// The symbol for the <see cref="Gu.Units.TimeUnit"/>.
         /// </summary>
         public string Symbol
         {
@@ -122,7 +124,7 @@
         }
 
         /// <summary>
-        /// Converts a value to <see cref="T:Gu.Units.Seconds"/>.
+        /// Converts <see <paramref name="value"/> to Seconds.
         /// </summary>
         /// <param name="value"></param>
         /// <returns>The converted value</returns>

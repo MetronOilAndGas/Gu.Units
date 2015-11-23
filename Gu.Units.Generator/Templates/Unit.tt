@@ -1,4 +1,4 @@
-﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+﻿<#@ template debug="true" hostspecific="false" language="C#" #>
 <#@ import namespace="System.Globalization" #>
 <#@ import namespace="System.Collections" #>
 <#@ import namespace="System.Collections.Generic" #>
@@ -26,17 +26,18 @@ else
 namespace <#= Settings.Namespace #>
 {
     using System;
+    using System.ComponentModel;
     using System.Diagnostics;
 
     /// <summary>
     /// A type for the unit <see cref="<#= Settings.Namespace #>.<#= unit.UnitName #>"/>.
 	/// Contains conversion logic.
     /// </summary>
-    [Serializable, DebuggerDisplay("1{symbol} == {ToSiUnit(1)}{<#= unit.ClassName #>.symbol}")]
+    [Serializable, TypeConverter(typeof(<#= unit.UnitName #>TypeConverter)), DebuggerDisplay("1{symbol} == {ToSiUnit(1)}{<#= unit.ClassName #>.symbol}")]
     public struct <#= unit.UnitName #> : IUnit, IUnit<<#= unit.QuantityName #>>, IEquatable<<#= unit.UnitName #>>
     {
         /// <summary>
-        /// The <see cref="T:<#= Settings.Namespace #>.<#= unit.ClassName #>"/> unit
+        /// The <#= unit.ClassName #> unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 <#
@@ -57,8 +58,9 @@ namespace <#= Settings.Namespace #>
 		    if(unit.IsSymbolNameValid)
             {
 		    #>
+
         /// <summary>
-        /// The <see cref="T:<#= Settings.Namespace #>.<#= unit.ClassName #>"/> unit
+        /// The <#= unit.ClassName #> unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly <#= unit.UnitName #> <#= unit.Symbol #> = <#= unit.ClassName #>;
@@ -70,7 +72,7 @@ namespace <#= Settings.Namespace #>
 		#>
 
         /// <summary>
-        /// The <see cref="T:<#= Settings.Namespace #>.<#= su.ClassName #>"/> unit
+        /// The <#= su.ClassName #> unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 <#
@@ -91,7 +93,7 @@ namespace <#= Settings.Namespace #>
             {
 		    #>
         /// <summary>
-        /// The <see cref="T:<#= Settings.Namespace #>.<#= su.ClassName #>"/> unit
+        /// The <see cref="<#= Settings.Namespace #>.<#= su.ClassName #>"/> unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly <#= unit.UnitName #> <#= su.Symbol #> = <#= su.ClassName #>;
@@ -140,7 +142,7 @@ namespace <#= Settings.Namespace #>
         }
 
 		/// <summary>
-        /// The symbol for <see cref="T:<#= Settings.Namespace #>.<#= unit.ClassName #>"/>.
+        /// The symbol for the <see cref="<#= Settings.Namespace #>.<#= unit.UnitName #>"/>.
         /// </summary>
         public string Symbol
         {
@@ -176,7 +178,7 @@ namespace <#= Settings.Namespace #>
         }
 
         /// <summary>
-        /// Converts a value to <see cref="T:<#= Settings.Namespace #>.<#= unit.ClassName #>"/>.
+        /// Converts <paramref name="value"/> to <#= unit.ClassName #>.
         /// </summary>
         /// <param name="value"></param>
         /// <returns>The converted value</returns>

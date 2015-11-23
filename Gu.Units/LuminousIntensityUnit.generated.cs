@@ -1,22 +1,24 @@
 ﻿namespace Gu.Units
 {
     using System;
+    using System.ComponentModel;
     using System.Diagnostics;
 
     /// <summary>
     /// A type for the unit <see cref="Gu.Units.LuminousIntensityUnit"/>.
 	/// Contains conversion logic.
     /// </summary>
-    [Serializable, DebuggerDisplay("1{symbol} == {ToSiUnit(1)}{Candelas.symbol}")]
+    [Serializable, TypeConverter(typeof(LuminousIntensityUnitTypeConverter)), DebuggerDisplay("1{symbol} == {ToSiUnit(1)}{Candelas.symbol}")]
     public struct LuminousIntensityUnit : IUnit, IUnit<LuminousIntensity>, IEquatable<LuminousIntensityUnit>
     {
         /// <summary>
-        /// The <see cref="T:Gu.Units.Candelas"/> unit
+        /// The Candelas unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
         public static readonly LuminousIntensityUnit Candelas = new LuminousIntensityUnit(1.0, "cd");
+
         /// <summary>
-        /// The <see cref="T:Gu.Units.Candelas"/> unit
+        /// The Candelas unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly LuminousIntensityUnit cd = Candelas;
@@ -31,7 +33,7 @@
         }
 
         /// <summary>
-        /// The symbol for <see cref="T:Gu.Units.Candelas"/>.
+        /// The symbol for the <see cref="Gu.Units.LuminousIntensityUnit"/>.
         /// </summary>
         public string Symbol
         {
@@ -67,7 +69,7 @@
         }
 
         /// <summary>
-        /// Converts a value to <see cref="T:Gu.Units.Candelas"/>.
+        /// Converts <see <paramref name="value"/> to Candelas.
         /// </summary>
         /// <param name="value"></param>
         /// <returns>The converted value</returns>

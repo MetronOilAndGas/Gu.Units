@@ -18,9 +18,9 @@
             Assert.IsFalse(metres1 != metres2);
         }
 
-        [TestCase(1, 2)]
-        [TestCase(1, 1)]
-        [TestCase(2, 1)]
+        [TestCase(1.0, 2.0)]
+        [TestCase(1.0, 1.0)]
+        [TestCase(2.0, 1.0)]
         public void Compare(double d1, double d2)
         {
             var metres1 = Length.FromMetres(d1);

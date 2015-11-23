@@ -1,22 +1,24 @@
 ﻿namespace Gu.Units
 {
     using System;
+    using System.ComponentModel;
     using System.Diagnostics;
 
     /// <summary>
     /// A type for the unit <see cref="Gu.Units.InductanceUnit"/>.
 	/// Contains conversion logic.
     /// </summary>
-    [Serializable, DebuggerDisplay("1{symbol} == {ToSiUnit(1)}{Henrys.symbol}")]
+    [Serializable, TypeConverter(typeof(InductanceUnitTypeConverter)), DebuggerDisplay("1{symbol} == {ToSiUnit(1)}{Henrys.symbol}")]
     public struct InductanceUnit : IUnit, IUnit<Inductance>, IEquatable<InductanceUnit>
     {
         /// <summary>
-        /// The <see cref="T:Gu.Units.Henrys"/> unit
+        /// The Henrys unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
         public static readonly InductanceUnit Henrys = new InductanceUnit(1.0, "H");
+
         /// <summary>
-        /// The <see cref="T:Gu.Units.Henrys"/> unit
+        /// The Henrys unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly InductanceUnit H = Henrys;
@@ -31,7 +33,7 @@
         }
 
         /// <summary>
-        /// The symbol for <see cref="T:Gu.Units.Henrys"/>.
+        /// The symbol for the <see cref="Gu.Units.InductanceUnit"/>.
         /// </summary>
         public string Symbol
         {
@@ -67,7 +69,7 @@
         }
 
         /// <summary>
-        /// Converts a value to <see cref="T:Gu.Units.Henrys"/>.
+        /// Converts <see <paramref name="value"/> to Henrys.
         /// </summary>
         /// <param name="value"></param>
         /// <returns>The converted value</returns>

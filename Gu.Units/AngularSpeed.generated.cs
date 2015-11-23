@@ -1,6 +1,7 @@
 ﻿namespace Gu.Units
 {
     using System;
+    using System.ComponentModel;
     using System.Globalization;
     using System.Xml;
     using System.Xml.Schema;
@@ -9,13 +10,13 @@
     /// <summary>
     /// A type for the quantity <see cref="Gu.Units.AngularSpeed"/>.
     /// </summary>
-    [Serializable]
+    [Serializable, TypeConverter(typeof(AngularSpeedTypeConverter))]
     public partial struct AngularSpeed : IComparable<AngularSpeed>, IEquatable<AngularSpeed>, IFormattable, IXmlSerializable, IQuantity<AngleUnit, I1, TimeUnit, INeg1>, IQuantity<AngularSpeedUnit>
     {
         public static readonly AngularSpeed Zero = new AngularSpeed();
 
         /// <summary>
-        /// The quantity in <see cref="T:Gu.Units.RadiansPerSecond"/>.
+        /// The quantity in <see cref="Gu.Units.AngularSpeedUnit.RadiansPerSecond"/>.
         /// </summary>
         internal readonly double radiansPerSecond;
 
@@ -25,17 +26,17 @@
         }
 
         /// <summary>
-        /// Initializes a new instance of <see cref="T:Gu.Units.AngularSpeed"/>.
+        /// Initializes a new instance of <see cref="Gu.Units.AngularSpeed"/>.
         /// </summary>
         /// <param name="value"></param>
-        /// <param name="unit"><see cref="T:Gu.Units.RadiansPerSecond"/>.</param>
+        /// <param name="unit"><see cref="Gu.Units.AngularSpeedUnit"/>.</param>
         public AngularSpeed(double value, AngularSpeedUnit unit)
         {
             this.radiansPerSecond = unit.ToSiUnit(value);
         }
 
         /// <summary>
-        /// The quantity in RadiansPerSecond
+        /// The quantity in <see cref="Gu.Units.AngularSpeedUnit.RadiansPerSecond"/>
         /// </summary>
         public double SiValue
         {
@@ -123,9 +124,9 @@
         }
 
         /// <summary>
-        /// Creates an instance of <see cref="T:Gu.Units.AngularSpeed"/> from its string representation
+        /// Creates an instance of <see cref="Gu.Units.AngularSpeed"/> from its string representation
         /// </summary>
-        /// <param name="s">The string representation of the <see cref="T:Gu.Units.AngularSpeed"/></param>
+        /// <param name="s">The string representation of the <see cref="Gu.Units.AngularSpeed"/></param>
         /// <returns></returns>
 		public static AngularSpeed Parse(string s)
         {
@@ -168,10 +169,10 @@
         }
 
         /// <summary>
-        /// Reads an instance of <see cref="T:Gu.Units.AngularSpeed"/> from the <paramref name="reader"/>
+        /// Reads an instance of <see cref="Gu.Units.AngularSpeed"/> from the <paramref name="reader"/>
         /// </summary>
         /// <param name="reader"></param>
-        /// <returns>An instance of  <see cref="T:Gu.Units.AngularSpeed"/></returns>
+        /// <returns>An instance of  <see cref="Gu.Units.AngularSpeed"/></returns>
         public static AngularSpeed ReadFrom(XmlReader reader)
         {
             var v = new AngularSpeed();
@@ -180,7 +181,7 @@
         }
 
         /// <summary>
-        /// Creates a new instance of <see cref="T:Gu.Units.AngularSpeed"/>.
+        /// Creates a new instance of <see cref="Gu.Units.AngularSpeed"/>.
         /// </summary>
         /// <param name="value"></param>
         /// <param name="unit"></param>
@@ -190,9 +191,9 @@
         }
 
         /// <summary>
-        /// Creates a new instance of <see cref="T:Gu.Units.AngularSpeed"/>.
+        /// Creates a new instance of <see cref="Gu.Units.AngularSpeed"/>.
         /// </summary>
-        /// <param name="radiansPerSecond">The value in <see cref="T:Gu.Units.RadiansPerSecond"/></param>
+        /// <param name="radiansPerSecond">The value in <see cref="Gu.Units.RadiansPerSecond"/></param>
         public static AngularSpeed FromRadiansPerSecond(double radiansPerSecond)
         {
             return new AngularSpeed(radiansPerSecond);
@@ -200,7 +201,7 @@
 
 
         /// <summary>
-        /// Creates a new instance of <see cref="T:Gu.Units.AngularSpeed"/>.
+        /// Creates a new instance of <see cref="Gu.Units.AngularSpeed"/>.
         /// </summary>
         /// <param name="revolutionsPerMinute">The value in rpm</param>
         public static AngularSpeed FromRevolutionsPerMinute(double revolutionsPerMinute)
@@ -209,7 +210,7 @@
         }
 
         /// <summary>
-        /// Creates a new instance of <see cref="T:Gu.Units.AngularSpeed"/>.
+        /// Creates a new instance of <see cref="Gu.Units.AngularSpeed"/>.
         /// </summary>
         /// <param name="degreesPerSecond">The value in °⋅s⁻¹</param>
         public static AngularSpeed FromDegreesPerSecond(double degreesPerSecond)
@@ -218,7 +219,7 @@
         }
 
         /// <summary>
-        /// Creates a new instance of <see cref="T:Gu.Units.AngularSpeed"/>.
+        /// Creates a new instance of <see cref="Gu.Units.AngularSpeed"/>.
         /// </summary>
         /// <param name="degreesPerMinute">The value in min⁻¹⋅°</param>
         public static AngularSpeed FromDegreesPerMinute(double degreesPerMinute)
@@ -227,7 +228,7 @@
         }
 
         /// <summary>
-        /// Creates a new instance of <see cref="T:Gu.Units.AngularSpeed"/>.
+        /// Creates a new instance of <see cref="Gu.Units.AngularSpeed"/>.
         /// </summary>
         /// <param name="radiansPerMinute">The value in min⁻¹⋅rad</param>
         public static AngularSpeed FromRadiansPerMinute(double radiansPerMinute)
@@ -236,7 +237,7 @@
         }
 
         /// <summary>
-        /// Creates a new instance of <see cref="T:Gu.Units.AngularSpeed"/>.
+        /// Creates a new instance of <see cref="Gu.Units.AngularSpeed"/>.
         /// </summary>
         /// <param name="degreesPerHour">The value in h⁻¹⋅°</param>
         public static AngularSpeed FromDegreesPerHour(double degreesPerHour)
@@ -245,7 +246,7 @@
         }
 
         /// <summary>
-        /// Creates a new instance of <see cref="T:Gu.Units.AngularSpeed"/>.
+        /// Creates a new instance of <see cref="Gu.Units.AngularSpeed"/>.
         /// </summary>
         /// <param name="radiansPerHour">The value in h⁻¹⋅rad</param>
         public static AngularSpeed FromRadiansPerHour(double radiansPerHour)
@@ -279,124 +280,124 @@
         }
 
         /// <summary>
-        /// Indicates whether two <see cref="T:Gu.Units.AngularSpeed"/> instances are equal.
+        /// Indicates whether two <see cref="Gu.Units.AngularSpeed"/> instances are equal.
         /// </summary>
         /// <returns>
         /// true if the quantitys of <paramref name="left"/> and <paramref name="right"/> are equal; otherwise, false.
         /// </returns>
-        /// <param name="left">An instance of <see cref="T:Gu.Units.AngularSpeed"/>.</param>
-        /// <param name="right">An instance of <see cref="T:Gu.Units.AngularSpeed"/>.</param>
+        /// <param name="left">An instance of <see cref="Gu.Units.AngularSpeed"/>.</param>
+        /// <param name="right">An instance of <see cref="Gu.Units.AngularSpeed"/>.</param>
         public static bool operator ==(AngularSpeed left, AngularSpeed right)
         {
             return left.Equals(right);
         }
 
         /// <summary>
-        /// Indicates whether two <see cref="T:Gu.Units.AngularSpeed"/> instances are not equal.
+        /// Indicates whether two <see cref="Gu.Units.AngularSpeed"/> instances are not equal.
         /// </summary>
         /// <returns>
         /// true if the quantitys of <paramref name="left"/> and <paramref name="right"/> are not equal; otherwise, false.
         /// </returns>
-        /// <param name="left">An instance of <see cref="T:Gu.Units.AngularSpeed"/>.</param>
-        /// <param name="right">An instance of <see cref="T:Gu.Units.AngularSpeed"/>.</param>
+        /// <param name="left">An instance of <see cref="Gu.Units.AngularSpeed"/>.</param>
+        /// <param name="right">An instance of <see cref="Gu.Units.AngularSpeed"/>.</param>
         public static bool operator !=(AngularSpeed left, AngularSpeed right)
         {
             return !left.Equals(right);
         }
 
         /// <summary>
-        /// Indicates whether a specified <see cref="T:Gu.Units.AngularSpeed"/> is less than another specified <see cref="T:Gu.Units.AngularSpeed"/>.
+        /// Indicates whether a specified <see cref="Gu.Units.AngularSpeed"/> is less than another specified <see cref="Gu.Units.AngularSpeed"/>.
         /// </summary>
         /// <returns>
         /// true if the quantity of <paramref name="left"/> is less than the quantity of <paramref name="right"/>; otherwise, false. 
         /// </returns>
-        /// <param name="left">An instance of <see cref="T:Gu.Units.AngularSpeed"/>.</param>
-        /// <param name="right">An instance of <see cref="T:Gu.Units.AngularSpeed"/>.</param>
+        /// <param name="left">An instance of <see cref="Gu.Units.AngularSpeed"/>.</param>
+        /// <param name="right">An instance of <see cref="Gu.Units.AngularSpeed"/>.</param>
         public static bool operator <(AngularSpeed left, AngularSpeed right)
         {
             return left.radiansPerSecond < right.radiansPerSecond;
         }
 
         /// <summary>
-        /// Indicates whether a specified <see cref="T:Gu.Units.AngularSpeed"/> is greater than another specified <see cref="T:Gu.Units.AngularSpeed"/>.
+        /// Indicates whether a specified <see cref="Gu.Units.AngularSpeed"/> is greater than another specified <see cref="Gu.Units.AngularSpeed"/>.
         /// </summary>
         /// <returns>
         /// true if the quantity of <paramref name="left"/> is greater than the quantity of <paramref name="right"/>; otherwise, false. 
         /// </returns>
-        /// <param name="left">An instance of <see cref="T:Gu.Units.AngularSpeed"/>.</param>
-        /// <param name="right">An instance of <see cref="T:Gu.Units.AngularSpeed"/>.</param>
+        /// <param name="left">An instance of <see cref="Gu.Units.AngularSpeed"/>.</param>
+        /// <param name="right">An instance of <see cref="Gu.Units.AngularSpeed"/>.</param>
         public static bool operator >(AngularSpeed left, AngularSpeed right)
         {
             return left.radiansPerSecond > right.radiansPerSecond;
         }
 
         /// <summary>
-        /// Indicates whether a specified <see cref="T:Gu.Units.AngularSpeed"/> is less than or equal to another specified <see cref="T:Gu.Units.AngularSpeed"/>.
+        /// Indicates whether a specified <see cref="Gu.Units.AngularSpeed"/> is less than or equal to another specified <see cref="Gu.Units.AngularSpeed"/>.
         /// </summary>
         /// <returns>
         /// true if the quantity of <paramref name="left"/> is less than or equal to the quantity of <paramref name="right"/>; otherwise, false.
         /// </returns>
-        /// <param name="left">An instance of <see cref="T:Gu.Units.AngularSpeed"/>.</param>
-        /// <param name="right">An instance of <see cref="T:Gu.Units.AngularSpeed"/>.</param>
+        /// <param name="left">An instance of <see cref="Gu.Units.AngularSpeed"/>.</param>
+        /// <param name="right">An instance of <see cref="Gu.Units.AngularSpeed"/>.</param>
         public static bool operator <=(AngularSpeed left, AngularSpeed right)
         {
             return left.radiansPerSecond <= right.radiansPerSecond;
         }
 
         /// <summary>
-        /// Indicates whether a specified <see cref="T:Gu.Units.AngularSpeed"/> is greater than or equal to another specified <see cref="T:Gu.Units.AngularSpeed"/>.
+        /// Indicates whether a specified <see cref="Gu.Units.AngularSpeed"/> is greater than or equal to another specified <see cref="Gu.Units.AngularSpeed"/>.
         /// </summary>
         /// <returns>
         /// true if the quantity of <paramref name="left"/> is greater than or equal to the quantity of <paramref name="right"/>; otherwise, false.
         /// </returns>
-        /// <param name="left">An instance of <see cref="T:Gu.Units.AngularSpeed"/>.</param>
-        /// <param name="right">An instance of <see cref="T:Gu.Units.AngularSpeed"/>.</param>
+        /// <param name="left">An instance of <see cref="Gu.Units.AngularSpeed"/>.</param>
+        /// <param name="right">An instance of <see cref="Gu.Units.AngularSpeed"/>.</param>
         public static bool operator >=(AngularSpeed left, AngularSpeed right)
         {
             return left.radiansPerSecond >= right.radiansPerSecond;
         }
 
         /// <summary>
-        /// Multiplies an instance of <see cref="T:Gu.Units.AngularSpeed"/> with <paramref name="left"/> and returns the result.
+        /// Multiplies an instance of <see cref="Gu.Units.AngularSpeed"/> with <paramref name="left"/> and returns the result.
         /// </summary>
-        /// <param name="right">An instance of <see cref="T:Gu.Units.AngularSpeed"/></param>
-        /// <param name="left">An instance of <seealso cref="T:System.Double"/></param>
-        /// <returns>Multiplies an instance of <see cref="T:Gu.Units.AngularSpeed"/> with <paramref name="left"/> and returns the result.</returns>
+        /// <param name="right">An instance of <see cref="Gu.Units.AngularSpeed"/></param>
+        /// <param name="left">An instance of <seealso cref="System.Double"/></param>
+        /// <returns>Multiplies an instance of <see cref="Gu.Units.AngularSpeed"/> with <paramref name="left"/> and returns the result.</returns>
         public static AngularSpeed operator *(double left, AngularSpeed right)
         {
             return new AngularSpeed(left * right.radiansPerSecond);
         }
 
         /// <summary>
-        /// Multiplies an instance of <see cref="T:Gu.Units.AngularSpeed"/> with <paramref name="right"/> and returns the result.
+        /// Multiplies an instance of <see cref="Gu.Units.AngularSpeed"/> with <paramref name="right"/> and returns the result.
         /// </summary>
-        /// <param name="left">An instance of <see cref="T:Gu.Units.AngularSpeed"/></param>
-        /// <param name="right">An instance of <seealso cref="T:System.Double"/></param>
-        /// <returns>Multiplies an instance of <see cref="T:Gu.Units.AngularSpeed"/> with <paramref name="right"/> and returns the result.</returns>
+        /// <param name="left">An instance of <see cref="Gu.Units.AngularSpeed"/></param>
+        /// <param name="right">An instance of <seealso cref="System.Double"/></param>
+        /// <returns>Multiplies an instance of <see cref="Gu.Units.AngularSpeed"/> with <paramref name="right"/> and returns the result.</returns>
         public static AngularSpeed operator *(AngularSpeed left, double right)
         {
             return new AngularSpeed(left.radiansPerSecond * right);
         }
 
         /// <summary>
-        /// Divides an instance of <see cref="T:Gu.Units.AngularSpeed"/> with <paramref name="right"/> and returns the result.
+        /// Divides an instance of <see cref="Gu.Units.AngularSpeed"/> with <paramref name="right"/> and returns the result.
         /// </summary>
-        /// <param name="left">An instance of <see cref="T:Gu.Units.AngularSpeed"/></param>
-        /// <param name="right">An instance of <seealso cref="T:System.Double"/></param>
-        /// <returns>Divides an instance of <see cref="T:Gu.Units.AngularSpeed"/> with <paramref name="right"/> and returns the result.</returns>
+        /// <param name="left">An instance of <see cref="Gu.Units.AngularSpeed"/></param>
+        /// <param name="right">An instance of <seealso cref="System.Double"/></param>
+        /// <returns>Divides an instance of <see cref="Gu.Units.AngularSpeed"/> with <paramref name="right"/> and returns the result.</returns>
         public static AngularSpeed operator /(AngularSpeed left, double right)
         {
             return new AngularSpeed(left.radiansPerSecond / right);
         }
 
         /// <summary>
-        /// Adds two specified <see cref="T:Gu.Units.AngularSpeed"/> instances.
+        /// Adds two specified <see cref="Gu.Units.AngularSpeed"/> instances.
         /// </summary>
         /// <returns>
-        /// An <see cref="T:Gu.Units.AngularSpeed"/> whose quantity is the sum of the quantitys of <paramref name="left"/> and <paramref name="right"/>.
+        /// An <see cref="Gu.Units.AngularSpeed"/> whose quantity is the sum of the quantitys of <paramref name="left"/> and <paramref name="right"/>.
         /// </returns>
-        /// <param name="left">An instance of <see cref="T:Gu.Units.AngularSpeed"/>.</param>
-        /// <param name="right">An instance of <see cref="T:Gu.Units.AngularSpeed"/>.</param>
+        /// <param name="left">An instance of <see cref="Gu.Units.AngularSpeed"/>.</param>
+        /// <param name="right">An instance of <see cref="Gu.Units.AngularSpeed"/>.</param>
         public static AngularSpeed operator +(AngularSpeed left, AngularSpeed right)
         {
             return new AngularSpeed(left.radiansPerSecond + right.radiansPerSecond);
@@ -406,34 +407,34 @@
         /// Subtracts an AngularSpeed from another AngularSpeed and returns the difference.
         /// </summary>
         /// <returns>
-        /// An <see cref="T:Gu.Units.AngularSpeed"/> that is the difference
+        /// An <see cref="Gu.Units.AngularSpeed"/> that is the difference
         /// </returns>
-        /// <param name="left">An instance of <see cref="T:Gu.Units.AngularSpeed"/> (the minuend).</param>
-        /// <param name="right">An instance of <see cref="T:Gu.Units.AngularSpeed"/> (the subtrahend).</param>
+        /// <param name="left">An instance of <see cref="Gu.Units.AngularSpeed"/> (the minuend).</param>
+        /// <param name="right">An instance of <see cref="Gu.Units.AngularSpeed"/> (the subtrahend).</param>
         public static AngularSpeed operator -(AngularSpeed left, AngularSpeed right)
         {
             return new AngularSpeed(left.radiansPerSecond - right.radiansPerSecond);
         }
 
         /// <summary>
-        /// Returns an <see cref="T:Gu.Units.AngularSpeed"/> whose quantity is the negated quantity of the specified instance.
+        /// Returns an <see cref="Gu.Units.AngularSpeed"/> whose quantity is the negated quantity of the specified instance.
         /// </summary>
         /// <returns>
-        /// An <see cref="T:Gu.Units.AngularSpeed"/> with the same numeric quantity as this instance, but the opposite sign.
+        /// An <see cref="Gu.Units.AngularSpeed"/> with the same numeric quantity as this instance, but the opposite sign.
         /// </returns>
-        /// <param name="angularSpeed">An instance of <see cref="T:Gu.Units.AngularSpeed"/></param>
+        /// <param name="angularSpeed">An instance of <see cref="Gu.Units.AngularSpeed"/></param>
         public static AngularSpeed operator -(AngularSpeed angularSpeed)
         {
             return new AngularSpeed(-1 * angularSpeed.radiansPerSecond);
         }
 
         /// <summary>
-        /// Returns the specified instance of <see cref="T:Gu.Units.AngularSpeed"/>.
+        /// Returns the specified instance of <see cref="Gu.Units.AngularSpeed"/>.
         /// </summary>
         /// <returns>
         /// Returns <paramref name="angularSpeed"/>.
         /// </returns>
-        /// <param name="angularSpeed">An instance of <see cref="T:Gu.Units.AngularSpeed"/></param>
+        /// <param name="angularSpeed">An instance of <see cref="Gu.Units.AngularSpeed"/></param>
         public static AngularSpeed operator +(AngularSpeed angularSpeed)
         {
             return angularSpeed;
@@ -486,7 +487,7 @@
         }
 
         /// <summary>
-        /// Compares this instance to a specified <see cref="T:MathNet.Spatial.Units.AngularSpeed"/> object and returns an integer that indicates whether this <see cref="quantity"/> is smaller than, equal to, or greater than the <see cref="T:MathNet.Spatial.Units.AngularSpeed"/> object.
+        /// Compares this instance to a specified <see cref="MathNet.Spatial.Units.AngularSpeed"/> object and returns an integer that indicates whether this <see cref="quantity"/> is smaller than, equal to, or greater than the <see cref="MathNet.Spatial.Units.AngularSpeed"/> object.
         /// </summary>
         /// <returns>
         /// A signed number indicating the relative quantitys of this instance and <paramref name="quantity"/>.
@@ -508,31 +509,31 @@
         ///                     This instance is larger than <paramref name="quantity"/>.
         /// 
         /// </returns>
-        /// <param name="quantity">An instance of <see cref="T:MathNet.Spatial.Units.AngularSpeed"/> object to compare to this instance.</param>
+        /// <param name="quantity">An instance of <see cref="MathNet.Spatial.Units.AngularSpeed"/> object to compare to this instance.</param>
         public int CompareTo(AngularSpeed quantity)
         {
             return this.radiansPerSecond.CompareTo(quantity.radiansPerSecond);
         }
 
         /// <summary>
-        /// Returns a quantity indicating whether this instance is equal to a specified <see cref="T:Gu.Units.AngularSpeed"/> object.
+        /// Returns a quantity indicating whether this instance is equal to a specified <see cref="Gu.Units.AngularSpeed"/> object.
         /// </summary>
         /// <returns>
         /// true if <paramref name="other"/> represents the same AngularSpeed as this instance; otherwise, false.
         /// </returns>
-        /// <param name="other">An instance of <see cref="T:Gu.Units.AngularSpeed"/> object to compare with this instance.</param>
+        /// <param name="other">An instance of <see cref="Gu.Units.AngularSpeed"/> object to compare with this instance.</param>
         public bool Equals(AngularSpeed other)
         {
             return this.radiansPerSecond.Equals(other.radiansPerSecond);
         }
 
         /// <summary>
-        /// Returns a quantity indicating whether this instance is equal to a specified <see cref="T:Gu.Units.AngularSpeed"/> object within the given tolerance.
+        /// Returns a quantity indicating whether this instance is equal to a specified <see cref="Gu.Units.AngularSpeed"/> object within the given tolerance.
         /// </summary>
         /// <returns>
         /// true if <paramref name="other"/> represents the same AngularSpeed as this instance; otherwise, false.
         /// </returns>
-        /// <param name="other">An instance of <see cref="T:Gu.Units.AngularSpeed"/> object to compare with this instance.</param>
+        /// <param name="other">An instance of <see cref="Gu.Units.AngularSpeed"/> object to compare with this instance.</param>
         /// <param name="tolerance">The maximum difference for being considered equal</param>
         public bool Equals(AngularSpeed other, double tolerance)
         {
@@ -557,10 +558,10 @@
         /// <summary>
         /// This method is reserved and should not be used. When implementing the IXmlSerializable interface, 
         /// you should return null (Nothing in Visual Basic) from this method, and instead, 
-        /// if specifying a custom schema is required, apply the <see cref="T:System.Xml.Serialization.XmlSchemaProviderAttribute"/> to the class.
+        /// if specifying a custom schema is required, apply the <see cref="System.Xml.Serialization.XmlSchemaProviderAttribute"/> to the class.
         /// </summary>
         /// <returns>
-        /// An <see cref="T:System.Xml.Schema.XmlSchema"/> that describes the XML representation of the object that is produced by the
+        /// An <see cref="System.Xml.Schema.XmlSchema"/> that describes the XML representation of the object that is produced by the
         ///  <see cref="M:System.Xml.Serialization.IXmlSerializable.WriteXml(System.Xml.XmlWriter)"/> 
         /// method and consumed by the <see cref="M:System.Xml.Serialization.IXmlSerializable.ReadXml(System.Xml.XmlReader)"/> method.
         /// </returns>
@@ -572,7 +573,7 @@
         /// <summary>
         /// Generates an object from its XML representation.
         /// </summary>
-        /// <param name="reader">The <see cref="T:System.Xml.XmlReader"/> stream from which the object is deserialized. </param>
+        /// <param name="reader">The <see cref="System.Xml.XmlReader"/> stream from which the object is deserialized. </param>
         public void ReadXml(XmlReader reader)
         {
             // Hacking set readonly fields here, can't think of a cleaner workaround
@@ -582,7 +583,7 @@
         /// <summary>
         /// Converts an object into its XML representation.
         /// </summary>
-        /// <param name="writer">The <see cref="T:System.Xml.XmlWriter"/> stream to which the object is serialized. </param>
+        /// <param name="writer">The <see cref="System.Xml.XmlWriter"/> stream to which the object is serialized. </param>
         public void WriteXml(XmlWriter writer)
         {
             XmlExt.WriteAttribute(writer, "Value", this.radiansPerSecond);

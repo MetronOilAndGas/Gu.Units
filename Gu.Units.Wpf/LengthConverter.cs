@@ -15,7 +15,7 @@
         {
         }
 
-        public LengthConverter([TypeConverter(typeof(LengthUnitTypeConverter))]LengthUnit unit)
+        public LengthConverter(LengthUnit unit)
         {
             Unit = unit;
         }
@@ -40,6 +40,17 @@
         {
             if (Unit == null)
             {
+                var pvt = (IProvideValueTarget)serviceProvider.GetService(typeof(IProvideValueTarget));
+                var binding = pvt.TargetObject as Binding;
+                var stringFormat = binding?.StringFormat;
+                if (stringFormat != null)
+                {
+                    throw new NotImplementedException("Use string format from binding");
+                }
+            }
+
+            if (Unit == null)
+            {
                 var message = $"{nameof(Unit)} cannot be null";
                 throw new InvalidOperationException(message);
             }
@@ -60,14 +71,14 @@
             if (!(value is Length))
             {
                 var message = $"{GetType().Name} only supports converting from {nameof(Length)}";
-                throw new InvalidOperationException(message);
+                throw new ArgumentException(message, nameof(value));
             }
 
             var length = (Length)value;
 
             if (targetType == typeof(string))
             {
-                throw new NotImplementedException("Use string format from binding");
+
                 return Unit.Value.GetScalarValue(length).ToString(culture);
             }
 
@@ -77,8 +88,8 @@
             }
 
             {
-                var message = $"{GetType().Name} does not support vonverting to {targetType.Name}";
-                throw new NotSupportedException(message);
+                var message = $"{GetType().Name} does not support converting to {targetType.Name}";
+                throw new ArgumentException(message, nameof(targetType));
             }
         }
 
@@ -89,7 +100,7 @@
         {
             if (!(targetType == typeof(Length) || targetType == typeof(Length?)))
             {
-                var message = $"{GetType().Name} does not support vonverting to {targetType.Name}";
+                var message = $"{GetType().Name} does not support converting to {targetType.Name}";
                 throw new NotSupportedException(message);
             }
 
@@ -116,7 +127,7 @@
                 return result;
             }
 
-            return Binding.DoNothing;
+            return value;
         }
     }
 }

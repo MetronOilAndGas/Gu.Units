@@ -1,6 +1,7 @@
 ﻿namespace Gu.Units
 {
     using System;
+    using System.ComponentModel;
     using System.Globalization;
     using System.Xml;
     using System.Xml.Schema;
@@ -9,13 +10,13 @@
     /// <summary>
     /// A type for the quantity <see cref="Gu.Units.AngularJerk"/>.
     /// </summary>
-    [Serializable]
+    [Serializable, TypeConverter(typeof(AngularJerkTypeConverter))]
     public partial struct AngularJerk : IComparable<AngularJerk>, IEquatable<AngularJerk>, IFormattable, IXmlSerializable, IQuantity<AngleUnit, I1, TimeUnit, INeg3>, IQuantity<AngularJerkUnit>
     {
         public static readonly AngularJerk Zero = new AngularJerk();
 
         /// <summary>
-        /// The quantity in <see cref="T:Gu.Units.RadiansPerSecondCubed"/>.
+        /// The quantity in <see cref="Gu.Units.AngularJerkUnit.RadiansPerSecondCubed"/>.
         /// </summary>
         internal readonly double radiansPerSecondCubed;
 
@@ -25,17 +26,17 @@
         }
 
         /// <summary>
-        /// Initializes a new instance of <see cref="T:Gu.Units.AngularJerk"/>.
+        /// Initializes a new instance of <see cref="Gu.Units.AngularJerk"/>.
         /// </summary>
         /// <param name="value"></param>
-        /// <param name="unit"><see cref="T:Gu.Units.RadiansPerSecondCubed"/>.</param>
+        /// <param name="unit"><see cref="Gu.Units.AngularJerkUnit"/>.</param>
         public AngularJerk(double value, AngularJerkUnit unit)
         {
             this.radiansPerSecondCubed = unit.ToSiUnit(value);
         }
 
         /// <summary>
-        /// The quantity in RadiansPerSecondCubed
+        /// The quantity in <see cref="Gu.Units.AngularJerkUnit.RadiansPerSecondCubed"/>
         /// </summary>
         public double SiValue
         {
@@ -112,9 +113,9 @@
         }
 
         /// <summary>
-        /// Creates an instance of <see cref="T:Gu.Units.AngularJerk"/> from its string representation
+        /// Creates an instance of <see cref="Gu.Units.AngularJerk"/> from its string representation
         /// </summary>
-        /// <param name="s">The string representation of the <see cref="T:Gu.Units.AngularJerk"/></param>
+        /// <param name="s">The string representation of the <see cref="Gu.Units.AngularJerk"/></param>
         /// <returns></returns>
 		public static AngularJerk Parse(string s)
         {
@@ -157,10 +158,10 @@
         }
 
         /// <summary>
-        /// Reads an instance of <see cref="T:Gu.Units.AngularJerk"/> from the <paramref name="reader"/>
+        /// Reads an instance of <see cref="Gu.Units.AngularJerk"/> from the <paramref name="reader"/>
         /// </summary>
         /// <param name="reader"></param>
-        /// <returns>An instance of  <see cref="T:Gu.Units.AngularJerk"/></returns>
+        /// <returns>An instance of  <see cref="Gu.Units.AngularJerk"/></returns>
         public static AngularJerk ReadFrom(XmlReader reader)
         {
             var v = new AngularJerk();
@@ -169,7 +170,7 @@
         }
 
         /// <summary>
-        /// Creates a new instance of <see cref="T:Gu.Units.AngularJerk"/>.
+        /// Creates a new instance of <see cref="Gu.Units.AngularJerk"/>.
         /// </summary>
         /// <param name="value"></param>
         /// <param name="unit"></param>
@@ -179,9 +180,9 @@
         }
 
         /// <summary>
-        /// Creates a new instance of <see cref="T:Gu.Units.AngularJerk"/>.
+        /// Creates a new instance of <see cref="Gu.Units.AngularJerk"/>.
         /// </summary>
-        /// <param name="radiansPerSecondCubed">The value in <see cref="T:Gu.Units.RadiansPerSecondCubed"/></param>
+        /// <param name="radiansPerSecondCubed">The value in <see cref="Gu.Units.RadiansPerSecondCubed"/></param>
         public static AngularJerk FromRadiansPerSecondCubed(double radiansPerSecondCubed)
         {
             return new AngularJerk(radiansPerSecondCubed);
@@ -189,7 +190,7 @@
 
 
         /// <summary>
-        /// Creates a new instance of <see cref="T:Gu.Units.AngularJerk"/>.
+        /// Creates a new instance of <see cref="Gu.Units.AngularJerk"/>.
         /// </summary>
         /// <param name="degreesPerSecondCubed">The value in °⋅s⁻³</param>
         public static AngularJerk FromDegreesPerSecondCubed(double degreesPerSecondCubed)
@@ -198,7 +199,7 @@
         }
 
         /// <summary>
-        /// Creates a new instance of <see cref="T:Gu.Units.AngularJerk"/>.
+        /// Creates a new instance of <see cref="Gu.Units.AngularJerk"/>.
         /// </summary>
         /// <param name="radiansPerHourCubed">The value in rad⋅h⁻³</param>
         public static AngularJerk FromRadiansPerHourCubed(double radiansPerHourCubed)
@@ -207,7 +208,7 @@
         }
 
         /// <summary>
-        /// Creates a new instance of <see cref="T:Gu.Units.AngularJerk"/>.
+        /// Creates a new instance of <see cref="Gu.Units.AngularJerk"/>.
         /// </summary>
         /// <param name="degreesPerHourCubed">The value in °⋅h⁻³</param>
         public static AngularJerk FromDegreesPerHourCubed(double degreesPerHourCubed)
@@ -216,7 +217,7 @@
         }
 
         /// <summary>
-        /// Creates a new instance of <see cref="T:Gu.Units.AngularJerk"/>.
+        /// Creates a new instance of <see cref="Gu.Units.AngularJerk"/>.
         /// </summary>
         /// <param name="radiansPerMinuteCubed">The value in rad⋅min⁻³</param>
         public static AngularJerk FromRadiansPerMinuteCubed(double radiansPerMinuteCubed)
@@ -225,7 +226,7 @@
         }
 
         /// <summary>
-        /// Creates a new instance of <see cref="T:Gu.Units.AngularJerk"/>.
+        /// Creates a new instance of <see cref="Gu.Units.AngularJerk"/>.
         /// </summary>
         /// <param name="degreesPerMinuteCubed">The value in °⋅min⁻³</param>
         public static AngularJerk FromDegreesPerMinuteCubed(double degreesPerMinuteCubed)
@@ -249,124 +250,124 @@
         }
 
         /// <summary>
-        /// Indicates whether two <see cref="T:Gu.Units.AngularJerk"/> instances are equal.
+        /// Indicates whether two <see cref="Gu.Units.AngularJerk"/> instances are equal.
         /// </summary>
         /// <returns>
         /// true if the quantitys of <paramref name="left"/> and <paramref name="right"/> are equal; otherwise, false.
         /// </returns>
-        /// <param name="left">An instance of <see cref="T:Gu.Units.AngularJerk"/>.</param>
-        /// <param name="right">An instance of <see cref="T:Gu.Units.AngularJerk"/>.</param>
+        /// <param name="left">An instance of <see cref="Gu.Units.AngularJerk"/>.</param>
+        /// <param name="right">An instance of <see cref="Gu.Units.AngularJerk"/>.</param>
         public static bool operator ==(AngularJerk left, AngularJerk right)
         {
             return left.Equals(right);
         }
 
         /// <summary>
-        /// Indicates whether two <see cref="T:Gu.Units.AngularJerk"/> instances are not equal.
+        /// Indicates whether two <see cref="Gu.Units.AngularJerk"/> instances are not equal.
         /// </summary>
         /// <returns>
         /// true if the quantitys of <paramref name="left"/> and <paramref name="right"/> are not equal; otherwise, false.
         /// </returns>
-        /// <param name="left">An instance of <see cref="T:Gu.Units.AngularJerk"/>.</param>
-        /// <param name="right">An instance of <see cref="T:Gu.Units.AngularJerk"/>.</param>
+        /// <param name="left">An instance of <see cref="Gu.Units.AngularJerk"/>.</param>
+        /// <param name="right">An instance of <see cref="Gu.Units.AngularJerk"/>.</param>
         public static bool operator !=(AngularJerk left, AngularJerk right)
         {
             return !left.Equals(right);
         }
 
         /// <summary>
-        /// Indicates whether a specified <see cref="T:Gu.Units.AngularJerk"/> is less than another specified <see cref="T:Gu.Units.AngularJerk"/>.
+        /// Indicates whether a specified <see cref="Gu.Units.AngularJerk"/> is less than another specified <see cref="Gu.Units.AngularJerk"/>.
         /// </summary>
         /// <returns>
         /// true if the quantity of <paramref name="left"/> is less than the quantity of <paramref name="right"/>; otherwise, false. 
         /// </returns>
-        /// <param name="left">An instance of <see cref="T:Gu.Units.AngularJerk"/>.</param>
-        /// <param name="right">An instance of <see cref="T:Gu.Units.AngularJerk"/>.</param>
+        /// <param name="left">An instance of <see cref="Gu.Units.AngularJerk"/>.</param>
+        /// <param name="right">An instance of <see cref="Gu.Units.AngularJerk"/>.</param>
         public static bool operator <(AngularJerk left, AngularJerk right)
         {
             return left.radiansPerSecondCubed < right.radiansPerSecondCubed;
         }
 
         /// <summary>
-        /// Indicates whether a specified <see cref="T:Gu.Units.AngularJerk"/> is greater than another specified <see cref="T:Gu.Units.AngularJerk"/>.
+        /// Indicates whether a specified <see cref="Gu.Units.AngularJerk"/> is greater than another specified <see cref="Gu.Units.AngularJerk"/>.
         /// </summary>
         /// <returns>
         /// true if the quantity of <paramref name="left"/> is greater than the quantity of <paramref name="right"/>; otherwise, false. 
         /// </returns>
-        /// <param name="left">An instance of <see cref="T:Gu.Units.AngularJerk"/>.</param>
-        /// <param name="right">An instance of <see cref="T:Gu.Units.AngularJerk"/>.</param>
+        /// <param name="left">An instance of <see cref="Gu.Units.AngularJerk"/>.</param>
+        /// <param name="right">An instance of <see cref="Gu.Units.AngularJerk"/>.</param>
         public static bool operator >(AngularJerk left, AngularJerk right)
         {
             return left.radiansPerSecondCubed > right.radiansPerSecondCubed;
         }
 
         /// <summary>
-        /// Indicates whether a specified <see cref="T:Gu.Units.AngularJerk"/> is less than or equal to another specified <see cref="T:Gu.Units.AngularJerk"/>.
+        /// Indicates whether a specified <see cref="Gu.Units.AngularJerk"/> is less than or equal to another specified <see cref="Gu.Units.AngularJerk"/>.
         /// </summary>
         /// <returns>
         /// true if the quantity of <paramref name="left"/> is less than or equal to the quantity of <paramref name="right"/>; otherwise, false.
         /// </returns>
-        /// <param name="left">An instance of <see cref="T:Gu.Units.AngularJerk"/>.</param>
-        /// <param name="right">An instance of <see cref="T:Gu.Units.AngularJerk"/>.</param>
+        /// <param name="left">An instance of <see cref="Gu.Units.AngularJerk"/>.</param>
+        /// <param name="right">An instance of <see cref="Gu.Units.AngularJerk"/>.</param>
         public static bool operator <=(AngularJerk left, AngularJerk right)
         {
             return left.radiansPerSecondCubed <= right.radiansPerSecondCubed;
         }
 
         /// <summary>
-        /// Indicates whether a specified <see cref="T:Gu.Units.AngularJerk"/> is greater than or equal to another specified <see cref="T:Gu.Units.AngularJerk"/>.
+        /// Indicates whether a specified <see cref="Gu.Units.AngularJerk"/> is greater than or equal to another specified <see cref="Gu.Units.AngularJerk"/>.
         /// </summary>
         /// <returns>
         /// true if the quantity of <paramref name="left"/> is greater than or equal to the quantity of <paramref name="right"/>; otherwise, false.
         /// </returns>
-        /// <param name="left">An instance of <see cref="T:Gu.Units.AngularJerk"/>.</param>
-        /// <param name="right">An instance of <see cref="T:Gu.Units.AngularJerk"/>.</param>
+        /// <param name="left">An instance of <see cref="Gu.Units.AngularJerk"/>.</param>
+        /// <param name="right">An instance of <see cref="Gu.Units.AngularJerk"/>.</param>
         public static bool operator >=(AngularJerk left, AngularJerk right)
         {
             return left.radiansPerSecondCubed >= right.radiansPerSecondCubed;
         }
 
         /// <summary>
-        /// Multiplies an instance of <see cref="T:Gu.Units.AngularJerk"/> with <paramref name="left"/> and returns the result.
+        /// Multiplies an instance of <see cref="Gu.Units.AngularJerk"/> with <paramref name="left"/> and returns the result.
         /// </summary>
-        /// <param name="right">An instance of <see cref="T:Gu.Units.AngularJerk"/></param>
-        /// <param name="left">An instance of <seealso cref="T:System.Double"/></param>
-        /// <returns>Multiplies an instance of <see cref="T:Gu.Units.AngularJerk"/> with <paramref name="left"/> and returns the result.</returns>
+        /// <param name="right">An instance of <see cref="Gu.Units.AngularJerk"/></param>
+        /// <param name="left">An instance of <seealso cref="System.Double"/></param>
+        /// <returns>Multiplies an instance of <see cref="Gu.Units.AngularJerk"/> with <paramref name="left"/> and returns the result.</returns>
         public static AngularJerk operator *(double left, AngularJerk right)
         {
             return new AngularJerk(left * right.radiansPerSecondCubed);
         }
 
         /// <summary>
-        /// Multiplies an instance of <see cref="T:Gu.Units.AngularJerk"/> with <paramref name="right"/> and returns the result.
+        /// Multiplies an instance of <see cref="Gu.Units.AngularJerk"/> with <paramref name="right"/> and returns the result.
         /// </summary>
-        /// <param name="left">An instance of <see cref="T:Gu.Units.AngularJerk"/></param>
-        /// <param name="right">An instance of <seealso cref="T:System.Double"/></param>
-        /// <returns>Multiplies an instance of <see cref="T:Gu.Units.AngularJerk"/> with <paramref name="right"/> and returns the result.</returns>
+        /// <param name="left">An instance of <see cref="Gu.Units.AngularJerk"/></param>
+        /// <param name="right">An instance of <seealso cref="System.Double"/></param>
+        /// <returns>Multiplies an instance of <see cref="Gu.Units.AngularJerk"/> with <paramref name="right"/> and returns the result.</returns>
         public static AngularJerk operator *(AngularJerk left, double right)
         {
             return new AngularJerk(left.radiansPerSecondCubed * right);
         }
 
         /// <summary>
-        /// Divides an instance of <see cref="T:Gu.Units.AngularJerk"/> with <paramref name="right"/> and returns the result.
+        /// Divides an instance of <see cref="Gu.Units.AngularJerk"/> with <paramref name="right"/> and returns the result.
         /// </summary>
-        /// <param name="left">An instance of <see cref="T:Gu.Units.AngularJerk"/></param>
-        /// <param name="right">An instance of <seealso cref="T:System.Double"/></param>
-        /// <returns>Divides an instance of <see cref="T:Gu.Units.AngularJerk"/> with <paramref name="right"/> and returns the result.</returns>
+        /// <param name="left">An instance of <see cref="Gu.Units.AngularJerk"/></param>
+        /// <param name="right">An instance of <seealso cref="System.Double"/></param>
+        /// <returns>Divides an instance of <see cref="Gu.Units.AngularJerk"/> with <paramref name="right"/> and returns the result.</returns>
         public static AngularJerk operator /(AngularJerk left, double right)
         {
             return new AngularJerk(left.radiansPerSecondCubed / right);
         }
 
         /// <summary>
-        /// Adds two specified <see cref="T:Gu.Units.AngularJerk"/> instances.
+        /// Adds two specified <see cref="Gu.Units.AngularJerk"/> instances.
         /// </summary>
         /// <returns>
-        /// An <see cref="T:Gu.Units.AngularJerk"/> whose quantity is the sum of the quantitys of <paramref name="left"/> and <paramref name="right"/>.
+        /// An <see cref="Gu.Units.AngularJerk"/> whose quantity is the sum of the quantitys of <paramref name="left"/> and <paramref name="right"/>.
         /// </returns>
-        /// <param name="left">An instance of <see cref="T:Gu.Units.AngularJerk"/>.</param>
-        /// <param name="right">An instance of <see cref="T:Gu.Units.AngularJerk"/>.</param>
+        /// <param name="left">An instance of <see cref="Gu.Units.AngularJerk"/>.</param>
+        /// <param name="right">An instance of <see cref="Gu.Units.AngularJerk"/>.</param>
         public static AngularJerk operator +(AngularJerk left, AngularJerk right)
         {
             return new AngularJerk(left.radiansPerSecondCubed + right.radiansPerSecondCubed);
@@ -376,34 +377,34 @@
         /// Subtracts an AngularJerk from another AngularJerk and returns the difference.
         /// </summary>
         /// <returns>
-        /// An <see cref="T:Gu.Units.AngularJerk"/> that is the difference
+        /// An <see cref="Gu.Units.AngularJerk"/> that is the difference
         /// </returns>
-        /// <param name="left">An instance of <see cref="T:Gu.Units.AngularJerk"/> (the minuend).</param>
-        /// <param name="right">An instance of <see cref="T:Gu.Units.AngularJerk"/> (the subtrahend).</param>
+        /// <param name="left">An instance of <see cref="Gu.Units.AngularJerk"/> (the minuend).</param>
+        /// <param name="right">An instance of <see cref="Gu.Units.AngularJerk"/> (the subtrahend).</param>
         public static AngularJerk operator -(AngularJerk left, AngularJerk right)
         {
             return new AngularJerk(left.radiansPerSecondCubed - right.radiansPerSecondCubed);
         }
 
         /// <summary>
-        /// Returns an <see cref="T:Gu.Units.AngularJerk"/> whose quantity is the negated quantity of the specified instance.
+        /// Returns an <see cref="Gu.Units.AngularJerk"/> whose quantity is the negated quantity of the specified instance.
         /// </summary>
         /// <returns>
-        /// An <see cref="T:Gu.Units.AngularJerk"/> with the same numeric quantity as this instance, but the opposite sign.
+        /// An <see cref="Gu.Units.AngularJerk"/> with the same numeric quantity as this instance, but the opposite sign.
         /// </returns>
-        /// <param name="angularJerk">An instance of <see cref="T:Gu.Units.AngularJerk"/></param>
+        /// <param name="angularJerk">An instance of <see cref="Gu.Units.AngularJerk"/></param>
         public static AngularJerk operator -(AngularJerk angularJerk)
         {
             return new AngularJerk(-1 * angularJerk.radiansPerSecondCubed);
         }
 
         /// <summary>
-        /// Returns the specified instance of <see cref="T:Gu.Units.AngularJerk"/>.
+        /// Returns the specified instance of <see cref="Gu.Units.AngularJerk"/>.
         /// </summary>
         /// <returns>
         /// Returns <paramref name="angularJerk"/>.
         /// </returns>
-        /// <param name="angularJerk">An instance of <see cref="T:Gu.Units.AngularJerk"/></param>
+        /// <param name="angularJerk">An instance of <see cref="Gu.Units.AngularJerk"/></param>
         public static AngularJerk operator +(AngularJerk angularJerk)
         {
             return angularJerk;
@@ -456,7 +457,7 @@
         }
 
         /// <summary>
-        /// Compares this instance to a specified <see cref="T:MathNet.Spatial.Units.AngularJerk"/> object and returns an integer that indicates whether this <see cref="quantity"/> is smaller than, equal to, or greater than the <see cref="T:MathNet.Spatial.Units.AngularJerk"/> object.
+        /// Compares this instance to a specified <see cref="MathNet.Spatial.Units.AngularJerk"/> object and returns an integer that indicates whether this <see cref="quantity"/> is smaller than, equal to, or greater than the <see cref="MathNet.Spatial.Units.AngularJerk"/> object.
         /// </summary>
         /// <returns>
         /// A signed number indicating the relative quantitys of this instance and <paramref name="quantity"/>.
@@ -478,31 +479,31 @@
         ///                     This instance is larger than <paramref name="quantity"/>.
         /// 
         /// </returns>
-        /// <param name="quantity">An instance of <see cref="T:MathNet.Spatial.Units.AngularJerk"/> object to compare to this instance.</param>
+        /// <param name="quantity">An instance of <see cref="MathNet.Spatial.Units.AngularJerk"/> object to compare to this instance.</param>
         public int CompareTo(AngularJerk quantity)
         {
             return this.radiansPerSecondCubed.CompareTo(quantity.radiansPerSecondCubed);
         }
 
         /// <summary>
-        /// Returns a quantity indicating whether this instance is equal to a specified <see cref="T:Gu.Units.AngularJerk"/> object.
+        /// Returns a quantity indicating whether this instance is equal to a specified <see cref="Gu.Units.AngularJerk"/> object.
         /// </summary>
         /// <returns>
         /// true if <paramref name="other"/> represents the same AngularJerk as this instance; otherwise, false.
         /// </returns>
-        /// <param name="other">An instance of <see cref="T:Gu.Units.AngularJerk"/> object to compare with this instance.</param>
+        /// <param name="other">An instance of <see cref="Gu.Units.AngularJerk"/> object to compare with this instance.</param>
         public bool Equals(AngularJerk other)
         {
             return this.radiansPerSecondCubed.Equals(other.radiansPerSecondCubed);
         }
 
         /// <summary>
-        /// Returns a quantity indicating whether this instance is equal to a specified <see cref="T:Gu.Units.AngularJerk"/> object within the given tolerance.
+        /// Returns a quantity indicating whether this instance is equal to a specified <see cref="Gu.Units.AngularJerk"/> object within the given tolerance.
         /// </summary>
         /// <returns>
         /// true if <paramref name="other"/> represents the same AngularJerk as this instance; otherwise, false.
         /// </returns>
-        /// <param name="other">An instance of <see cref="T:Gu.Units.AngularJerk"/> object to compare with this instance.</param>
+        /// <param name="other">An instance of <see cref="Gu.Units.AngularJerk"/> object to compare with this instance.</param>
         /// <param name="tolerance">The maximum difference for being considered equal</param>
         public bool Equals(AngularJerk other, double tolerance)
         {
@@ -527,10 +528,10 @@
         /// <summary>
         /// This method is reserved and should not be used. When implementing the IXmlSerializable interface, 
         /// you should return null (Nothing in Visual Basic) from this method, and instead, 
-        /// if specifying a custom schema is required, apply the <see cref="T:System.Xml.Serialization.XmlSchemaProviderAttribute"/> to the class.
+        /// if specifying a custom schema is required, apply the <see cref="System.Xml.Serialization.XmlSchemaProviderAttribute"/> to the class.
         /// </summary>
         /// <returns>
-        /// An <see cref="T:System.Xml.Schema.XmlSchema"/> that describes the XML representation of the object that is produced by the
+        /// An <see cref="System.Xml.Schema.XmlSchema"/> that describes the XML representation of the object that is produced by the
         ///  <see cref="M:System.Xml.Serialization.IXmlSerializable.WriteXml(System.Xml.XmlWriter)"/> 
         /// method and consumed by the <see cref="M:System.Xml.Serialization.IXmlSerializable.ReadXml(System.Xml.XmlReader)"/> method.
         /// </returns>
@@ -542,7 +543,7 @@
         /// <summary>
         /// Generates an object from its XML representation.
         /// </summary>
-        /// <param name="reader">The <see cref="T:System.Xml.XmlReader"/> stream from which the object is deserialized. </param>
+        /// <param name="reader">The <see cref="System.Xml.XmlReader"/> stream from which the object is deserialized. </param>
         public void ReadXml(XmlReader reader)
         {
             // Hacking set readonly fields here, can't think of a cleaner workaround
@@ -552,7 +553,7 @@
         /// <summary>
         /// Converts an object into its XML representation.
         /// </summary>
-        /// <param name="writer">The <see cref="T:System.Xml.XmlWriter"/> stream to which the object is serialized. </param>
+        /// <param name="writer">The <see cref="System.Xml.XmlWriter"/> stream to which the object is serialized. </param>
         public void WriteXml(XmlWriter writer)
         {
             XmlExt.WriteAttribute(writer, "Value", this.radiansPerSecondCubed);

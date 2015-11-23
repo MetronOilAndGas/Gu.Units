@@ -1,45 +1,47 @@
 ﻿namespace Gu.Units
 {
     using System;
+    using System.ComponentModel;
     using System.Diagnostics;
 
     /// <summary>
     /// A type for the unit <see cref="Gu.Units.UnitlessUnit"/>.
 	/// Contains conversion logic.
     /// </summary>
-    [Serializable, DebuggerDisplay("1{symbol} == {ToSiUnit(1)}{Scalar.symbol}")]
+    [Serializable, TypeConverter(typeof(UnitlessUnitTypeConverter)), DebuggerDisplay("1{symbol} == {ToSiUnit(1)}{Scalar.symbol}")]
     public struct UnitlessUnit : IUnit, IUnit<Unitless>, IEquatable<UnitlessUnit>
     {
         /// <summary>
-        /// The <see cref="T:Gu.Units.Scalar"/> unit
+        /// The Scalar unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
         public static readonly UnitlessUnit Scalar = new UnitlessUnit(1.0, "ul");
+
         /// <summary>
-        /// The <see cref="T:Gu.Units.Scalar"/> unit
+        /// The Scalar unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly UnitlessUnit ul = Scalar;
 
         /// <summary>
-        /// The <see cref="T:Gu.Units.PartsPerMillion"/> unit
+        /// The PartsPerMillion unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly UnitlessUnit PartsPerMillion = new UnitlessUnit(1E-06, "ppm");
         /// <summary>
-        /// The <see cref="T:Gu.Units.PartsPerMillion"/> unit
+        /// The <see cref="Gu.Units.PartsPerMillion"/> unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly UnitlessUnit ppm = PartsPerMillion;
 
         /// <summary>
-        /// The <see cref="T:Gu.Units.Promilles"/> unit
+        /// The Promilles unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly UnitlessUnit Promilles = new UnitlessUnit(0.001, "‰");
 
         /// <summary>
-        /// The <see cref="T:Gu.Units.Percents"/> unit
+        /// The Percents unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly UnitlessUnit Percents = new UnitlessUnit(0.01, "%");
@@ -54,7 +56,7 @@
         }
 
         /// <summary>
-        /// The symbol for <see cref="T:Gu.Units.Scalar"/>.
+        /// The symbol for the <see cref="Gu.Units.UnitlessUnit"/>.
         /// </summary>
         public string Symbol
         {
@@ -90,7 +92,7 @@
         }
 
         /// <summary>
-        /// Converts a value to <see cref="T:Gu.Units.Scalar"/>.
+        /// Converts <see <paramref name="value"/> to Scalar.
         /// </summary>
         /// <param name="value"></param>
         /// <returns>The converted value</returns>

@@ -51,7 +51,7 @@
         }
 
         [TestCase("mm^2")]
-        [TestCase("mm²")]
+        [TestCase("mm\x00B2")]
         public void AreaUnit_Parse(string s)
         {
             var actual = AreaUnit.Parse(s);

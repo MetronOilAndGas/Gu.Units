@@ -1,46 +1,47 @@
 ﻿namespace Gu.Units
 {
     using System;
+    using System.ComponentModel;
     using System.Diagnostics;
 
     /// <summary>
     /// A type for the unit <see cref="Gu.Units.VolumeUnit"/>.
 	/// Contains conversion logic.
     /// </summary>
-    [Serializable, DebuggerDisplay("1{symbol} == {ToSiUnit(1)}{CubicMetres.symbol}")]
+    [Serializable, TypeConverter(typeof(VolumeUnitTypeConverter)), DebuggerDisplay("1{symbol} == {ToSiUnit(1)}{CubicMetres.symbol}")]
     public struct VolumeUnit : IUnit, IUnit<Volume>, IEquatable<VolumeUnit>
     {
         /// <summary>
-        /// The <see cref="T:Gu.Units.CubicMetres"/> unit
+        /// The CubicMetres unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
         public static readonly VolumeUnit CubicMetres = new VolumeUnit(1.0, "m³");
 
         /// <summary>
-        /// The <see cref="T:Gu.Units.Litres"/> unit
+        /// The Litres unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly VolumeUnit Litres = new VolumeUnit(0.0010000000000000002, "L");
         /// <summary>
-        /// The <see cref="T:Gu.Units.Litres"/> unit
+        /// The <see cref="Gu.Units.Litres"/> unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly VolumeUnit L = Litres;
 
         /// <summary>
-        /// The <see cref="T:Gu.Units.CubicCentimetres"/> unit
+        /// The CubicCentimetres unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly VolumeUnit CubicCentimetres = new VolumeUnit(1.0000000000000002E-06, "cm³");
 
         /// <summary>
-        /// The <see cref="T:Gu.Units.CubicMillimetres"/> unit
+        /// The CubicMillimetres unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly VolumeUnit CubicMillimetres = new VolumeUnit(1E-09, "mm³");
 
         /// <summary>
-        /// The <see cref="T:Gu.Units.CubicInches"/> unit
+        /// The CubicInches unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly VolumeUnit CubicInches = new VolumeUnit(1.6387064E-05, "in³");
@@ -55,7 +56,7 @@
         }
 
         /// <summary>
-        /// The symbol for <see cref="T:Gu.Units.CubicMetres"/>.
+        /// The symbol for the <see cref="Gu.Units.VolumeUnit"/>.
         /// </summary>
         public string Symbol
         {
@@ -91,7 +92,7 @@
         }
 
         /// <summary>
-        /// Converts a value to <see cref="T:Gu.Units.CubicMetres"/>.
+        /// Converts <see <paramref name="value"/> to CubicMetres.
         /// </summary>
         /// <param name="value"></param>
         /// <returns>The converted value</returns>

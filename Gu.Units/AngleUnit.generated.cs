@@ -1,28 +1,30 @@
 ﻿namespace Gu.Units
 {
     using System;
+    using System.ComponentModel;
     using System.Diagnostics;
 
     /// <summary>
     /// A type for the unit <see cref="Gu.Units.AngleUnit"/>.
 	/// Contains conversion logic.
     /// </summary>
-    [Serializable, DebuggerDisplay("1{symbol} == {ToSiUnit(1)}{Radians.symbol}")]
+    [Serializable, TypeConverter(typeof(AngleUnitTypeConverter)), DebuggerDisplay("1{symbol} == {ToSiUnit(1)}{Radians.symbol}")]
     public struct AngleUnit : IUnit, IUnit<Angle>, IEquatable<AngleUnit>
     {
         /// <summary>
-        /// The <see cref="T:Gu.Units.Radians"/> unit
+        /// The Radians unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
         public static readonly AngleUnit Radians = new AngleUnit(1.0, "rad");
+
         /// <summary>
-        /// The <see cref="T:Gu.Units.Radians"/> unit
+        /// The Radians unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly AngleUnit rad = Radians;
 
         /// <summary>
-        /// The <see cref="T:Gu.Units.Degrees"/> unit
+        /// The Degrees unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly AngleUnit Degrees = new AngleUnit(0.017453292519943295, "°");
@@ -37,7 +39,7 @@
         }
 
         /// <summary>
-        /// The symbol for <see cref="T:Gu.Units.Radians"/>.
+        /// The symbol for the <see cref="Gu.Units.AngleUnit"/>.
         /// </summary>
         public string Symbol
         {
@@ -73,7 +75,7 @@
         }
 
         /// <summary>
-        /// Converts a value to <see cref="T:Gu.Units.Radians"/>.
+        /// Converts <see <paramref name="value"/> to Radians.
         /// </summary>
         /// <param name="value"></param>
         /// <returns>The converted value</returns>

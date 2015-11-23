@@ -1,47 +1,48 @@
 ﻿namespace Gu.Units
 {
     using System;
+    using System.ComponentModel;
     using System.Diagnostics;
 
     /// <summary>
     /// A type for the unit <see cref="Gu.Units.AngularAccelerationUnit"/>.
 	/// Contains conversion logic.
     /// </summary>
-    [Serializable, DebuggerDisplay("1{symbol} == {ToSiUnit(1)}{RadiansPerSecondSquared.symbol}")]
+    [Serializable, TypeConverter(typeof(AngularAccelerationUnitTypeConverter)), DebuggerDisplay("1{symbol} == {ToSiUnit(1)}{RadiansPerSecondSquared.symbol}")]
     public struct AngularAccelerationUnit : IUnit, IUnit<AngularAcceleration>, IEquatable<AngularAccelerationUnit>
     {
         /// <summary>
-        /// The <see cref="T:Gu.Units.RadiansPerSecondSquared"/> unit
+        /// The RadiansPerSecondSquared unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
         public static readonly AngularAccelerationUnit RadiansPerSecondSquared = new AngularAccelerationUnit(1.0, "rad/s²");
 
         /// <summary>
-        /// The <see cref="T:Gu.Units.DegreesPerSquareSecond"/> unit
+        /// The DegreesPerSquareSecond unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly AngularAccelerationUnit DegreesPerSquareSecond = new AngularAccelerationUnit(0.017453292519943295, "°⋅s⁻²");
 
         /// <summary>
-        /// The <see cref="T:Gu.Units.RadiansPerSquareHour"/> unit
+        /// The RadiansPerSquareHour unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly AngularAccelerationUnit RadiansPerSquareHour = new AngularAccelerationUnit(7.71604938271605E-08, "h⁻²⋅rad");
 
         /// <summary>
-        /// The <see cref="T:Gu.Units.DegreesPerSquareHour"/> unit
+        /// The DegreesPerSquareHour unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly AngularAccelerationUnit DegreesPerSquareHour = new AngularAccelerationUnit(1.346704669748711E-09, "h⁻²⋅°");
 
         /// <summary>
-        /// The <see cref="T:Gu.Units.DegreesPerSquareMinute"/> unit
+        /// The DegreesPerSquareMinute unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly AngularAccelerationUnit DegreesPerSquareMinute = new AngularAccelerationUnit(4.84813681109536E-06, "min⁻²⋅°");
 
         /// <summary>
-        /// The <see cref="T:Gu.Units.RadiansPerSquareMinute"/> unit
+        /// The RadiansPerSquareMinute unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly AngularAccelerationUnit RadiansPerSquareMinute = new AngularAccelerationUnit(0.00027777777777777778, "min⁻²⋅rad");
@@ -56,7 +57,7 @@
         }
 
         /// <summary>
-        /// The symbol for <see cref="T:Gu.Units.RadiansPerSecondSquared"/>.
+        /// The symbol for the <see cref="Gu.Units.AngularAccelerationUnit"/>.
         /// </summary>
         public string Symbol
         {
@@ -92,7 +93,7 @@
         }
 
         /// <summary>
-        /// Converts a value to <see cref="T:Gu.Units.RadiansPerSecondSquared"/>.
+        /// Converts <see <paramref name="value"/> to RadiansPerSecondSquared.
         /// </summary>
         /// <param name="value"></param>
         /// <returns>The converted value</returns>

@@ -1,34 +1,36 @@
 ﻿namespace Gu.Units
 {
     using System;
+    using System.ComponentModel;
     using System.Diagnostics;
 
     /// <summary>
     /// A type for the unit <see cref="Gu.Units.TemperatureUnit"/>.
 	/// Contains conversion logic.
     /// </summary>
-    [Serializable, DebuggerDisplay("1{symbol} == {ToSiUnit(1)}{Kelvin.symbol}")]
+    [Serializable, TypeConverter(typeof(TemperatureUnitTypeConverter)), DebuggerDisplay("1{symbol} == {ToSiUnit(1)}{Kelvin.symbol}")]
     public struct TemperatureUnit : IUnit, IUnit<Temperature>, IEquatable<TemperatureUnit>
     {
         /// <summary>
-        /// The <see cref="T:Gu.Units.Kelvin"/> unit
+        /// The Kelvin unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
         public static readonly TemperatureUnit Kelvin = new TemperatureUnit(1.0, 0, "K");
+
         /// <summary>
-        /// The <see cref="T:Gu.Units.Kelvin"/> unit
+        /// The Kelvin unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly TemperatureUnit K = Kelvin;
 
         /// <summary>
-        /// The <see cref="T:Gu.Units.Celsius"/> unit
+        /// The Celsius unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly TemperatureUnit Celsius = new TemperatureUnit(1, -273.15, "°C");
 
         /// <summary>
-        /// The <see cref="T:Gu.Units.Fahrenheit"/> unit
+        /// The Fahrenheit unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly TemperatureUnit Fahrenheit = new TemperatureUnit(1.8, -459.67, "°F");
@@ -45,7 +47,7 @@
         }
 
         /// <summary>
-        /// The symbol for <see cref="T:Gu.Units.Kelvin"/>.
+        /// The symbol for the <see cref="Gu.Units.TemperatureUnit"/>.
         /// </summary>
         public string Symbol
         {
@@ -81,7 +83,7 @@
         }
 
         /// <summary>
-        /// Converts a value to <see cref="T:Gu.Units.Kelvin"/>.
+        /// Converts <see <paramref name="value"/> to Kelvin.
         /// </summary>
         /// <param name="value"></param>
         /// <returns>The converted value</returns>

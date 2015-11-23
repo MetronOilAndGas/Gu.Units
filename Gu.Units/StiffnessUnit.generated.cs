@@ -1,17 +1,18 @@
 ﻿namespace Gu.Units
 {
     using System;
+    using System.ComponentModel;
     using System.Diagnostics;
 
     /// <summary>
     /// A type for the unit <see cref="Gu.Units.StiffnessUnit"/>.
 	/// Contains conversion logic.
     /// </summary>
-    [Serializable, DebuggerDisplay("1{symbol} == {ToSiUnit(1)}{NewtonsPerMetre.symbol}")]
+    [Serializable, TypeConverter(typeof(StiffnessUnitTypeConverter)), DebuggerDisplay("1{symbol} == {ToSiUnit(1)}{NewtonsPerMetre.symbol}")]
     public struct StiffnessUnit : IUnit, IUnit<Stiffness>, IEquatable<StiffnessUnit>
     {
         /// <summary>
-        /// The <see cref="T:Gu.Units.NewtonsPerMetre"/> unit
+        /// The NewtonsPerMetre unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
         public static readonly StiffnessUnit NewtonsPerMetre = new StiffnessUnit(1.0, "N/m");
@@ -26,7 +27,7 @@
         }
 
         /// <summary>
-        /// The symbol for <see cref="T:Gu.Units.NewtonsPerMetre"/>.
+        /// The symbol for the <see cref="Gu.Units.StiffnessUnit"/>.
         /// </summary>
         public string Symbol
         {
@@ -62,7 +63,7 @@
         }
 
         /// <summary>
-        /// Converts a value to <see cref="T:Gu.Units.NewtonsPerMetre"/>.
+        /// Converts <see <paramref name="value"/> to NewtonsPerMetre.
         /// </summary>
         /// <param name="value"></param>
         /// <returns>The converted value</returns>

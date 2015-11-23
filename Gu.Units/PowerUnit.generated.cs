@@ -1,88 +1,90 @@
 ﻿namespace Gu.Units
 {
     using System;
+    using System.ComponentModel;
     using System.Diagnostics;
 
     /// <summary>
     /// A type for the unit <see cref="Gu.Units.PowerUnit"/>.
 	/// Contains conversion logic.
     /// </summary>
-    [Serializable, DebuggerDisplay("1{symbol} == {ToSiUnit(1)}{Watts.symbol}")]
+    [Serializable, TypeConverter(typeof(PowerUnitTypeConverter)), DebuggerDisplay("1{symbol} == {ToSiUnit(1)}{Watts.symbol}")]
     public struct PowerUnit : IUnit, IUnit<Power>, IEquatable<PowerUnit>
     {
         /// <summary>
-        /// The <see cref="T:Gu.Units.Watts"/> unit
+        /// The Watts unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
         public static readonly PowerUnit Watts = new PowerUnit(1.0, "W");
+
         /// <summary>
-        /// The <see cref="T:Gu.Units.Watts"/> unit
+        /// The Watts unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly PowerUnit W = Watts;
 
         /// <summary>
-        /// The <see cref="T:Gu.Units.Nanowatts"/> unit
+        /// The Nanowatts unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly PowerUnit Nanowatts = new PowerUnit(1E-09, "nW");
         /// <summary>
-        /// The <see cref="T:Gu.Units.Nanowatts"/> unit
+        /// The <see cref="Gu.Units.Nanowatts"/> unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly PowerUnit nW = Nanowatts;
 
         /// <summary>
-        /// The <see cref="T:Gu.Units.Microwatts"/> unit
+        /// The Microwatts unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly PowerUnit Microwatts = new PowerUnit(1E-06, "µW");
         /// <summary>
-        /// The <see cref="T:Gu.Units.Microwatts"/> unit
+        /// The <see cref="Gu.Units.Microwatts"/> unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly PowerUnit µW = Microwatts;
 
         /// <summary>
-        /// The <see cref="T:Gu.Units.Milliwatts"/> unit
+        /// The Milliwatts unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly PowerUnit Milliwatts = new PowerUnit(0.001, "mW");
         /// <summary>
-        /// The <see cref="T:Gu.Units.Milliwatts"/> unit
+        /// The <see cref="Gu.Units.Milliwatts"/> unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly PowerUnit mW = Milliwatts;
 
         /// <summary>
-        /// The <see cref="T:Gu.Units.Kilowatts"/> unit
+        /// The Kilowatts unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly PowerUnit Kilowatts = new PowerUnit(1000, "kW");
         /// <summary>
-        /// The <see cref="T:Gu.Units.Kilowatts"/> unit
+        /// The <see cref="Gu.Units.Kilowatts"/> unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly PowerUnit kW = Kilowatts;
 
         /// <summary>
-        /// The <see cref="T:Gu.Units.Megawatts"/> unit
+        /// The Megawatts unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly PowerUnit Megawatts = new PowerUnit(1000000, "MW");
         /// <summary>
-        /// The <see cref="T:Gu.Units.Megawatts"/> unit
+        /// The <see cref="Gu.Units.Megawatts"/> unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly PowerUnit MW = Megawatts;
 
         /// <summary>
-        /// The <see cref="T:Gu.Units.Gigawatts"/> unit
+        /// The Gigawatts unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly PowerUnit Gigawatts = new PowerUnit(1000000000, "GW");
         /// <summary>
-        /// The <see cref="T:Gu.Units.Gigawatts"/> unit
+        /// The <see cref="Gu.Units.Gigawatts"/> unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly PowerUnit GW = Gigawatts;
@@ -97,7 +99,7 @@
         }
 
         /// <summary>
-        /// The symbol for <see cref="T:Gu.Units.Watts"/>.
+        /// The symbol for the <see cref="Gu.Units.PowerUnit"/>.
         /// </summary>
         public string Symbol
         {
@@ -133,7 +135,7 @@
         }
 
         /// <summary>
-        /// Converts a value to <see cref="T:Gu.Units.Watts"/>.
+        /// Converts <see <paramref name="value"/> to Watts.
         /// </summary>
         /// <param name="value"></param>
         /// <returns>The converted value</returns>

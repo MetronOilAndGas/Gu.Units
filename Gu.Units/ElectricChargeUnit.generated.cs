@@ -1,22 +1,24 @@
 ﻿namespace Gu.Units
 {
     using System;
+    using System.ComponentModel;
     using System.Diagnostics;
 
     /// <summary>
     /// A type for the unit <see cref="Gu.Units.ElectricChargeUnit"/>.
 	/// Contains conversion logic.
     /// </summary>
-    [Serializable, DebuggerDisplay("1{symbol} == {ToSiUnit(1)}{Coulombs.symbol}")]
+    [Serializable, TypeConverter(typeof(ElectricChargeUnitTypeConverter)), DebuggerDisplay("1{symbol} == {ToSiUnit(1)}{Coulombs.symbol}")]
     public struct ElectricChargeUnit : IUnit, IUnit<ElectricCharge>, IEquatable<ElectricChargeUnit>
     {
         /// <summary>
-        /// The <see cref="T:Gu.Units.Coulombs"/> unit
+        /// The Coulombs unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
         public static readonly ElectricChargeUnit Coulombs = new ElectricChargeUnit(1.0, "C");
+
         /// <summary>
-        /// The <see cref="T:Gu.Units.Coulombs"/> unit
+        /// The Coulombs unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly ElectricChargeUnit C = Coulombs;
@@ -31,7 +33,7 @@
         }
 
         /// <summary>
-        /// The symbol for <see cref="T:Gu.Units.Coulombs"/>.
+        /// The symbol for the <see cref="Gu.Units.ElectricChargeUnit"/>.
         /// </summary>
         public string Symbol
         {
@@ -67,7 +69,7 @@
         }
 
         /// <summary>
-        /// Converts a value to <see cref="T:Gu.Units.Coulombs"/>.
+        /// Converts <see <paramref name="value"/> to Coulombs.
         /// </summary>
         /// <param name="value"></param>
         /// <returns>The converted value</returns>

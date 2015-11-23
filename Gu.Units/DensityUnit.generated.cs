@@ -1,29 +1,30 @@
 ﻿namespace Gu.Units
 {
     using System;
+    using System.ComponentModel;
     using System.Diagnostics;
 
     /// <summary>
     /// A type for the unit <see cref="Gu.Units.DensityUnit"/>.
 	/// Contains conversion logic.
     /// </summary>
-    [Serializable, DebuggerDisplay("1{symbol} == {ToSiUnit(1)}{KilogramsPerCubicMetre.symbol}")]
+    [Serializable, TypeConverter(typeof(DensityUnitTypeConverter)), DebuggerDisplay("1{symbol} == {ToSiUnit(1)}{KilogramsPerCubicMetre.symbol}")]
     public struct DensityUnit : IUnit, IUnit<Density>, IEquatable<DensityUnit>
     {
         /// <summary>
-        /// The <see cref="T:Gu.Units.KilogramsPerCubicMetre"/> unit
+        /// The KilogramsPerCubicMetre unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
         public static readonly DensityUnit KilogramsPerCubicMetre = new DensityUnit(1.0, "kg/m³");
 
         /// <summary>
-        /// The <see cref="T:Gu.Units.GramsPerCubicMillimetre"/> unit
+        /// The GramsPerCubicMillimetre unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly DensityUnit GramsPerCubicMillimetre = new DensityUnit(999999.99999999988, "g/mm³");
 
         /// <summary>
-        /// The <see cref="T:Gu.Units.GramsPerCubicCentimetre"/> unit
+        /// The GramsPerCubicCentimetre unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly DensityUnit GramsPerCubicCentimetre = new DensityUnit(999.99999999999989, "g/cm³");
@@ -38,7 +39,7 @@
         }
 
         /// <summary>
-        /// The symbol for <see cref="T:Gu.Units.KilogramsPerCubicMetre"/>.
+        /// The symbol for the <see cref="Gu.Units.DensityUnit"/>.
         /// </summary>
         public string Symbol
         {
@@ -74,7 +75,7 @@
         }
 
         /// <summary>
-        /// Converts a value to <see cref="T:Gu.Units.KilogramsPerCubicMetre"/>.
+        /// Converts <see <paramref name="value"/> to KilogramsPerCubicMetre.
         /// </summary>
         /// <param name="value"></param>
         /// <returns>The converted value</returns>

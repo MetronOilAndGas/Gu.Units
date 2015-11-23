@@ -13,50 +13,72 @@
     <Window.DataContext>
         <local:ViewModel />
     </Window.DataContext>
+    <Window.Resources>
+        <Style TargetType="{x:Type TextBlock}">
+            <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
+    </Window.Resources>
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition />
-        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
-        <!--<TextBlock Grid.Row="0"
-                   Grid.Column="0"
-                   Text="Length" />
-        <TextBox Grid.Row="0"
-                 Grid.Column="1"
-                 Text="{Binding Length,
-                                Converter={units:LengthConverter mm}}" />-->
 
-        <TextBlock Grid.Row="1"
-                   Grid.Column="0"
-                   Text="Length" />
-        <TextBox Grid.Row="1"
-                 Grid.Column="1"
-                 Text="{Binding Length,
-                                Converter={units:LengthConverter Unit=mm}}" />
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition MinWidth="50" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
 
-        <TextBlock Grid.Row="2"
-                   Grid.Column="0"
-                   Text="Length" />
-        <TextBox Grid.Row="2"
-                 Grid.Column="1"
-                 Text="{Binding Length,
-                                Converter={units:LengthConverter Unit={x:Static units1:LengthUnit.Millimetres}}}" />
+            <!--
+            <TextBox Grid.Row="0"
+                     Grid.Column="0"
+                     Text="{Binding Length,
+                                    Converter={units:LengthConverter m}}" />
+            <Label Grid.Row="0"
+                       Grid.Column="1"
+                       Content="m" />-->
 
-        <TextBlock Grid.Row="3"
-                   Grid.Column="0"
-                   Text="Length" />
-        <TextBox Grid.Row="3"
-                 Grid.Column="1"
-                 Text="{Binding Length,
-                                Converter={units:LengthConverter {x:Static units1:LengthUnit.Millimetres}}}" />
+            <TextBox Grid.Row="1"
+                     Grid.Column="0"
+                     Text="{Binding Length,
+                                    Converter={units:LengthConverter Unit=mm}}" />
+            <Label Grid.Row="1"
+                   Grid.Column="1"
+                   Content="mm" />
 
+            <TextBox Grid.Row="2"
+                     Grid.Column="0"
+                     Text="{Binding Length,
+                                    Converter={units:LengthConverter Unit={x:Static units1:LengthUnit.Millimetres}}}" />
+            <Label Grid.Row="2"
+                   Grid.Column="1"
+                   Content="{x:Static units1:LengthUnit.Millimetres}" />
+
+            <TextBox Grid.Row="3"
+                     Grid.Column="0"
+                     Text="{Binding Length,
+                                    Converter={units:LengthConverter {x:Static units1:LengthUnit.Metres}}}" />
+
+            <TextBox Grid.Row="3"
+                     Grid.Column="0"
+                     Text="{Binding Length,
+                                    Converter={units:LengthConverter},
+                                    StringFormat='0:F3 mm'}" />
+            <Label Grid.Row="4"
+                   Grid.Column="1"
+                   Content="{x:Static units1:LengthUnit.Metres}" />
+
+        </Grid>
     </Grid>
 </Window>

@@ -1,66 +1,68 @@
 ﻿namespace Gu.Units
 {
     using System;
+    using System.ComponentModel;
     using System.Diagnostics;
 
     /// <summary>
     /// A type for the unit <see cref="Gu.Units.CurrentUnit"/>.
 	/// Contains conversion logic.
     /// </summary>
-    [Serializable, DebuggerDisplay("1{symbol} == {ToSiUnit(1)}{Amperes.symbol}")]
+    [Serializable, TypeConverter(typeof(CurrentUnitTypeConverter)), DebuggerDisplay("1{symbol} == {ToSiUnit(1)}{Amperes.symbol}")]
     public struct CurrentUnit : IUnit, IUnit<Current>, IEquatable<CurrentUnit>
     {
         /// <summary>
-        /// The <see cref="T:Gu.Units.Amperes"/> unit
+        /// The Amperes unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
         public static readonly CurrentUnit Amperes = new CurrentUnit(1.0, "A");
+
         /// <summary>
-        /// The <see cref="T:Gu.Units.Amperes"/> unit
+        /// The Amperes unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly CurrentUnit A = Amperes;
 
         /// <summary>
-        /// The <see cref="T:Gu.Units.Milliamperes"/> unit
+        /// The Milliamperes unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly CurrentUnit Milliamperes = new CurrentUnit(0.001, "mA");
         /// <summary>
-        /// The <see cref="T:Gu.Units.Milliamperes"/> unit
+        /// The <see cref="Gu.Units.Milliamperes"/> unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly CurrentUnit mA = Milliamperes;
 
         /// <summary>
-        /// The <see cref="T:Gu.Units.Kiloamperes"/> unit
+        /// The Kiloamperes unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly CurrentUnit Kiloamperes = new CurrentUnit(1000, "kA");
         /// <summary>
-        /// The <see cref="T:Gu.Units.Kiloamperes"/> unit
+        /// The <see cref="Gu.Units.Kiloamperes"/> unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly CurrentUnit kA = Kiloamperes;
 
         /// <summary>
-        /// The <see cref="T:Gu.Units.Megaamperes"/> unit
+        /// The Megaamperes unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly CurrentUnit Megaamperes = new CurrentUnit(1000000, "MA");
         /// <summary>
-        /// The <see cref="T:Gu.Units.Megaamperes"/> unit
+        /// The <see cref="Gu.Units.Megaamperes"/> unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly CurrentUnit MA = Megaamperes;
 
         /// <summary>
-        /// The <see cref="T:Gu.Units.Microamperes"/> unit
+        /// The Microamperes unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly CurrentUnit Microamperes = new CurrentUnit(1E-06, "µA");
         /// <summary>
-        /// The <see cref="T:Gu.Units.Microamperes"/> unit
+        /// The <see cref="Gu.Units.Microamperes"/> unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly CurrentUnit µA = Microamperes;
@@ -75,7 +77,7 @@
         }
 
         /// <summary>
-        /// The symbol for <see cref="T:Gu.Units.Amperes"/>.
+        /// The symbol for the <see cref="Gu.Units.CurrentUnit"/>.
         /// </summary>
         public string Symbol
         {
@@ -111,7 +113,7 @@
         }
 
         /// <summary>
-        /// Converts a value to <see cref="T:Gu.Units.Amperes"/>.
+        /// Converts <see <paramref name="value"/> to Amperes.
         /// </summary>
         /// <param name="value"></param>
         /// <returns>The converted value</returns>

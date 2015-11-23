@@ -1,58 +1,59 @@
 ﻿namespace Gu.Units
 {
     using System;
+    using System.ComponentModel;
     using System.Diagnostics;
 
     /// <summary>
     /// A type for the unit <see cref="Gu.Units.AngularSpeedUnit"/>.
 	/// Contains conversion logic.
     /// </summary>
-    [Serializable, DebuggerDisplay("1{symbol} == {ToSiUnit(1)}{RadiansPerSecond.symbol}")]
+    [Serializable, TypeConverter(typeof(AngularSpeedUnitTypeConverter)), DebuggerDisplay("1{symbol} == {ToSiUnit(1)}{RadiansPerSecond.symbol}")]
     public struct AngularSpeedUnit : IUnit, IUnit<AngularSpeed>, IEquatable<AngularSpeedUnit>
     {
         /// <summary>
-        /// The <see cref="T:Gu.Units.RadiansPerSecond"/> unit
+        /// The RadiansPerSecond unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
         public static readonly AngularSpeedUnit RadiansPerSecond = new AngularSpeedUnit(1.0, "rad/s");
 
         /// <summary>
-        /// The <see cref="T:Gu.Units.RevolutionsPerMinute"/> unit
+        /// The RevolutionsPerMinute unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly AngularSpeedUnit RevolutionsPerMinute = new AngularSpeedUnit(0.10471975511966, "rpm");
         /// <summary>
-        /// The <see cref="T:Gu.Units.RevolutionsPerMinute"/> unit
+        /// The <see cref="Gu.Units.RevolutionsPerMinute"/> unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly AngularSpeedUnit rpm = RevolutionsPerMinute;
 
         /// <summary>
-        /// The <see cref="T:Gu.Units.DegreesPerSecond"/> unit
+        /// The DegreesPerSecond unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly AngularSpeedUnit DegreesPerSecond = new AngularSpeedUnit(0.017453292519943295, "°⋅s⁻¹");
 
         /// <summary>
-        /// The <see cref="T:Gu.Units.DegreesPerMinute"/> unit
+        /// The DegreesPerMinute unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly AngularSpeedUnit DegreesPerMinute = new AngularSpeedUnit(0.00029088820866572158, "min⁻¹⋅°");
 
         /// <summary>
-        /// The <see cref="T:Gu.Units.RadiansPerMinute"/> unit
+        /// The RadiansPerMinute unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly AngularSpeedUnit RadiansPerMinute = new AngularSpeedUnit(0.016666666666666666, "min⁻¹⋅rad");
 
         /// <summary>
-        /// The <see cref="T:Gu.Units.DegreesPerHour"/> unit
+        /// The DegreesPerHour unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly AngularSpeedUnit DegreesPerHour = new AngularSpeedUnit(4.84813681109536E-06, "h⁻¹⋅°");
 
         /// <summary>
-        /// The <see cref="T:Gu.Units.RadiansPerHour"/> unit
+        /// The RadiansPerHour unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly AngularSpeedUnit RadiansPerHour = new AngularSpeedUnit(0.00027777777777777778, "h⁻¹⋅rad");
@@ -67,7 +68,7 @@
         }
 
         /// <summary>
-        /// The symbol for <see cref="T:Gu.Units.RadiansPerSecond"/>.
+        /// The symbol for the <see cref="Gu.Units.AngularSpeedUnit"/>.
         /// </summary>
         public string Symbol
         {
@@ -103,7 +104,7 @@
         }
 
         /// <summary>
-        /// Converts a value to <see cref="T:Gu.Units.RadiansPerSecond"/>.
+        /// Converts <see <paramref name="value"/> to RadiansPerSecond.
         /// </summary>
         /// <param name="value"></param>
         /// <returns>The converted value</returns>

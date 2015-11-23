@@ -1,29 +1,30 @@
 ﻿namespace Gu.Units
 {
     using System;
+    using System.ComponentModel;
     using System.Diagnostics;
 
     /// <summary>
     /// A type for the unit <see cref="Gu.Units.AccelerationUnit"/>.
 	/// Contains conversion logic.
     /// </summary>
-    [Serializable, DebuggerDisplay("1{symbol} == {ToSiUnit(1)}{MetresPerSecondSquared.symbol}")]
+    [Serializable, TypeConverter(typeof(AccelerationUnitTypeConverter)), DebuggerDisplay("1{symbol} == {ToSiUnit(1)}{MetresPerSecondSquared.symbol}")]
     public struct AccelerationUnit : IUnit, IUnit<Acceleration>, IEquatable<AccelerationUnit>
     {
         /// <summary>
-        /// The <see cref="T:Gu.Units.MetresPerSecondSquared"/> unit
+        /// The MetresPerSecondSquared unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
         public static readonly AccelerationUnit MetresPerSecondSquared = new AccelerationUnit(1.0, "m/s²");
 
         /// <summary>
-        /// The <see cref="T:Gu.Units.MillimetresPerSecondSquared"/> unit
+        /// The MillimetresPerSecondSquared unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly AccelerationUnit MillimetresPerSecondSquared = new AccelerationUnit(0.001, "mm/s²");
 
         /// <summary>
-        /// The <see cref="T:Gu.Units.CentimetresPerSecondSquared"/> unit
+        /// The CentimetresPerSecondSquared unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly AccelerationUnit CentimetresPerSecondSquared = new AccelerationUnit(0.01, "cm/s²");
@@ -38,7 +39,7 @@
         }
 
         /// <summary>
-        /// The symbol for <see cref="T:Gu.Units.MetresPerSecondSquared"/>.
+        /// The symbol for the <see cref="Gu.Units.AccelerationUnit"/>.
         /// </summary>
         public string Symbol
         {
@@ -74,7 +75,7 @@
         }
 
         /// <summary>
-        /// Converts a value to <see cref="T:Gu.Units.MetresPerSecondSquared"/>.
+        /// Converts <see <paramref name="value"/> to MetresPerSecondSquared.
         /// </summary>
         /// <param name="value"></param>
         /// <returns>The converted value</returns>
