@@ -46,6 +46,19 @@
             }
         }
 
+        [Test]
+        public void ParseException()
+        {
+            int endPos;
+            var text = "abcdef";
+            var culture = CultureInfo.InvariantCulture;
+            var e = Assert.Throws<FormatException>(() => DoubleParser.Parse(text, 3, NumberStyles.Float, culture, out endPos));
+            var expected = "Expected to find a double starting at index 3\r\n" +
+                           "String: abcdef\r\n" +
+                           "           ^";
+            Assert.AreEqual(expected, e.Message);
+        }
+
         [TestCaseSource(typeof(DoubleParseHappyPathSource))]
         public void TryParse(DoubleParseData data)
         {
@@ -103,7 +116,7 @@
                 Add("+1,2", NumberStyles.Float, sv);
                 Add("+1.2e3", NumberStyles.Float, en);
                 Add("+1.2E3", NumberStyles.Float, en);
-                Add("+1.2e-3", NumberStyles.Float, en);           
+                Add("+1.2e-3", NumberStyles.Float, en);
                 Add("+1.2E-3", NumberStyles.Float, en);
                 Add("+1.2e+3", NumberStyles.Float, en);
                 Add(sv.NumberFormat.NaNSymbol, NumberStyles.Float, sv);
@@ -131,7 +144,7 @@
                 Add(".", NumberStyles.Float, en);
                 //Add("+1,2", NumberStyles.Float, en);
                 //Add("+1.2", NumberStyles.Float, sv);
-                Add("+1.2e3", NumberStyles.None|NumberStyles.AllowDecimalPoint|NumberStyles.AllowLeadingSign, en);
+                Add("+1.2e3", NumberStyles.None | NumberStyles.AllowDecimalPoint | NumberStyles.AllowLeadingSign, en);
             }
 
             public void Add(string text, NumberStyles styles, CultureInfo culture)

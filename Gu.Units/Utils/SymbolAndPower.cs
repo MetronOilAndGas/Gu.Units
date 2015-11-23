@@ -2,7 +2,7 @@
 {
     using System;
 
-    public struct SymbolAndPower : IEquatable<SymbolAndPower>
+    internal struct SymbolAndPower : IEquatable<SymbolAndPower>
     {
         private const string Superscripts = "⁺⁻⁰¹²³⁴⁵⁶⁷⁸⁹";
         private const string SuperscriptDigits = "⁰¹²³⁴⁵⁶⁷⁸⁹";
@@ -49,7 +49,7 @@
             {
                 p = new string(new[] { '⁻', SuperscriptDigits[-1 * Power] });
             }
-            return String.Format("{0}{1}", Symbol, p);
+            return $"{this.Symbol}{p}";
         }
 
         public bool Equals(SymbolAndPower other)
@@ -78,12 +78,12 @@
         {
             if (sign == Sign.None)
             {
-                throw new ArgumentException("Sign cannot be none", "sign");
+                throw new ArgumentException("Sign cannot be none", nameof(sign));
             }
             ReadWhiteSpace(s, ref pos);
             if (pos == s.Length)
             {
-                throw new FormatException(String.Format("Expected symbol or operator. {0} position: end", s));
+                throw new FormatException($"Expected symbol or operator. {s} position: end");
             }
 
             var op = ReadOperator(s, ref pos);
@@ -92,14 +92,14 @@
                 ReadWhiteSpace(s, ref pos);
                 if (ReadOperator(s, ref pos) != Operator.None)
                 {
-                    var message = String.Format("Cannot have multiple operators in a row. {0} position: {1}", s, pos);
+                    var message = $"Cannot have multiple operators in a row. {s} position: {pos}";
                     throw new FormatException(message);
                 }
                 if (op == Operator.Division)
                 {
                     if (sign == Sign.Negative)
                     {
-                        throw new FormatException(String.Format("String cannot contain / twice. String is: {0}", s));
+                        throw new FormatException($"String cannot contain / twice. String is: {s}");
                     }
                     sign = Sign.Negative;
                 }
@@ -107,7 +107,6 @@
             ReadWhiteSpace(s, ref pos);
             return ReadSymbolAndPower(s, ref pos, sign);
         }
-
 
         internal static bool TryRead(string s, ref int pos, ref Sign sign, out SymbolAndPower result)
         {
@@ -317,13 +316,13 @@
         {
             if (!Char.IsDigit(s[pos]))
             {
-                throw new FormatException(String.Format("Expected digit at pos: {0} in {1} was {2}", pos, s, s[pos]));
+                throw new FormatException($"Expected digit at pos: {pos} in {s} was {s[pos]}");
             }
             int i = (int)Char.GetNumericValue(s[pos]);
             pos++;
             if (pos < s.Length && Char.IsDigit(s[pos]))
             {
-                throw new FormatException(String.Format("Did not expect digit at pos: {0} in {1} was {2}", pos, s, s[pos]));
+                throw new FormatException($"Did not expect digit at pos: {pos} in {s} was {s[pos]}");
             }
             return i;
         }
@@ -333,13 +332,13 @@
             var indexOf = SuperscriptDigits.IndexOf(s[pos]);
             if (indexOf == -1)
             {
-                throw new FormatException(String.Format("Expected digit at pos: {0} in {1} was {2}", pos, s, s[pos]));
+                throw new FormatException($"Expected digit at pos: {pos} in {s} was {s[pos]}");
             }
             int i = indexOf;
             pos++;
             if (pos < s.Length && SuperscriptDigits.IndexOf(s[pos]) != -1)
             {
-                throw new FormatException(String.Format("Did not expect digit at pos: {0} in {1} was {2}", pos, s, s[pos]));
+                throw new FormatException($"Did not expect digit at pos: {pos} in {s} was {s[pos]}");
             }
             return i;
         }

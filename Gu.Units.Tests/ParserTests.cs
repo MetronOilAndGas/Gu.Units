@@ -153,7 +153,7 @@
         }
 
         [TestCaseSource(typeof(TokenSource))]
-        public void Tokenize(TokenSource.TokenData data)
+        internal void Tokenize(TokenSource.TokenData data)
         {
             var text = data.Text;
             if (data.Tokens == null)

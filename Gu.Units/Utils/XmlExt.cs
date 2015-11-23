@@ -3,7 +3,7 @@ namespace Gu.Units
     using System.Reflection;
     using System.Xml;
 
-    public class XmlExt
+    internal static class XmlExt
     {
         internal static void SetReadonlyField<T>(ref T self, string fieldName, XmlReader reader, string attributeName)
             where T : IQuantity
@@ -23,7 +23,6 @@ namespace Gu.Units
             fieldInfo.SetValue(boxed, value);
             self = (T)boxed;
         }
-
 
         internal static void WriteAttribute(XmlWriter writer, string name, double value)
         {

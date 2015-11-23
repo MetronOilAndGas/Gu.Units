@@ -22,7 +22,7 @@
         private const string DecimalPointNotAllowed = "Decimal point not allowed";
 
         internal static double Parse(
-            string s,
+            string text,
             int start,
             NumberStyles style,
             IFormatProvider provider,
@@ -30,113 +30,37 @@
         {
             if (!IsValidFloatingPointStyle(style))
             {
-                throw new ArgumentException("Invalid NumberStyles", "style");
+                throw new ArgumentException("Invalid NumberStyles", nameof(style));
             }
 
             if (style.HasFlag(NumberStyles.AllowHexSpecifier))
             {
-                throw new ArgumentException("Hex not supported", "style");
+                throw new ArgumentException("Hex not supported", nameof(style));
             }
 
-            var pos = start;
-            if (style.HasFlag(NumberStyles.AllowLeadingWhite))
+            double result;
+            if (TryParse(text, start, style, provider, out result, out endPos))
             {
-                ReadWhite(s, ref pos);
+                return result;
             }
 
-            if (provider == null)
-            {
-                provider = CultureInfo.CurrentCulture;
-            }
-
-            var format = NumberFormatInfo.GetInstance(provider);
-            string read;
-            if (TryRead(s, ref pos, format.NaNSymbol, out read))
-            {
-                endPos = pos;
-                return double.NaN;
-            }
-
-            if (TryRead(s, ref pos, format.PositiveInfinitySymbol, out read))
-            {
-                endPos = pos;
-                return double.PositiveInfinity;
-            }
-
-            if (TryRead(s, ref pos, format.NegativeInfinitySymbol, out read))
-            {
-                endPos = pos;
-                return double.NegativeInfinity;
-            }
-
-            var sb = new StringBuilder();
-            if (TryReadSign(s, ref pos, format, out read))
-            {
-                if (!style.HasFlag(NumberStyles.AllowLeadingSign))
-                {
-                    throw new FormatException(LeadingSignNotAllowed);
-                }
-                sb.Append(read);
-            }
-
-            ReadDigits(s, ref pos, sb);
-
-            if (TryRead(s, ref pos, format.NumberDecimalSeparator, out read))
-            {
-                if (!style.HasFlag(NumberStyles.AllowDecimalPoint))
-                {
-                    throw new FormatException(DecimalPointNotAllowed);
-                }
-                sb.Append(read);
-                ReadDigits(s, ref pos, sb);
-            }
-
-            string result;
-            string exponent;
-            if (TryReadExponent(s, ref pos, out exponent))
-            {
-                if (!style.HasFlag(NumberStyles.AllowExponent))
-                {
-                    throw new FormatException(ExponentNotAllowed);
-                }
-                sb.Append(exponent);
-                string sign;
-                if (TryReadSign(s, ref pos, format, out sign))
-                {
-                    sb.Append(sign);
-                }
-
-                if (ReadDigits(s, ref pos, sb))
-                {
-                    result = sb.ToString();
-                }
-                else
-                {
-                    var back = exponent.Length + sign.Length;
-                    result = sb.ToString(0, sb.Length - back);
-                    pos -= back;
-                }
-            }
-            else
-            {
-                result = sb.ToString();
-            }
-            var d = double.Parse(result, style, provider);
-            endPos = pos;
-            return d;
+            var message = $"Expected to find a double starting at index {start}\r\n" +
+                          $"String: {text}\r\n" +
+                          $"        {new string(' ', start)}^";
+            throw new FormatException(message);
         }
 
         internal static bool TryParse(
-            string s,
+            string text,
             int start,
             NumberStyles style,
             IFormatProvider provider,
-            out double value,
+            out double result,
             out int endPos)
         {
-            value = 0;
+            result = 0;
             endPos = start;
-            if (s == null)
+            if (string.IsNullOrEmpty(text))
             {
                 return false;
             }
@@ -151,15 +75,19 @@
                 return false;
             }
 
-            var pos = start;
             if (style.HasFlag(NumberStyles.AllowLeadingWhite))
             {
-                ReadWhite(s, ref pos);
+                ReadWhite(text, ref endPos);
             }
 
-            if (char.IsWhiteSpace(s[pos]))
+            if (char.IsWhiteSpace(text[endPos]))
             {
                 return false;
+            }
+
+            if (TryParseDigits(text, endPos, style, provider, out result, out endPos))
+            {
+                return true;
             }
 
             if (provider == null)
@@ -168,144 +96,166 @@
             }
 
             var format = NumberFormatInfo.GetInstance(provider);
-            var read = string.Empty;
-            if (TryRead(s, ref pos, format.NaNSymbol, out read))
+            if (TryRead(text, ref endPos, format.NaNSymbol))
             {
-                endPos = pos;
-                value = double.NaN;
+                result = double.NaN;
                 return true;
             }
 
-            if (TryRead(s, ref pos, format.PositiveInfinitySymbol, out read))
+            if (TryRead(text, ref endPos, format.PositiveInfinitySymbol))
             {
-                endPos = pos;
-                value = double.PositiveInfinity;
+                result = double.PositiveInfinity;
                 return true;
             }
 
-            if (TryRead(s, ref pos, format.NegativeInfinitySymbol, out read))
+            if (TryRead(text, ref endPos, format.NegativeInfinitySymbol))
             {
-                endPos = pos;
-                value = double.NegativeInfinity;
+                result = double.NegativeInfinity;
                 return true;
             }
 
-            var sb = new StringBuilder();
-            if (TryReadSign(s, ref pos, format, out read))
+            endPos = start;
+            return false;
+        }
+
+        // Try parse a double from digits ignoring +-Inf and NaN
+        private static bool TryParseDigits(
+            string text,
+            int start,
+            NumberStyles style,
+            IFormatProvider provider,
+            out double result,
+            out int end)
+        {
+            end = start;
+            var format = NumberFormatInfo.GetInstance(provider);
+            Sign sign;
+            if (TryReadSign(text, ref end, format, out sign))
             {
                 if (!style.HasFlag(NumberStyles.AllowLeadingSign))
                 {
+                    result = 0;
                     return false;
                 }
-                sb.Append(read);
             }
 
+            TryReadDigits(text, ref end);
 
-            ReadDigits(s, ref pos, sb);
-
-            if (TryRead(s, ref pos, format.NumberDecimalSeparator, out read))
+            if (TryRead(text, ref end, format.NumberDecimalSeparator))
             {
                 if (!style.HasFlag(NumberStyles.AllowDecimalPoint))
                 {
+                    result = 0;
                     return false;
                 }
-                sb.Append(read);
-                ReadDigits(s, ref pos, sb);
+
+                TryReadDigits(text, ref end);
             }
 
-            string result;
-            string exponent;
-            if (TryReadExponent(s, ref pos, out exponent))
+            if (TryReadExponent(text, ref end))
             {
                 if (!style.HasFlag(NumberStyles.AllowExponent))
                 {
+                    result = 0;
                     return false;
                 }
-                sb.Append(exponent);
-                string sign;
-                if (TryReadSign(s, ref pos, format, out sign))
+
+                TryReadSign(text, ref end, format, out sign);
+                if (TryReadDigits(text, ref end))
                 {
-                    sb.Append(sign);
+                    return TryParseSubString(text, start, ref end, style, provider, out result);
                 }
 
-                if (ReadDigits(s, ref pos, sb))
-                {
-                    result = sb.ToString();
-                }
-                else
-                {
-                    var back = exponent.Length + sign.Length;
-                    result = sb.ToString(0, sb.Length - back);
-                    pos -= back;
-                }
+                // This is a tricky spot we read digits followed by (sign) exponent 
+                // then no digits were thrown. I choose to return the double here.
+                // Both alternatives will be wrong in some situations.
+                // returning false here would make it impossible to parse 1.2eV
+                var backStep = sign == Sign.None
+                    ? 1
+                    : 2;
+                end -= backStep;
+                return TryParseSubString(text, start, ref end, style, provider, out result);
             }
-            else
+
+            return TryParseSubString(text, start, ref end, style, provider, out result);
+        }
+
+        private static bool TryParseSubString(
+            string text,
+            int start,
+            ref int end,
+            NumberStyles style,
+            IFormatProvider provider,
+            out double result)
+        {
+            var s = text.Substring(start, end - start);
+            var success = double.TryParse(s, style, provider, out result);
+            if (!success)
             {
-                result = sb.ToString();
+                end = start;
             }
-            endPos = pos;
-            return double.TryParse(result, style, provider, out value);
+            return success;
         }
 
         private static bool TryReadSign(string s,
             ref int pos,
             NumberFormatInfo format,
-            out string read)
+            out Sign sign)
         {
-            if (TryRead(s, ref pos, format.PositiveSign, out read))
+            if (TryRead(s, ref pos, format.PositiveSign))
             {
+                sign = Sign.Positive;
                 return true;
             }
 
-            if (TryRead(s, ref pos, format.NegativeSign, out read))
+            if (TryRead(s, ref pos, format.NegativeSign))
             {
+                sign = Sign.Negative;
                 return true;
             }
 
-            read = string.Empty;
+            sign = Sign.None;
             return false;
         }
 
         private static bool TryReadExponent(
             string s,
-            ref int pos,
-            out string read)
+            ref int pos)
         {
-            if (TryRead(s, ref pos, "E", out read))
+            if (TryRead(s, ref pos, "E"))
             {
                 return true;
             }
 
-            if (TryRead(s, ref pos, "e", out read))
+            if (TryRead(s, ref pos, "e"))
             {
                 return true;
             }
 
-            read = string.Empty;
             return false;
         }
 
-        private static bool ReadDigits(string s, ref int pos, StringBuilder sb)
+        private static bool TryReadDigits(string s, ref int pos)
         {
             var start = pos;
             while (pos < s.Length && char.IsDigit(s[pos]))
             {
-                sb.Append(s[pos]);
                 pos++;
             }
+
             return pos != start;
         }
 
-        private static bool TryRead(string s, ref int pos, string toRead, out string read)
+        private static bool TryRead(string s, ref int pos, string toRead)
         {
-            read = null;
             if (pos == s.Length)
             {
                 return false;
             }
 
             int start = pos;
-            while (pos < s.Length && pos - start < toRead.Length)
+            while (pos < s.Length &&
+                   pos - start < toRead.Length)
             {
                 if (s[pos] != toRead[pos - start])
                 {
@@ -315,7 +265,6 @@
                 pos++;
             }
 
-            read = toRead;
             return true;
         }
 
@@ -331,6 +280,21 @@
         {
             // Check for undefined flags
             return (style & InvalidNumberStyles) == 0;
+        }
+
+        private static StringBuilder Append(this StringBuilder builder, Sign sign, NumberFormatInfo format)
+        {
+            switch (sign)
+            {
+                case Sign.Negative:
+                    return builder.Append(format.NegativeSign);
+                case Sign.None:
+                    return builder;
+                case Sign.Positive:
+                    return builder.Append(format.PositiveSign);
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(sign), sign, null);
+            }
         }
     }
 }

@@ -7,7 +7,7 @@
     using System.Linq;
     using System.Reflection;
 
-    public static class Parser
+    internal static class Parser
     {
         private static readonly ConcurrentDictionary<Type, IReadOnlyList<Symbol>> SymbolCache = new ConcurrentDictionary<Type, IReadOnlyList<Symbol>>();
 
