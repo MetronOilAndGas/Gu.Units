@@ -40,14 +40,14 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
-            <!--
+            
             <TextBox Grid.Row="0"
                      Grid.Column="0"
                      Text="{Binding Length,
                                     Converter={units:LengthConverter m}}" />
             <Label Grid.Row="0"
                        Grid.Column="1"
-                       Content="m" />-->
+                       Content="m" />
 
             <TextBox Grid.Row="1"
                      Grid.Column="0"
@@ -75,10 +75,22 @@
                      Text="{Binding Length,
                                     Converter={units:LengthConverter},
                                     StringFormat='0:F3 mm'}" />
+
+
+            <local:DoubleControl Grid.Row="4"
+                                 Grid.Column="0"
+                                 Value="{Binding Length,
+                                                 Converter={units:LengthConverter {x:Static units1:LengthUnit.Metres}}}">
+                <local:DoubleControl.Template>
+                    <ControlTemplate TargetType="{x:Type local:DoubleControl}">
+                        <TextBox Text="{TemplateBinding Value}" />
+                    </ControlTemplate>
+                </local:DoubleControl.Template>
+            </local:DoubleControl>
+
             <Label Grid.Row="4"
                    Grid.Column="1"
                    Content="{x:Static units1:LengthUnit.Metres}" />
-
         </Grid>
     </Grid>
 </Window>

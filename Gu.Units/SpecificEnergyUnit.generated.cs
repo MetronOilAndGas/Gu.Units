@@ -86,14 +86,14 @@
         /// Creates a quantity with this unit
         /// </summary>
         /// <param name="value"></param>
-        /// <returns>new TTQuantity(value, this)</returns>
+        /// <returns>new SpecificEnergy(value, this)</returns>
         public SpecificEnergy CreateQuantity(double value)
         {
             return new SpecificEnergy(value, this);
         }
 
         /// <summary>
-        /// Gets the scalar value
+        /// Gets the scalar value of <paramref name="quantity"/> in JoulesPerKilogram
         /// </summary>
         /// <param name="quantity"></param>
         /// <returns></returns>

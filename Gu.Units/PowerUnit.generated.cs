@@ -28,8 +28,9 @@
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly PowerUnit Nanowatts = new PowerUnit(1E-09, "nW");
+
         /// <summary>
-        /// The <see cref="Gu.Units.Nanowatts"/> unit
+        /// The Nanowatts unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly PowerUnit nW = Nanowatts;
@@ -39,8 +40,9 @@
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly PowerUnit Microwatts = new PowerUnit(1E-06, "µW");
+
         /// <summary>
-        /// The <see cref="Gu.Units.Microwatts"/> unit
+        /// The Microwatts unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly PowerUnit µW = Microwatts;
@@ -50,8 +52,9 @@
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly PowerUnit Milliwatts = new PowerUnit(0.001, "mW");
+
         /// <summary>
-        /// The <see cref="Gu.Units.Milliwatts"/> unit
+        /// The Milliwatts unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly PowerUnit mW = Milliwatts;
@@ -61,8 +64,9 @@
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly PowerUnit Kilowatts = new PowerUnit(1000, "kW");
+
         /// <summary>
-        /// The <see cref="Gu.Units.Kilowatts"/> unit
+        /// The Kilowatts unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly PowerUnit kW = Kilowatts;
@@ -72,8 +76,9 @@
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly PowerUnit Megawatts = new PowerUnit(1000000, "MW");
+
         /// <summary>
-        /// The <see cref="Gu.Units.Megawatts"/> unit
+        /// The Megawatts unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly PowerUnit MW = Megawatts;
@@ -83,8 +88,9 @@
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly PowerUnit Gigawatts = new PowerUnit(1000000000, "GW");
+
         /// <summary>
-        /// The <see cref="Gu.Units.Gigawatts"/> unit
+        /// The Gigawatts unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly PowerUnit GW = Gigawatts;
@@ -135,7 +141,7 @@
         }
 
         /// <summary>
-        /// Converts <see <paramref name="value"/> to Watts.
+        /// Converts <paramref name="value"/> to Watts.
         /// </summary>
         /// <param name="value"></param>
         /// <returns>The converted value</returns>
@@ -158,14 +164,14 @@
         /// Creates a quantity with this unit
         /// </summary>
         /// <param name="value"></param>
-        /// <returns>new TTQuantity(value, this)</returns>
+        /// <returns>new Power(value, this)</returns>
         public Power CreateQuantity(double value)
         {
             return new Power(value, this);
         }
 
         /// <summary>
-        /// Gets the scalar value
+        /// Gets the scalar value of <paramref name="quantity"/> in Watts
         /// </summary>
         /// <param name="quantity"></param>
         /// <returns></returns>

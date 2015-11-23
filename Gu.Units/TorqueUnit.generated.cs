@@ -63,7 +63,7 @@
         }
 
         /// <summary>
-        /// Converts <see <paramref name="value"/> to NewtonMetres.
+        /// Converts <paramref name="value"/> to NewtonMetres.
         /// </summary>
         /// <param name="value"></param>
         /// <returns>The converted value</returns>
@@ -86,14 +86,14 @@
         /// Creates a quantity with this unit
         /// </summary>
         /// <param name="value"></param>
-        /// <returns>new TTQuantity(value, this)</returns>
+        /// <returns>new Torque(value, this)</returns>
         public Torque CreateQuantity(double value)
         {
             return new Torque(value, this);
         }
 
         /// <summary>
-        /// Gets the scalar value
+        /// Gets the scalar value of <paramref name="quantity"/> in NewtonMetres
         /// </summary>
         /// <param name="quantity"></param>
         /// <returns></returns>

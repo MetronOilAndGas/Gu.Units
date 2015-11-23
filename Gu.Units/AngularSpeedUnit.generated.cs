@@ -22,8 +22,9 @@
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly AngularSpeedUnit RevolutionsPerMinute = new AngularSpeedUnit(0.10471975511966, "rpm");
+
         /// <summary>
-        /// The <see cref="Gu.Units.RevolutionsPerMinute"/> unit
+        /// The RevolutionsPerMinute unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly AngularSpeedUnit rpm = RevolutionsPerMinute;
@@ -104,7 +105,7 @@
         }
 
         /// <summary>
-        /// Converts <see <paramref name="value"/> to RadiansPerSecond.
+        /// Converts <paramref name="value"/> to RadiansPerSecond.
         /// </summary>
         /// <param name="value"></param>
         /// <returns>The converted value</returns>
@@ -127,14 +128,14 @@
         /// Creates a quantity with this unit
         /// </summary>
         /// <param name="value"></param>
-        /// <returns>new TTQuantity(value, this)</returns>
+        /// <returns>new AngularSpeed(value, this)</returns>
         public AngularSpeed CreateQuantity(double value)
         {
             return new AngularSpeed(value, this);
         }
 
         /// <summary>
-        /// Gets the scalar value
+        /// Gets the scalar value of <paramref name="quantity"/> in RadiansPerSecond
         /// </summary>
         /// <param name="quantity"></param>
         /// <returns></returns>

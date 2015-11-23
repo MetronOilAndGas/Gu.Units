@@ -93,7 +93,7 @@
         }
 
         /// <summary>
-        /// Converts <see <paramref name="value"/> to RadiansPerSecondSquared.
+        /// Converts <paramref name="value"/> to RadiansPerSecondSquared.
         /// </summary>
         /// <param name="value"></param>
         /// <returns>The converted value</returns>
@@ -116,14 +116,14 @@
         /// Creates a quantity with this unit
         /// </summary>
         /// <param name="value"></param>
-        /// <returns>new TTQuantity(value, this)</returns>
+        /// <returns>new AngularAcceleration(value, this)</returns>
         public AngularAcceleration CreateQuantity(double value)
         {
             return new AngularAcceleration(value, this);
         }
 
         /// <summary>
-        /// Gets the scalar value
+        /// Gets the scalar value of <paramref name="quantity"/> in RadiansPerSecondSquared
         /// </summary>
         /// <param name="quantity"></param>
         /// <returns></returns>

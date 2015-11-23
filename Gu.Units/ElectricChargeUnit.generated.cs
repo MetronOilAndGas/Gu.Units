@@ -69,7 +69,7 @@
         }
 
         /// <summary>
-        /// Converts <see <paramref name="value"/> to Coulombs.
+        /// Converts <paramref name="value"/> to Coulombs.
         /// </summary>
         /// <param name="value"></param>
         /// <returns>The converted value</returns>
@@ -92,14 +92,14 @@
         /// Creates a quantity with this unit
         /// </summary>
         /// <param name="value"></param>
-        /// <returns>new TTQuantity(value, this)</returns>
+        /// <returns>new ElectricCharge(value, this)</returns>
         public ElectricCharge CreateQuantity(double value)
         {
             return new ElectricCharge(value, this);
         }
 
         /// <summary>
-        /// Gets the scalar value
+        /// Gets the scalar value of <paramref name="quantity"/> in Coulombs
         /// </summary>
         /// <param name="quantity"></param>
         /// <returns></returns>

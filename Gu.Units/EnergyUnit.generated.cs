@@ -28,8 +28,9 @@
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly EnergyUnit Nanojoules = new EnergyUnit(1E-09, "nJ");
+
         /// <summary>
-        /// The <see cref="Gu.Units.Nanojoules"/> unit
+        /// The Nanojoules unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly EnergyUnit nJ = Nanojoules;
@@ -39,8 +40,9 @@
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly EnergyUnit Microjoules = new EnergyUnit(1E-06, "µJ");
+
         /// <summary>
-        /// The <see cref="Gu.Units.Microjoules"/> unit
+        /// The Microjoules unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly EnergyUnit µJ = Microjoules;
@@ -50,8 +52,9 @@
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly EnergyUnit Millijoules = new EnergyUnit(0.001, "mJ");
+
         /// <summary>
-        /// The <see cref="Gu.Units.Millijoules"/> unit
+        /// The Millijoules unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly EnergyUnit mJ = Millijoules;
@@ -61,8 +64,9 @@
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly EnergyUnit Kilojoules = new EnergyUnit(1000, "kJ");
+
         /// <summary>
-        /// The <see cref="Gu.Units.Kilojoules"/> unit
+        /// The Kilojoules unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly EnergyUnit kJ = Kilojoules;
@@ -72,8 +76,9 @@
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly EnergyUnit Megajoules = new EnergyUnit(1000000, "MJ");
+
         /// <summary>
-        /// The <see cref="Gu.Units.Megajoules"/> unit
+        /// The Megajoules unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly EnergyUnit MJ = Megajoules;
@@ -83,8 +88,9 @@
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly EnergyUnit Gigajoules = new EnergyUnit(1000000000, "GJ");
+
         /// <summary>
-        /// The <see cref="Gu.Units.Gigajoules"/> unit
+        /// The Gigajoules unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly EnergyUnit GJ = Gigajoules;
@@ -94,8 +100,9 @@
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly EnergyUnit KilowattHours = new EnergyUnit(3600000, "kWh");
+
         /// <summary>
-        /// The <see cref="Gu.Units.KilowattHours"/> unit
+        /// The KilowattHours unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly EnergyUnit kWh = KilowattHours;
@@ -146,7 +153,7 @@
         }
 
         /// <summary>
-        /// Converts <see <paramref name="value"/> to Joules.
+        /// Converts <paramref name="value"/> to Joules.
         /// </summary>
         /// <param name="value"></param>
         /// <returns>The converted value</returns>
@@ -169,14 +176,14 @@
         /// Creates a quantity with this unit
         /// </summary>
         /// <param name="value"></param>
-        /// <returns>new TTQuantity(value, this)</returns>
+        /// <returns>new Energy(value, this)</returns>
         public Energy CreateQuantity(double value)
         {
             return new Energy(value, this);
         }
 
         /// <summary>
-        /// Gets the scalar value
+        /// Gets the scalar value of <paramref name="quantity"/> in Joules
         /// </summary>
         /// <param name="quantity"></param>
         /// <returns></returns>

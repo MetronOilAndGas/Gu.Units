@@ -52,8 +52,9 @@
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly AreaUnit Hectare = new AreaUnit(10000, "ha");
+
         /// <summary>
-        /// The <see cref="Gu.Units.Hectare"/> unit
+        /// The Hectare unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly AreaUnit ha = Hectare;
@@ -116,7 +117,7 @@
         }
 
         /// <summary>
-        /// Converts <see <paramref name="value"/> to SquareMetres.
+        /// Converts <paramref name="value"/> to SquareMetres.
         /// </summary>
         /// <param name="value"></param>
         /// <returns>The converted value</returns>
@@ -139,14 +140,14 @@
         /// Creates a quantity with this unit
         /// </summary>
         /// <param name="value"></param>
-        /// <returns>new TTQuantity(value, this)</returns>
+        /// <returns>new Area(value, this)</returns>
         public Area CreateQuantity(double value)
         {
             return new Area(value, this);
         }
 
         /// <summary>
-        /// Gets the scalar value
+        /// Gets the scalar value of <paramref name="quantity"/> in SquareMetres
         /// </summary>
         /// <param name="quantity"></param>
         /// <returns></returns>

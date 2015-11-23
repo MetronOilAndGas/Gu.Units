@@ -2,7 +2,6 @@
 {
     using System;
     using System.Globalization;
-    using System.Text.RegularExpressions;
     using System.Threading;
 
     using Gu.Units.Tests.Sources;
@@ -27,13 +26,108 @@
         [TestCase("1 m", new[] { "sv-se", "en-us" }, 1)]
         [TestCase("1m ", new[] { "sv-se", "en-us" }, 1)]
         [TestCase("1mm", new[] { "sv-se", "en-us" }, 1e-3)]
+        [TestCase("1,2mm", new[] { "sv-se" }, 1.2e-3)]
         [TestCase("1cm", new[] { "sv-se", "en-us" }, 1e-2)]
         public void ParseLength(string s, string[] cultures, double expected)
         {
             foreach (var culture in cultures)
             {
                 var cultureInfo = CultureInfo.GetCultureInfo(culture);
-                var length = Parser.Parse<LengthUnit, Length>(s, Length.From, NumberStyles.Float, cultureInfo);
+                var numberStyles = NumberStyles.Float;
+
+                var length = Parser.Parse<LengthUnit, Length>(s, Length.From, numberStyles, cultureInfo);
+                Assert.AreEqual(expected, length.Metres);
+
+                length = Length.Parse(s, numberStyles, cultureInfo);
+                Assert.AreEqual(expected, length.Metres);
+
+                length = Length.Parse(s, cultureInfo);
+                Assert.AreEqual(expected, length.Metres);
+            }
+        }
+
+        [TestCase("1,2m", new[] { "en-us" }, "Could not parse the unit value from: 1,2m")]
+        public void ParseLengthThrows(string s, string[] cultures, string expectedMessage)
+        {
+            foreach (var culture in cultures)
+            {
+                var cultureInfo = CultureInfo.GetCultureInfo(culture);
+                var numberStyles = NumberStyles.Float;
+                var ex1 = Assert.Throws<FormatException>(() => Parser.Parse<LengthUnit, Length>(s, Length.From, numberStyles, cultureInfo));
+                var ex2 = Assert.Throws<FormatException>(() => Length.Parse(s, numberStyles, cultureInfo));
+                var ex3 = Assert.Throws<FormatException>(() => Length.Parse(s, cultureInfo));
+
+                foreach (var ex in new[] { ex1, ex2, ex3 })
+                {
+                    Assert.AreEqual(expectedMessage, ex.Message);
+                }
+            }
+        }
+
+        [TestCase("1m", new[] { "sv-se", "en-us" }, 1)]
+        [TestCase("-1m", new[] { "sv-se", "en-us" }, -1)]
+        [TestCase("1.2m", new[] { "en-us" }, 1.2)]
+        [TestCase("1.2m", new[] { "en-us" }, 1.2)]
+        [TestCase("1,2m", new[] { "sv-se" }, 1.2)]
+        [TestCase("-1m", new[] { "sv-se", "en-us" }, -1)]
+        [TestCase("1e3m", new[] { "sv-se", "en-us" }, 1e3)]
+        [TestCase("1E3m", new[] { "sv-se", "en-us" }, 1e3)]
+        [TestCase("1e+3m", new[] { "sv-se", "en-us" }, 1e+3)]
+        [TestCase("1E+3m", new[] { "sv-se", "en-us" }, 1E+3)]
+        [TestCase("1.2e-3m", new[] { "en-us" }, 1.2e-3)]
+        [TestCase("1.2E-3m", new[] { "en-us" }, 1.2e-3)]
+        [TestCase(" 1m", new[] { "sv-se", "en-us" }, 1)]
+        [TestCase("1 m", new[] { "sv-se", "en-us" }, 1)]
+        [TestCase("1m ", new[] { "sv-se", "en-us" }, 1)]
+        [TestCase("1mm", new[] { "sv-se", "en-us" }, 1e-3)]
+        [TestCase("1cm", new[] { "sv-se", "en-us" }, 1e-2)]
+        public void TryParseLengthSuccess(string s, string[] cultures, double expected)
+        {
+            foreach (var culture in cultures)
+            {
+                var cultureInfo = CultureInfo.GetCultureInfo(culture);
+                Length length;
+                var success = Parser.TryParse<LengthUnit, Length>(
+                    s,
+                    Length.From,
+                    NumberStyles.Float,
+                    cultureInfo,
+                    out length);
+                Assert.AreEqual(true, success);
+                Assert.AreEqual(expected, length.Metres);
+
+                success = Length.TryParse(s, NumberStyles.Float, cultureInfo, out length);
+                Assert.AreEqual(true, success);
+                Assert.AreEqual(expected, length.Metres);
+
+                success = Length.TryParse(s, cultureInfo, out length);
+                Assert.AreEqual(true, success);
+                Assert.AreEqual(expected, length.Metres);
+            }
+        }
+
+        [TestCase("1.2m", new[] { "sv-se" }, 0.0)]
+        public void TryParseLengthFails(string s, string[] cultures, double expected)
+        {
+            foreach (var culture in cultures)
+            {
+                var cultureInfo = CultureInfo.GetCultureInfo(culture);
+                Length length;
+                var success = Parser.TryParse<LengthUnit, Length>(
+                    s,
+                    Length.From,
+                    NumberStyles.Float,
+                    cultureInfo,
+                    out length);
+                Assert.AreEqual(false, success);
+                Assert.AreEqual(expected, length.Metres);
+
+                success = Length.TryParse(s, NumberStyles.Float, cultureInfo, out length);
+                Assert.AreEqual(false, success);
+                Assert.AreEqual(expected, length.Metres);
+
+                success = Length.TryParse(s, cultureInfo, out length);
+                Assert.AreEqual(false, success);
                 Assert.AreEqual(expected, length.Metres);
             }
         }
@@ -51,7 +145,7 @@
         }
 
         [TestCase("mm^2")]
-        [TestCase("mm\x00B2")]
+        [TestCase("mm²")]
         public void AreaUnit_Parse(string s)
         {
             var actual = AreaUnit.Parse(s);

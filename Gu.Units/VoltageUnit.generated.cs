@@ -28,8 +28,9 @@
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly VoltageUnit Millivolts = new VoltageUnit(0.001, "mV");
+
         /// <summary>
-        /// The <see cref="Gu.Units.Millivolts"/> unit
+        /// The Millivolts unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly VoltageUnit mV = Millivolts;
@@ -39,8 +40,9 @@
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly VoltageUnit Kilovolts = new VoltageUnit(1000, "kV");
+
         /// <summary>
-        /// The <see cref="Gu.Units.Kilovolts"/> unit
+        /// The Kilovolts unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly VoltageUnit kV = Kilovolts;
@@ -50,8 +52,9 @@
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly VoltageUnit Megavolts = new VoltageUnit(1000000, "MV");
+
         /// <summary>
-        /// The <see cref="Gu.Units.Megavolts"/> unit
+        /// The Megavolts unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly VoltageUnit MV = Megavolts;
@@ -61,8 +64,9 @@
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly VoltageUnit Microvolts = new VoltageUnit(1E-06, "µV");
+
         /// <summary>
-        /// The <see cref="Gu.Units.Microvolts"/> unit
+        /// The Microvolts unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly VoltageUnit µV = Microvolts;
@@ -113,7 +117,7 @@
         }
 
         /// <summary>
-        /// Converts <see <paramref name="value"/> to Volts.
+        /// Converts <paramref name="value"/> to Volts.
         /// </summary>
         /// <param name="value"></param>
         /// <returns>The converted value</returns>
@@ -136,14 +140,14 @@
         /// Creates a quantity with this unit
         /// </summary>
         /// <param name="value"></param>
-        /// <returns>new TTQuantity(value, this)</returns>
+        /// <returns>new Voltage(value, this)</returns>
         public Voltage CreateQuantity(double value)
         {
             return new Voltage(value, this);
         }
 
         /// <summary>
-        /// Gets the scalar value
+        /// Gets the scalar value of <paramref name="quantity"/> in Volts
         /// </summary>
         /// <param name="quantity"></param>
         /// <returns></returns>

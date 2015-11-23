@@ -75,7 +75,7 @@
         }
 
         /// <summary>
-        /// Converts <see <paramref name="value"/> to MetresPerSecondSquared.
+        /// Converts <paramref name="value"/> to MetresPerSecondSquared.
         /// </summary>
         /// <param name="value"></param>
         /// <returns>The converted value</returns>
@@ -98,14 +98,14 @@
         /// Creates a quantity with this unit
         /// </summary>
         /// <param name="value"></param>
-        /// <returns>new TTQuantity(value, this)</returns>
+        /// <returns>new Acceleration(value, this)</returns>
         public Acceleration CreateQuantity(double value)
         {
             return new Acceleration(value, this);
         }
 
         /// <summary>
-        /// Gets the scalar value
+        /// Gets the scalar value of <paramref name="quantity"/> in MetresPerSecondSquared
         /// </summary>
         /// <param name="quantity"></param>
         /// <returns></returns>

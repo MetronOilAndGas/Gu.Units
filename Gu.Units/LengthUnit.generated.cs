@@ -28,8 +28,9 @@
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly LengthUnit Nanometres = new LengthUnit(1E-09, "nm");
+
         /// <summary>
-        /// The <see cref="Gu.Units.Nanometres"/> unit
+        /// The Nanometres unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly LengthUnit nm = Nanometres;
@@ -39,8 +40,9 @@
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly LengthUnit Micrometres = new LengthUnit(1E-06, "µm");
+
         /// <summary>
-        /// The <see cref="Gu.Units.Micrometres"/> unit
+        /// The Micrometres unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly LengthUnit µm = Micrometres;
@@ -50,8 +52,9 @@
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly LengthUnit Millimetres = new LengthUnit(0.001, "mm");
+
         /// <summary>
-        /// The <see cref="Gu.Units.Millimetres"/> unit
+        /// The Millimetres unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly LengthUnit mm = Millimetres;
@@ -61,8 +64,9 @@
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly LengthUnit Centimetres = new LengthUnit(0.01, "cm");
+
         /// <summary>
-        /// The <see cref="Gu.Units.Centimetres"/> unit
+        /// The Centimetres unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly LengthUnit cm = Centimetres;
@@ -72,8 +76,9 @@
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly LengthUnit Decimetres = new LengthUnit(0.1, "dm");
+
         /// <summary>
-        /// The <see cref="Gu.Units.Decimetres"/> unit
+        /// The Decimetres unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly LengthUnit dm = Decimetres;
@@ -83,8 +88,9 @@
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly LengthUnit Kilometres = new LengthUnit(1000, "km");
+
         /// <summary>
-        /// The <see cref="Gu.Units.Kilometres"/> unit
+        /// The Kilometres unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly LengthUnit km = Kilometres;
@@ -100,8 +106,9 @@
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly LengthUnit Mile = new LengthUnit(1609.344, "mi");
+
         /// <summary>
-        /// The <see cref="Gu.Units.Mile"/> unit
+        /// The Mile unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly LengthUnit mi = Mile;
@@ -111,8 +118,9 @@
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly LengthUnit Yard = new LengthUnit(0.9144, "yd");
+
         /// <summary>
-        /// The <see cref="Gu.Units.Yard"/> unit
+        /// The Yard unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly LengthUnit yd = Yard;
@@ -122,8 +130,9 @@
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly LengthUnit NauticalMile = new LengthUnit(1852, "nmi");
+
         /// <summary>
-        /// The <see cref="Gu.Units.NauticalMile"/> unit
+        /// The NauticalMile unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly LengthUnit nmi = NauticalMile;
@@ -174,7 +183,7 @@
         }
 
         /// <summary>
-        /// Converts <see <paramref name="value"/> to Metres.
+        /// Converts <paramref name="value"/> to Metres.
         /// </summary>
         /// <param name="value"></param>
         /// <returns>The converted value</returns>
@@ -197,14 +206,14 @@
         /// Creates a quantity with this unit
         /// </summary>
         /// <param name="value"></param>
-        /// <returns>new TTQuantity(value, this)</returns>
+        /// <returns>new Length(value, this)</returns>
         public Length CreateQuantity(double value)
         {
             return new Length(value, this);
         }
 
         /// <summary>
-        /// Gets the scalar value
+        /// Gets the scalar value of <paramref name="quantity"/> in LengthUnit
         /// </summary>
         /// <param name="quantity"></param>
         /// <returns></returns>

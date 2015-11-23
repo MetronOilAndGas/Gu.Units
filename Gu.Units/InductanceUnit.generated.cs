@@ -69,7 +69,7 @@
         }
 
         /// <summary>
-        /// Converts <see <paramref name="value"/> to Henrys.
+        /// Converts <paramref name="value"/> to Henrys.
         /// </summary>
         /// <param name="value"></param>
         /// <returns>The converted value</returns>
@@ -92,14 +92,14 @@
         /// Creates a quantity with this unit
         /// </summary>
         /// <param name="value"></param>
-        /// <returns>new TTQuantity(value, this)</returns>
+        /// <returns>new Inductance(value, this)</returns>
         public Inductance CreateQuantity(double value)
         {
             return new Inductance(value, this);
         }
 
         /// <summary>
-        /// Gets the scalar value
+        /// Gets the scalar value of <paramref name="quantity"/> in Henrys
         /// </summary>
         /// <param name="quantity"></param>
         /// <returns></returns>

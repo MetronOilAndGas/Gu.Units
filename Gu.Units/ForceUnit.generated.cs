@@ -28,8 +28,9 @@
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly ForceUnit Nanonewtons = new ForceUnit(1E-09, "nN");
+
         /// <summary>
-        /// The <see cref="Gu.Units.Nanonewtons"/> unit
+        /// The Nanonewtons unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly ForceUnit nN = Nanonewtons;
@@ -39,8 +40,9 @@
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly ForceUnit Micronewtons = new ForceUnit(1E-06, "µN");
+
         /// <summary>
-        /// The <see cref="Gu.Units.Micronewtons"/> unit
+        /// The Micronewtons unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly ForceUnit µN = Micronewtons;
@@ -50,8 +52,9 @@
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly ForceUnit Millinewtons = new ForceUnit(0.001, "mN");
+
         /// <summary>
-        /// The <see cref="Gu.Units.Millinewtons"/> unit
+        /// The Millinewtons unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly ForceUnit mN = Millinewtons;
@@ -61,8 +64,9 @@
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly ForceUnit Kilonewtons = new ForceUnit(1000, "kN");
+
         /// <summary>
-        /// The <see cref="Gu.Units.Kilonewtons"/> unit
+        /// The Kilonewtons unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly ForceUnit kN = Kilonewtons;
@@ -72,8 +76,9 @@
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly ForceUnit Meganewtons = new ForceUnit(1000000, "MN");
+
         /// <summary>
-        /// The <see cref="Gu.Units.Meganewtons"/> unit
+        /// The Meganewtons unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly ForceUnit MN = Meganewtons;
@@ -83,8 +88,9 @@
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly ForceUnit Giganewtons = new ForceUnit(1000000000, "GN");
+
         /// <summary>
-        /// The <see cref="Gu.Units.Giganewtons"/> unit
+        /// The Giganewtons unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly ForceUnit GN = Giganewtons;
@@ -135,7 +141,7 @@
         }
 
         /// <summary>
-        /// Converts <see <paramref name="value"/> to Newtons.
+        /// Converts <paramref name="value"/> to Newtons.
         /// </summary>
         /// <param name="value"></param>
         /// <returns>The converted value</returns>
@@ -158,14 +164,14 @@
         /// Creates a quantity with this unit
         /// </summary>
         /// <param name="value"></param>
-        /// <returns>new TTQuantity(value, this)</returns>
+        /// <returns>new Force(value, this)</returns>
         public Force CreateQuantity(double value)
         {
             return new Force(value, this);
         }
 
         /// <summary>
-        /// Gets the scalar value
+        /// Gets the scalar value of <paramref name="quantity"/> in Newtons
         /// </summary>
         /// <param name="quantity"></param>
         /// <returns></returns>

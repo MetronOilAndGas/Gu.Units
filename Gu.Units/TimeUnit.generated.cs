@@ -28,8 +28,9 @@
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly TimeUnit Nanoseconds = new TimeUnit(1E-09, "ns");
+
         /// <summary>
-        /// The <see cref="Gu.Units.Nanoseconds"/> unit
+        /// The Nanoseconds unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly TimeUnit ns = Nanoseconds;
@@ -39,8 +40,9 @@
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly TimeUnit Microseconds = new TimeUnit(1E-06, "µs");
+
         /// <summary>
-        /// The <see cref="Gu.Units.Microseconds"/> unit
+        /// The Microseconds unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly TimeUnit µs = Microseconds;
@@ -50,8 +52,9 @@
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly TimeUnit Milliseconds = new TimeUnit(0.001, "ms");
+
         /// <summary>
-        /// The <see cref="Gu.Units.Milliseconds"/> unit
+        /// The Milliseconds unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly TimeUnit ms = Milliseconds;
@@ -61,8 +64,9 @@
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly TimeUnit Hours = new TimeUnit(3600, "h");
+
         /// <summary>
-        /// The <see cref="Gu.Units.Hours"/> unit
+        /// The Hours unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly TimeUnit h = Hours;
@@ -72,8 +76,9 @@
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly TimeUnit Minutes = new TimeUnit(60, "min");
+
         /// <summary>
-        /// The <see cref="Gu.Units.Minutes"/> unit
+        /// The Minutes unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly TimeUnit min = Minutes;
@@ -124,7 +129,7 @@
         }
 
         /// <summary>
-        /// Converts <see <paramref name="value"/> to Seconds.
+        /// Converts <paramref name="value"/> to Seconds.
         /// </summary>
         /// <param name="value"></param>
         /// <returns>The converted value</returns>
@@ -147,14 +152,14 @@
         /// Creates a quantity with this unit
         /// </summary>
         /// <param name="value"></param>
-        /// <returns>new TTQuantity(value, this)</returns>
+        /// <returns>new Time(value, this)</returns>
         public Time CreateQuantity(double value)
         {
             return new Time(value, this);
         }
 
         /// <summary>
-        /// Gets the scalar value
+        /// Gets the scalar value of <paramref name="quantity"/> in Seconds
         /// </summary>
         /// <param name="quantity"></param>
         /// <returns></returns>

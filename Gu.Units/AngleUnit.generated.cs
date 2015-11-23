@@ -75,7 +75,7 @@
         }
 
         /// <summary>
-        /// Converts <see <paramref name="value"/> to Radians.
+        /// Converts <paramref name="value"/> to Radians.
         /// </summary>
         /// <param name="value"></param>
         /// <returns>The converted value</returns>
@@ -98,14 +98,14 @@
         /// Creates a quantity with this unit
         /// </summary>
         /// <param name="value"></param>
-        /// <returns>new TTQuantity(value, this)</returns>
+        /// <returns>new Angle(value, this)</returns>
         public Angle CreateQuantity(double value)
         {
             return new Angle(value, this);
         }
 
         /// <summary>
-        /// Gets the scalar value
+        /// Gets the scalar value of <paramref name="quantity"/> in Radians
         /// </summary>
         /// <param name="quantity"></param>
         /// <returns></returns>

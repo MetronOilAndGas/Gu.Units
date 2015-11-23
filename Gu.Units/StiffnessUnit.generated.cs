@@ -63,7 +63,7 @@
         }
 
         /// <summary>
-        /// Converts <see <paramref name="value"/> to NewtonsPerMetre.
+        /// Converts <paramref name="value"/> to NewtonsPerMetre.
         /// </summary>
         /// <param name="value"></param>
         /// <returns>The converted value</returns>
@@ -86,14 +86,14 @@
         /// Creates a quantity with this unit
         /// </summary>
         /// <param name="value"></param>
-        /// <returns>new TTQuantity(value, this)</returns>
+        /// <returns>new Stiffness(value, this)</returns>
         public Stiffness CreateQuantity(double value)
         {
             return new Stiffness(value, this);
         }
 
         /// <summary>
-        /// Gets the scalar value
+        /// Gets the scalar value of <paramref name="quantity"/> in NewtonsPerMetre
         /// </summary>
         /// <param name="quantity"></param>
         /// <returns></returns>

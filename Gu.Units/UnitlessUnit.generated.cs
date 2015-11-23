@@ -28,8 +28,9 @@
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly UnitlessUnit PartsPerMillion = new UnitlessUnit(1E-06, "ppm");
+
         /// <summary>
-        /// The <see cref="Gu.Units.PartsPerMillion"/> unit
+        /// The PartsPerMillion unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly UnitlessUnit ppm = PartsPerMillion;
@@ -92,7 +93,7 @@
         }
 
         /// <summary>
-        /// Converts <see <paramref name="value"/> to Scalar.
+        /// Converts <paramref name="value"/> to Scalar.
         /// </summary>
         /// <param name="value"></param>
         /// <returns>The converted value</returns>
@@ -115,14 +116,14 @@
         /// Creates a quantity with this unit
         /// </summary>
         /// <param name="value"></param>
-        /// <returns>new TTQuantity(value, this)</returns>
+        /// <returns>new Unitless(value, this)</returns>
         public Unitless CreateQuantity(double value)
         {
             return new Unitless(value, this);
         }
 
         /// <summary>
-        /// Gets the scalar value
+        /// Gets the scalar value of <paramref name="quantity"/> in Scalar
         /// </summary>
         /// <param name="quantity"></param>
         /// <returns></returns>

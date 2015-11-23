@@ -123,7 +123,7 @@
         }
 
         /// <summary>
-        /// Converts <see <paramref name="value"/> to MetresPerSecondCubed.
+        /// Converts <paramref name="value"/> to MetresPerSecondCubed.
         /// </summary>
         /// <param name="value"></param>
         /// <returns>The converted value</returns>
@@ -146,14 +146,14 @@
         /// Creates a quantity with this unit
         /// </summary>
         /// <param name="value"></param>
-        /// <returns>new TTQuantity(value, this)</returns>
+        /// <returns>new Jerk(value, this)</returns>
         public Jerk CreateQuantity(double value)
         {
             return new Jerk(value, this);
         }
 
         /// <summary>
-        /// Gets the scalar value
+        /// Gets the scalar value of <paramref name="quantity"/> in MetresPerSecondCubed
         /// </summary>
         /// <param name="quantity"></param>
         /// <returns></returns>

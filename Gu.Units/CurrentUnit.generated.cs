@@ -28,8 +28,9 @@
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly CurrentUnit Milliamperes = new CurrentUnit(0.001, "mA");
+
         /// <summary>
-        /// The <see cref="Gu.Units.Milliamperes"/> unit
+        /// The Milliamperes unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly CurrentUnit mA = Milliamperes;
@@ -39,8 +40,9 @@
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly CurrentUnit Kiloamperes = new CurrentUnit(1000, "kA");
+
         /// <summary>
-        /// The <see cref="Gu.Units.Kiloamperes"/> unit
+        /// The Kiloamperes unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly CurrentUnit kA = Kiloamperes;
@@ -50,8 +52,9 @@
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly CurrentUnit Megaamperes = new CurrentUnit(1000000, "MA");
+
         /// <summary>
-        /// The <see cref="Gu.Units.Megaamperes"/> unit
+        /// The Megaamperes unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly CurrentUnit MA = Megaamperes;
@@ -61,8 +64,9 @@
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly CurrentUnit Microamperes = new CurrentUnit(1E-06, "µA");
+
         /// <summary>
-        /// The <see cref="Gu.Units.Microamperes"/> unit
+        /// The Microamperes unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly CurrentUnit µA = Microamperes;
@@ -113,7 +117,7 @@
         }
 
         /// <summary>
-        /// Converts <see <paramref name="value"/> to Amperes.
+        /// Converts <paramref name="value"/> to Amperes.
         /// </summary>
         /// <param name="value"></param>
         /// <returns>The converted value</returns>
@@ -136,14 +140,14 @@
         /// Creates a quantity with this unit
         /// </summary>
         /// <param name="value"></param>
-        /// <returns>new TTQuantity(value, this)</returns>
+        /// <returns>new Current(value, this)</returns>
         public Current CreateQuantity(double value)
         {
             return new Current(value, this);
         }
 
         /// <summary>
-        /// Gets the scalar value
+        /// Gets the scalar value of <paramref name="quantity"/> in Amperes
         /// </summary>
         /// <param name="quantity"></param>
         /// <returns></returns>

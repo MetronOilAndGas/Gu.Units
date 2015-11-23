@@ -28,8 +28,9 @@
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly MassUnit Grams = new MassUnit(0.001, "g");
+
         /// <summary>
-        /// The <see cref="Gu.Units.Grams"/> unit
+        /// The Grams unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly MassUnit g = Grams;
@@ -39,8 +40,9 @@
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly MassUnit Milligrams = new MassUnit(1E-06, "mg");
+
         /// <summary>
-        /// The <see cref="Gu.Units.Milligrams"/> unit
+        /// The Milligrams unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly MassUnit mg = Milligrams;
@@ -50,8 +52,9 @@
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly MassUnit Micrograms = new MassUnit(1E-09, "µg");
+
         /// <summary>
-        /// The <see cref="Gu.Units.Micrograms"/> unit
+        /// The Micrograms unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly MassUnit µg = Micrograms;
@@ -102,7 +105,7 @@
         }
 
         /// <summary>
-        /// Converts <see <paramref name="value"/> to Kilograms.
+        /// Converts <paramref name="value"/> to Kilograms.
         /// </summary>
         /// <param name="value"></param>
         /// <returns>The converted value</returns>
@@ -125,14 +128,14 @@
         /// Creates a quantity with this unit
         /// </summary>
         /// <param name="value"></param>
-        /// <returns>new TTQuantity(value, this)</returns>
+        /// <returns>new Mass(value, this)</returns>
         public Mass CreateQuantity(double value)
         {
             return new Mass(value, this);
         }
 
         /// <summary>
-        /// Gets the scalar value
+        /// Gets the scalar value of <paramref name="quantity"/> in Kilograms
         /// </summary>
         /// <param name="quantity"></param>
         /// <returns></returns>

@@ -63,7 +63,7 @@
         }
 
         /// <summary>
-        /// Converts <see <paramref name="value"/> to CubicMetresPerSecond.
+        /// Converts <paramref name="value"/> to CubicMetresPerSecond.
         /// </summary>
         /// <param name="value"></param>
         /// <returns>The converted value</returns>
@@ -86,14 +86,14 @@
         /// Creates a quantity with this unit
         /// </summary>
         /// <param name="value"></param>
-        /// <returns>new TTQuantity(value, this)</returns>
+        /// <returns>new VolumetricFlow(value, this)</returns>
         public VolumetricFlow CreateQuantity(double value)
         {
             return new VolumetricFlow(value, this);
         }
 
         /// <summary>
-        /// Gets the scalar value
+        /// Gets the scalar value of <paramref name="quantity"/> in CubicMetresPerSecond
         /// </summary>
         /// <param name="quantity"></param>
         /// <returns></returns>

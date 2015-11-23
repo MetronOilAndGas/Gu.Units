@@ -22,8 +22,9 @@
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly VolumeUnit Litres = new VolumeUnit(0.0010000000000000002, "L");
+
         /// <summary>
-        /// The <see cref="Gu.Units.Litres"/> unit
+        /// The Litres unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly VolumeUnit L = Litres;
@@ -92,7 +93,7 @@
         }
 
         /// <summary>
-        /// Converts <see <paramref name="value"/> to CubicMetres.
+        /// Converts <paramref name="value"/> to CubicMetres.
         /// </summary>
         /// <param name="value"></param>
         /// <returns>The converted value</returns>
@@ -115,14 +116,14 @@
         /// Creates a quantity with this unit
         /// </summary>
         /// <param name="value"></param>
-        /// <returns>new TTQuantity(value, this)</returns>
+        /// <returns>new Volume(value, this)</returns>
         public Volume CreateQuantity(double value)
         {
             return new Volume(value, this);
         }
 
         /// <summary>
-        /// Gets the scalar value
+        /// Gets the scalar value of <paramref name="quantity"/> in CubicMetres
         /// </summary>
         /// <param name="quantity"></param>
         /// <returns></returns>

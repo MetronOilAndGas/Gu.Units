@@ -28,8 +28,9 @@
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly FrequencyUnit Millihertz = new FrequencyUnit(0.001, "mHz");
+
         /// <summary>
-        /// The <see cref="Gu.Units.Millihertz"/> unit
+        /// The Millihertz unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly FrequencyUnit mHz = Millihertz;
@@ -39,8 +40,9 @@
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly FrequencyUnit Kilohertz = new FrequencyUnit(1000, "kHz");
+
         /// <summary>
-        /// The <see cref="Gu.Units.Kilohertz"/> unit
+        /// The Kilohertz unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly FrequencyUnit kHz = Kilohertz;
@@ -50,8 +52,9 @@
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly FrequencyUnit Megahertz = new FrequencyUnit(1000000, "MHz");
+
         /// <summary>
-        /// The <see cref="Gu.Units.Megahertz"/> unit
+        /// The Megahertz unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly FrequencyUnit MHz = Megahertz;
@@ -61,8 +64,9 @@
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly FrequencyUnit Gigahertz = new FrequencyUnit(1000000000, "GHz");
+
         /// <summary>
-        /// The <see cref="Gu.Units.Gigahertz"/> unit
+        /// The Gigahertz unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly FrequencyUnit GHz = Gigahertz;
@@ -113,7 +117,7 @@
         }
 
         /// <summary>
-        /// Converts <see <paramref name="value"/> to Hertz.
+        /// Converts <paramref name="value"/> to Hertz.
         /// </summary>
         /// <param name="value"></param>
         /// <returns>The converted value</returns>
@@ -136,14 +140,14 @@
         /// Creates a quantity with this unit
         /// </summary>
         /// <param name="value"></param>
-        /// <returns>new TTQuantity(value, this)</returns>
+        /// <returns>new Frequency(value, this)</returns>
         public Frequency CreateQuantity(double value)
         {
             return new Frequency(value, this);
         }
 
         /// <summary>
-        /// Gets the scalar value
+        /// Gets the scalar value of <paramref name="quantity"/> in Hertz
         /// </summary>
         /// <param name="quantity"></param>
         /// <returns></returns>

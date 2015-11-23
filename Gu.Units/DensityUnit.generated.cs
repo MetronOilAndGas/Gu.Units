@@ -75,7 +75,7 @@
         }
 
         /// <summary>
-        /// Converts <see <paramref name="value"/> to KilogramsPerCubicMetre.
+        /// Converts <paramref name="value"/> to KilogramsPerCubicMetre.
         /// </summary>
         /// <param name="value"></param>
         /// <returns>The converted value</returns>
@@ -98,14 +98,14 @@
         /// Creates a quantity with this unit
         /// </summary>
         /// <param name="value"></param>
-        /// <returns>new TTQuantity(value, this)</returns>
+        /// <returns>new Density(value, this)</returns>
         public Density CreateQuantity(double value)
         {
             return new Density(value, this);
         }
 
         /// <summary>
-        /// Gets the scalar value
+        /// Gets the scalar value of <paramref name="quantity"/> in KilogramsPerCubicMetre
         /// </summary>
         /// <param name="quantity"></param>
         /// <returns></returns>

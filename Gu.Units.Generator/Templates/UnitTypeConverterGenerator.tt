@@ -3,7 +3,6 @@
 <#@ assembly name="System.Core" #>
 <#@ assembly name="$(TargetPath)" #>
 <#@ import namespace="Gu.Units.Generator" #>
-<#@ import namespace="System.Linq" #>
 <#@ output extension=".txt" #>
 <# 
 // after save Generator.tt, the output will be generated in the TestFolder of the project

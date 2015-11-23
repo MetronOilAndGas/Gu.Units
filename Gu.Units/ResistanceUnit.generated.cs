@@ -28,8 +28,9 @@
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly ResistanceUnit Microohm = new ResistanceUnit(1E-06, "µΩ");
+
         /// <summary>
-        /// The <see cref="Gu.Units.Microohm"/> unit
+        /// The Microohm unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly ResistanceUnit µΩ = Microohm;
@@ -39,8 +40,9 @@
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly ResistanceUnit Milliohm = new ResistanceUnit(0.001, "mΩ");
+
         /// <summary>
-        /// The <see cref="Gu.Units.Milliohm"/> unit
+        /// The Milliohm unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly ResistanceUnit mΩ = Milliohm;
@@ -50,8 +52,9 @@
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly ResistanceUnit Kiloohm = new ResistanceUnit(1000, "kΩ");
+
         /// <summary>
-        /// The <see cref="Gu.Units.Kiloohm"/> unit
+        /// The Kiloohm unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly ResistanceUnit kΩ = Kiloohm;
@@ -61,8 +64,9 @@
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly ResistanceUnit Megaohm = new ResistanceUnit(1000000, "MΩ");
+
         /// <summary>
-        /// The <see cref="Gu.Units.Megaohm"/> unit
+        /// The Megaohm unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly ResistanceUnit MΩ = Megaohm;
@@ -113,7 +117,7 @@
         }
 
         /// <summary>
-        /// Converts <see <paramref name="value"/> to Ohm.
+        /// Converts <paramref name="value"/> to Ohm.
         /// </summary>
         /// <param name="value"></param>
         /// <returns>The converted value</returns>
@@ -136,14 +140,14 @@
         /// Creates a quantity with this unit
         /// </summary>
         /// <param name="value"></param>
-        /// <returns>new TTQuantity(value, this)</returns>
+        /// <returns>new Resistance(value, this)</returns>
         public Resistance CreateQuantity(double value)
         {
             return new Resistance(value, this);
         }
 
         /// <summary>
-        /// Gets the scalar value
+        /// Gets the scalar value of <paramref name="quantity"/> in Ohm
         /// </summary>
         /// <param name="quantity"></param>
         /// <returns></returns>
