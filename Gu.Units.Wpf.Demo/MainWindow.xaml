@@ -5,6 +5,7 @@
         xmlns:local="clr-namespace:Gu.Units.Wpf.Demo"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:units="http://Gu.com/Units"
+        xmlns:units1="clr-namespace:Gu.Units;assembly=Gu.Units"
         Title="MainWindow"
         Width="525"
         Height="350"
@@ -14,21 +15,48 @@
     </Window.DataContext>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
-        <TextBlock Grid.Row="0"
+        <!--<TextBlock Grid.Row="0"
                    Grid.Column="0"
                    Text="Length" />
-        <!--<TextBox Grid.Row="0"
+        <TextBox Grid.Row="0"
                  Grid.Column="1"
                  Text="{Binding Length,
                                 Converter={units:LengthConverter mm}}" />-->
+
+        <TextBlock Grid.Row="1"
+                   Grid.Column="0"
+                   Text="Length" />
+        <TextBox Grid.Row="1"
+                 Grid.Column="1"
+                 Text="{Binding Length,
+                                Converter={units:LengthConverter Unit=mm}}" />
+
+        <TextBlock Grid.Row="2"
+                   Grid.Column="0"
+                   Text="Length" />
+        <TextBox Grid.Row="2"
+                 Grid.Column="1"
+                 Text="{Binding Length,
+                                Converter={units:LengthConverter Unit={x:Static units1:LengthUnit.Millimetres}}}" />
+
+        <TextBlock Grid.Row="3"
+                   Grid.Column="0"
+                   Text="Length" />
+        <TextBox Grid.Row="3"
+                 Grid.Column="1"
+                 Text="{Binding Length,
+                                Converter={units:LengthConverter {x:Static units1:LengthUnit.Millimetres}}}" />
+
     </Grid>
 </Window>

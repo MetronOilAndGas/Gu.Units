@@ -183,7 +183,7 @@
             }
             if (pos == start)
             {
-                throw new FormatException(String.Format("No symbol found at {0} in {1}", pos, s));
+                throw new FormatException($"No symbol found at {pos} in {s}");
             }
             var symbol = s.Substring(start, pos - start);
             ReadWhiteSpace(s, ref pos);
@@ -193,11 +193,11 @@
                             : ReadPower(s, ref pos);
             if (power == 0)
             {
-                throw new FormatException(String.Format("Power cannot be 0, error at {0} in {1}", start + symbol.Length, s));
+                throw new FormatException($"Power cannot be 0, error at {start + symbol.Length} in {s}");
             }
             if (sign == Sign.Negative && power < 0)
             {
-                throw new FormatException(String.Format("Power cannot be negative after / error at {0} in {1}", start + symbol.Length, s));
+                throw new FormatException($"Power cannot be negative after / error at {start + symbol.Length} in {s}");
             }
             return new SymbolAndPower(symbol, (int)sign * power);
         }
