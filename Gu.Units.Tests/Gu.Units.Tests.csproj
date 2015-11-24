@@ -51,6 +51,7 @@
     <Compile Include="Internals\Parsing\Sources\ErrorData{T}.cs" />
     <Compile Include="Internals\Parsing\IntReaderTests.cs" />
     <Compile Include="Internals\Parsing\PowerReaderTests.cs" />
+    <Compile Include="Internals\Parsing\Sources\IErrorData.cs" />
     <Compile Include="Internals\Parsing\Sources\ISuccessData.cs" />
     <Compile Include="Internals\Parsing\Sources\SuccessData.cs" />
     <Compile Include="Internals\Parsing\Sources\SuccessData{T}.cs" />

@@ -1,6 +1,6 @@
 ﻿namespace Gu.Units.Tests.Internals.Parsing
 {
-    public class ErrorData<T> : SuccessData<T>
+    public class ErrorData<T> : SuccessData<T>, IErrorData
     {
         public ErrorData(string text,
             int start,

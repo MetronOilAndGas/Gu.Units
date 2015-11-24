@@ -1,66 +1,81 @@
 ﻿namespace Gu.Units.Tests.Internals.Parsing
 {
     using System;
+    using System.Collections.Generic;
     using NUnit.Framework;
 
     public class SymbolAndPowerParserTests
     {
+        [TestCaseSource(nameof(SuccessSource))]
+        public void ParseSuccess(ISuccessData data)
+        {
+            var pos = data.Start;
+            var actual = SymbolAndPowerParser.Parse(data.Text, ref pos);
+            Assert.AreEqual(data.Expected, actual);
+            Assert.AreEqual(data.ExpectedEnd, pos);
+        }
+
+        [TestCaseSource(nameof(ErrorSource))]
+        public void ParseError(IErrorData data)
+        {
+            var pos = data.Start;
+            Assert.Throws<FormatException>(() => SymbolAndPowerParser.Parse(data.Text, ref pos));
+            Assert.AreEqual(data.ExpectedEnd, pos);
+        }
+
+        [TestCaseSource(nameof(SuccessSource))]
+        public void TryParseSuccess(ISuccessData data)
+        {
+            var pos = data.Start;
+            SymbolAndPower actual;
+            var success = SymbolAndPowerParser.TryParse(data.Text, ref pos, out actual);
+            Assert.AreEqual(true, success);
+            Assert.AreEqual(data.Expected, actual);
+            Assert.AreEqual(data.ExpectedEnd, pos);
+        }
+
+        [TestCaseSource(nameof(ErrorSource))]
+        public void TryParseError(IErrorData data)
+        {
+            var pos = data.Start;
+            SymbolAndPower sap;
+            var success = SymbolAndPowerParser.TryParse(data.Text, ref pos, out sap);
+            Assert.AreEqual(false, success);
+            Assert.AreEqual(default(SymbolAndPower), sap);
+            Assert.AreEqual(data.ExpectedEnd, pos);
+        }
+
         private const string Superscripts = "⁺⁻⁰¹²³⁴⁵⁶⁷⁸⁹";
 
-        internal static readonly Sign[] Signs = { Sign.Positive, Sign.Negative };
-
-        [TestCase("m", 0, "m", 1, 1)]
-        [TestCase(" m", 1, "m", 1, 2)]
-        [TestCase("m^1", 0, "m", 1, 3)]
-        [TestCase(" m ^ 1", 1, "m", 1, 6)]
-        [TestCase("m⁻¹", 0, "m", -1, 3)]
-        [TestCase("m^-1", 0, "m", -1, 4)]
-        [TestCase("m¹", 0, "m", 1, 2)]
-        [TestCase("m^2", 0, "m", 2, 3)]
-        [TestCase("m^-2", 0, "m", -2, 4)]
-        [TestCase("m²", 0, "m", 2, 2)]
-        [TestCase("m⁻²", 0, "m", -2, 3)]
-        [TestCase("m¹", 0, "m", 1, 2)]
-        [TestCase("m³", 0, "m", 3, 2)]
-        [TestCase("m⁹", 0, "m", 9, 2)]
-        [TestCase("kg⁹", 0, "kg", 9, 3)]
-        [TestCase("°", 0, "°", 1, 1)]
-        public void ParseSuccess(string text, int startPos, string symbol, int power, int endPos)
+        private static readonly IReadOnlyList<SuccessData<SymbolAndPower>> SuccessSource = new[]
         {
-            var pos = startPos;
-            var sap = SymbolAndPowerParser.Parse(text, ref pos);
-            Assert.AreEqual(symbol, sap.Symbol);
-            Assert.AreEqual(power, sap.Power);
-            Assert.AreEqual(endPos, pos);
+            SuccessData.Create("m", 0, new SymbolAndPower("m", 1), 1),
+            SuccessData.Create(" m", 1, new SymbolAndPower("m", 1), 2),
+            SuccessData.Create("m^1", 0, new SymbolAndPower("m", 1), 3),
+            SuccessData.Create(" m ^ 1", 1, new SymbolAndPower("m", 1), 6),
+            SuccessData.Create("m⁻¹", 0, new SymbolAndPower("m", -1), 3),
+            SuccessData.Create("m^-1", 0, new SymbolAndPower("m", -1), 4),
+            SuccessData.Create("m¹", 0, new SymbolAndPower("m", 1), 2),
+            SuccessData.Create("m^2", 0, new SymbolAndPower("m", 2), 3),
+            SuccessData.Create("m^-2", 0, new SymbolAndPower("m", -2), 4),
+            SuccessData.Create("m²", 0, new SymbolAndPower("m", 2), 2),
+            SuccessData.Create("m⁻²", 0, new SymbolAndPower("m", -2), 3),
+            SuccessData.Create("m¹", 0, new SymbolAndPower("m", 1), 2),
+            SuccessData.Create("m³", 0, new SymbolAndPower("m", 3), 2),
+            SuccessData.Create("m⁹", 0, new SymbolAndPower("m", 9), 2),
+            SuccessData.Create("kg⁹", 0, new SymbolAndPower("kg", 9), 3),
+            SuccessData.Create("°", 0, new SymbolAndPower("°", 1), 1)
+        };
 
-            pos = startPos;
-            var success = SymbolAndPowerParser.TryParse(text, ref pos, out sap);
-            Assert.AreEqual(true, success);
-            Assert.AreEqual(symbol, sap.Symbol);
-            Assert.AreEqual(power, sap.Power);
-            Assert.AreEqual(endPos, pos);
-        }
-
-        [TestCase("m¹²", 0, 0)]
-        [TestCase("m⁻¹²", 0, 0)]
-        [TestCase("m⁻⁻2", 0, 0)]
-        [TestCase("m^12", 0, 0)]
-        [TestCase("m^-12", 0, 0)]
-        [TestCase("m^--2", 0, 0)]
-        [TestCase("m-", 0, 0)]
-        public void ParseFails(string text, int startPos, int endPos)
+        private static readonly IReadOnlyList<SuccessData<SymbolAndPower>> ErrorSource = new[]
         {
-            var pos = startPos;
-            Assert.Throws<FormatException>(() => SymbolAndPowerParser.Parse(text, ref pos));
-            Assert.AreEqual(endPos, pos);
-
-            pos = startPos;
-            SymbolAndPower sap;
-            var success = SymbolAndPowerParser.TryParse(text, ref pos, out sap);
-            Assert.AreEqual(true, success);
-            Assert.AreEqual(null, sap.Symbol);
-            Assert.AreEqual(0, sap.Power);
-            Assert.AreEqual(endPos, pos);
-        }
+            ErrorData.Create<SymbolAndPower>("m¹²", 0),
+            ErrorData.Create<SymbolAndPower>("m⁻¹²", 0),
+            ErrorData.Create<SymbolAndPower>("m⁻⁻2", 0),
+            ErrorData.Create<SymbolAndPower>("m^12", 0),
+            ErrorData.Create<SymbolAndPower>("m^-12", 0),
+            ErrorData.Create<SymbolAndPower>("m^--2", 0),
+            ErrorData.Create<SymbolAndPower>("m-", 0),
+        };
     }
 }
