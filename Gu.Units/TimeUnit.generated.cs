@@ -120,12 +120,12 @@
 
         public static TimeUnit Parse(string text)
         {
-            return Parser.ParseUnit<TimeUnit>(text);
+            return UnitParser.Parse<TimeUnit>(text);
         }
 
         public static bool TryParse(string text, out TimeUnit value)
         {
-            return Parser.TryParseUnit<TimeUnit>(text, out value);
+            return UnitParser.TryParse<TimeUnit>(text, out value);
         }
 
         /// <summary>

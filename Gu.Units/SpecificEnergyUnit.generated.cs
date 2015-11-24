@@ -54,12 +54,12 @@
 
         public static SpecificEnergyUnit Parse(string text)
         {
-            return Parser.ParseUnit<SpecificEnergyUnit>(text);
+            return UnitParser.Parse<SpecificEnergyUnit>(text);
         }
 
         public static bool TryParse(string text, out SpecificEnergyUnit value)
         {
-            return Parser.TryParseUnit<SpecificEnergyUnit>(text, out value);
+            return UnitParser.TryParse<SpecificEnergyUnit>(text, out value);
         }
 
         /// <summary>

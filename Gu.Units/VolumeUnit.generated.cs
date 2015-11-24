@@ -84,12 +84,12 @@
 
         public static VolumeUnit Parse(string text)
         {
-            return Parser.ParseUnit<VolumeUnit>(text);
+            return UnitParser.Parse<VolumeUnit>(text);
         }
 
         public static bool TryParse(string text, out VolumeUnit value)
         {
-            return Parser.TryParseUnit<VolumeUnit>(text, out value);
+            return UnitParser.TryParse<VolumeUnit>(text, out value);
         }
 
         /// <summary>

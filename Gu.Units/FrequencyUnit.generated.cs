@@ -108,12 +108,12 @@
 
         public static FrequencyUnit Parse(string text)
         {
-            return Parser.ParseUnit<FrequencyUnit>(text);
+            return UnitParser.Parse<FrequencyUnit>(text);
         }
 
         public static bool TryParse(string text, out FrequencyUnit value)
         {
-            return Parser.TryParseUnit<FrequencyUnit>(text, out value);
+            return UnitParser.TryParse<FrequencyUnit>(text, out value);
         }
 
         /// <summary>

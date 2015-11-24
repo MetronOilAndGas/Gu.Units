@@ -97,42 +97,42 @@
         /// <returns></returns>
 		public static Unitless Parse(string s)
         {
-            return Parser.Parse<UnitlessUnit, Unitless>(s, From, NumberStyles.Float, CultureInfo.CurrentCulture);
+            return QuantityParser.Parse<UnitlessUnit, Unitless>(s, From, NumberStyles.Float, CultureInfo.CurrentCulture);
         }
 
         public static Unitless Parse(string s, IFormatProvider provider)
         {
-            return Parser.Parse<UnitlessUnit, Unitless>(s, From, NumberStyles.Float, provider);
+            return QuantityParser.Parse<UnitlessUnit, Unitless>(s, From, NumberStyles.Float, provider);
         }
 
         public static Unitless Parse(string s, NumberStyles styles)
         {
-            return Parser.Parse<UnitlessUnit, Unitless>(s, From, styles, CultureInfo.CurrentCulture);
+            return QuantityParser.Parse<UnitlessUnit, Unitless>(s, From, styles, CultureInfo.CurrentCulture);
         }
 
         public static Unitless Parse(string s, NumberStyles styles, IFormatProvider provider)
         {
-            return Parser.Parse<UnitlessUnit, Unitless>(s, From, styles, provider);
+            return QuantityParser.Parse<UnitlessUnit, Unitless>(s, From, styles, provider);
         }
 
         public static bool TryParse(string s, out Unitless value)
         {
-            return Parser.TryParse<UnitlessUnit, Unitless>(s, From, NumberStyles.Float, CultureInfo.CurrentCulture, out value);
+            return QuantityParser.TryParse<UnitlessUnit, Unitless>(s, From, NumberStyles.Float, CultureInfo.CurrentCulture, out value);
         }
 
         public static bool TryParse(string s, IFormatProvider provider, out Unitless value)
         {
-            return Parser.TryParse<UnitlessUnit, Unitless>(s, From, NumberStyles.Float, provider, out value);
+            return QuantityParser.TryParse<UnitlessUnit, Unitless>(s, From, NumberStyles.Float, provider, out value);
         }
 
         public static bool TryParse(string s, NumberStyles styles, out Unitless value)
         {
-            return Parser.TryParse<UnitlessUnit, Unitless>(s, From, styles, CultureInfo.CurrentCulture, out value);
+            return QuantityParser.TryParse<UnitlessUnit, Unitless>(s, From, styles, CultureInfo.CurrentCulture, out value);
         }
 
         public static bool TryParse(string s, NumberStyles styles, IFormatProvider provider, out Unitless value)
         {
-            return Parser.TryParse<UnitlessUnit, Unitless>(s, From, styles, provider, out value);
+            return QuantityParser.TryParse<UnitlessUnit, Unitless>(s, From, styles, provider, out value);
         }
 
         /// <summary>

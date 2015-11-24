@@ -54,12 +54,12 @@
 
         public static TorqueUnit Parse(string text)
         {
-            return Parser.ParseUnit<TorqueUnit>(text);
+            return UnitParser.Parse<TorqueUnit>(text);
         }
 
         public static bool TryParse(string text, out TorqueUnit value)
         {
-            return Parser.TryParseUnit<TorqueUnit>(text, out value);
+            return UnitParser.TryParse<TorqueUnit>(text, out value);
         }
 
         /// <summary>

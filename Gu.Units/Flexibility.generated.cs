@@ -97,42 +97,42 @@
         /// <returns></returns>
 		public static Flexibility Parse(string s)
         {
-            return Parser.Parse<FlexibilityUnit, Flexibility>(s, From, NumberStyles.Float, CultureInfo.CurrentCulture);
+            return QuantityParser.Parse<FlexibilityUnit, Flexibility>(s, From, NumberStyles.Float, CultureInfo.CurrentCulture);
         }
 
         public static Flexibility Parse(string s, IFormatProvider provider)
         {
-            return Parser.Parse<FlexibilityUnit, Flexibility>(s, From, NumberStyles.Float, provider);
+            return QuantityParser.Parse<FlexibilityUnit, Flexibility>(s, From, NumberStyles.Float, provider);
         }
 
         public static Flexibility Parse(string s, NumberStyles styles)
         {
-            return Parser.Parse<FlexibilityUnit, Flexibility>(s, From, styles, CultureInfo.CurrentCulture);
+            return QuantityParser.Parse<FlexibilityUnit, Flexibility>(s, From, styles, CultureInfo.CurrentCulture);
         }
 
         public static Flexibility Parse(string s, NumberStyles styles, IFormatProvider provider)
         {
-            return Parser.Parse<FlexibilityUnit, Flexibility>(s, From, styles, provider);
+            return QuantityParser.Parse<FlexibilityUnit, Flexibility>(s, From, styles, provider);
         }
 
         public static bool TryParse(string s, out Flexibility value)
         {
-            return Parser.TryParse<FlexibilityUnit, Flexibility>(s, From, NumberStyles.Float, CultureInfo.CurrentCulture, out value);
+            return QuantityParser.TryParse<FlexibilityUnit, Flexibility>(s, From, NumberStyles.Float, CultureInfo.CurrentCulture, out value);
         }
 
         public static bool TryParse(string s, IFormatProvider provider, out Flexibility value)
         {
-            return Parser.TryParse<FlexibilityUnit, Flexibility>(s, From, NumberStyles.Float, provider, out value);
+            return QuantityParser.TryParse<FlexibilityUnit, Flexibility>(s, From, NumberStyles.Float, provider, out value);
         }
 
         public static bool TryParse(string s, NumberStyles styles, out Flexibility value)
         {
-            return Parser.TryParse<FlexibilityUnit, Flexibility>(s, From, styles, CultureInfo.CurrentCulture, out value);
+            return QuantityParser.TryParse<FlexibilityUnit, Flexibility>(s, From, styles, CultureInfo.CurrentCulture, out value);
         }
 
         public static bool TryParse(string s, NumberStyles styles, IFormatProvider provider, out Flexibility value)
         {
-            return Parser.TryParse<FlexibilityUnit, Flexibility>(s, From, styles, provider, out value);
+            return QuantityParser.TryParse<FlexibilityUnit, Flexibility>(s, From, styles, provider, out value);
         }
 
         /// <summary>

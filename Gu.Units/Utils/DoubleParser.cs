@@ -2,7 +2,6 @@
 {
     using System;
     using System.Globalization;
-    using System.Text;
 
     internal static class DoubleParser
     {
@@ -280,21 +279,6 @@
         {
             // Check for undefined flags
             return (style & InvalidNumberStyles) == 0;
-        }
-
-        private static StringBuilder Append(this StringBuilder builder, Sign sign, NumberFormatInfo format)
-        {
-            switch (sign)
-            {
-                case Sign.Negative:
-                    return builder.Append(format.NegativeSign);
-                case Sign.None:
-                    return builder;
-                case Sign.Positive:
-                    return builder.Append(format.PositiveSign);
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(sign), sign, null);
-            }
         }
     }
 }

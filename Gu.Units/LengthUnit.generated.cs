@@ -174,12 +174,12 @@
 
         public static LengthUnit Parse(string text)
         {
-            return Parser.ParseUnit<LengthUnit>(text);
+            return UnitParser.Parse<LengthUnit>(text);
         }
 
         public static bool TryParse(string text, out LengthUnit value)
         {
-            return Parser.TryParseUnit<LengthUnit>(text, out value);
+            return UnitParser.TryParse<LengthUnit>(text, out value);
         }
 
         /// <summary>
@@ -213,7 +213,7 @@
         }
 
         /// <summary>
-        /// Gets the scalar value of <paramref name="quantity"/> in LengthUnit
+        /// Gets the scalar value of <paramref name="quantity"/> in Metres
         /// </summary>
         /// <param name="quantity"></param>
         /// <returns></returns>

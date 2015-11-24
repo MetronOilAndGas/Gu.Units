@@ -60,12 +60,12 @@
 
         public static ElectricChargeUnit Parse(string text)
         {
-            return Parser.ParseUnit<ElectricChargeUnit>(text);
+            return UnitParser.Parse<ElectricChargeUnit>(text);
         }
 
         public static bool TryParse(string text, out ElectricChargeUnit value)
         {
-            return Parser.TryParseUnit<ElectricChargeUnit>(text, out value);
+            return UnitParser.TryParse<ElectricChargeUnit>(text, out value);
         }
 
         /// <summary>

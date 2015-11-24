@@ -74,12 +74,12 @@
 
         public static TemperatureUnit Parse(string text)
         {
-            return Parser.ParseUnit<TemperatureUnit>(text);
+            return UnitParser.Parse<TemperatureUnit>(text);
         }
 
         public static bool TryParse(string text, out TemperatureUnit value)
         {
-            return Parser.TryParseUnit<TemperatureUnit>(text, out value);
+            return UnitParser.TryParse<TemperatureUnit>(text, out value);
         }
 
         /// <summary>

@@ -54,12 +54,12 @@
 
         public static StiffnessUnit Parse(string text)
         {
-            return Parser.ParseUnit<StiffnessUnit>(text);
+            return UnitParser.Parse<StiffnessUnit>(text);
         }
 
         public static bool TryParse(string text, out StiffnessUnit value)
         {
-            return Parser.TryParseUnit<StiffnessUnit>(text, out value);
+            return UnitParser.TryParse<StiffnessUnit>(text, out value);
         }
 
         /// <summary>

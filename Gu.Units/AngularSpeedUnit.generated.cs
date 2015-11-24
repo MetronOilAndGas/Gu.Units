@@ -96,12 +96,12 @@
 
         public static AngularSpeedUnit Parse(string text)
         {
-            return Parser.ParseUnit<AngularSpeedUnit>(text);
+            return UnitParser.Parse<AngularSpeedUnit>(text);
         }
 
         public static bool TryParse(string text, out AngularSpeedUnit value)
         {
-            return Parser.TryParseUnit<AngularSpeedUnit>(text, out value);
+            return UnitParser.TryParse<AngularSpeedUnit>(text, out value);
         }
 
         /// <summary>

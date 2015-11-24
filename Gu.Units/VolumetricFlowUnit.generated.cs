@@ -54,12 +54,12 @@
 
         public static VolumetricFlowUnit Parse(string text)
         {
-            return Parser.ParseUnit<VolumetricFlowUnit>(text);
+            return UnitParser.Parse<VolumetricFlowUnit>(text);
         }
 
         public static bool TryParse(string text, out VolumetricFlowUnit value)
         {
-            return Parser.TryParseUnit<VolumetricFlowUnit>(text, out value);
+            return UnitParser.TryParse<VolumetricFlowUnit>(text, out value);
         }
 
         /// <summary>

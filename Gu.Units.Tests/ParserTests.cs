@@ -35,7 +35,7 @@
                 var cultureInfo = CultureInfo.GetCultureInfo(culture);
                 var numberStyles = NumberStyles.Float;
 
-                var length = Parser.Parse<LengthUnit, Length>(s, Length.From, numberStyles, cultureInfo);
+                var length = QuantityParser.Parse<LengthUnit, Length>(s, Length.From, numberStyles, cultureInfo);
                 Assert.AreEqual(expected, length.Metres);
 
                 length = Length.Parse(s, numberStyles, cultureInfo);
@@ -53,7 +53,7 @@
             {
                 var cultureInfo = CultureInfo.GetCultureInfo(culture);
                 var numberStyles = NumberStyles.Float;
-                var ex1 = Assert.Throws<FormatException>(() => Parser.Parse<LengthUnit, Length>(s, Length.From, numberStyles, cultureInfo));
+                var ex1 = Assert.Throws<FormatException>(() => QuantityParser.Parse<LengthUnit, Length>(s, Length.From, numberStyles, cultureInfo));
                 var ex2 = Assert.Throws<FormatException>(() => Length.Parse(s, numberStyles, cultureInfo));
                 var ex3 = Assert.Throws<FormatException>(() => Length.Parse(s, cultureInfo));
 
@@ -87,7 +87,7 @@
             {
                 var cultureInfo = CultureInfo.GetCultureInfo(culture);
                 Length length;
-                var success = Parser.TryParse<LengthUnit, Length>(
+                var success = QuantityParser.TryParse<LengthUnit, Length>(
                     s,
                     Length.From,
                     NumberStyles.Float,
@@ -113,7 +113,7 @@
             {
                 var cultureInfo = CultureInfo.GetCultureInfo(culture);
                 Length length;
-                var success = Parser.TryParse<LengthUnit, Length>(
+                var success = QuantityParser.TryParse<LengthUnit, Length>(
                     s,
                     Length.From,
                     NumberStyles.Float,
@@ -158,11 +158,11 @@
             var text = data.Text;
             if (data.Tokens == null)
             {
-                Assert.Throws<FormatException>(() => Parser.TokenizeUnit(text));
+                Assert.Throws<FormatException>(() => Symbol.TokenizeUnit(text));
             }
             else
             {
-                var actual = Parser.TokenizeUnit(text);
+                var actual = Symbol.TokenizeUnit(text);
                 Console.WriteLine("expected: {0}", data.ToString(data.Tokens));
                 Console.WriteLine("actual:   {0}", data.ToString(actual));
                 CollectionAssert.AreEqual(data.Tokens, actual);
@@ -174,7 +174,7 @@
         public void Exceptions(string s, string culture)
         {
             var cultureInfo = CultureInfo.GetCultureInfo(culture);
-            Assert.Throws<FormatException>(() => Parser.Parse<LengthUnit, Length>(s, Length.From, NumberStyles.Float, cultureInfo));
+            Assert.Throws<FormatException>(() => QuantityParser.Parse<LengthUnit, Length>(s, Length.From, NumberStyles.Float, cultureInfo));
         }
     }
 }

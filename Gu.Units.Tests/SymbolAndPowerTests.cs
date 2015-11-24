@@ -33,10 +33,10 @@
                 SymbolAndPower sap;
                 if (power < 0 && sign == Sign.Negative)
                 {
-                    Assert.Throws<FormatException>(() => SymbolAndPower.Read(s, ref pos, ref sign));
+                    Assert.Throws<FormatException>(() => SymbolAndPower.Parse(s, ref pos, ref sign));
                     return;
                 }
-                sap = SymbolAndPower.Read(s, ref pos, ref sign);
+                sap = SymbolAndPower.Parse(s, ref pos, ref sign);
                 Assert.AreEqual(symbol, sap.Symbol);
                 if (si == Sign.Negative)
                 {

@@ -60,12 +60,12 @@
 
         public static CapacitanceUnit Parse(string text)
         {
-            return Parser.ParseUnit<CapacitanceUnit>(text);
+            return UnitParser.Parse<CapacitanceUnit>(text);
         }
 
         public static bool TryParse(string text, out CapacitanceUnit value)
         {
-            return Parser.TryParseUnit<CapacitanceUnit>(text, out value);
+            return UnitParser.TryParse<CapacitanceUnit>(text, out value);
         }
 
         /// <summary>

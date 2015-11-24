@@ -108,12 +108,12 @@
 
         public static VoltageUnit Parse(string text)
         {
-            return Parser.ParseUnit<VoltageUnit>(text);
+            return UnitParser.Parse<VoltageUnit>(text);
         }
 
         public static bool TryParse(string text, out VoltageUnit value)
         {
-            return Parser.TryParseUnit<VoltageUnit>(text, out value);
+            return UnitParser.TryParse<VoltageUnit>(text, out value);
         }
 
         /// <summary>

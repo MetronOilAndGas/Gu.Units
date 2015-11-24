@@ -4,13 +4,6 @@
 
     internal struct SymbolAndPower : IEquatable<SymbolAndPower>
     {
-        private const string Superscripts = "⁺⁻⁰¹²³⁴⁵⁶⁷⁸⁹";
-        private const string SuperscriptDigits = "⁰¹²³⁴⁵⁶⁷⁸⁹";
-        private const char MultiplyDot = '⋅';
-        private const char MultiplyStar = '*';
-        private const char MultiplyX = 'x';
-        private const char Divide = '/';
-
         public readonly string Symbol;
         public readonly int Power;
 
@@ -43,11 +36,11 @@
             }
             else if (Power > 1)
             {
-                p = new string(SuperscriptDigits[Power], 1);
+                p = new string(PowerParser.SuperscriptDigits[Power], 1);
             }
             else
             {
-                p = new string(new[] { '⁻', SuperscriptDigits[-1 * Power] });
+                p = new string(new[] { '⁻', PowerParser.SuperscriptDigits[-1 * Power] });
             }
             return $"{this.Symbol}{p}";
         }
@@ -74,59 +67,65 @@
             }
         }
 
-        internal static SymbolAndPower Read(string s, ref int pos, ref Sign sign)
+        internal static SymbolAndPower Parse(string text, ref int pos, ref Sign sign)
         {
             if (sign == Sign.None)
             {
                 throw new ArgumentException("Sign cannot be none", nameof(sign));
             }
-            ReadWhiteSpace(s, ref pos);
-            if (pos == s.Length)
+
+            text.ReadWhiteSpace(ref pos);
+
+            if (pos == text.Length)
             {
-                throw new FormatException($"Expected symbol or operator. {s} position: end");
+                throw new FormatException($"Expected symbol or operator. {text} position: end");
             }
 
-            var op = ReadOperator(s, ref pos);
+            var op = OperatorParser.Parse(text, ref pos);
             if (op != Operator.None)
             {
-                ReadWhiteSpace(s, ref pos);
-                if (ReadOperator(s, ref pos) != Operator.None)
+                text.ReadWhiteSpace(ref pos);
+                if (OperatorParser.Parse(text, ref pos) != Operator.None)
                 {
-                    var message = $"Cannot have multiple operators in a row. {s} position: {pos}";
+                    var message = $"Cannot have multiple operators in a row. {text} position: {pos}";
                     throw new FormatException(message);
                 }
+
                 if (op == Operator.Division)
                 {
                     if (sign == Sign.Negative)
                     {
-                        throw new FormatException($"String cannot contain / twice. String is: {s}");
+                        throw new FormatException($"String cannot contain / twice. String is: {text}");
                     }
+
                     sign = Sign.Negative;
                 }
             }
-            ReadWhiteSpace(s, ref pos);
-            return ReadSymbolAndPower(s, ref pos, sign);
+
+            text.ReadWhiteSpace(ref pos);
+            return ReadSymbolAndPower(text, ref pos, sign);
         }
 
-        internal static bool TryRead(string s, ref int pos, ref Sign sign, out SymbolAndPower result)
+        internal static bool TryParse(string text, ref int pos, ref Sign sign, out SymbolAndPower result)
         {
             if (sign == Sign.None)
             {
                 result = default(SymbolAndPower);
                 return false;
             }
-            ReadWhiteSpace(s, ref pos);
-            if (pos == s.Length)
+
+            text.ReadWhiteSpace(ref pos);
+            if (pos == text.Length)
             {
                 result = default(SymbolAndPower);
                 return false;
             }
 
-            var op = ReadOperator(s, ref pos);
+            var op = OperatorParser.Parse(text, ref pos);
             if (op != Operator.None)
             {
-                ReadWhiteSpace(s, ref pos);
-                if (ReadOperator(s, ref pos) != Operator.None)
+                text.ReadWhiteSpace(ref pos);
+                if (OperatorParser.Parse(text, ref pos) != Operator.None)
                 {
                     result = default(SymbolAndPower);
                     return false;
@@ -141,36 +140,15 @@
                     sign = Sign.Negative;
                 }
             }
-            ReadWhiteSpace(s, ref pos);
-            return TryReadSymbolAndPower(s, ref pos, sign,out result);
+
+            text.ReadWhiteSpace(ref pos);
+            return TryReadSymbolAndPower(text, ref pos, sign, out result);
         }
 
-        internal static bool CanRead(string s, ref int pos)
+        internal static bool CanRead(string text, ref int pos)
         {
-            ReadWhiteSpace(s, ref pos);
-            return pos < s.Length;
-        }
-
-        private static Operator ReadOperator(string s, ref int pos)
-        {
-            if (pos == s.Length)
-            {
-                return Operator.None;
-            }
-
-            if (s[pos] == MultiplyDot || s[pos] == MultiplyStar || s[pos] == MultiplyX)
-            {
-                pos++;
-                return Operator.Multiply;
-            }
-
-            if (s[pos] == Divide)
-            {
-                pos++;
-                return Operator.Division;
-            }
-
-            return Operator.None;
+            text.ReadWhiteSpace(ref pos);
+            return pos < text.Length;
         }
 
         private static SymbolAndPower ReadSymbolAndPower(string s, ref int pos, Sign sign)
@@ -185,11 +163,11 @@
                 throw new FormatException($"No symbol found at {pos} in {s}");
             }
             var symbol = s.Substring(start, pos - start);
-            ReadWhiteSpace(s, ref pos);
+            s.ReadWhiteSpace(ref pos);
 
             var power = s.Length == pos
                             ? 1
-                            : ReadPower(s, ref pos);
+                            : PowerParser.Parse(s, ref pos);
             if (power == 0)
             {
                 throw new FormatException($"Power cannot be 0, error at {start + symbol.Length} in {s}");
@@ -214,11 +192,11 @@
                 return false;
             }
             var symbol = s.Substring(start, pos - start);
-            ReadWhiteSpace(s, ref pos);
+            s.ReadWhiteSpace(ref pos);
 
             var power = s.Length == pos
                             ? 1
-                            : ReadPower(s, ref pos);
+                            : PowerParser.Parse(s, ref pos);
             if (power == 0)
             {
                 result = default(SymbolAndPower);
@@ -240,107 +218,7 @@
                 return true;
             }
 
-            return Char.IsLetter(c);
-        }
-
-        private static int ReadPower(string s, ref int pos)
-        {
-            ReadWhiteSpace(s, ref pos);
-            if (s[pos] == '^')
-            {
-                return ReadHatPower(s, ref pos);
-            }
-            if (Superscripts.IndexOf(s[pos]) == -1)
-            {
-                return 1;
-            }
-            return ReadSuperScriptPower(s, ref pos);
-        }
-
-        private static int ReadHatPower(string s, ref int pos)
-        {
-            if (s[pos] != '^')
-            {
-                throw new InvalidOperationException();
-            }
-            pos++;
-            ReadWhiteSpace(s, ref pos);
-            var ps = ReadSign(s, ref pos);
-            if (ps == Sign.None)
-            {
-                ps = Sign.Positive;
-            }
-            ReadWhiteSpace(s, ref pos);
-            var i = ReadSingleCharInt(s, ref pos);
-            return (int)ps * i;
-        }
-
-        private static int ReadSuperScriptPower(string s, ref int pos)
-        {
-            if (Superscripts.IndexOf(s[pos]) == -1)
-            {
-                throw new InvalidOperationException();
-            }
-
-            var ps = ReadSuperScriptSign(s, ref pos);
-            if (ps == Sign.None)
-            {
-                ps = Sign.Positive;
-            }
-            ReadWhiteSpace(s, ref pos);
-            var i = ReadSingleCharSuperScriptInt(s, ref pos);
-            return (int)ps * i;
-        }
-
-        private static Sign ReadSuperScriptSign(string s, ref int pos)
-        {
-            var sign = Sign.None;
-            if (s[pos] == '⁺')
-            {
-                sign = Sign.Positive;
-            }
-
-            if (s[pos] == '⁻')
-            {
-                sign = Sign.Negative;
-            }
-
-            if (sign != Sign.None)
-            {
-                pos++;
-            }
-            return sign;
-        }
-
-        private static int ReadSingleCharInt(string s, ref int pos)
-        {
-            if (!Char.IsDigit(s[pos]))
-            {
-                throw new FormatException($"Expected digit at pos: {pos} in {s} was {s[pos]}");
-            }
-            int i = (int)Char.GetNumericValue(s[pos]);
-            pos++;
-            if (pos < s.Length && Char.IsDigit(s[pos]))
-            {
-                throw new FormatException($"Did not expect digit at pos: {pos} in {s} was {s[pos]}");
-            }
-            return i;
-        }
-
-        private static int ReadSingleCharSuperScriptInt(string s, ref int pos)
-        {
-            var indexOf = SuperscriptDigits.IndexOf(s[pos]);
-            if (indexOf == -1)
-            {
-                throw new FormatException($"Expected digit at pos: {pos} in {s} was {s[pos]}");
-            }
-            int i = indexOf;
-            pos++;
-            if (pos < s.Length && SuperscriptDigits.IndexOf(s[pos]) != -1)
-            {
-                throw new FormatException($"Did not expect digit at pos: {pos} in {s} was {s[pos]}");
-            }
-            return i;
+            return char.IsLetter(c);
         }
 
         private static bool Read(string s, ref int pos, string toRead)
@@ -356,41 +234,6 @@
                 pos++;
             }
             return true;
-        }
-
-        private static Sign ReadSign(string s, ref int pos)
-        {
-            var sign = Sign.None;
-            if (s[pos] == '+')
-            {
-                sign = Sign.Positive;
-            }
-
-            if (s[pos] == '-')
-            {
-                sign = Sign.Negative;
-            }
-
-            if (sign != Sign.None)
-            {
-                pos++;
-            }
-            return sign;
-        }
-
-        private static void ReadWhiteSpace(string s, ref int pos)
-        {
-            while (s.Length > pos && Char.IsWhiteSpace(s[pos]))
-            {
-                pos++;
-            }
-        }
-
-        private enum Operator
-        {
-            None,
-            Multiply,
-            Division
         }
     }
 }

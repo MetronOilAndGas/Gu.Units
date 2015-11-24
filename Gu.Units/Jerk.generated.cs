@@ -174,42 +174,42 @@
         /// <returns></returns>
 		public static Jerk Parse(string s)
         {
-            return Parser.Parse<JerkUnit, Jerk>(s, From, NumberStyles.Float, CultureInfo.CurrentCulture);
+            return QuantityParser.Parse<JerkUnit, Jerk>(s, From, NumberStyles.Float, CultureInfo.CurrentCulture);
         }
 
         public static Jerk Parse(string s, IFormatProvider provider)
         {
-            return Parser.Parse<JerkUnit, Jerk>(s, From, NumberStyles.Float, provider);
+            return QuantityParser.Parse<JerkUnit, Jerk>(s, From, NumberStyles.Float, provider);
         }
 
         public static Jerk Parse(string s, NumberStyles styles)
         {
-            return Parser.Parse<JerkUnit, Jerk>(s, From, styles, CultureInfo.CurrentCulture);
+            return QuantityParser.Parse<JerkUnit, Jerk>(s, From, styles, CultureInfo.CurrentCulture);
         }
 
         public static Jerk Parse(string s, NumberStyles styles, IFormatProvider provider)
         {
-            return Parser.Parse<JerkUnit, Jerk>(s, From, styles, provider);
+            return QuantityParser.Parse<JerkUnit, Jerk>(s, From, styles, provider);
         }
 
         public static bool TryParse(string s, out Jerk value)
         {
-            return Parser.TryParse<JerkUnit, Jerk>(s, From, NumberStyles.Float, CultureInfo.CurrentCulture, out value);
+            return QuantityParser.TryParse<JerkUnit, Jerk>(s, From, NumberStyles.Float, CultureInfo.CurrentCulture, out value);
         }
 
         public static bool TryParse(string s, IFormatProvider provider, out Jerk value)
         {
-            return Parser.TryParse<JerkUnit, Jerk>(s, From, NumberStyles.Float, provider, out value);
+            return QuantityParser.TryParse<JerkUnit, Jerk>(s, From, NumberStyles.Float, provider, out value);
         }
 
         public static bool TryParse(string s, NumberStyles styles, out Jerk value)
         {
-            return Parser.TryParse<JerkUnit, Jerk>(s, From, styles, CultureInfo.CurrentCulture, out value);
+            return QuantityParser.TryParse<JerkUnit, Jerk>(s, From, styles, CultureInfo.CurrentCulture, out value);
         }
 
         public static bool TryParse(string s, NumberStyles styles, IFormatProvider provider, out Jerk value)
         {
-            return Parser.TryParse<JerkUnit, Jerk>(s, From, styles, provider, out value);
+            return QuantityParser.TryParse<JerkUnit, Jerk>(s, From, styles, provider, out value);
         }
 
         /// <summary>

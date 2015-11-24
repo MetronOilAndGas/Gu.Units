@@ -119,42 +119,42 @@
         /// <returns></returns>
 		public static AngularAcceleration Parse(string s)
         {
-            return Parser.Parse<AngularAccelerationUnit, AngularAcceleration>(s, From, NumberStyles.Float, CultureInfo.CurrentCulture);
+            return QuantityParser.Parse<AngularAccelerationUnit, AngularAcceleration>(s, From, NumberStyles.Float, CultureInfo.CurrentCulture);
         }
 
         public static AngularAcceleration Parse(string s, IFormatProvider provider)
         {
-            return Parser.Parse<AngularAccelerationUnit, AngularAcceleration>(s, From, NumberStyles.Float, provider);
+            return QuantityParser.Parse<AngularAccelerationUnit, AngularAcceleration>(s, From, NumberStyles.Float, provider);
         }
 
         public static AngularAcceleration Parse(string s, NumberStyles styles)
         {
-            return Parser.Parse<AngularAccelerationUnit, AngularAcceleration>(s, From, styles, CultureInfo.CurrentCulture);
+            return QuantityParser.Parse<AngularAccelerationUnit, AngularAcceleration>(s, From, styles, CultureInfo.CurrentCulture);
         }
 
         public static AngularAcceleration Parse(string s, NumberStyles styles, IFormatProvider provider)
         {
-            return Parser.Parse<AngularAccelerationUnit, AngularAcceleration>(s, From, styles, provider);
+            return QuantityParser.Parse<AngularAccelerationUnit, AngularAcceleration>(s, From, styles, provider);
         }
 
         public static bool TryParse(string s, out AngularAcceleration value)
         {
-            return Parser.TryParse<AngularAccelerationUnit, AngularAcceleration>(s, From, NumberStyles.Float, CultureInfo.CurrentCulture, out value);
+            return QuantityParser.TryParse<AngularAccelerationUnit, AngularAcceleration>(s, From, NumberStyles.Float, CultureInfo.CurrentCulture, out value);
         }
 
         public static bool TryParse(string s, IFormatProvider provider, out AngularAcceleration value)
         {
-            return Parser.TryParse<AngularAccelerationUnit, AngularAcceleration>(s, From, NumberStyles.Float, provider, out value);
+            return QuantityParser.TryParse<AngularAccelerationUnit, AngularAcceleration>(s, From, NumberStyles.Float, provider, out value);
         }
 
         public static bool TryParse(string s, NumberStyles styles, out AngularAcceleration value)
         {
-            return Parser.TryParse<AngularAccelerationUnit, AngularAcceleration>(s, From, styles, CultureInfo.CurrentCulture, out value);
+            return QuantityParser.TryParse<AngularAccelerationUnit, AngularAcceleration>(s, From, styles, CultureInfo.CurrentCulture, out value);
         }
 
         public static bool TryParse(string s, NumberStyles styles, IFormatProvider provider, out AngularAcceleration value)
         {
-            return Parser.TryParse<AngularAccelerationUnit, AngularAcceleration>(s, From, styles, provider, out value);
+            return QuantityParser.TryParse<AngularAccelerationUnit, AngularAcceleration>(s, From, styles, provider, out value);
         }
 
         /// <summary>

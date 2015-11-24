@@ -64,42 +64,42 @@
         /// <returns></returns>
 		public static Stiffness Parse(string s)
         {
-            return Parser.Parse<StiffnessUnit, Stiffness>(s, From, NumberStyles.Float, CultureInfo.CurrentCulture);
+            return QuantityParser.Parse<StiffnessUnit, Stiffness>(s, From, NumberStyles.Float, CultureInfo.CurrentCulture);
         }
 
         public static Stiffness Parse(string s, IFormatProvider provider)
         {
-            return Parser.Parse<StiffnessUnit, Stiffness>(s, From, NumberStyles.Float, provider);
+            return QuantityParser.Parse<StiffnessUnit, Stiffness>(s, From, NumberStyles.Float, provider);
         }
 
         public static Stiffness Parse(string s, NumberStyles styles)
         {
-            return Parser.Parse<StiffnessUnit, Stiffness>(s, From, styles, CultureInfo.CurrentCulture);
+            return QuantityParser.Parse<StiffnessUnit, Stiffness>(s, From, styles, CultureInfo.CurrentCulture);
         }
 
         public static Stiffness Parse(string s, NumberStyles styles, IFormatProvider provider)
         {
-            return Parser.Parse<StiffnessUnit, Stiffness>(s, From, styles, provider);
+            return QuantityParser.Parse<StiffnessUnit, Stiffness>(s, From, styles, provider);
         }
 
         public static bool TryParse(string s, out Stiffness value)
         {
-            return Parser.TryParse<StiffnessUnit, Stiffness>(s, From, NumberStyles.Float, CultureInfo.CurrentCulture, out value);
+            return QuantityParser.TryParse<StiffnessUnit, Stiffness>(s, From, NumberStyles.Float, CultureInfo.CurrentCulture, out value);
         }
 
         public static bool TryParse(string s, IFormatProvider provider, out Stiffness value)
         {
-            return Parser.TryParse<StiffnessUnit, Stiffness>(s, From, NumberStyles.Float, provider, out value);
+            return QuantityParser.TryParse<StiffnessUnit, Stiffness>(s, From, NumberStyles.Float, provider, out value);
         }
 
         public static bool TryParse(string s, NumberStyles styles, out Stiffness value)
         {
-            return Parser.TryParse<StiffnessUnit, Stiffness>(s, From, styles, CultureInfo.CurrentCulture, out value);
+            return QuantityParser.TryParse<StiffnessUnit, Stiffness>(s, From, styles, CultureInfo.CurrentCulture, out value);
         }
 
         public static bool TryParse(string s, NumberStyles styles, IFormatProvider provider, out Stiffness value)
         {
-            return Parser.TryParse<StiffnessUnit, Stiffness>(s, From, styles, provider, out value);
+            return QuantityParser.TryParse<StiffnessUnit, Stiffness>(s, From, styles, provider, out value);
         }
 
         /// <summary>

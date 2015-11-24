@@ -66,12 +66,12 @@
 
         public static AngleUnit Parse(string text)
         {
-            return Parser.ParseUnit<AngleUnit>(text);
+            return UnitParser.Parse<AngleUnit>(text);
         }
 
         public static bool TryParse(string text, out AngleUnit value)
         {
-            return Parser.TryParseUnit<AngleUnit>(text, out value);
+            return UnitParser.TryParse<AngleUnit>(text, out value);
         }
 
         /// <summary>

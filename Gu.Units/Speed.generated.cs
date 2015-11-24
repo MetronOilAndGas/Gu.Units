@@ -163,42 +163,42 @@
         /// <returns></returns>
 		public static Speed Parse(string s)
         {
-            return Parser.Parse<SpeedUnit, Speed>(s, From, NumberStyles.Float, CultureInfo.CurrentCulture);
+            return QuantityParser.Parse<SpeedUnit, Speed>(s, From, NumberStyles.Float, CultureInfo.CurrentCulture);
         }
 
         public static Speed Parse(string s, IFormatProvider provider)
         {
-            return Parser.Parse<SpeedUnit, Speed>(s, From, NumberStyles.Float, provider);
+            return QuantityParser.Parse<SpeedUnit, Speed>(s, From, NumberStyles.Float, provider);
         }
 
         public static Speed Parse(string s, NumberStyles styles)
         {
-            return Parser.Parse<SpeedUnit, Speed>(s, From, styles, CultureInfo.CurrentCulture);
+            return QuantityParser.Parse<SpeedUnit, Speed>(s, From, styles, CultureInfo.CurrentCulture);
         }
 
         public static Speed Parse(string s, NumberStyles styles, IFormatProvider provider)
         {
-            return Parser.Parse<SpeedUnit, Speed>(s, From, styles, provider);
+            return QuantityParser.Parse<SpeedUnit, Speed>(s, From, styles, provider);
         }
 
         public static bool TryParse(string s, out Speed value)
         {
-            return Parser.TryParse<SpeedUnit, Speed>(s, From, NumberStyles.Float, CultureInfo.CurrentCulture, out value);
+            return QuantityParser.TryParse<SpeedUnit, Speed>(s, From, NumberStyles.Float, CultureInfo.CurrentCulture, out value);
         }
 
         public static bool TryParse(string s, IFormatProvider provider, out Speed value)
         {
-            return Parser.TryParse<SpeedUnit, Speed>(s, From, NumberStyles.Float, provider, out value);
+            return QuantityParser.TryParse<SpeedUnit, Speed>(s, From, NumberStyles.Float, provider, out value);
         }
 
         public static bool TryParse(string s, NumberStyles styles, out Speed value)
         {
-            return Parser.TryParse<SpeedUnit, Speed>(s, From, styles, CultureInfo.CurrentCulture, out value);
+            return QuantityParser.TryParse<SpeedUnit, Speed>(s, From, styles, CultureInfo.CurrentCulture, out value);
         }
 
         public static bool TryParse(string s, NumberStyles styles, IFormatProvider provider, out Speed value)
         {
-            return Parser.TryParse<SpeedUnit, Speed>(s, From, styles, provider, out value);
+            return QuantityParser.TryParse<SpeedUnit, Speed>(s, From, styles, provider, out value);
         }
 
         /// <summary>
