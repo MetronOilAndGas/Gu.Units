@@ -34,11 +34,11 @@
             }
             else if (Power > 1)
             {
-                p = new string(PowerParser.SuperscriptDigits[Power], 1);
+                p = new string(PowerReader.SuperscriptDigits[Power], 1);
             }
             else
             {
-                p = new string(new[] { '⁻', PowerParser.SuperscriptDigits[-1 * Power] });
+                p = new string(new[] { '⁻', PowerReader.SuperscriptDigits[-1 * Power] });
             }
 
             return $"{this.Symbol}{p}";

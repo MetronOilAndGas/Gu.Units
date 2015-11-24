@@ -205,6 +205,7 @@
     <Compile Include="Interfaces\IUnit`1.cs" />
     <Compile Include="Internals\Ensure\Ensure.cs" />
     <Compile Include="Internals\Ensure\Ensure.string.cs" />
+    <Compile Include="Internals\Parsing\IntReader.cs" />
     <Compile Include="Internals\Parsing\SymbolAndPowerParser.cs" />
     <Compile Include="Jerk.generated.cs">
       <DependentUpon>QuantityGenerator.txt4</DependentUpon>
@@ -403,10 +404,10 @@
     <Compile Include="UnitlessUnitTypeConverter.generated.cs">
       <DependentUpon>UnitTypeConverterGenerator.txt4</DependentUpon>
     </Compile>
-    <Compile Include="Internals\Parsing\DoubleParser.cs" />
+    <Compile Include="Internals\Parsing\DoubleReader.cs" />
     <Compile Include="Internals\Parsing\MultiplyOrDivide.cs" />
-    <Compile Include="Internals\Parsing\OperatorParser.cs" />
-    <Compile Include="Internals\Parsing\PowerParser.cs" />
+    <Compile Include="Internals\Parsing\OperatorReader.cs" />
+    <Compile Include="Internals\Parsing\PowerReader.cs" />
     <Compile Include="Internals\Parsing\QuantityParser.cs" />
     <Compile Include="Internals\Parsing\Sign.cs" />
     <Compile Include="Internals\Parsing\StringExt.cs" />

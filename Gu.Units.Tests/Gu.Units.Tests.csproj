@@ -45,9 +45,12 @@
   <ItemGroup>
     <Compile Include="ArithmeticsTests.cs" />
     <Compile Include="ConversionTests.cs" />
-    <Compile Include="Internals\Parsing\DoubleParserTests.cs" />
+    <Compile Include="Internals\Parsing\DoubleReaderTests.cs" />
     <Compile Include="EnumerableTests.cs" />
-    <Compile Include="Internals\Parsing\PowerParserTests.cs" />
+    <Compile Include="Internals\Parsing\IntReaderTests.cs" />
+    <Compile Include="Internals\Parsing\PowerReaderTests.cs" />
+    <Compile Include="Internals\Parsing\SuccessData.cs" />
+    <Compile Include="Internals\Parsing\SuccessData{T}.cs" />
     <Compile Include="Internals\Parsing\SymbolTests.cs" />
     <Compile Include="QuantityTests.cs" />
     <Compile Include="Samples\Samples.cs" />

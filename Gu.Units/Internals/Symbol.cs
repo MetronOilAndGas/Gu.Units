@@ -57,11 +57,11 @@ namespace Gu.Units
                 tokens.Add(sap);
 
 
-                var op = OperatorParser.TryReadMultiplyOrDivide(text, ref pos);
+                var op = OperatorReader.TryReadMultiplyOrDivide(text, ref pos);
                 if (op != MultiplyOrDivide.None)
                 {
                     text.ReadWhiteSpace(ref pos);
-                    if (OperatorParser.TryReadMultiplyOrDivide(text, ref pos) != MultiplyOrDivide.None)
+                    if (OperatorReader.TryReadMultiplyOrDivide(text, ref pos) != MultiplyOrDivide.None)
                     {
                         var message = $"Cannot have multiple operators in a row. {text} position: {pos}";
                         throw new FormatException(message);
@@ -113,11 +113,11 @@ namespace Gu.Units
                 tokens.Add(sap);
 
 
-                var op = OperatorParser.TryReadMultiplyOrDivide(text, ref pos);
+                var op = OperatorReader.TryReadMultiplyOrDivide(text, ref pos);
                 if (op != MultiplyOrDivide.None)
                 {
                     text.ReadWhiteSpace(ref pos);
-                    if (OperatorParser.TryReadMultiplyOrDivide(text, ref pos) != MultiplyOrDivide.None)
+                    if (OperatorReader.TryReadMultiplyOrDivide(text, ref pos) != MultiplyOrDivide.None)
                     {
                         result = Empty;
                         return false;

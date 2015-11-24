@@ -3,7 +3,7 @@
     using System;
     using System.Globalization;
 
-    internal static class DoubleParser
+    internal static class DoubleReader
     {
         private const NumberStyles InvalidNumberStyles = ~(NumberStyles.AllowLeadingWhite |
                                                            NumberStyles.AllowTrailingWhite |
@@ -20,7 +20,7 @@
         private const string ExponentNotAllowed = "Exponent not allowed";
         private const string DecimalPointNotAllowed = "Decimal point not allowed";
 
-        internal static double Parse(
+        internal static double Read(
             string text,
             int start,
             NumberStyles style,
@@ -38,7 +38,7 @@
             }
 
             double result;
-            if (TryParse(text, start, style, provider, out result, out endPos))
+            if (TryRead(text, start, style, provider, out result, out endPos))
             {
                 return result;
             }
@@ -49,7 +49,7 @@
             throw new FormatException(message);
         }
 
-        internal static bool TryParse(
+        internal static bool TryRead(
             string text,
             int start,
             NumberStyles style,

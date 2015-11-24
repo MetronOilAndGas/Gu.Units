@@ -1,13 +1,13 @@
 ﻿namespace Gu.Units
 {
-    internal static class OperatorParser
+    internal static class OperatorReader
     {
         private const char MultiplyDot = '⋅';
         private const char MultiplyStar = '*';
         private const char MultiplyX = 'x';
         private const char Divide = '/';
 
-        internal static MultiplyOrDivide Parse(string s, ref int pos)
+        internal static MultiplyOrDivide TryReadMultiplyOrDivide(string s, ref int pos)
         {
             if (pos == s.Length)
             {
@@ -29,24 +29,21 @@
             return MultiplyOrDivide.None;
         }
 
-        internal static Sign ReadSign(string s, ref int pos)
+        internal static Sign TryReadSign(string s, ref int pos)
         {
-            var sign = Sign.None;
             if (s[pos] == '+')
             {
-                sign = Sign.Positive;
+                pos++;
+                return Sign.Positive;
             }
 
             if (s[pos] == '-')
             {
-                sign = Sign.Negative;
+                pos++;
+                return Sign.Negative;
             }
 
-            if (sign != Sign.None)
-            {
-                pos++;
-            }
-            return sign;
+            return Sign.None;
         }
     }
 }

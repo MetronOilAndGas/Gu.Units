@@ -27,7 +27,7 @@
 
             var power = text.Length == pos
                             ? 1
-                            : PowerParser.Parse(text, ref pos);
+                            : PowerReader.Read(text, ref pos);
             if (power == 0)
             {
                 throw new FormatException($"Power cannot be 0, error at {start + symbol.Length} in {text}");
@@ -61,7 +61,7 @@
 
             var power = text.Length == pos
                             ? 1
-                            : PowerParser.Parse(text, ref pos);
+                            : PowerReader.Read(text, ref pos);
             if (power == 0)
             {
                 result = default(SymbolAndPower);

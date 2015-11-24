@@ -15,7 +15,7 @@
             try
             {
                 int end;
-                var d = DoubleParser.Parse(s, 0, style, provider, out end);
+                var d = DoubleReader.Read(s, 0, style, provider, out end);
                 var us = s.Substring(end, s.Length - end);
                 var unit = UnitParser.Parse<TUnit>(us);
                 return creator(d, unit);
@@ -38,7 +38,7 @@
             }
             int end;
             double d;
-            if (!DoubleParser.TryParse(s, 0, style, provider, out d, out end))
+            if (!DoubleReader.TryRead(s, 0, style, provider, out d, out end))
             {
                 value = default(TQuantity);
                 return false;
