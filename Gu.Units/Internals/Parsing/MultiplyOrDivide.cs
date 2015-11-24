@@ -1,6 +1,6 @@
 namespace Gu.Units
 {
-    internal enum Operator
+    internal enum MultiplyOrDivide
     {
         None,
         Multiply,

@@ -1,12 +1,10 @@
-﻿namespace Gu.Units.Tests
+﻿namespace Gu.Units.Tests.Internals.Parsing
 {
     using System;
     using System.Globalization;
     using System.Threading;
-
-    using Gu.Units.Tests.Sources;
-
     using NUnit.Framework;
+    using Sources;
 
     public class ParserTests
     {
@@ -150,23 +148,6 @@
         {
             var actual = AreaUnit.Parse(s);
             Assert.AreEqual(AreaUnit.SquareMillimetres, actual);
-        }
-
-        [TestCaseSource(typeof(TokenSource))]
-        internal void Tokenize(TokenSource.TokenData data)
-        {
-            var text = data.Text;
-            if (data.Tokens == null)
-            {
-                Assert.Throws<FormatException>(() => Symbol.TokenizeUnit(text));
-            }
-            else
-            {
-                var actual = Symbol.TokenizeUnit(text);
-                Console.WriteLine("expected: {0}", data.ToString(data.Tokens));
-                Console.WriteLine("actual:   {0}", data.ToString(actual));
-                CollectionAssert.AreEqual(data.Tokens, actual);
-            }
         }
 
         [TestCase("1.0cm", "sv-se")]

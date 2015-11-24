@@ -9,7 +9,6 @@
 
         internal static int Parse(string s, ref int pos)
         {
-            //ReadWhiteSpace(s, ref pos);
             if (s[pos] == '^')
             {
                 return ReadHatPower(s, ref pos);
@@ -19,6 +18,7 @@
             {
                 return 1;
             }
+
             return ReadSuperScriptPower(s, ref pos);
         }
 
@@ -26,16 +26,19 @@
         {
             if (s[pos] != '^')
             {
-                throw new FormatException();
+                var message = $"Expected to find ^ at position {pos} in {s}. Was {s[pos]}";
+                throw new FormatException(message);
             }
+
             pos++;
-            //ReadWhiteSpace(s, ref pos);
-            var ps =OperatorParser.ReadSign(s, ref pos);
+            s.ReadWhiteSpace(ref pos);
+            var ps = OperatorParser.ReadSign(s, ref pos);
             if (ps == Sign.None)
             {
                 ps = Sign.Positive;
             }
-            //ReadWhiteSpace(s, ref pos);
+
+            s.ReadWhiteSpace(ref pos);
             var i = ReadSingleCharInt(s, ref pos);
             return (int)ps * i;
         }
@@ -52,7 +55,8 @@
             {
                 ps = Sign.Positive;
             }
-            //ReadWhiteSpace(s, ref pos);
+
+            s.ReadWhiteSpace(ref pos);
             var i = ReadSingleCharSuperScriptInt(s, ref pos);
             return (int)ps * i;
         }
@@ -62,33 +66,32 @@
             var sign = Sign.None;
             if (s[pos] == '⁺')
             {
+                pos++;
                 sign = Sign.Positive;
             }
-
-            if (s[pos] == '⁻')
+            else if (s[pos] == '⁻')
             {
+                pos++;
                 sign = Sign.Negative;
             }
 
-            if (sign != Sign.None)
-            {
-                pos++;
-            }
             return sign;
         }
 
         private static int ReadSingleCharInt(string s, ref int pos)
         {
-            if (!Char.IsDigit(s[pos]))
+            if (!char.IsDigit(s[pos]))
             {
                 throw new FormatException($"Expected digit at pos: {pos} in {s} was {s[pos]}");
             }
-            int i = (int)Char.GetNumericValue(s[pos]);
+
+            int i = (int)char.GetNumericValue(s[pos]);
             pos++;
-            if (pos < s.Length && Char.IsDigit(s[pos]))
+            if (pos < s.Length && char.IsDigit(s[pos]))
             {
                 throw new FormatException($"Did not expect digit at pos: {pos} in {s} was {s[pos]}");
             }
+
             return i;
         }
 
@@ -99,12 +102,14 @@
             {
                 throw new FormatException($"Expected digit at pos: {pos} in {s} was {s[pos]}");
             }
+
             int i = indexOf;
             pos++;
             if (pos < s.Length && SuperscriptDigits.IndexOf(s[pos]) != -1)
             {
                 throw new FormatException($"Did not expect digit at pos: {pos} in {s} was {s[pos]}");
             }
+
             return i;
         }
     }

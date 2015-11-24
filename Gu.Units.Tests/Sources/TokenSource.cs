@@ -2,11 +2,11 @@
 {
     using System.Collections.Generic;
 
-    internal class TokenSource : List<TokenSource.TokenData>
+    public class TokenSource : List<TokenSource.TokenData>
     {
         private const string Superscripts = "⋅⁺⁻⁰¹²³⁴⁵⁶⁷⁸⁹";
 
-        internal TokenSource()
+        public TokenSource()
         {
             Add(new TokenData("m", new SymbolAndPower("m", 1)));
             Add(new TokenData(" m ", new SymbolAndPower("m", 1)));
@@ -26,12 +26,12 @@
             Add(new TokenData("m^¹/s⁻²", null));
         }
 
-        internal class TokenData
+        public class TokenData
         {
             public readonly string Text;
-            public readonly IReadOnlyList<SymbolAndPower> Tokens;
+            internal readonly IReadOnlyList<SymbolAndPower> Tokens;
 
-            public TokenData(string text, params SymbolAndPower[] tokens)
+            internal TokenData(string text, params SymbolAndPower[] tokens)
             {
                 Text = text;
                 Tokens = tokens;
@@ -44,10 +44,11 @@
                 {
                     tokens = ToString(Tokens);
                 }
-                return string.Format("Text: {0}, Tokens: {1}", Text, Tokens);
+
+                return $"Text: {this.Text}, Tokens: {this.Tokens}";
             }
 
-            public string ToString(IEnumerable<SymbolAndPower> tokens)
+            internal string ToString(IEnumerable<SymbolAndPower> tokens)
             {
                 return string.Join(", ", tokens);
             }

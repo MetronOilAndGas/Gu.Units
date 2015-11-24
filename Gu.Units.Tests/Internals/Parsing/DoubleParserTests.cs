@@ -1,9 +1,8 @@
-﻿namespace Gu.Units.Tests
+﻿namespace Gu.Units.Tests.Internals.Parsing
 {
     using System;
     using System.Collections.Generic;
     using System.Globalization;
-
     using NUnit.Framework;
 
     public class DoubleParserTests
@@ -42,7 +41,7 @@
                 int end = -1;
                 Assert.Throws<FormatException>(() => double.Parse(s, style, culture));
                 Assert.Throws<FormatException>(() => DoubleParser.Parse(ns, start, style, culture, out end));
-                //Assert.AreEqual(start, end);
+                Assert.AreEqual(start, end);
             }
         }
 
@@ -161,14 +160,14 @@
 
             public DoubleParseData(string text, NumberStyles styles, CultureInfo culture)
             {
-                Text = text;
-                Styles = styles;
-                Culture = culture;
+                this.Text = text;
+                this.Styles = styles;
+                this.Culture = culture;
             }
 
             public override string ToString()
             {
-                return string.Format("Text: {0}, Styles: {1}, Culture: {2}", Text, Styles, Culture);
+                return string.Format("Text: {0}, Styles: {1}, Culture: {2}", this.Text, this.Styles, this.Culture);
             }
         }
     }

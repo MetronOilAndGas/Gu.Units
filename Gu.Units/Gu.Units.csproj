@@ -203,6 +203,9 @@
     </Compile>
     <Compile Include="Interfaces\IPower.cs" />
     <Compile Include="Interfaces\IUnit`1.cs" />
+    <Compile Include="Internals\Ensure\Ensure.cs" />
+    <Compile Include="Internals\Ensure\Ensure.string.cs" />
+    <Compile Include="Internals\Parsing\SymbolAndPowerParser.cs" />
     <Compile Include="Jerk.generated.cs">
       <DependentUpon>QuantityGenerator.txt4</DependentUpon>
     </Compile>
@@ -400,17 +403,17 @@
     <Compile Include="UnitlessUnitTypeConverter.generated.cs">
       <DependentUpon>UnitTypeConverterGenerator.txt4</DependentUpon>
     </Compile>
-    <Compile Include="Utils\DoubleParser.cs" />
-    <Compile Include="Utils\Operator.cs" />
-    <Compile Include="Utils\OperatorParser.cs" />
-    <Compile Include="Utils\PowerParser.cs" />
-    <Compile Include="Utils\QuantityParser.cs" />
-    <Compile Include="Utils\Sign.cs" />
-    <Compile Include="Utils\StringExt.cs" />
-    <Compile Include="Utils\Symbol.cs" />
-    <Compile Include="Utils\SymbolAndPower.cs" />
-    <Compile Include="Utils\UnitParser.cs" />
-    <Compile Include="Utils\XmlExt.cs" />
+    <Compile Include="Internals\Parsing\DoubleParser.cs" />
+    <Compile Include="Internals\Parsing\MultiplyOrDivide.cs" />
+    <Compile Include="Internals\Parsing\OperatorParser.cs" />
+    <Compile Include="Internals\Parsing\PowerParser.cs" />
+    <Compile Include="Internals\Parsing\QuantityParser.cs" />
+    <Compile Include="Internals\Parsing\Sign.cs" />
+    <Compile Include="Internals\Parsing\StringExt.cs" />
+    <Compile Include="Internals\Symbol.cs" />
+    <Compile Include="Internals\SymbolAndPower.cs" />
+    <Compile Include="Internals\Parsing\UnitParser.cs" />
+    <Compile Include="Internals\Parsing\XmlExt.cs" />
     <Compile Include="Voltage.generated.cs">
       <DependentUpon>QuantityGenerator.txt4</DependentUpon>
     </Compile>
@@ -456,9 +459,7 @@
     <None Include="UnitGenerator.txt4" />
     <None Include="UnitTypeConverterGenerator.txt4" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Ensure\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

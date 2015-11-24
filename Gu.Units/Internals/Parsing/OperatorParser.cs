@@ -7,27 +7,26 @@
         private const char MultiplyX = 'x';
         private const char Divide = '/';
 
-
-        internal static Operator Parse(string s, ref int pos)
+        internal static MultiplyOrDivide Parse(string s, ref int pos)
         {
             if (pos == s.Length)
             {
-                return Operator.None;
+                return MultiplyOrDivide.None;
             }
 
             if (s[pos] == MultiplyDot || s[pos] == MultiplyStar || s[pos] == MultiplyX)
             {
                 pos++;
-                return Operator.Multiply;
+                return MultiplyOrDivide.Multiply;
             }
 
             if (s[pos] == Divide)
             {
                 pos++;
-                return Operator.Division;
+                return MultiplyOrDivide.Division;
             }
 
-            return Operator.None;
+            return MultiplyOrDivide.None;
         }
 
         internal static Sign ReadSign(string s, ref int pos)
