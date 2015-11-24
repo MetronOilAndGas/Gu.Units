@@ -99,6 +99,15 @@
             }
         }
 
+        [Test]
+        public void Reminder()
+        {
+            Assert.Fail("Max digits");
+            Assert.Fail("Max mantissa");
+            Assert.Fail("Max exp");
+            Assert.Fail("Min exp");
+        }
+
         #region TestData
 
         private static readonly CultureInfo en = CultureInfo.GetCultureInfo("en-US");
@@ -134,8 +143,7 @@
             CreateParseData(".", NumberStyles.Float, en),
             //Add("+1,2", NumberStyles.Float, en),
             //Add("+1.2", NumberStyles.Float, sv),
-            CreateParseData("+1.2e3", NumberStyles.None | NumberStyles.AllowDecimalPoint | NumberStyles.AllowLeadingSign,
-                en),
+            CreateParseData("+1.2e3", NumberStyles.None | NumberStyles.AllowDecimalPoint | NumberStyles.AllowLeadingSign, en),
         };
 
         private static DoubleData CreateParseData(string text,

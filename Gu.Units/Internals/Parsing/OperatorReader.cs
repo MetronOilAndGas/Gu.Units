@@ -29,15 +29,15 @@
             return MultiplyOrDivide.None;
         }
 
-        internal static Sign TryReadSign(string s, ref int pos)
+        internal static Sign TryReadSign(string text, ref int pos)
         {
-            if (s[pos] == '+')
+            if (text[pos] == '+')
             {
                 pos++;
                 return Sign.Positive;
             }
 
-            if (s[pos] == '-')
+            if (text[pos] == '-')
             {
                 pos++;
                 return Sign.Negative;

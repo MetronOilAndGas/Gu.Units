@@ -80,7 +80,7 @@
             }
 
             text.ReadWhiteSpace(ref pos);
-            if (IntReader.TryRead(text, ref pos, out power))
+            if (IntReader.TryReadInt32(text, ref pos, out power))
             {
                 power *= (int)ps;
                 return true;
@@ -142,8 +142,8 @@
 
             pos++;
             int d;
-            while ((d = SuperscriptDigits.IndexOf(text[pos])) > -1 &&
-                    pos < text.Length)
+            while (pos < text.Length &&
+                  (d = SuperscriptDigits.IndexOf(text[pos])) > -1)
             {
                 result *= 10;
                 result += d;
