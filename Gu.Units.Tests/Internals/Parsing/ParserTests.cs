@@ -142,14 +142,6 @@
             Assert.AreEqual(expected, roundtripped);
         }
 
-        [TestCase("mm^2")]
-        [TestCase("mm²")]
-        public void AreaUnit_Parse(string s)
-        {
-            var actual = AreaUnit.Parse(s);
-            Assert.AreEqual(AreaUnit.SquareMillimetres, actual);
-        }
-
         [TestCase("1.0cm", "sv-se")]
         [TestCase("1,0cm", "en-us")]
         public void Exceptions(string s, string culture)

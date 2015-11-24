@@ -1,27 +1,34 @@
 namespace Gu.Units
 {
     using System;
+    using System.Collections.Concurrent;
     using System.Collections.Generic;
     using System.Linq;
 
     internal class Symbol
     {
         private static readonly IReadOnlyList<SymbolAndPower> Empty = new SymbolAndPower[0];
-
+        private readonly HashSet<SymbolAndPower> _tokens;
+        private readonly ConcurrentDictionary<string, bool> _matches = new ConcurrentDictionary<string, bool>();
         public Symbol(IUnit unit)
         {
             Unit = unit;
-            Tokens = new HashSet<SymbolAndPower>(TokenizeUnit(unit.Symbol));
+            _tokens = new HashSet<SymbolAndPower>(TokenizeUnit(unit.Symbol));
+            this._matches[unit.Symbol] = true;
         }
 
-        internal HashSet<SymbolAndPower> Tokens { get; }
+        internal IEnumerable<SymbolAndPower> Tokens => this._tokens;
 
         public IUnit Unit { get; }
 
         public bool IsMatch(string text)
         {
-            var saps = TokenizeUnit(text);
-            return Tokens.SetEquals(saps);
+            return this._matches.GetOrAdd(text, IsMatchCore);
+        }
+
+        public bool TryMatch(string text)
+        {
+            return this._matches.GetOrAdd(text, TryMatchCore);
         }
 
         public override string ToString()
@@ -140,6 +147,23 @@ namespace Gu.Units
 
             result = tokens;
             return true;
+        }
+
+        private bool IsMatchCore(string text)
+        {
+            var saps = TokenizeUnit(text);
+            return _tokens.SetEquals(saps);
+        }
+
+        private bool TryMatchCore(string text)
+        {
+            IReadOnlyList<SymbolAndPower> saps;
+            if (TryTokenizeUnit(text, out saps))
+            {
+                return _tokens.SetEquals(saps);
+            }
+
+            return false;
         }
     }
 }

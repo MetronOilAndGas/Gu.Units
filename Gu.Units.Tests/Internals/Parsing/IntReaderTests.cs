@@ -30,8 +30,8 @@
             int actual;
             var success = IntReader.TryReadInt32(data.Text, ref pos, out actual);
             Assert.AreEqual(true, success);
-            Assert.AreEqual(actual, data.Expected);
-            Assert.AreEqual(pos, data.ExpectedEnd);
+            Assert.AreEqual(data.Expected, actual);
+            Assert.AreEqual(data.ExpectedEnd, pos);
         }
 
         [TestCaseSource(nameof(ErrorSource))]
@@ -41,8 +41,8 @@
             int actual;
             var success = IntReader.TryReadInt32(data.Text, ref pos, out actual);
             Assert.AreEqual(false, success);
-            Assert.AreEqual(actual, data.Expected);
-            Assert.AreEqual(pos, data.ExpectedEnd);
+            Assert.AreEqual(data.Expected, actual);
+            Assert.AreEqual(data.ExpectedEnd, pos);
         }
 
         private static readonly IReadOnlyList<SuccessData<int>> SuccessSource = new[]
@@ -55,8 +55,8 @@
 
         private static readonly IReadOnlyList<SuccessData<int>> ErrorSource = new[]
         {
-            ErrorData.Create("-2147483649", 0, 0), // less than int.min
-            ErrorData.Create("2147483648", 0, 0), // greater than int.max
+            ErrorData.Create<int>("-2147483649",  0), // less than int.min
+            ErrorData.Create<int>("2147483648",  0), // greater than int.max
         };
     }
 }

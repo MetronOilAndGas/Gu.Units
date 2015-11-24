@@ -10,15 +10,15 @@ namespace Gu.Units
     {
         private static readonly ConcurrentDictionary<Type, IReadOnlyList<Symbol>> SymbolCache = new ConcurrentDictionary<Type, IReadOnlyList<Symbol>>();
 
-        internal static TUnit Parse<TUnit>(string s)
+        internal static TUnit Parse<TUnit>(string text)
             where TUnit : IUnit
         {
             var type = typeof(TUnit);
             var symbols = SymbolCache.GetOrAdd(type, CreateSymbolsForType);
-            var matches = symbols.Where(x => x.IsMatch(s)).ToArray();
+            var matches = symbols.Where(x => x.IsMatch(text)).ToArray();
             if (matches.Length == 0)
             {
-                var message = $"Could not parse: '{s}' to {typeof (TUnit).Name}";
+                var message = $"Could not parse: '{text}' to {typeof (TUnit).Name}";
                 throw new FormatException(message);
             }
 
@@ -29,7 +29,7 @@ namespace Gu.Units
                     matches.Select(x => $"Unit: {x.Unit.Symbol} with pattern: {x.Tokens}"));
                 var message = string.Format(
                     "Could not parse: '{0}' to {1}{2}The following matches:{2}{3}",
-                    s,
+                    text,
                     typeof(TUnit).Name,
                     Environment.NewLine,
                     patterns);
@@ -42,12 +42,13 @@ namespace Gu.Units
         {
             var type = typeof(TUnit);
             var symbols = SymbolCache.GetOrAdd(type, CreateSymbolsForType);
-            var matches = symbols.Where(x => x.IsMatch(text)).ToArray();
+            var matches = symbols.Where(x => x.TryMatch(text)).ToArray();
             if (matches.Length != 1)
             {
                 value = default(TUnit);
                 return false;
             }
+
             value = (TUnit)matches[0].Unit;
             return true;
         }

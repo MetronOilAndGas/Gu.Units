@@ -9,36 +9,24 @@
 
         internal static int Read(string text, ref int pos)
         {
-            if (text[pos] == '^')
+            int result;
+            if (TryRead(text, ref pos, out result))
             {
-                int power;
-                if (TryReadHatPower(text, ref pos, out power))
-                {
-                    return power;
-                }
-
-                var message = $"Expected to find ^n at position {pos} in {text}.";
-                throw new FormatException(message);
+                return result;
             }
 
-            if (Superscripts.IndexOf(text[pos]) == -1)
-            {
-                return 1;
-            }
-            {
-                int power;
-                if (TryReadSuperScriptPower(text, ref pos, out power))
-                {
-                    return power;
-                }
-
-                var message = $"Expected to find superscript power at position {pos} in {text}.";
-                throw new FormatException(message);
-            }
+            var message = $"Expected to find power at position {pos} in {text}.";
+            throw new FormatException(message);
         }
 
         internal static bool TryRead(string text, ref int pos, out int result)
         {
+            if (pos == text.Length)
+            {
+                result = 1;
+                return true;
+            }
+
             int start = pos;
             if (text[pos] == '^')
             {
@@ -49,11 +37,7 @@
                 return success;
             }
 
-            if (Superscripts.IndexOf(text[pos]) == -1)
-            {
-                result = 1;
-                return true;
-            }
+            if (Superscripts.IndexOf(text[pos]) >= 0)
             {
                 var success = TryReadSuperScriptPower(text, ref pos, out result);
                 pos = success
@@ -61,6 +45,9 @@
                     : start;
                 return success;
             }
+
+            result = 1;
+            return true;
         }
 
         private static bool TryReadHatPower(string text, ref int pos, out int power)
@@ -90,21 +77,22 @@
             return false;
         }
 
-        private static bool TryReadSuperScriptPower(string s, ref int pos, out int power)
+        private static bool TryReadSuperScriptPower(string text, ref int pos, out int power)
         {
-            if (Superscripts.IndexOf(s[pos]) == -1)
+            if (Superscripts.IndexOf(text[pos]) < 0)
             {
-                throw new InvalidOperationException();
+                power = 0;
+                return false;
             }
 
-            var sign = TryReadSuperScriptSign(s, ref pos);
+            var sign = TryReadSuperScriptSign(text, ref pos);
             if (sign == Sign.None)
             {
                 sign = Sign.Positive;
             }
 
-            s.ReadWhiteSpace(ref pos);
-            if (TryReadSuperScriptInt(s, ref pos, out power))
+            text.ReadWhiteSpace(ref pos);
+            if (TryReadSuperScriptInt(text, ref pos, out power))
             {
                 power *= (int)sign;
                 return true;

@@ -17,19 +17,17 @@
 
         internal static bool TryReadInt32(string text, ref int pos, out int result)
         {
+            var start = pos;
             var sign = OperatorReader.TryReadSign(text, ref pos);
 
             if (!char.IsDigit(text[pos]))
             {
                 result = 0;
-                if (sign != Sign.None)
-                {
-                    pos--;
-                }
+                pos = start;
                 return false;
             }
 
-          long  temp = (int)char.GetNumericValue(text[pos]);
+            long temp = (int)char.GetNumericValue(text[pos]);
             pos++;
             while (pos < text.Length &&
                    char.IsDigit(text[pos]))
@@ -37,7 +35,7 @@
                 temp *= 10;
                 temp += (int)char.GetNumericValue(text[pos]);
                 pos++;
-                if (temp > int.MinValue)
+                if (temp > int.MaxValue)
                 {
                     break;
                 }
@@ -49,6 +47,7 @@
                 if (temp < int.MinValue)
                 {
                     result = 0;
+                    pos = start;
                     return false;
                 }
             }
@@ -57,11 +56,12 @@
                 if (temp > int.MaxValue)
                 {
                     result = 0;
+                    pos = start;
                     return false;
                 }
             }
 
-            result = (int) temp;
+            result = (int)temp;
             return true;
         }
     }

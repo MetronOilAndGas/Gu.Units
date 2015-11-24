@@ -2,5 +2,5 @@ NUGET
   remote: http://www.nuget.org/api/v2
   specs:
     Moq (4.2.1510.2205)
-    NUnit (3.0.0)
+    NUnit (2.6.4)
     T4.TemplateFileManager (2.2.1)

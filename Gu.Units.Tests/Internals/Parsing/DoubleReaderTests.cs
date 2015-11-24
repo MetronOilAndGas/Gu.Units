@@ -99,15 +99,6 @@
             }
         }
 
-        [Test]
-        public void Reminder()
-        {
-            Assert.Fail("Max digits");
-            Assert.Fail("Max mantissa");
-            Assert.Fail("Max exp");
-            Assert.Fail("Min exp");
-        }
-
         #region TestData
 
         private static readonly CultureInfo en = CultureInfo.GetCultureInfo("en-US");
