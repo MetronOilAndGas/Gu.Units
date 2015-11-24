@@ -1,6 +1,7 @@
 ﻿namespace Gu.Units.Tests.Internals.Parsing
 {
     using System;
+    using System.Collections.Generic;
     using System.Globalization;
     using System.Threading;
     using NUnit.Framework;
@@ -130,16 +131,53 @@
             }
         }
 
-        [TestCaseSource(typeof(ParseProvider))]
-        public void Roundtrip(ParseProvider.ParseData data)
+        [TestCaseSource(nameof(SuccessSource))]
+        public void ParseRoundtrip(ISuccessData data)
         {
-            Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
-            var actual = data.ParseMethod(data.StringValue);
-            var expected = data.Quantity;
-            Assert.AreEqual(expected, actual);
-            var s = actual.ToString();
-            var roundtripped = data.ParseMethod(s);
-            Assert.AreEqual(expected, roundtripped);
+            Thread.CurrentThread.CurrentCulture = data.CultureInfo;
+            var actual = data.Parse(data.Text);
+            Assert.AreEqual(data.Expected, actual);
+            var toString = actual.ToString();
+            var roundtripped = data.Parse(toString);
+            Assert.AreEqual(data.Expected, roundtripped);
+        }
+
+        [TestCaseSource(nameof(SuccessSource))]
+        public void ParseRoundtripWithCulture(ISuccessData data)
+        {
+            var actual = data.Parse(data.Text, data.CultureInfo);
+            Assert.AreEqual(data.Expected, actual);
+            var toString = ((IFormattable)actual).ToString(null, data.CultureInfo);
+            var roundtripped = data.Parse(toString, data.CultureInfo);
+            Assert.AreEqual(data.Expected, roundtripped);
+        }
+
+
+        [TestCaseSource(nameof(SuccessSource))]
+        public void TryParseRoundtrip(ISuccessData data)
+        {
+            Thread.CurrentThread.CurrentCulture = data.CultureInfo;
+            object actual;
+            var success = data.TryParse(data.Text, out actual);
+            Assert.AreEqual(true, success);
+            Assert.AreEqual(data.Expected, actual);
+            var toString = actual.ToString();
+            success = data.TryParse(toString, out actual);
+            Assert.AreEqual(true, success);
+            Assert.AreEqual(data.Expected, actual);
+        }
+
+        [TestCaseSource(nameof(SuccessSource))]
+        public void TryParseRoundtripWithCulture(ISuccessData data)
+        {
+            object actual;
+            var success = data.TryParse(data.Text, data.CultureInfo, out actual);
+            Assert.AreEqual(true, success);
+            Assert.AreEqual(data.Expected, actual);
+            var toString = ((IFormattable)actual).ToString(null, data.CultureInfo);
+            success = data.TryParse(data.Text, data.CultureInfo, out actual);
+            Assert.AreEqual(data.Expected, actual);
+            Assert.AreEqual(true, success);
         }
 
         [TestCase("1.0cm", "sv-se")]
@@ -147,7 +185,37 @@
         public void Exceptions(string s, string culture)
         {
             var cultureInfo = CultureInfo.GetCultureInfo(culture);
-            Assert.Throws<FormatException>(() => QuantityParser.Parse<LengthUnit, Length>(s, Length.From, NumberStyles.Float, cultureInfo));
+            var ex = Assert.Throws<FormatException>(() => QuantityParser.Parse<LengthUnit, Length>(s, Length.From, NumberStyles.Float, cultureInfo));
+            Console.Write(ex.Message);
         }
+
+        private static readonly CultureInfo en = CultureInfo.GetCultureInfo("en-US");
+        private static readonly CultureInfo sv = CultureInfo.GetCultureInfo("sv-SE");
+
+        private static readonly IReadOnlyList<ISuccessData> SuccessSource = new ISuccessData[]
+        {
+            SuccessData.Create("1.2m^2", en, Area.FromSquareMetres(1.2)),
+            SuccessData.Create("1.2m²", en, Area.FromSquareMetres(1.2)),
+            SuccessData.Create("1,2m²", sv, Area.FromSquareMetres(1.2)),
+            SuccessData.Create("1.2s", en, Time.FromSeconds(1.2)),
+            SuccessData.Create("1.2h", en, Time.FromHours(1.2)),
+            SuccessData.Create("1.2ms", en, Time.FromMilliseconds(1.2)),
+            SuccessData.Create("1.2kg", en, Mass.FromKilograms(1.2)),
+            SuccessData.Create("1.2g", en, Mass.FromGrams(1.2)),
+            SuccessData.Create("1.2m³", en, Volume.FromCubicMetres(1.2)),
+            SuccessData.Create("1.2m^3", en, Volume.FromCubicMetres(1.2)),
+            SuccessData.Create("1.2m/s", en, Speed.FromMetresPerSecond(1.2)),
+            SuccessData.Create("1.2m⋅s⁻¹", en, Speed.FromMetresPerSecond(1.2)),
+            SuccessData.Create("1.2m*s⁻¹", en, Speed.FromMetresPerSecond(1.2)),
+            SuccessData.Create("1.2m¹⋅s⁻¹", en, Speed.FromMetresPerSecond(1.2)),
+            SuccessData.Create("1.2m^1⋅s⁻¹", en, Speed.FromMetresPerSecond(1.2)),
+            SuccessData.Create("1.2m^1⋅s^-1", en, Speed.FromMetresPerSecond(1.2)),
+            SuccessData.Create("1.2m^1/s^2", en, Acceleration.FromMetresPerSecondSquared(1.2)),
+            SuccessData.Create("1.2m/s^2", en, Acceleration.FromMetresPerSecondSquared(1.2)),
+            SuccessData.Create("1.2 m/s^2", en, Acceleration.FromMetresPerSecondSquared(1.2)),
+            SuccessData.Create("1.2 m / s^2", en, Acceleration.FromMetresPerSecondSquared(1.2)),
+            SuccessData.Create("1.2 m / s²", en, Acceleration.FromMetresPerSecondSquared(1.2)),
+            SuccessData.Create("1.2 mm / s²", en, Acceleration.FromMillimetresPerSecondSquared(1.2)),
+        };
     }
 }

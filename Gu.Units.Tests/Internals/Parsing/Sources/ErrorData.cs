@@ -1,6 +1,7 @@
 namespace Gu.Units.Tests.Internals.Parsing
 {
     using System.Collections.Generic;
+    using System.Globalization;
 
     public static class ErrorData
     {
@@ -22,6 +23,11 @@ namespace Gu.Units.Tests.Internals.Parsing
         public static ErrorData<T> Create<T>(string text, int start)
         {
             return new ErrorData<T>(text, start, default(T), start, null);
+        }
+
+        public static ErrorData<T> Create<T>(string text, CultureInfo cultureInfo, int start)
+        {
+            return new ErrorData<T>(text, cultureInfo, start, default(T), start, null);
         }
 
         internal static ErrorData<IReadOnlyList<SymbolAndPower>> CreateForSymbol(string text)
