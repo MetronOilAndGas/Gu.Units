@@ -225,6 +225,7 @@
     </Resource>
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Templates\Readme.txt" />
     <EmbeddedResource Include="Templates\QuantityTypeConverter.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>QuantityTypeConverter.txt</LastGenOutput>
@@ -242,15 +243,15 @@
     <Resource Include="GeneratorSettings.xml">
       <SubType>Designer</SubType>
     </Resource>
-    <Resource Include="Templates\Enumerable.txt">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Enumerable.tt</DependentUpon>
-    </Resource>
     <Resource Include="Templates\EnumerableGenerator.txt">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>EnumerableGenerator.tt</DependentUpon>
+    </Resource>
+    <Resource Include="Templates\Enumerable.txt">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Enumerable.tt</DependentUpon>
     </Resource>
     <Content Include="Templates\QuantityGenerator.txt">
       <AutoGen>True</AutoGen>
