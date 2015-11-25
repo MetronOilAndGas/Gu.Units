@@ -47,6 +47,16 @@
         }
 
         /// <summary>
+        /// The <see cref="Gu.Units.EnergyUnit"/> for the <see cref="SiValue"/>
+        /// </summary>
+        public EnergyUnit SiUnit => EnergyUnit.Joules;
+
+        /// <summary>
+        /// The <see cref="Gu.Units.IUnit"/> for the <see cref="SiValue"/>
+        /// </summary>
+        IUnit IQuantity.SiUnit => EnergyUnit.Joules;
+
+        /// <summary>
         /// The quantity in joules".
         /// </summary>
         public double Joules
@@ -514,15 +524,15 @@
             return this.ToString((string)null, (IFormatProvider)NumberFormatInfo.CurrentInfo, unit);
         }
 
-        public string ToString(string format, EnergyUnit unit)
+        public string ToString(string valueFormat, EnergyUnit unit)
         {
-            return this.ToString(format, (IFormatProvider)NumberFormatInfo.CurrentInfo, unit);
+            return this.ToString(valueFormat, (IFormatProvider)NumberFormatInfo.CurrentInfo, unit);
         }
 
-        public string ToString(string format, IFormatProvider formatProvider, EnergyUnit unit)
+        public string ToString(string valueFormat, IFormatProvider formatProvider, EnergyUnit unit)
         {
             var quantity = unit.FromSiUnit(this.joules);
-            return string.Format("{0}{1}", quantity.ToString(format, formatProvider), unit.Symbol);
+            return string.Format("{0}{1}", quantity.ToString(valueFormat, formatProvider), unit.Symbol);
         }
 
         /// <summary>

@@ -47,6 +47,16 @@
         }
 
         /// <summary>
+        /// The <see cref="Gu.Units.AccelerationUnit"/> for the <see cref="SiValue"/>
+        /// </summary>
+        public AccelerationUnit SiUnit => AccelerationUnit.MetresPerSecondSquared;
+
+        /// <summary>
+        /// The <see cref="Gu.Units.IUnit"/> for the <see cref="SiValue"/>
+        /// </summary>
+        IUnit IQuantity.SiUnit => AccelerationUnit.MetresPerSecondSquared;
+
+        /// <summary>
         /// The quantity in metresPerSecondSquared".
         /// </summary>
         public double MetresPerSecondSquared
@@ -404,15 +414,15 @@
             return this.ToString((string)null, (IFormatProvider)NumberFormatInfo.CurrentInfo, unit);
         }
 
-        public string ToString(string format, AccelerationUnit unit)
+        public string ToString(string valueFormat, AccelerationUnit unit)
         {
-            return this.ToString(format, (IFormatProvider)NumberFormatInfo.CurrentInfo, unit);
+            return this.ToString(valueFormat, (IFormatProvider)NumberFormatInfo.CurrentInfo, unit);
         }
 
-        public string ToString(string format, IFormatProvider formatProvider, AccelerationUnit unit)
+        public string ToString(string valueFormat, IFormatProvider formatProvider, AccelerationUnit unit)
         {
             var quantity = unit.FromSiUnit(this.metresPerSecondSquared);
-            return string.Format("{0}{1}", quantity.ToString(format, formatProvider), unit.Symbol);
+            return string.Format("{0}{1}", quantity.ToString(valueFormat, formatProvider), unit.Symbol);
         }
 
         /// <summary>

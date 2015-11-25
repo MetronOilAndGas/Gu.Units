@@ -47,6 +47,16 @@
         }
 
         /// <summary>
+        /// The <see cref="Gu.Units.ElectricChargeUnit"/> for the <see cref="SiValue"/>
+        /// </summary>
+        public ElectricChargeUnit SiUnit => ElectricChargeUnit.Coulombs;
+
+        /// <summary>
+        /// The <see cref="Gu.Units.IUnit"/> for the <see cref="SiValue"/>
+        /// </summary>
+        IUnit IQuantity.SiUnit => ElectricChargeUnit.Coulombs;
+
+        /// <summary>
         /// The quantity in coulombs".
         /// </summary>
         public double Coulombs
@@ -344,15 +354,15 @@
             return this.ToString((string)null, (IFormatProvider)NumberFormatInfo.CurrentInfo, unit);
         }
 
-        public string ToString(string format, ElectricChargeUnit unit)
+        public string ToString(string valueFormat, ElectricChargeUnit unit)
         {
-            return this.ToString(format, (IFormatProvider)NumberFormatInfo.CurrentInfo, unit);
+            return this.ToString(valueFormat, (IFormatProvider)NumberFormatInfo.CurrentInfo, unit);
         }
 
-        public string ToString(string format, IFormatProvider formatProvider, ElectricChargeUnit unit)
+        public string ToString(string valueFormat, IFormatProvider formatProvider, ElectricChargeUnit unit)
         {
             var quantity = unit.FromSiUnit(this.coulombs);
-            return string.Format("{0}{1}", quantity.ToString(format, formatProvider), unit.Symbol);
+            return string.Format("{0}{1}", quantity.ToString(valueFormat, formatProvider), unit.Symbol);
         }
 
         /// <summary>

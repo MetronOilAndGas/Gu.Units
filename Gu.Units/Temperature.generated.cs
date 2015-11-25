@@ -47,6 +47,16 @@
         }
 
         /// <summary>
+        /// The <see cref="Gu.Units.TemperatureUnit"/> for the <see cref="SiValue"/>
+        /// </summary>
+        public TemperatureUnit SiUnit => TemperatureUnit.Kelvin;
+
+        /// <summary>
+        /// The <see cref="Gu.Units.IUnit"/> for the <see cref="SiValue"/>
+        /// </summary>
+        IUnit IQuantity.SiUnit => TemperatureUnit.Kelvin;
+
+        /// <summary>
         /// The quantity in kelvin".
         /// </summary>
         public double Kelvin
@@ -374,15 +384,15 @@
             return this.ToString((string)null, (IFormatProvider)NumberFormatInfo.CurrentInfo, unit);
         }
 
-        public string ToString(string format, TemperatureUnit unit)
+        public string ToString(string valueFormat, TemperatureUnit unit)
         {
-            return this.ToString(format, (IFormatProvider)NumberFormatInfo.CurrentInfo, unit);
+            return this.ToString(valueFormat, (IFormatProvider)NumberFormatInfo.CurrentInfo, unit);
         }
 
-        public string ToString(string format, IFormatProvider formatProvider, TemperatureUnit unit)
+        public string ToString(string valueFormat, IFormatProvider formatProvider, TemperatureUnit unit)
         {
             var quantity = unit.FromSiUnit(this.kelvin);
-            return string.Format("{0}{1}", quantity.ToString(format, formatProvider), unit.Symbol);
+            return string.Format("{0}{1}", quantity.ToString(valueFormat, formatProvider), unit.Symbol);
         }
 
         /// <summary>

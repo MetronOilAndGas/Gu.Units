@@ -47,6 +47,16 @@
         }
 
         /// <summary>
+        /// The <see cref="Gu.Units.VolumeUnit"/> for the <see cref="SiValue"/>
+        /// </summary>
+        public VolumeUnit SiUnit => VolumeUnit.CubicMetres;
+
+        /// <summary>
+        /// The <see cref="Gu.Units.IUnit"/> for the <see cref="SiValue"/>
+        /// </summary>
+        IUnit IQuantity.SiUnit => VolumeUnit.CubicMetres;
+
+        /// <summary>
         /// The quantity in cubicMetres".
         /// </summary>
         public double CubicMetres
@@ -434,15 +444,15 @@
             return this.ToString((string)null, (IFormatProvider)NumberFormatInfo.CurrentInfo, unit);
         }
 
-        public string ToString(string format, VolumeUnit unit)
+        public string ToString(string valueFormat, VolumeUnit unit)
         {
-            return this.ToString(format, (IFormatProvider)NumberFormatInfo.CurrentInfo, unit);
+            return this.ToString(valueFormat, (IFormatProvider)NumberFormatInfo.CurrentInfo, unit);
         }
 
-        public string ToString(string format, IFormatProvider formatProvider, VolumeUnit unit)
+        public string ToString(string valueFormat, IFormatProvider formatProvider, VolumeUnit unit)
         {
             var quantity = unit.FromSiUnit(this.cubicMetres);
-            return string.Format("{0}{1}", quantity.ToString(format, formatProvider), unit.Symbol);
+            return string.Format("{0}{1}", quantity.ToString(valueFormat, formatProvider), unit.Symbol);
         }
 
         /// <summary>

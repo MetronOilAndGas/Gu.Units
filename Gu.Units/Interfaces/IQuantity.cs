@@ -14,7 +14,7 @@
         /// <summary>
         /// The <see cref="Gu.Units.IUnit"/> for the <see cref="SiValue"/>
         /// </summary>
-        //IUnit SiUnit { get; }
+        IUnit SiUnit { get; }
     }
 
     public interface IQuantity<TUnit> : IQuantity

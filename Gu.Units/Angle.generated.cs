@@ -47,6 +47,16 @@
         }
 
         /// <summary>
+        /// The <see cref="Gu.Units.AngleUnit"/> for the <see cref="SiValue"/>
+        /// </summary>
+        public AngleUnit SiUnit => AngleUnit.Radians;
+
+        /// <summary>
+        /// The <see cref="Gu.Units.IUnit"/> for the <see cref="SiValue"/>
+        /// </summary>
+        IUnit IQuantity.SiUnit => AngleUnit.Radians;
+
+        /// <summary>
         /// The quantity in radians".
         /// </summary>
         public double Radians
@@ -364,15 +374,15 @@
             return this.ToString((string)null, (IFormatProvider)NumberFormatInfo.CurrentInfo, unit);
         }
 
-        public string ToString(string format, AngleUnit unit)
+        public string ToString(string valueFormat, AngleUnit unit)
         {
-            return this.ToString(format, (IFormatProvider)NumberFormatInfo.CurrentInfo, unit);
+            return this.ToString(valueFormat, (IFormatProvider)NumberFormatInfo.CurrentInfo, unit);
         }
 
-        public string ToString(string format, IFormatProvider formatProvider, AngleUnit unit)
+        public string ToString(string valueFormat, IFormatProvider formatProvider, AngleUnit unit)
         {
             var quantity = unit.FromSiUnit(this.radians);
-            return string.Format("{0}{1}", quantity.ToString(format, formatProvider), unit.Symbol);
+            return string.Format("{0}{1}", quantity.ToString(valueFormat, formatProvider), unit.Symbol);
         }
 
         /// <summary>

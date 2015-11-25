@@ -47,6 +47,16 @@
         }
 
         /// <summary>
+        /// The <see cref="Gu.Units.VoltageUnit"/> for the <see cref="SiValue"/>
+        /// </summary>
+        public VoltageUnit SiUnit => VoltageUnit.Volts;
+
+        /// <summary>
+        /// The <see cref="Gu.Units.IUnit"/> for the <see cref="SiValue"/>
+        /// </summary>
+        IUnit IQuantity.SiUnit => VoltageUnit.Volts;
+
+        /// <summary>
         /// The quantity in volts".
         /// </summary>
         public double Volts
@@ -429,15 +439,15 @@
             return this.ToString((string)null, (IFormatProvider)NumberFormatInfo.CurrentInfo, unit);
         }
 
-        public string ToString(string format, VoltageUnit unit)
+        public string ToString(string valueFormat, VoltageUnit unit)
         {
-            return this.ToString(format, (IFormatProvider)NumberFormatInfo.CurrentInfo, unit);
+            return this.ToString(valueFormat, (IFormatProvider)NumberFormatInfo.CurrentInfo, unit);
         }
 
-        public string ToString(string format, IFormatProvider formatProvider, VoltageUnit unit)
+        public string ToString(string valueFormat, IFormatProvider formatProvider, VoltageUnit unit)
         {
             var quantity = unit.FromSiUnit(this.volts);
-            return string.Format("{0}{1}", quantity.ToString(format, formatProvider), unit.Symbol);
+            return string.Format("{0}{1}", quantity.ToString(valueFormat, formatProvider), unit.Symbol);
         }
 
         /// <summary>

@@ -47,6 +47,16 @@
         }
 
         /// <summary>
+        /// The <see cref="Gu.Units.TimeUnit"/> for the <see cref="SiValue"/>
+        /// </summary>
+        public TimeUnit SiUnit => TimeUnit.Seconds;
+
+        /// <summary>
+        /// The <see cref="Gu.Units.IUnit"/> for the <see cref="SiValue"/>
+        /// </summary>
+        IUnit IQuantity.SiUnit => TimeUnit.Seconds;
+
+        /// <summary>
         /// The quantity in seconds".
         /// </summary>
         public double Seconds
@@ -474,15 +484,15 @@
             return this.ToString((string)null, (IFormatProvider)NumberFormatInfo.CurrentInfo, unit);
         }
 
-        public string ToString(string format, TimeUnit unit)
+        public string ToString(string valueFormat, TimeUnit unit)
         {
-            return this.ToString(format, (IFormatProvider)NumberFormatInfo.CurrentInfo, unit);
+            return this.ToString(valueFormat, (IFormatProvider)NumberFormatInfo.CurrentInfo, unit);
         }
 
-        public string ToString(string format, IFormatProvider formatProvider, TimeUnit unit)
+        public string ToString(string valueFormat, IFormatProvider formatProvider, TimeUnit unit)
         {
             var quantity = unit.FromSiUnit(this.seconds);
-            return string.Format("{0}{1}", quantity.ToString(format, formatProvider), unit.Symbol);
+            return string.Format("{0}{1}", quantity.ToString(valueFormat, formatProvider), unit.Symbol);
         }
 
         /// <summary>

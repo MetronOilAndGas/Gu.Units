@@ -47,6 +47,16 @@
         }
 
         /// <summary>
+        /// The <see cref="Gu.Units.ForceUnit"/> for the <see cref="SiValue"/>
+        /// </summary>
+        public ForceUnit SiUnit => ForceUnit.Newtons;
+
+        /// <summary>
+        /// The <see cref="Gu.Units.IUnit"/> for the <see cref="SiValue"/>
+        /// </summary>
+        IUnit IQuantity.SiUnit => ForceUnit.Newtons;
+
+        /// <summary>
         /// The quantity in newtons".
         /// </summary>
         public double Newtons
@@ -484,15 +494,15 @@
             return this.ToString((string)null, (IFormatProvider)NumberFormatInfo.CurrentInfo, unit);
         }
 
-        public string ToString(string format, ForceUnit unit)
+        public string ToString(string valueFormat, ForceUnit unit)
         {
-            return this.ToString(format, (IFormatProvider)NumberFormatInfo.CurrentInfo, unit);
+            return this.ToString(valueFormat, (IFormatProvider)NumberFormatInfo.CurrentInfo, unit);
         }
 
-        public string ToString(string format, IFormatProvider formatProvider, ForceUnit unit)
+        public string ToString(string valueFormat, IFormatProvider formatProvider, ForceUnit unit)
         {
             var quantity = unit.FromSiUnit(this.newtons);
-            return string.Format("{0}{1}", quantity.ToString(format, formatProvider), unit.Symbol);
+            return string.Format("{0}{1}", quantity.ToString(valueFormat, formatProvider), unit.Symbol);
         }
 
         /// <summary>

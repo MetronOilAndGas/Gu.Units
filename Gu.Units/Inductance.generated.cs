@@ -47,6 +47,16 @@
         }
 
         /// <summary>
+        /// The <see cref="Gu.Units.InductanceUnit"/> for the <see cref="SiValue"/>
+        /// </summary>
+        public InductanceUnit SiUnit => InductanceUnit.Henrys;
+
+        /// <summary>
+        /// The <see cref="Gu.Units.IUnit"/> for the <see cref="SiValue"/>
+        /// </summary>
+        IUnit IQuantity.SiUnit => InductanceUnit.Henrys;
+
+        /// <summary>
         /// The quantity in henrys".
         /// </summary>
         public double Henrys
@@ -339,15 +349,15 @@
             return this.ToString((string)null, (IFormatProvider)NumberFormatInfo.CurrentInfo, unit);
         }
 
-        public string ToString(string format, InductanceUnit unit)
+        public string ToString(string valueFormat, InductanceUnit unit)
         {
-            return this.ToString(format, (IFormatProvider)NumberFormatInfo.CurrentInfo, unit);
+            return this.ToString(valueFormat, (IFormatProvider)NumberFormatInfo.CurrentInfo, unit);
         }
 
-        public string ToString(string format, IFormatProvider formatProvider, InductanceUnit unit)
+        public string ToString(string valueFormat, IFormatProvider formatProvider, InductanceUnit unit)
         {
             var quantity = unit.FromSiUnit(this.henrys);
-            return string.Format("{0}{1}", quantity.ToString(format, formatProvider), unit.Symbol);
+            return string.Format("{0}{1}", quantity.ToString(valueFormat, formatProvider), unit.Symbol);
         }
 
         /// <summary>

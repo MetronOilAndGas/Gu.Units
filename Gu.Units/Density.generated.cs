@@ -47,6 +47,16 @@
         }
 
         /// <summary>
+        /// The <see cref="Gu.Units.DensityUnit"/> for the <see cref="SiValue"/>
+        /// </summary>
+        public DensityUnit SiUnit => DensityUnit.KilogramsPerCubicMetre;
+
+        /// <summary>
+        /// The <see cref="Gu.Units.IUnit"/> for the <see cref="SiValue"/>
+        /// </summary>
+        IUnit IQuantity.SiUnit => DensityUnit.KilogramsPerCubicMetre;
+
+        /// <summary>
         /// The quantity in kilogramsPerCubicMetre".
         /// </summary>
         public double KilogramsPerCubicMetre
@@ -379,15 +389,15 @@
             return this.ToString((string)null, (IFormatProvider)NumberFormatInfo.CurrentInfo, unit);
         }
 
-        public string ToString(string format, DensityUnit unit)
+        public string ToString(string valueFormat, DensityUnit unit)
         {
-            return this.ToString(format, (IFormatProvider)NumberFormatInfo.CurrentInfo, unit);
+            return this.ToString(valueFormat, (IFormatProvider)NumberFormatInfo.CurrentInfo, unit);
         }
 
-        public string ToString(string format, IFormatProvider formatProvider, DensityUnit unit)
+        public string ToString(string valueFormat, IFormatProvider formatProvider, DensityUnit unit)
         {
             var quantity = unit.FromSiUnit(this.kilogramsPerCubicMetre);
-            return string.Format("{0}{1}", quantity.ToString(format, formatProvider), unit.Symbol);
+            return string.Format("{0}{1}", quantity.ToString(valueFormat, formatProvider), unit.Symbol);
         }
 
         /// <summary>

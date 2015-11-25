@@ -47,6 +47,16 @@
         }
 
         /// <summary>
+        /// The <see cref="Gu.Units.UnitlessUnit"/> for the <see cref="SiValue"/>
+        /// </summary>
+        public UnitlessUnit SiUnit => UnitlessUnit.Scalar;
+
+        /// <summary>
+        /// The <see cref="Gu.Units.IUnit"/> for the <see cref="SiValue"/>
+        /// </summary>
+        IUnit IQuantity.SiUnit => UnitlessUnit.Scalar;
+
+        /// <summary>
         /// The quantity in scalar".
         /// </summary>
         public double Scalar
@@ -394,15 +404,15 @@
             return this.ToString((string)null, (IFormatProvider)NumberFormatInfo.CurrentInfo, unit);
         }
 
-        public string ToString(string format, UnitlessUnit unit)
+        public string ToString(string valueFormat, UnitlessUnit unit)
         {
-            return this.ToString(format, (IFormatProvider)NumberFormatInfo.CurrentInfo, unit);
+            return this.ToString(valueFormat, (IFormatProvider)NumberFormatInfo.CurrentInfo, unit);
         }
 
-        public string ToString(string format, IFormatProvider formatProvider, UnitlessUnit unit)
+        public string ToString(string valueFormat, IFormatProvider formatProvider, UnitlessUnit unit)
         {
             var quantity = unit.FromSiUnit(this.scalar);
-            return string.Format("{0}{1}", quantity.ToString(format, formatProvider), unit.Symbol);
+            return string.Format("{0}{1}", quantity.ToString(valueFormat, formatProvider), unit.Symbol);
         }
 
         /// <summary>

@@ -47,6 +47,16 @@
         }
 
         /// <summary>
+        /// The <see cref="Gu.Units.SpeedUnit"/> for the <see cref="SiValue"/>
+        /// </summary>
+        public SpeedUnit SiUnit => SpeedUnit.MetresPerSecond;
+
+        /// <summary>
+        /// The <see cref="Gu.Units.IUnit"/> for the <see cref="SiValue"/>
+        /// </summary>
+        IUnit IQuantity.SiUnit => SpeedUnit.MetresPerSecond;
+
+        /// <summary>
         /// The quantity in metresPerSecond".
         /// </summary>
         public double MetresPerSecond
@@ -549,15 +559,15 @@
             return this.ToString((string)null, (IFormatProvider)NumberFormatInfo.CurrentInfo, unit);
         }
 
-        public string ToString(string format, SpeedUnit unit)
+        public string ToString(string valueFormat, SpeedUnit unit)
         {
-            return this.ToString(format, (IFormatProvider)NumberFormatInfo.CurrentInfo, unit);
+            return this.ToString(valueFormat, (IFormatProvider)NumberFormatInfo.CurrentInfo, unit);
         }
 
-        public string ToString(string format, IFormatProvider formatProvider, SpeedUnit unit)
+        public string ToString(string valueFormat, IFormatProvider formatProvider, SpeedUnit unit)
         {
             var quantity = unit.FromSiUnit(this.metresPerSecond);
-            return string.Format("{0}{1}", quantity.ToString(format, formatProvider), unit.Symbol);
+            return string.Format("{0}{1}", quantity.ToString(valueFormat, formatProvider), unit.Symbol);
         }
 
         /// <summary>
