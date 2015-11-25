@@ -13,50 +13,43 @@ namespace Gu.Units
         internal static TUnit Parse<TUnit>(string text)
             where TUnit : IUnit
         {
-            var type = typeof(TUnit);
-            var symbols = SymbolCache.GetOrAdd(type, CreateSymbolsForType);
-            var matches = symbols.Where(x => x.IsMatch(text)).ToArray();
-            if (matches.Length == 0)
+            TUnit result;
+            if (TryParse(text, out result))
             {
-                var message = $"Could not parse: '{text}' to {typeof (TUnit).Name}";
-                throw new FormatException(message);
+                return result;
             }
 
-            if (matches.Length > 1)
-            {
-                var patterns = string.Join(
-                    Environment.NewLine,
-                    matches.Select(x => $"Unit: {x.Unit.Symbol} with pattern: {x.Tokens}"));
-                var message = string.Format(
-                    "Could not parse: '{0}' to {1}{2}The following matches:{2}{3}",
-                    text,
-                    typeof(TUnit).Name,
-                    Environment.NewLine,
-                    patterns);
-                throw new FormatException(message);
-            }
-            return (TUnit)matches[0].Unit;
+            var message = $"Could not parse: '{text}' to {typeof(TUnit).Name}";
+            throw new FormatException(message);
         }
 
         internal static bool TryParse<TUnit>(string text, out TUnit value)
         {
+            var temp = 0;
+            return TryParse(text, ref temp, out value);
+        }
+
+        internal static bool TryParse<TUnit>(string text, ref int pos, out TUnit value)
+        {
             var type = typeof(TUnit);
             var symbols = SymbolCache.GetOrAdd(type, CreateSymbolsForType);
-            var matches = symbols.Where(x => x.TryMatch(text)).ToArray();
-            if (matches.Length != 1)
+            foreach (var symbol in symbols)
             {
-                value = default(TUnit);
-                return false;
+                if (symbol.TryMatch(text, ref pos))
+                {
+                    value = (TUnit) symbol.Unit;
+                    return true;
+                }
             }
 
-            value = (TUnit)matches[0].Unit;
-            return true;
+            value = default(TUnit);
+            return false;
         }
 
         private static IReadOnlyList<Symbol> CreateSymbolsForType(Type type)
         {
             var symbols = type.GetUnitsForType()
-                .Select(x => new Symbol(x))
+                .Select(x => new Symbol(ref x))
                 .ToArray();
             return symbols;
         }

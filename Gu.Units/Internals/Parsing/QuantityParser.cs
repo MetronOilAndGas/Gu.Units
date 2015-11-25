@@ -26,7 +26,7 @@
             }
         }
 
-        internal static bool TryParse<TUnit, TQuantity>(string s,
+        internal static bool TryParse<TUnit, TQuantity>(string text,
             Func<double, TUnit, TQuantity> creator,
             NumberStyles style,
             IFormatProvider provider,
@@ -36,17 +36,17 @@
             {
                 provider = NumberFormatInfo.GetInstance(CultureInfo.CurrentCulture);
             }
+
             int end;
             double d;
-            if (!DoubleReader.TryRead(s, 0, style, provider, out d, out end))
+            if (!DoubleReader.TryRead(text, 0, style, provider, out d, out end))
             {
                 value = default(TQuantity);
                 return false;
             }
 
-            var us = s.Substring(end, s.Length - end);
             TUnit unit;
-            if (!UnitParser.TryParse(us, out unit))
+            if (!UnitParser.TryParse(text, ref end, out unit))
             {
                 value = default(TQuantity);
                 return false;

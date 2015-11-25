@@ -9,26 +9,31 @@ namespace Gu.Units
     {
         private static readonly IReadOnlyList<SymbolAndPower> Empty = new SymbolAndPower[0];
         private readonly HashSet<SymbolAndPower> _tokens;
-        private readonly ConcurrentDictionary<string, bool> _matches = new ConcurrentDictionary<string, bool>();
-        public Symbol(IUnit unit)
+        private readonly ConcurrentDictionary<string, MatchAndLength> _matches = new ConcurrentDictionary<string, MatchAndLength>();
+
+        /// <param name="unit">ref to avoid boxing</param>
+        internal Symbol(ref IUnit unit)
         {
             Unit = unit;
             _tokens = new HashSet<SymbolAndPower>(TokenizeUnit(unit.Symbol));
-            this._matches[unit.Symbol] = true;
+            this._matches[unit.Symbol] = new MatchAndLength(true, unit.Symbol.Length);
         }
 
         internal IEnumerable<SymbolAndPower> Tokens => this._tokens;
 
         public IUnit Unit { get; }
 
-        public bool IsMatch(string text)
+        public bool TryMatch(string text, ref int pos)
         {
-            return this._matches.GetOrAdd(text, IsMatchCore);
-        }
+            var temp = pos;
+            var matchAndLength = this._matches.GetOrAdd(text, s => TryMatchCore(s, temp));
+            if (matchAndLength.IsMatch)
+            {
+                pos += matchAndLength.Length;
+                return true;
+            }
 
-        public bool TryMatch(string text)
-        {
-            return this._matches.GetOrAdd(text, TryMatchCore);
+            return false;
         }
 
         public override string ToString()
@@ -91,15 +96,22 @@ namespace Gu.Units
             return tokens;
         }
 
-        internal static bool TryTokenizeUnit(string text, out IReadOnlyList<SymbolAndPower> result)
+        internal static bool TryTokenizeUnit(string text, ref int pos, out IReadOnlyList<SymbolAndPower> result)
         {
-            int pos = 0;
+            int start = pos;
             var sign = Sign.Positive;
             var tokens = new List<SymbolAndPower>();
             text.ReadWhiteSpace(ref pos);
             while (pos < text.Length)
             {
-                var sap = SymbolAndPowerParser.Parse(text, ref pos);
+                SymbolAndPower sap;
+                if (!SymbolAndPowerParser.TryParse(text, ref pos, out sap))
+                {
+                    pos = start;
+                    result = Empty;
+                    return false;
+                }
+
                 if (sap.Power < 0 && sign == Sign.Negative)
                 {
                     result = Empty;
@@ -119,7 +131,6 @@ namespace Gu.Units
 
                 tokens.Add(sap);
 
-
                 var op = OperatorReader.TryReadMultiplyOrDivide(text, ref pos);
                 if (op != MultiplyOrDivide.None)
                 {
@@ -127,6 +138,7 @@ namespace Gu.Units
                     if (OperatorReader.TryReadMultiplyOrDivide(text, ref pos) != MultiplyOrDivide.None)
                     {
                         result = Empty;
+                        pos = start;
                         return false;
                     }
 
@@ -135,6 +147,7 @@ namespace Gu.Units
                         if (sign == Sign.Negative)
                         {
                             result = Empty;
+                            pos = start;
                             return false;
                         }
 
@@ -149,21 +162,29 @@ namespace Gu.Units
             return true;
         }
 
-        private bool IsMatchCore(string text)
+        private MatchAndLength TryMatchCore(string text, int pos)
         {
-            var saps = TokenizeUnit(text);
-            return _tokens.SetEquals(saps);
-        }
-
-        private bool TryMatchCore(string text)
-        {
+            var start = pos;
             IReadOnlyList<SymbolAndPower> saps;
-            if (TryTokenizeUnit(text, out saps))
+            if (TryTokenizeUnit(text, ref pos, out saps))
             {
-                return _tokens.SetEquals(saps);
+                return new MatchAndLength(_tokens.SetEquals(saps), pos - start);
             }
 
-            return false;
+            return new MatchAndLength(false, 0);
+        }
+
+        private struct MatchAndLength
+        {
+            public readonly bool IsMatch;
+            public readonly int Length;
+
+            public MatchAndLength(bool isMatch,
+                int length)
+            {
+                this.IsMatch = isMatch;
+                this.Length = length;
+            }
         }
     }
 }

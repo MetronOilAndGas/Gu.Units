@@ -25,18 +25,22 @@
         [TestCaseSource(nameof(SuccessSource))]
         public void TryTokenizeSuccess(ISuccessData data)
         {
+            var pos = data.Start;
             IReadOnlyList<SymbolAndPower> actual;
-            var success = Symbol.TryTokenizeUnit(data.Text, out actual);
+            var success = Symbol.TryTokenizeUnit(data.Text, ref pos, out actual);
             Assert.AreEqual(true, success);
-            CollectionAssert.AreEqual((IEnumerable) data.Expected, actual);
+            Assert.AreEqual(data.ExpectedEnd, pos);
+            CollectionAssert.AreEqual((IEnumerable)data.Expected, actual);
         }
 
         [TestCaseSource(nameof(ErrorSource))]
         public void TryTokenizeError(ErrorData<IEnumerable> data)
         {
+            var pos = data.Start;
             IReadOnlyList<SymbolAndPower> actual;
-            var success = Symbol.TryTokenizeUnit(data.Text, out actual);
+            var success = Symbol.TryTokenizeUnit(data.Text, ref pos, out actual);
             Assert.AreEqual(false, success);
+            Assert.AreEqual(data.ExpectedEnd, pos);
             CollectionAssert.AreEqual(data.Expected, actual);
         }
 
@@ -60,9 +64,9 @@
         internal static readonly IReadOnlyList<SuccessData<IReadOnlyList<SymbolAndPower>>> ErrorSource = new[]
         {
             ErrorData.CreateForSymbol("m⁻¹/s⁻²"),
-            ErrorData.CreateForSymbol("m⁻⁻¹/s⁻²"),
-            ErrorData.CreateForSymbol("m⁺⁻¹/s⁻²"),
-            ErrorData.CreateForSymbol("m+⁻¹/s⁻²"),
+            ErrorData.CreateForSymbol("m⁻⁻¹"),
+            ErrorData.CreateForSymbol("m⁺⁻¹"),
+            ErrorData.CreateForSymbol("m+⁻¹"),
             ErrorData.CreateForSymbol("m^¹/s⁻²"),
         };
     }

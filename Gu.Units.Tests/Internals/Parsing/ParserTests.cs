@@ -27,7 +27,7 @@
         [TestCase("1mm", new[] { "sv-se", "en-us" }, 1e-3)]
         [TestCase("1,2mm", new[] { "sv-se" }, 1.2e-3)]
         [TestCase("1cm", new[] { "sv-se", "en-us" }, 1e-2)]
-        public void ParseLength(string s, string[] cultures, double expected)
+        public void ParseLengthSuccess(string s, string[] cultures, double expected)
         {
             foreach (var culture in cultures)
             {
@@ -105,30 +105,27 @@
             }
         }
 
-        [TestCase("1.2m", new[] { "sv-se" }, 0.0)]
-        public void TryParseLengthFails(string s, string[] cultures, double expected)
+        [TestCase("1.2m", "sv-se", 0.0)]
+        public void TryParseLengthFails(string s, string culture, double expected)
         {
-            foreach (var culture in cultures)
-            {
-                var cultureInfo = CultureInfo.GetCultureInfo(culture);
-                Length length;
-                var success = QuantityParser.TryParse<LengthUnit, Length>(
-                    s,
-                    Length.From,
-                    NumberStyles.Float,
-                    cultureInfo,
-                    out length);
-                Assert.AreEqual(false, success);
-                Assert.AreEqual(expected, length.Metres);
+            var cultureInfo = CultureInfo.GetCultureInfo(culture);
+            Length length;
+            var success = QuantityParser.TryParse<LengthUnit, Length>(
+                s,
+                Length.From,
+                NumberStyles.Float,
+                cultureInfo,
+                out length);
+            Assert.AreEqual(false, success);
+            Assert.AreEqual(expected, length.Metres);
 
-                success = Length.TryParse(s, NumberStyles.Float, cultureInfo, out length);
-                Assert.AreEqual(false, success);
-                Assert.AreEqual(expected, length.Metres);
+            success = Length.TryParse(s, NumberStyles.Float, cultureInfo, out length);
+            Assert.AreEqual(false, success);
+            Assert.AreEqual(expected, length.Metres);
 
-                success = Length.TryParse(s, cultureInfo, out length);
-                Assert.AreEqual(false, success);
-                Assert.AreEqual(expected, length.Metres);
-            }
+            success = Length.TryParse(s, cultureInfo, out length);
+            Assert.AreEqual(false, success);
+            Assert.AreEqual(expected, length.Metres);
         }
 
         [TestCaseSource(nameof(SuccessSource))]
@@ -151,7 +148,6 @@
             var roundtripped = data.Parse(toString, data.CultureInfo);
             Assert.AreEqual(data.Expected, roundtripped);
         }
-
 
         [TestCaseSource(nameof(SuccessSource))]
         public void TryParseRoundtrip(ISuccessData data)
