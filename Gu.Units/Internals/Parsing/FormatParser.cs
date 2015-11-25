@@ -1,5 +1,6 @@
 ﻿namespace Gu.Units
 {
+    using System;
     using System.Collections.Generic;
     using System.Text.RegularExpressions;
 
@@ -22,7 +23,7 @@
             string doubleFormat;
             if (!TryReadDoubleFormat(format, ref pos, out doubleFormat))
             {
-                actual = new QuantityFormat<TUnit>("");
+                actual = QuantityFormat<TUnit>.Default;
                 return false;
             }
 
@@ -30,11 +31,12 @@
             TUnit unit;
             if (!TryReadUnit(format, ref pos, @default, out unitFormat, out unit))
             {
-                actual = new QuantityFormat<TUnit>();
+                actual = QuantityFormat<TUnit>.Default;
                 return false;
             }
 
-            actual = new QuantityFormat<TUnit>(doubleFormat, unitFormat, unit);
+            throw new NotImplementedException();
+            //actual = new QuantityFormat<TUnit>(doubleFormat, unitFormat, unit);
             return true;
         }
 

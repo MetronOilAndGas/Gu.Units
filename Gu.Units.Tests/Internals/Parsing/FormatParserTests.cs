@@ -66,14 +66,15 @@
         [TestCase("#0.0#")]
         public void TryParseWithUnit(string format)
         {
-            QuantityFormat<LengthUnit> actual;
-            var success = FormatParser.TryParse(format, LengthUnit.Metres, out actual);
+            Assert.Fail()
+            //QuantityFormat<LengthUnit> actual;
+            //var success = FormatParser.TryParse(format, LengthUnit.Metres, out actual);
 
-            Assert.AreEqual(true, success);
-            Assert.AreEqual(format, actual.ValueFormat);
-            Assert.AreEqual(LengthUnit.Metres, actual.Unit);
-            Assert.AreEqual("m", actual.UnitFormat);
-            Assert.DoesNotThrow(() => 1.2.ToString(actual.ValueFormat));
+            //Assert.AreEqual(true, success);
+            //Assert.AreEqual(format, actual.ValueFormat);
+            //Assert.AreEqual(LengthUnit.Metres, actual.Unit);
+            //Assert.AreEqual("m", actual.UnitFormat);
+            //Assert.DoesNotThrow(() => 1.2.ToString(actual.ValueFormat));
         }
     }
 }

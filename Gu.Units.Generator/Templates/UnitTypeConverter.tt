@@ -1,4 +1,5 @@
 ﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ CleanupBehavior processor="T4VSHost" CleanupAfterProcessingtemplate="true" #>
 <#@ assembly name="$(TargetPath)" #>
 <#@ import namespace="Gu.Units.Generator" #>
 <#@ parameter name="UnitMetaData" type="Gu.Units.Generator.IUnit" #>

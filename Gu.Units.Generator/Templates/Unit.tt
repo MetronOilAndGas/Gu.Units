@@ -1,4 +1,5 @@
-﻿<#@ template debug="true" hostspecific="false" language="C#" #>
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ CleanupBehavior processor="T4VSHost" CleanupAfterProcessingtemplate="true" #>
 <#@ import namespace="System.Globalization" #>
 <#@ assembly name="$(TargetPath)" #>
 <#@ import namespace="Gu.Units.Generator" #>
@@ -151,7 +152,6 @@ namespace <#= Settings.Namespace #>
             }
         }
 
-		
 		/// <summary>
         /// The default unit for <see cref="<#= Settings.Namespace #>.<#= unit.UnitName #>"/>
         /// </summary>
