@@ -33,7 +33,7 @@
                 throw new FormatException($"Power cannot be 0, error at {start + symbol.Length} in {text}");
             }
 
-            return new SymbolAndPower(symbol,  power);
+            return new SymbolAndPower(symbol, power);
         }
 
         internal static bool TryParse(string text, ref int pos, out SymbolAndPower result)
@@ -58,24 +58,23 @@
 
             var symbol = text.Substring(start, pos - start);
             text.ReadWhiteSpace(ref pos);
-
-            var power = text.Length == pos
-                            ? 1
-                            : PowerReader.Read(text, ref pos);
-            if (power == 0)
+            int power;
+            if (!PowerReader.TryRead(text, ref pos, out power))
             {
+                pos = start;
+                result = default(SymbolAndPower);
+                return false;
+            }
+
+            if (power == 0 || Math.Abs(power) > 5) // 5 > is most likely a typo right?
+            {
+                pos = start;
                 result = default(SymbolAndPower);
                 return false;
             }
 
             result = new SymbolAndPower(symbol, power);
             return true;
-        }
-
-        internal static bool CanRead(string text, ref int pos)
-        {
-            text.ReadWhiteSpace(ref pos);
-            return pos < text.Length;
         }
 
         private static bool IsSymbol(char c)
@@ -86,21 +85,6 @@
             }
 
             return char.IsLetter(c);
-        }
-
-        private static bool Read(string s, ref int pos, string toRead)
-        {
-            int start = pos;
-            while (s.Length < pos && pos - start < toRead.Length)
-            {
-                if (s[pos] != toRead[pos - start])
-                {
-                    pos = start;
-                    return false;
-                }
-                pos++;
-            }
-            return true;
         }
     }
 }

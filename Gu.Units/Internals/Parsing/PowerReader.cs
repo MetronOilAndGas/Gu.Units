@@ -60,10 +60,18 @@
 
             pos++;
             text.ReadWhiteSpace(ref pos);
+
             var ps = OperatorReader.TryReadSign(text, ref pos);
             if (ps == Sign.None)
             {
                 ps = Sign.Positive;
+            }
+
+            if (OperatorReader.TryReadSign(text, ref pos) != Sign.None)
+            {
+                // not allowing a^--2 as it is most likely a typo
+                power = 0; 
+                return false;
             }
 
             text.ReadWhiteSpace(ref pos);
@@ -89,6 +97,13 @@
             if (sign == Sign.None)
             {
                 sign = Sign.Positive;
+            }
+
+            if (TryReadSuperScriptSign(text, ref pos) != Sign.None)
+            {
+                // not allowing a⁻⁻² as it is most likely a typo
+                power = 0;
+                return false;
             }
 
             text.ReadWhiteSpace(ref pos);
