@@ -5,7 +5,16 @@
     public interface IQuantity
     {
         Type GetType();
+
+        /// <summary>
+        /// The value in <see cref="SiUnit"/>
+        /// </summary>
         double SiValue { get; }
+
+        /// <summary>
+        /// The <see cref="Gu.Units.IUnit"/> for the <see cref="SiValue"/>
+        /// </summary>
+        //IUnit SiUnit { get; }
     }
 
     public interface IQuantity<TUnit> : IQuantity
