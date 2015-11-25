@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
-    using System.Collections.Specialized;
     using System.IO;
     using System.Linq;
     using System.Reflection;
@@ -115,18 +114,9 @@
             get { return _prefixes; }
         }
 
-        public IEnumerable<IUnit> AllUnits
-        {
-            get { return SiUnits.Concat<IUnit>(DerivedUnits); }
-        }
+        public IReadOnlyList<IUnit> AllUnits => SiUnits.Concat<IUnit>(DerivedUnits).ToList();
 
-        public IEnumerable<Quantity> Quantities
-        {
-            get
-            {
-                return AllUnits.Select(x => x.Quantity).ToArray();
-            }
-        }
+        public IReadOnlyList<Quantity> Quantities => AllUnits.Select(x => x.Quantity).ToList();
 
         public static Settings FromFile(string fullFileName)
         {
