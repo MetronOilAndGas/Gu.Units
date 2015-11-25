@@ -63,7 +63,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Generator Only|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\Generator Only\</OutputPath>
+    <OutputPath>..\Generator\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>

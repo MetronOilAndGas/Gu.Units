@@ -2,7 +2,7 @@
 <#@ CleanupBehavior processor="T4VSHost" CleanupAfterProcessingtemplate="true" #>
 <#@ include file="$(SolutionDir)Packages\T4.TemplateFileManager\tools\ttinc\TemplateFilemanager.CS.ttinclude" #>
 <#@ assembly name="System.Core" #>
-<#@ assembly name="$(TargetPath)" #>
+<#@ assembly name="$(SolutionDir)Generator\Gu.Units.Generator" #>
 <#@ import namespace="Gu.Units.Generator" #>
 <#@ output extension=".txt" #>
 <# 

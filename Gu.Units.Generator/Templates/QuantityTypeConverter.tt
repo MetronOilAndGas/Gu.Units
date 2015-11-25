@@ -1,6 +1,6 @@
 ﻿<#@ template debug="false" hostspecific="false" language="C#" #>
 <#@ CleanupBehavior processor="T4VSHost" CleanupAfterProcessingtemplate="true" #>
-<#@ assembly name="$(TargetPath)" #>
+<#@ assembly name="$(SolutionDir)Generator\Gu.Units.Generator" #>
 <#@ import namespace="Gu.Units.Generator" #>
 <#@ parameter name="QuantityMetaData" type="Gu.Units.Generator.Quantity" #>
 <#@ output extension=".txt" #>

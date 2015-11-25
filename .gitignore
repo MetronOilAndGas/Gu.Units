@@ -31,3 +31,4 @@ packages/*
 Gu.Units.Generator/Templates/*.txt
 publish/*
 *.generated.cs
+Generator/*

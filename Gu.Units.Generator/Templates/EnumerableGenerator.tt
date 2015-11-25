@@ -3,7 +3,7 @@
 <#@ include file="$(SolutionDir)Packages\T4.TemplateFileManager\tools\ttinc\TemplateFilemanager.CS.ttinclude" #>
 <#@ output extension=".txt" #>
 <#@ assembly name="System.Core" #>
-<#@ assembly name="$(TargetPath)" #>
+<#@ assembly name="$(SolutionDir)Generator\Gu.Units.Generator" #>
 <#@ import namespace="Gu.Units.Generator" #>
 <#
 //var fileProperties = new FileProperties()
