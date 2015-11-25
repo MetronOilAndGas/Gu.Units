@@ -47,12 +47,16 @@
     <Compile Include="ConversionTests.cs" />
     <Compile Include="Internals\Parsing\DoubleReaderTests.cs" />
     <Compile Include="EnumerableTests.cs" />
+    <Compile Include="Internals\Parsing\Extensions\ThreadExt.cs" />
+    <Compile Include="Internals\Parsing\ParseLengthTests.cs" />
+    <Compile Include="Internals\Parsing\ParseRoundtripTests.cs" />
     <Compile Include="Internals\Parsing\Sources\ErrorData.cs" />
     <Compile Include="Internals\Parsing\Sources\ErrorData{T}.cs" />
     <Compile Include="Internals\Parsing\IntReaderTests.cs" />
     <Compile Include="Internals\Parsing\PowerReaderTests.cs" />
     <Compile Include="Internals\Parsing\Sources\IErrorData.cs" />
     <Compile Include="Internals\Parsing\Sources\ISuccessData.cs" />
+    <Compile Include="Internals\Parsing\Extensions\ParseExt.cs" />
     <Compile Include="Internals\Parsing\Sources\SuccessData.cs" />
     <Compile Include="Internals\Parsing\Sources\SuccessData{T}.cs" />
     <Compile Include="Internals\Parsing\SymbolTests.cs" />

@@ -17,7 +17,7 @@
         }
 
         [TestCaseSource(nameof(ErrorSource))]
-        public void TokenizeError(ErrorData<IEnumerable> data)
+        public void TokenizeError(IErrorData data)
         {
             Assert.Throws<FormatException>(() => Symbol.TokenizeUnit(data.Text));
         }
@@ -34,14 +34,14 @@
         }
 
         [TestCaseSource(nameof(ErrorSource))]
-        public void TryTokenizeError(ErrorData<IEnumerable> data)
+        public void TryTokenizeError(IErrorData data)
         {
             var pos = data.Start;
             IReadOnlyList<SymbolAndPower> actual;
             var success = Symbol.TryTokenizeUnit(data.Text, ref pos, out actual);
             Assert.AreEqual(false, success);
             Assert.AreEqual(data.ExpectedEnd, pos);
-            CollectionAssert.AreEqual(data.Expected, actual);
+            CollectionAssert.AreEqual((IEnumerable) data.Expected, actual);
         }
 
         private const string Superscripts = "⋅⁺⁻⁰¹²³⁴⁵⁶⁷⁸⁹";

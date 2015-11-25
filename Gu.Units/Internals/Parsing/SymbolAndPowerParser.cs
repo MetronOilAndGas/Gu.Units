@@ -11,29 +11,13 @@
                 throw new FormatException($"Expected symbol or operator. {text} position: end");
             }
 
-            var start = pos;
-            while (text.Length > pos && IsSymbol(text[pos]))
+            SymbolAndPower result;
+            if (TryParse(text, ref pos, out result))
             {
-                pos++;
+                return result;
             }
 
-            if (pos == start)
-            {
-                throw new FormatException($"No symbol found at {pos} in {text}");
-            }
-
-            var symbol = text.Substring(start, pos - start);
-            text.ReadWhiteSpace(ref pos);
-
-            var power = text.Length == pos
-                            ? 1
-                            : PowerReader.Read(text, ref pos);
-            if (power == 0)
-            {
-                throw new FormatException($"Power cannot be 0, error at {start + symbol.Length} in {text}");
-            }
-
-            return new SymbolAndPower(symbol, power);
+            throw new FormatException($"No symbol found at {pos} in {text}");
         }
 
         internal static bool TryParse(string text, ref int pos, out SymbolAndPower result)

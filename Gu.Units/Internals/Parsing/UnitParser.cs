@@ -23,6 +23,19 @@ namespace Gu.Units
             throw new FormatException(message);
         }
 
+        internal static TUnit Parse<TUnit>(string text, ref int pos)
+    where TUnit : IUnit
+        {
+            TUnit result;
+            if (TryParse(text, ref pos, out result))
+            {
+                return result;
+            }
+
+            var message = $"Could not parse: '{text}' to {typeof(TUnit).Name}";
+            throw new FormatException(message);
+        }
+
         internal static bool TryParse<TUnit>(string text, out TUnit value)
         {
             var temp = 0;
@@ -37,7 +50,7 @@ namespace Gu.Units
             {
                 if (symbol.TryMatch(text, ref pos))
                 {
-                    value = (TUnit) symbol.Unit;
+                    value = (TUnit)symbol.Unit;
                     return true;
                 }
             }

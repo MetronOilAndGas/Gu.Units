@@ -114,12 +114,14 @@ namespace Gu.Units
 
                 if (sap.Power < 0 && sign == Sign.Negative)
                 {
+                    pos = start;
                     result = Empty;
                     return false;
                 }
 
                 if (tokens.Any(t => t.Symbol == sap.Symbol))
                 {
+                    pos = start;
                     result = Empty;
                     return false;
                 }
@@ -137,8 +139,8 @@ namespace Gu.Units
                     text.ReadWhiteSpace(ref pos);
                     if (OperatorReader.TryReadMultiplyOrDivide(text, ref pos) != MultiplyOrDivide.None)
                     {
-                        result = Empty;
                         pos = start;
+                        result = Empty;
                         return false;
                     }
 
@@ -146,8 +148,8 @@ namespace Gu.Units
                     {
                         if (sign == Sign.Negative)
                         {
-                            result = Empty;
                             pos = start;
+                            result = Empty;
                             return false;
                         }
 

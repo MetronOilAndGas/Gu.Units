@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using System.Globalization;
-    using System.Reflection;
 
     public class SuccessData<T> : ISuccessData
     {
@@ -26,56 +25,14 @@
         }
 
         public string Text { get; }
-        public object Parse(string text)
-        {
-            var parseMethod = typeof(T).GetMethod(
-                nameof(Length.Parse),
-                new[] { typeof(string) });
-            return parseMethod.Invoke(null, new object[] { text });
-        }
-
-        public object Parse(string text,
-            CultureInfo cultureInfo)
-        {
-            var name = nameof(Length.Parse);
-            var parseMethod = typeof(T).GetMethod(
-                name,
-                new[] { typeof(string), typeof(IFormatProvider) });
-            return parseMethod.Invoke(null, new object[] { text, cultureInfo });
-        }
-
-        public bool TryParse(string text,
-            out object actual)
-        {
-            var tryParseMethod = typeof(T).GetMethod(
-                nameof(Length.TryParse),
-                new[] { typeof(string), typeof(T).MakeByRefType() });
-            actual = null;
-            var parameters = new[] { text, actual };
-            var success = (bool) tryParseMethod.Invoke(null, parameters);
-            actual = parameters[1];
-            return success;
-        }
-
-        public bool TryParse(string text,
-            CultureInfo cultureInfo,
-            out object actual)
-        {
-            var parseMethod = typeof(T).GetMethod(
-                nameof(Length.TryParse),
-                new[] { typeof(string), typeof(IFormatProvider), typeof(T).MakeByRefType() });
-            actual = null;
-            var parameters = new object[] { text, cultureInfo, actual };
-            var success = (bool) parseMethod.Invoke(null, parameters);
-            actual = parameters[2];
-            return success;
-        }
 
         public CultureInfo CultureInfo { get; }
 
         public int Start { get; }
 
         public T Expected { get; }
+
+        public Type Type => typeof (T);
 
         object ISuccessData.Expected => Expected;
 

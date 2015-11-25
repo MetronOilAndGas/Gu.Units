@@ -62,8 +62,6 @@
             SuccessData.Create("m⁻²", 0, new SymbolAndPower("m", -2), 3),
             SuccessData.Create("m¹", 0, new SymbolAndPower("m", 1), 2),
             SuccessData.Create("m³", 0, new SymbolAndPower("m", 3), 2),
-            SuccessData.Create("m⁹", 0, new SymbolAndPower("m", 9), 2),
-            SuccessData.Create("kg⁹", 0, new SymbolAndPower("kg", 9), 3),
             SuccessData.Create("°", 0, new SymbolAndPower("°", 1), 1)
         };
 
@@ -75,7 +73,7 @@
             ErrorData.Create<SymbolAndPower>("m^12", 0),
             ErrorData.Create<SymbolAndPower>("m^-12", 0),
             ErrorData.Create<SymbolAndPower>("m^--2", 0),
-            ErrorData.Create<SymbolAndPower>("m-", 0),
+            //ErrorData.Create<SymbolAndPower>("m-", 0),
         };
     }
 }

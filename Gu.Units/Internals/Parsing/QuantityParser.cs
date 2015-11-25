@@ -5,25 +5,33 @@
 
     internal static class QuantityParser
     {
-        internal static TQuantity Parse<TUnit, TQuantity>(string s,
+        internal static TQuantity Parse<TUnit, TQuantity>(string text,
             Func<double, TUnit, TQuantity> creator,
             NumberStyles style,
             IFormatProvider provider)
             where TUnit : IUnit
             where TQuantity : IQuantity
         {
-            try
+
+            if (provider == null)
             {
-                int end;
-                var d = DoubleReader.Read(s, 0, style, provider, out end);
-                var us = s.Substring(end, s.Length - end);
-                var unit = UnitParser.Parse<TUnit>(us);
-                return creator(d, unit);
+                provider = NumberFormatInfo.GetInstance(CultureInfo.CurrentCulture);
             }
-            catch (Exception e)
+
+            int end;
+            double d;
+            if (!DoubleReader.TryRead(text, 0, style, provider, out d, out end))
             {
-                throw new FormatException("Could not parse the unit value from: " + s, e);
+                throw new FormatException("Could not parse the scalar value from: " + text);
             }
+
+            TUnit unit;
+            if (!UnitParser.TryParse(text, ref end, out unit))
+            {
+                throw new FormatException("Could not parse the unit value from: " + text);
+            }
+
+            return creator(d, unit);
         }
 
         internal static bool TryParse<TUnit, TQuantity>(string text,

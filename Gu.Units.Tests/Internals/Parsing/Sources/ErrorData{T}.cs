@@ -25,6 +25,8 @@
             ExpectedMessage = expectedMessage;
         }
 
+        object IErrorData.Expected => Expected;
+
         public string ExpectedMessage { get; }
     }
 }
