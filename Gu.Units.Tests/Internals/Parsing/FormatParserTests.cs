@@ -66,7 +66,7 @@
         [TestCase("#0.0#")]
         public void TryParseWithUnit(string format)
         {
-            Assert.Fail()
+            Assert.Fail();
             //QuantityFormat<LengthUnit> actual;
             //var success = FormatParser.TryParse(format, LengthUnit.Metres, out actual);
 

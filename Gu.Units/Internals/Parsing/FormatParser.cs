@@ -23,7 +23,8 @@
             string doubleFormat;
             if (!TryReadDoubleFormat(format, ref pos, out doubleFormat))
             {
-                actual = QuantityFormat<TUnit>.Default;
+                throw new NotImplementedException();
+                //actual = QuantityFormat<TUnit>.Default;
                 return false;
             }
 
@@ -31,7 +32,8 @@
             TUnit unit;
             if (!TryReadUnit(format, ref pos, @default, out unitFormat, out unit))
             {
-                actual = QuantityFormat<TUnit>.Default;
+                throw new NotImplementedException();
+                //actual = QuantityFormat<TUnit>.Default;
                 return false;
             }
 
