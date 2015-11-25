@@ -12,12 +12,6 @@
             where TUnit : IUnit
             where TQuantity : IQuantity
         {
-
-            if (provider == null)
-            {
-                provider = NumberFormatInfo.GetInstance(CultureInfo.CurrentCulture);
-            }
-
             int end;
             double d;
             if (!DoubleReader.TryRead(text, 0, style, provider, out d, out end))
@@ -31,6 +25,12 @@
                 throw new FormatException("Could not parse the unit value from: " + text);
             }
 
+            text.ReadWhiteSpace(ref end);
+            if (end != text.Length)
+            {
+                throw new FormatException("Could not parse the unit value from: " + text);
+            }
+
             return creator(d, unit);
         }
 
@@ -40,11 +40,6 @@
             IFormatProvider provider,
             out TQuantity value)
         {
-            if (provider == null)
-            {
-                provider = NumberFormatInfo.GetInstance(CultureInfo.CurrentCulture);
-            }
-
             int end;
             double d;
             if (!DoubleReader.TryRead(text, 0, style, provider, out d, out end))
@@ -55,6 +50,13 @@
 
             TUnit unit;
             if (!UnitParser.TryParse(text, ref end, out unit))
+            {
+                value = default(TQuantity);
+                return false;
+            }
+
+            text.ReadWhiteSpace(ref end);
+            if (end != text.Length)
             {
                 value = default(TQuantity);
                 return false;

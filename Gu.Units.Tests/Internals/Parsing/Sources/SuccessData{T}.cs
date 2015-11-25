@@ -40,7 +40,12 @@
 
         public override string ToString()
         {
-            return $"Text: {Text}, Start: {Start}, Expected {ToString(typeof(T))}: {ToString(Expected)}, ExpectedEnd: {ExpectedEnd}";
+            if (CultureInfo == null)
+            {
+                return $"Text: {Text}, Start: {Start}, Expected {ToString(typeof(T))}: {ToString(Expected)}, ExpectedEnd: {ExpectedEnd}";
+            }
+
+            return $"Text: {Text}, Culture: {CultureInfo.Name} Start: {Start}, Expected {ToString(typeof(T))}: {ToString(Expected)}, ExpectedEnd: {ExpectedEnd}";
         }
 
         private static string ToString(Type type)
