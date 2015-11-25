@@ -204,12 +204,11 @@
         /// <summary>
         /// Creates a new instance of <see cref="Gu.Units.Energy"/>.
         /// </summary>
-        /// <param name="joules">The value in <see cref="Gu.Units.Joules"/></param>
+        /// <param name="joules">The value in <see cref="Gu.Units.EnergyUnit.Joules"/></param>
         public static Energy FromJoules(double joules)
         {
             return new Energy(joules);
         }
-
 
         /// <summary>
         /// Creates a new instance of <see cref="Gu.Units.Energy"/>.

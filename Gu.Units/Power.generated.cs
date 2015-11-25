@@ -193,12 +193,11 @@
         /// <summary>
         /// Creates a new instance of <see cref="Gu.Units.Power"/>.
         /// </summary>
-        /// <param name="watts">The value in <see cref="Gu.Units.Watts"/></param>
+        /// <param name="watts">The value in <see cref="Gu.Units.PowerUnit.Watts"/></param>
         public static Power FromWatts(double watts)
         {
             return new Power(watts);
         }
-
 
         /// <summary>
         /// Creates a new instance of <see cref="Gu.Units.Power"/>.

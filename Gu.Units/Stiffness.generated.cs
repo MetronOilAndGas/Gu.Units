@@ -127,12 +127,11 @@
         /// <summary>
         /// Creates a new instance of <see cref="Gu.Units.Stiffness"/>.
         /// </summary>
-        /// <param name="newtonsPerMetre">The value in <see cref="Gu.Units.NewtonsPerMetre"/></param>
+        /// <param name="newtonsPerMetre">The value in <see cref="Gu.Units.StiffnessUnit.NewtonsPerMetre"/></param>
         public static Stiffness FromNewtonsPerMetre(double newtonsPerMetre)
         {
             return new Stiffness(newtonsPerMetre);
         }
-
 
         public static Force operator *(Stiffness left, Length right)
         {

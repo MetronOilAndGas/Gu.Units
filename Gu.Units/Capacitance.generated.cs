@@ -127,12 +127,11 @@
         /// <summary>
         /// Creates a new instance of <see cref="Gu.Units.Capacitance"/>.
         /// </summary>
-        /// <param name="farads">The value in <see cref="Gu.Units.Farads"/></param>
+        /// <param name="farads">The value in <see cref="Gu.Units.CapacitanceUnit.Farads"/></param>
         public static Capacitance FromFarads(double farads)
         {
             return new Capacitance(farads);
         }
-
 
         public static double operator /(Capacitance left, Capacitance right)
         {

@@ -149,12 +149,11 @@
         /// <summary>
         /// Creates a new instance of <see cref="Gu.Units.Acceleration"/>.
         /// </summary>
-        /// <param name="metresPerSecondSquared">The value in <see cref="Gu.Units.MetresPerSecondSquared"/></param>
+        /// <param name="metresPerSecondSquared">The value in <see cref="Gu.Units.AccelerationUnit.MetresPerSecondSquared"/></param>
         public static Acceleration FromMetresPerSecondSquared(double metresPerSecondSquared)
         {
             return new Acceleration(metresPerSecondSquared);
         }
-
 
         /// <summary>
         /// Creates a new instance of <see cref="Gu.Units.Acceleration"/>.

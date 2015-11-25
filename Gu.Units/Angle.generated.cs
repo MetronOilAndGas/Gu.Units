@@ -138,12 +138,11 @@
         /// <summary>
         /// Creates a new instance of <see cref="Gu.Units.Angle"/>.
         /// </summary>
-        /// <param name="radians">The value in <see cref="Gu.Units.Radians"/></param>
+        /// <param name="radians">The value in <see cref="Gu.Units.AngleUnit.Radians"/></param>
         public static Angle FromRadians(double radians)
         {
             return new Angle(radians);
         }
-
 
         /// <summary>
         /// Creates a new instance of <see cref="Gu.Units.Angle"/>.

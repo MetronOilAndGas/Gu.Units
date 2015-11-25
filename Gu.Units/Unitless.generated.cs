@@ -160,12 +160,11 @@
         /// <summary>
         /// Creates a new instance of <see cref="Gu.Units.Unitless"/>.
         /// </summary>
-        /// <param name="scalar">The value in <see cref="Gu.Units.Scalar"/></param>
+        /// <param name="scalar">The value in <see cref="Gu.Units.UnitlessUnit.Scalar"/></param>
         public static Unitless FromScalar(double scalar)
         {
             return new Unitless(scalar);
         }
-
 
         /// <summary>
         /// Creates a new instance of <see cref="Gu.Units.Unitless"/>.

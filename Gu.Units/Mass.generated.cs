@@ -160,12 +160,11 @@
         /// <summary>
         /// Creates a new instance of <see cref="Gu.Units.Mass"/>.
         /// </summary>
-        /// <param name="kilograms">The value in <see cref="Gu.Units.Kilograms"/></param>
+        /// <param name="kilograms">The value in <see cref="Gu.Units.MassUnit.Kilograms"/></param>
         public static Mass FromKilograms(double kilograms)
         {
             return new Mass(kilograms);
         }
-
 
         /// <summary>
         /// Creates a new instance of <see cref="Gu.Units.Mass"/>.

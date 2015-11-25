@@ -160,12 +160,11 @@
         /// <summary>
         /// Creates a new instance of <see cref="Gu.Units.Flexibility"/>.
         /// </summary>
-        /// <param name="metresPerNewton">The value in <see cref="Gu.Units.MetresPerNewton"/></param>
+        /// <param name="metresPerNewton">The value in <see cref="Gu.Units.FlexibilityUnit.MetresPerNewton"/></param>
         public static Flexibility FromMetresPerNewton(double metresPerNewton)
         {
             return new Flexibility(metresPerNewton);
         }
-
 
         /// <summary>
         /// Creates a new instance of <see cref="Gu.Units.Flexibility"/>.

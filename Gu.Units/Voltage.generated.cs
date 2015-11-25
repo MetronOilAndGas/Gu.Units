@@ -171,12 +171,11 @@
         /// <summary>
         /// Creates a new instance of <see cref="Gu.Units.Voltage"/>.
         /// </summary>
-        /// <param name="volts">The value in <see cref="Gu.Units.Volts"/></param>
+        /// <param name="volts">The value in <see cref="Gu.Units.VoltageUnit.Volts"/></param>
         public static Voltage FromVolts(double volts)
         {
             return new Voltage(volts);
         }
-
 
         /// <summary>
         /// Creates a new instance of <see cref="Gu.Units.Voltage"/>.

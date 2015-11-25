@@ -182,12 +182,11 @@
         /// <summary>
         /// Creates a new instance of <see cref="Gu.Units.Time"/>.
         /// </summary>
-        /// <param name="seconds">The value in <see cref="Gu.Units.Seconds"/></param>
+        /// <param name="seconds">The value in <see cref="Gu.Units.TimeUnit.Seconds"/></param>
         public static Time FromSeconds(double seconds)
         {
             return new Time(seconds);
         }
-
 
         /// <summary>
         /// Creates a new instance of <see cref="Gu.Units.Time"/>.

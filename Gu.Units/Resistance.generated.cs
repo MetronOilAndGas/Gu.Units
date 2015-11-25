@@ -171,12 +171,11 @@
         /// <summary>
         /// Creates a new instance of <see cref="Gu.Units.Resistance"/>.
         /// </summary>
-        /// <param name="ohm">The value in <see cref="Gu.Units.Ohm"/></param>
+        /// <param name="ohm">The value in <see cref="Gu.Units.ResistanceUnit.Ohm"/></param>
         public static Resistance FromOhm(double ohm)
         {
             return new Resistance(ohm);
         }
-
 
         /// <summary>
         /// Creates a new instance of <see cref="Gu.Units.Resistance"/>.

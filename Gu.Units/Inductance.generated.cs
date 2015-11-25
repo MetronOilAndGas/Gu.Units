@@ -127,12 +127,11 @@
         /// <summary>
         /// Creates a new instance of <see cref="Gu.Units.Inductance"/>.
         /// </summary>
-        /// <param name="henrys">The value in <see cref="Gu.Units.Henrys"/></param>
+        /// <param name="henrys">The value in <see cref="Gu.Units.InductanceUnit.Henrys"/></param>
         public static Inductance FromHenrys(double henrys)
         {
             return new Inductance(henrys);
         }
-
 
         public static Resistance operator /(Inductance left, Time right)
         {

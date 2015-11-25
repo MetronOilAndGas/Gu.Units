@@ -182,12 +182,11 @@
         /// <summary>
         /// Creates a new instance of <see cref="Gu.Units.AngularAcceleration"/>.
         /// </summary>
-        /// <param name="radiansPerSecondSquared">The value in <see cref="Gu.Units.RadiansPerSecondSquared"/></param>
+        /// <param name="radiansPerSecondSquared">The value in <see cref="Gu.Units.AngularAccelerationUnit.RadiansPerSecondSquared"/></param>
         public static AngularAcceleration FromRadiansPerSecondSquared(double radiansPerSecondSquared)
         {
             return new AngularAcceleration(radiansPerSecondSquared);
         }
-
 
         /// <summary>
         /// Creates a new instance of <see cref="Gu.Units.AngularAcceleration"/>.

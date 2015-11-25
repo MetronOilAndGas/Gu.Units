@@ -215,12 +215,11 @@
         /// <summary>
         /// Creates a new instance of <see cref="Gu.Units.Area"/>.
         /// </summary>
-        /// <param name="squareMetres">The value in <see cref="Gu.Units.SquareMetres"/></param>
+        /// <param name="squareMetres">The value in <see cref="Gu.Units.AreaUnit.SquareMetres"/></param>
         public static Area FromSquareMetres(double squareMetres)
         {
             return new Area(squareMetres);
         }
-
 
         /// <summary>
         /// Creates a new instance of <see cref="Gu.Units.Area"/>.

@@ -171,12 +171,11 @@
         /// <summary>
         /// Creates a new instance of <see cref="Gu.Units.Frequency"/>.
         /// </summary>
-        /// <param name="hertz">The value in <see cref="Gu.Units.Hertz"/></param>
+        /// <param name="hertz">The value in <see cref="Gu.Units.FrequencyUnit.Hertz"/></param>
         public static Frequency FromHertz(double hertz)
         {
             return new Frequency(hertz);
         }
-
 
         /// <summary>
         /// Creates a new instance of <see cref="Gu.Units.Frequency"/>.

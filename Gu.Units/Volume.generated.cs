@@ -171,12 +171,11 @@
         /// <summary>
         /// Creates a new instance of <see cref="Gu.Units.Volume"/>.
         /// </summary>
-        /// <param name="cubicMetres">The value in <see cref="Gu.Units.CubicMetres"/></param>
+        /// <param name="cubicMetres">The value in <see cref="Gu.Units.VolumeUnit.CubicMetres"/></param>
         public static Volume FromCubicMetres(double cubicMetres)
         {
             return new Volume(cubicMetres);
         }
-
 
         /// <summary>
         /// Creates a new instance of <see cref="Gu.Units.Volume"/>.

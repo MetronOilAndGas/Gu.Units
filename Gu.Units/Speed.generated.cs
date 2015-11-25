@@ -226,12 +226,11 @@
         /// <summary>
         /// Creates a new instance of <see cref="Gu.Units.Speed"/>.
         /// </summary>
-        /// <param name="metresPerSecond">The value in <see cref="Gu.Units.MetresPerSecond"/></param>
+        /// <param name="metresPerSecond">The value in <see cref="Gu.Units.SpeedUnit.MetresPerSecond"/></param>
         public static Speed FromMetresPerSecond(double metresPerSecond)
         {
             return new Speed(metresPerSecond);
         }
-
 
         /// <summary>
         /// Creates a new instance of <see cref="Gu.Units.Speed"/>.

@@ -127,12 +127,11 @@
         /// <summary>
         /// Creates a new instance of <see cref="Gu.Units.Torque"/>.
         /// </summary>
-        /// <param name="newtonMetres">The value in <see cref="Gu.Units.NewtonMetres"/></param>
+        /// <param name="newtonMetres">The value in <see cref="Gu.Units.TorqueUnit.NewtonMetres"/></param>
         public static Torque FromNewtonMetres(double newtonMetres)
         {
             return new Torque(newtonMetres);
         }
-
 
         public static Energy operator *(Torque left, Angle right)
         {

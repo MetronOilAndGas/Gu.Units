@@ -193,12 +193,11 @@
         /// <summary>
         /// Creates a new instance of <see cref="Gu.Units.Force"/>.
         /// </summary>
-        /// <param name="newtons">The value in <see cref="Gu.Units.Newtons"/></param>
+        /// <param name="newtons">The value in <see cref="Gu.Units.ForceUnit.Newtons"/></param>
         public static Force FromNewtons(double newtons)
         {
             return new Force(newtons);
         }
-
 
         /// <summary>
         /// Creates a new instance of <see cref="Gu.Units.Force"/>.

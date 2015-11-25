@@ -149,12 +149,11 @@
         /// <summary>
         /// Creates a new instance of <see cref="Gu.Units.Density"/>.
         /// </summary>
-        /// <param name="kilogramsPerCubicMetre">The value in <see cref="Gu.Units.KilogramsPerCubicMetre"/></param>
+        /// <param name="kilogramsPerCubicMetre">The value in <see cref="Gu.Units.DensityUnit.KilogramsPerCubicMetre"/></param>
         public static Density FromKilogramsPerCubicMetre(double kilogramsPerCubicMetre)
         {
             return new Density(kilogramsPerCubicMetre);
         }
-
 
         /// <summary>
         /// Creates a new instance of <see cref="Gu.Units.Density"/>.

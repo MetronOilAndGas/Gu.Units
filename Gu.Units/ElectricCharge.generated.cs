@@ -127,12 +127,11 @@
         /// <summary>
         /// Creates a new instance of <see cref="Gu.Units.ElectricCharge"/>.
         /// </summary>
-        /// <param name="coulombs">The value in <see cref="Gu.Units.Coulombs"/></param>
+        /// <param name="coulombs">The value in <see cref="Gu.Units.ElectricChargeUnit.Coulombs"/></param>
         public static ElectricCharge FromCoulombs(double coulombs)
         {
             return new ElectricCharge(coulombs);
         }
-
 
         public static Time operator /(ElectricCharge left, Current right)
         {

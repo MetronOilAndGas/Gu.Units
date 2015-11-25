@@ -127,12 +127,11 @@
         /// <summary>
         /// Creates a new instance of <see cref="Gu.Units.VolumetricFlow"/>.
         /// </summary>
-        /// <param name="cubicMetresPerSecond">The value in <see cref="Gu.Units.CubicMetresPerSecond"/></param>
+        /// <param name="cubicMetresPerSecond">The value in <see cref="Gu.Units.VolumetricFlowUnit.CubicMetresPerSecond"/></param>
         public static VolumetricFlow FromCubicMetresPerSecond(double cubicMetresPerSecond)
         {
             return new VolumetricFlow(cubicMetresPerSecond);
         }
-
 
         public static Area operator /(VolumetricFlow left, Speed right)
         {

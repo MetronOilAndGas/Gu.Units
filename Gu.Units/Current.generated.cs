@@ -171,12 +171,11 @@
         /// <summary>
         /// Creates a new instance of <see cref="Gu.Units.Current"/>.
         /// </summary>
-        /// <param name="amperes">The value in <see cref="Gu.Units.Amperes"/></param>
+        /// <param name="amperes">The value in <see cref="Gu.Units.CurrentUnit.Amperes"/></param>
         public static Current FromAmperes(double amperes)
         {
             return new Current(amperes);
         }
-
 
         /// <summary>
         /// Creates a new instance of <see cref="Gu.Units.Current"/>.

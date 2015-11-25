@@ -237,12 +237,11 @@
         /// <summary>
         /// Creates a new instance of <see cref="Gu.Units.Jerk"/>.
         /// </summary>
-        /// <param name="metresPerSecondCubed">The value in <see cref="Gu.Units.MetresPerSecondCubed"/></param>
+        /// <param name="metresPerSecondCubed">The value in <see cref="Gu.Units.JerkUnit.MetresPerSecondCubed"/></param>
         public static Jerk FromMetresPerSecondCubed(double metresPerSecondCubed)
         {
             return new Jerk(metresPerSecondCubed);
         }
-
 
         /// <summary>
         /// Creates a new instance of <see cref="Gu.Units.Jerk"/>.

@@ -215,12 +215,11 @@
         /// <summary>
         /// Creates a new instance of <see cref="Gu.Units.Pressure"/>.
         /// </summary>
-        /// <param name="pascals">The value in <see cref="Gu.Units.Pascals"/></param>
+        /// <param name="pascals">The value in <see cref="Gu.Units.PressureUnit.Pascals"/></param>
         public static Pressure FromPascals(double pascals)
         {
             return new Pressure(pascals);
         }
-
 
         /// <summary>
         /// Creates a new instance of <see cref="Gu.Units.Pressure"/>.

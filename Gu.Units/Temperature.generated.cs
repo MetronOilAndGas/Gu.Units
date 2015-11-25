@@ -149,12 +149,11 @@
         /// <summary>
         /// Creates a new instance of <see cref="Gu.Units.Temperature"/>.
         /// </summary>
-        /// <param name="kelvin">The value in <see cref="Gu.Units.Kelvin"/></param>
+        /// <param name="kelvin">The value in <see cref="Gu.Units.TemperatureUnit.Kelvin"/></param>
         public static Temperature FromKelvin(double kelvin)
         {
             return new Temperature(kelvin);
         }
-
 
         /// <summary>
         /// Creates a new instance of <see cref="Gu.Units.Temperature"/>.

@@ -127,12 +127,11 @@
         /// <summary>
         /// Creates a new instance of <see cref="Gu.Units.SpecificEnergy"/>.
         /// </summary>
-        /// <param name="joulesPerKilogram">The value in <see cref="Gu.Units.JoulesPerKilogram"/></param>
+        /// <param name="joulesPerKilogram">The value in <see cref="Gu.Units.SpecificEnergyUnit.JoulesPerKilogram"/></param>
         public static SpecificEnergy FromJoulesPerKilogram(double joulesPerKilogram)
         {
             return new SpecificEnergy(joulesPerKilogram);
         }
-
 
         public static Length operator /(SpecificEnergy left, Acceleration right)
         {

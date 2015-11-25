@@ -193,12 +193,11 @@
         /// <summary>
         /// Creates a new instance of <see cref="Gu.Units.AngularSpeed"/>.
         /// </summary>
-        /// <param name="radiansPerSecond">The value in <see cref="Gu.Units.RadiansPerSecond"/></param>
+        /// <param name="radiansPerSecond">The value in <see cref="Gu.Units.AngularSpeedUnit.RadiansPerSecond"/></param>
         public static AngularSpeed FromRadiansPerSecond(double radiansPerSecond)
         {
             return new AngularSpeed(radiansPerSecond);
         }
-
 
         /// <summary>
         /// Creates a new instance of <see cref="Gu.Units.AngularSpeed"/>.

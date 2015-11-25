@@ -182,12 +182,11 @@
         /// <summary>
         /// Creates a new instance of <see cref="Gu.Units.AngularJerk"/>.
         /// </summary>
-        /// <param name="radiansPerSecondCubed">The value in <see cref="Gu.Units.RadiansPerSecondCubed"/></param>
+        /// <param name="radiansPerSecondCubed">The value in <see cref="Gu.Units.AngularJerkUnit.RadiansPerSecondCubed"/></param>
         public static AngularJerk FromRadiansPerSecondCubed(double radiansPerSecondCubed)
         {
             return new AngularJerk(radiansPerSecondCubed);
         }
-
 
         /// <summary>
         /// Creates a new instance of <see cref="Gu.Units.AngularJerk"/>.

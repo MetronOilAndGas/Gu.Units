@@ -237,7 +237,7 @@
         /// <summary>
         /// Creates a new instance of <see cref="Gu.Units.Length"/>.
         /// </summary>
-        /// <param name="metres">The value in <see cref="Gu.Units.Metres"/></param>
+        /// <param name="metres">The value in <see cref="Gu.Units.LengthUnit.Metres"/></param>
         public static Length FromMetres(double metres)
         {
             return new Length(metres);

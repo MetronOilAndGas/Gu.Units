@@ -168,12 +168,11 @@ namespace <#= Settings.Namespace #>
         /// <summary>
         /// Creates a new instance of <see cref="<#= Settings.Namespace #>.<#= quantity.ClassName #>"/>.
         /// </summary>
-        /// <param name="<#= quantity.Unit.ParameterName #>">The value in <see cref="<#= Settings.Namespace #>.<#= quantity.Unit.ClassName #>"/></param>
+        /// <param name="<#= quantity.Unit.ParameterName #>">The value in <see cref="<#= Settings.Namespace #>.<#= quantity.Unit.UnitName #>.<#= quantity.Unit.ClassName #>"/></param>
         public static <#= quantity.ClassName #> From<#= quantity.Unit.ClassName #>(double <#= quantity.Unit.ParameterName #>)
         {
             return new <#= quantity.ClassName #>(<#= quantity.Unit.ParameterName #>);
         }
-
 <#
 		foreach(var su in quantity.Unit.Conversions)
 		{

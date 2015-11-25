@@ -127,12 +127,11 @@
         /// <summary>
         /// Creates a new instance of <see cref="Gu.Units.LuminousIntensity"/>.
         /// </summary>
-        /// <param name="candelas">The value in <see cref="Gu.Units.Candelas"/></param>
+        /// <param name="candelas">The value in <see cref="Gu.Units.LuminousIntensityUnit.Candelas"/></param>
         public static LuminousIntensity FromCandelas(double candelas)
         {
             return new LuminousIntensity(candelas);
         }
-
 
         public static double operator /(LuminousIntensity left, LuminousIntensity right)
         {
