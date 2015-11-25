@@ -151,6 +151,17 @@ namespace <#= Settings.Namespace #>
             }
         }
 
+		
+		/// <summary>
+        /// The default unit for <see cref="<#= Settings.Namespace #>.<#= unit.UnitName #>"/>
+        /// </summary>
+        public <#= unit.UnitName #> SiUnit => <#= unit.UnitName #>.<#= unit.ClassName #>;
+
+		/// <summary>
+        /// The default <see cref="<#= Settings.Namespace #>.IUnit"/> for <see cref="<#= Settings.Namespace #>.<#= unit.UnitName #>"/>
+        /// </summary>
+        IUnit IUnit.SiUnit => <#= unit.UnitName #>.<#= unit.ClassName #>;
+
         public static <#= unit.QuantityName #> operator *(double left, <#= unit.UnitName #> right)
         {
             return <#= unit.QuantityName #>.From(left, right);

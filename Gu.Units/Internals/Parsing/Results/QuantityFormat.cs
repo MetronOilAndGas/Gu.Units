@@ -1,19 +1,16 @@
 ﻿namespace Gu.Units
 {
-    internal struct QuantityFormat<T> where T : IUnit
+    internal class QuantityFormat<T>
+        where T : IUnit
     {
-        internal readonly string ValueFormat;
-
-        internal readonly string UnitFormat;
+        public static readonly QuantityFormat<T> Default = new QuantityFormat<T>("", default(T).Symbol);
+        internal readonly string Format;
 
         internal readonly T Unit;
 
-        public QuantityFormat(string valueFormat,
-            string unitFormat,
-            T unit)
+        public QuantityFormat(string format, T unit)
         {
-            this.ValueFormat = valueFormat;
-            this.UnitFormat = unitFormat;
+            this.Format = format;
             this.Unit = unit;
         }
     }

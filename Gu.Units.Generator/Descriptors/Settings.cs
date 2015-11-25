@@ -17,6 +17,7 @@
         private readonly ParentCollection<Settings, DerivedUnit> _derivedUnits;
         private readonly ParentCollection<Settings, SiUnit> _siUnits;
         private readonly ObservableCollection<Prefix> _prefixes = new ObservableCollection<Prefix>();
+
         protected Settings()
         {
             _derivedUnits = new ParentCollection<Settings, DerivedUnit>(this, (unit, settings) => unit.Settings = settings);

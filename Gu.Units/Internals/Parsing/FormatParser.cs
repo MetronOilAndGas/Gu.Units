@@ -7,23 +7,28 @@
     {
         internal static readonly IReadOnlyList<string> DoubleFormatPatterns = new[]
         {
-            CreateDoubleFormat("F")
+            CreateDoubleFormat(@"(?:E|e)\d*"),
+            CreateDoubleFormat(@"(?:F|f)\d*"),
+            CreateDoubleFormat(@"(?:G|g)\d*"),
+            CreateDoubleFormat(@"(?:N|n)\d*"),
+            CreateDoubleFormat(@"(?:R|r)"),
+            CreateDoubleFormat(@"[0,#]*(?:\.[0,#]+)?"),
         };
 
-        internal static bool TryParse<TUnit>(string format, out QuantityFormat<TUnit> actual)
+        internal static bool TryParse<TUnit>(string format, TUnit @default, out QuantityFormat<TUnit> actual)
             where TUnit : IUnit
         {
             int pos = 0;
             string doubleFormat;
             if (!TryReadDoubleFormat(format, ref pos, out doubleFormat))
             {
-                actual = new QuantityFormat<TUnit>();
+                actual = new QuantityFormat<TUnit>("");
                 return false;
             }
 
             string unitFormat;
             TUnit unit;
-            if (!TryReadUnit(format, ref pos, out unitFormat, out unit))
+            if (!TryReadUnit(format, ref pos, @default, out unitFormat, out unit))
             {
                 actual = new QuantityFormat<TUnit>();
                 return false;
@@ -38,7 +43,7 @@
             foreach (var pattern in DoubleFormatPatterns)
             {
                 var match = Regex.Match(format, pattern);
-                if (match.Success)
+                if (match.Success && match.Value != string.Empty)
                 {
                     pos = match.Index + match.Length;
                     doubleFormat = match.Value;
@@ -52,6 +57,7 @@
 
         private static bool TryReadUnit<TUnit>(string format,
             ref int pos,
+            TUnit @default,
             out string unitFormat,
             out TUnit unit) where TUnit : IUnit
         {
@@ -59,7 +65,7 @@
             format.ReadWhiteSpace(ref pos);
             if (pos == format.Length)
             {
-                unit = default(TUnit);
+                unit = @default;
                 unitFormat = unit.Symbol;
                 return true;
             }
@@ -70,7 +76,7 @@
                 return true;
             }
 
-            unit = default(TUnit);
+            unit = @default;
             unitFormat = unit.Symbol;
             return false;
         }

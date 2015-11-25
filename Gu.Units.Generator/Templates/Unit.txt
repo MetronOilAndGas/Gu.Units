@@ -67,6 +67,17 @@
             }
         }
 
+		
+		/// <summary>
+        /// The default unit for <see cref="Gu.Units.LengthUnit"/>
+        /// </summary>
+        public LengthUnit SiUnit => LengthUnit.Metres;
+
+		/// <summary>
+        /// The default <see cref="Gu.Units.IUnit"/> for <see cref="Gu.Units.LengthUnit"/>
+        /// </summary>
+        IUnit IUnit.SiUnit => LengthUnit.Metres;
+
         public static Length operator *(double left, LengthUnit right)
         {
             return Length.From(left, right);
