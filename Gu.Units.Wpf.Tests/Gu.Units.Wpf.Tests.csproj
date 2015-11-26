@@ -30,10 +30,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.XML" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="LengthConverterTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
@@ -50,5 +55,15 @@
       <Private>True</Private>
       <Paket>True</Paket>
     </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Gu.Units.Wpf\Gu.Units.Wpf.csproj">
+      <Project>{ea4bce51-a58d-4fa7-bba4-6f0056d753ca}</Project>
+      <Name>Gu.Units.Wpf</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Gu.Units\Gu.Units.csproj">
+      <Project>{f1f8b138-becc-4475-a7ab-b3019338bc7b}</Project>
+      <Name>Gu.Units</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>

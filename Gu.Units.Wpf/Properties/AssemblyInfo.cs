@@ -37,9 +37,8 @@ using Gu.Units;
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly:InternalsVisibleTo("Gu.Units.Wpf.Tests", AllInternalsVisible = true)]
 
-[assembly: TypeForwardedTo(typeof(Length))]
-[assembly: TypeForwardedTo(typeof(LengthUnit))]
 [assembly: XmlnsDefinition("http://Gu.com/Units", clrNamespace: "Gu.Units", AssemblyName = "Gu.Units")]
 [assembly: XmlnsDefinition("http://Gu.com/Units", clrNamespace: "Gu.Units.Wpf", AssemblyName = "Gu.Units.Wpf")]
 [assembly: XmlnsPrefix("http://Gu.com/Units", "units")]

@@ -4,6 +4,7 @@
     using System.Windows.Controls;
     using System.Windows.Data;
 
+    // Dummy control for testing binding of doubles.
     public class DoubleControl : Control
     {
         public static readonly DependencyProperty ValueProperty = DependencyProperty.Register(
