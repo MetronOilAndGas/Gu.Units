@@ -2,12 +2,12 @@
 {
     using System;
 
-    internal struct SymbolAndPower : IEquatable<SymbolAndPower>
+    public struct SymbolAndPower : IEquatable<SymbolAndPower>
     {
         public readonly string Symbol;
         public readonly int Power;
 
-        internal SymbolAndPower(string symbol, int power)
+        public SymbolAndPower(string symbol, int power)
         {
             Ensure.NotNullOrEmpty(symbol, nameof(symbol));
 

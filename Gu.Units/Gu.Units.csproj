@@ -203,6 +203,7 @@
     </Compile>
     <Compile Include="Interfaces\IPower.cs" />
     <Compile Include="Interfaces\IUnit`1.cs" />
+    <Compile Include="Internals\Ensure\Ensure.compare.cs" />
     <Compile Include="Internals\Ensure\Ensure.cs" />
     <Compile Include="Internals\Ensure\Ensure.string.cs" />
     <Compile Include="Internals\Parsing\FormatParser.cs" />
@@ -305,6 +306,7 @@
     <Compile Include="StiffnessUnitTypeConverter.generated.cs">
       <DependentUpon>UnitTypeConverters.txt4</DependentUpon>
     </Compile>
+    <Compile Include="SuperScript.cs" />
     <Compile Include="Temperature.generated.cs">
       <DependentUpon>Quantties.txt4</DependentUpon>
     </Compile>
@@ -417,7 +419,7 @@
     <Compile Include="Internals\Parsing\Results\Sign.cs" />
     <Compile Include="Internals\Parsing\StringExt.cs" />
     <Compile Include="Internals\Parsing\Results\Symbol.cs" />
-    <Compile Include="Internals\Parsing\Results\SymbolAndPower.cs" />
+    <Compile Include="SymbolAndPower.cs" />
     <Compile Include="Internals\Parsing\UnitParser.cs" />
     <Compile Include="Internals\Parsing\XmlExt.cs" />
     <Compile Include="Voltage.generated.cs">

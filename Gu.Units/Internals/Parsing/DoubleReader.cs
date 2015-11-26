@@ -76,7 +76,7 @@
 
             if (style.HasFlag(NumberStyles.AllowLeadingWhite))
             {
-                ReadWhite(text, ref endPos);
+                text.ReadWhiteSpace(ref endPos);
             }
 
             if (char.IsWhiteSpace(text[endPos]))
@@ -265,14 +265,6 @@
             }
 
             return true;
-        }
-
-        private static void ReadWhite(string s, ref int pos)
-        {
-            while (pos < s.Length && Char.IsWhiteSpace(s[pos]))
-            {
-                pos++;
-            }
         }
 
         private static bool IsValidFloatingPointStyle(NumberStyles style)

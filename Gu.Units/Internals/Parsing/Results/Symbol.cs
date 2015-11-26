@@ -181,8 +181,7 @@ namespace Gu.Units
             public readonly bool IsMatch;
             public readonly int Length;
 
-            public MatchAndLength(bool isMatch,
-                int length)
+            public MatchAndLength(bool isMatch, int length)
             {
                 this.IsMatch = isMatch;
                 this.Length = length;

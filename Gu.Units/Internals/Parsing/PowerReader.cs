@@ -4,9 +4,6 @@
 
     internal static class PowerReader
     {
-        private const string Superscripts = "⁺⁻⁰¹²³⁴⁵⁶⁷⁸⁹";
-        internal const string SuperscriptDigits = "⁰¹²³⁴⁵⁶⁷⁸⁹";
-
         internal static int Read(string text, ref int pos)
         {
             int result;
@@ -37,7 +34,7 @@
                 return success;
             }
 
-            if (Superscripts.IndexOf(text[pos]) >= 0)
+            if (text[pos].IsSuperscriptDigit())
             {
                 var success = TryReadSuperScriptPower(text, ref pos, out result);
                 pos = success
@@ -70,7 +67,7 @@
             if (OperatorReader.TryReadSign(text, ref pos) != Sign.None)
             {
                 // not allowing a^--2 as it is most likely a typo
-                power = 0; 
+                power = 0;
                 return false;
             }
 
@@ -87,7 +84,7 @@
 
         private static bool TryReadSuperScriptPower(string text, ref int pos, out int power)
         {
-            if (Superscripts.IndexOf(text[pos]) < 0)
+            if (text[pos].IsSuperscriptDigit())
             {
                 power = 0;
                 return false;
@@ -136,7 +133,7 @@
 
         private static bool TryReadSuperScriptInt(string text, ref int pos, out int result)
         {
-            result = SuperscriptDigits.IndexOf(text[pos]);
+            result = SuperScript.GetDigit(text[pos]);
             if (result < 0)
             {
                 result = 0;
@@ -144,16 +141,21 @@
             }
 
             pos++;
-            int d;
+
             while (pos < text.Length &&
-                  (d = SuperscriptDigits.IndexOf(text[pos])) > -1)
+                  text[pos].IsSuperscriptDigit())
             {
                 result *= 10;
-                result += d;
+                result += SuperScript.GetDigit(text[pos]);
                 pos++;
             }
 
             return true;
+        }
+
+        private static bool IsSuperscriptDigit(this char c)
+        {
+            return SuperScript.SuperscriptDigits.IndexOf(c) > -1;
         }
     }
 }
