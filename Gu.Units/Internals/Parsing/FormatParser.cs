@@ -1,6 +1,7 @@
 ﻿namespace Gu.Units
 {
     using System;
+    using System.Collections.Concurrent;
     using System.Collections.Generic;
     using System.Text.RegularExpressions;
 
@@ -16,24 +17,21 @@
             CreateDoubleFormat(@"[0,#]*(?:\.[0,#]+)?"),
         };
 
-        internal static bool TryParse<TUnit>(string format, TUnit @default, out QuantityFormat<TUnit> actual)
-            where TUnit : IUnit
+        private static readonly ConcurrentDictionary<string, IQuantityFormat> Cache = new ConcurrentDictionary<string, IQuantityFormat>();
+
+        internal static bool TryParse<TUnit>(
+            string format,
+            out QuantityFormat<TUnit> result) where TUnit : IUnit
         {
             int pos = 0;
             string doubleFormat;
-            if (!TryReadDoubleFormat(format, ref pos, out doubleFormat))
-            {
-                throw new NotImplementedException();
-                //actual = QuantityFormat<TUnit>.Default;
-                return false;
-            }
-
             string unitFormat;
             TUnit unit;
-            if (!TryReadUnit(format, ref pos, @default, out unitFormat, out unit))
+            var readDf = TryReadDoubleFormat(format, ref pos, out doubleFormat);
+            var readUf = TryReadUnit(format, ref pos, out unitFormat, out unit);
+            if (!(readDf || readUf))
             {
-                throw new NotImplementedException();
-                //actual = QuantityFormat<TUnit>.Default;
+                result = QuantityFormat<TUnit>.Default;
                 return false;
             }
 
@@ -61,7 +59,6 @@
 
         private static bool TryReadUnit<TUnit>(string format,
             ref int pos,
-            TUnit @default,
             out string unitFormat,
             out TUnit unit) where TUnit : IUnit
         {
@@ -69,7 +66,7 @@
             format.ReadWhiteSpace(ref pos);
             if (pos == format.Length)
             {
-                unit = @default;
+                unit = (TUnit)default(TUnit).SiUnit;
                 unitFormat = unit.Symbol;
                 return true;
             }
@@ -80,7 +77,7 @@
                 return true;
             }
 
-            unit = @default;
+            unit = (TUnit)default(TUnit).SiUnit;
             unitFormat = unit.Symbol;
             return false;
         }
