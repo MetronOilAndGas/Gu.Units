@@ -451,38 +451,51 @@
 
         public override string ToString()
         {
-            return this.ToString((string)null, (IFormatProvider)NumberFormatInfo.CurrentInfo);
+            var quantityFormat = FormatParser<FrequencyUnit>.GetOrCreate(string.Empty, this.SiUnit);
+            return this.ToString(quantityFormat, null);
         }
 
         public string ToString(string format)
         {
-            return this.ToString(format, (IFormatProvider)NumberFormatInfo.CurrentInfo);
+            var quantityFormat = FormatParser<FrequencyUnit>.GetOrCreate(format);
+            return ToString(quantityFormat, null);
         }
 
         public string ToString(IFormatProvider provider)
         {
-            return this.ToString((string)null, (IFormatProvider)NumberFormatInfo.GetInstance(provider));
+            var quantityFormat = FormatParser<FrequencyUnit>.GetOrCreate(string.Empty, SiUnit);
+            return ToString(quantityFormat, provider);
         }
 
         public string ToString(string format, IFormatProvider formatProvider)
         {
-            return this.ToString(format, formatProvider, FrequencyUnit.Hertz);
+            var quantityFormat = FormatParser<FrequencyUnit>.GetOrCreate(format);
+            return ToString(quantityFormat, formatProvider);
         }
 
         public string ToString(FrequencyUnit unit)
         {
-            return this.ToString((string)null, (IFormatProvider)NumberFormatInfo.CurrentInfo, unit);
+            var quantityFormat = FormatParser<FrequencyUnit>.GetOrCreate(string.Empty, unit);
+            return ToString(quantityFormat, null);
         }
 
         public string ToString(string valueFormat, FrequencyUnit unit)
         {
-            return this.ToString(valueFormat, (IFormatProvider)NumberFormatInfo.CurrentInfo, unit);
+            var quantityFormat = FormatParser<FrequencyUnit>.GetOrCreate(valueFormat, unit);
+            return ToString(quantityFormat, null);
         }
 
         public string ToString(string valueFormat, IFormatProvider formatProvider, FrequencyUnit unit)
         {
-            var quantity = unit.FromSiUnit(this.hertz);
-            return string.Format("{0}{1}", quantity.ToString(valueFormat, formatProvider), unit.Symbol);
+            var quantityFormat = FormatParser<FrequencyUnit>.GetOrCreate(valueFormat, unit);
+            return ToString(quantityFormat, formatProvider);
+        }
+
+        private string ToString(QuantityFormat<FrequencyUnit> format, IFormatProvider formatProvider)
+        {
+            var scalarValue = format.Unit.GetScalarValue(this);
+            var provider = formatProvider ?? (IFormatProvider)NumberFormatInfo.CurrentInfo;
+            return string.Format(provider, format.Format, scalarValue);
         }
 
         /// <summary>

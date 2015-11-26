@@ -341,38 +341,51 @@
 
         public override string ToString()
         {
-            return this.ToString((string)null, (IFormatProvider)NumberFormatInfo.CurrentInfo);
+            var quantityFormat = FormatParser<VolumetricFlowUnit>.GetOrCreate(string.Empty, this.SiUnit);
+            return this.ToString(quantityFormat, null);
         }
 
         public string ToString(string format)
         {
-            return this.ToString(format, (IFormatProvider)NumberFormatInfo.CurrentInfo);
+            var quantityFormat = FormatParser<VolumetricFlowUnit>.GetOrCreate(format);
+            return ToString(quantityFormat, null);
         }
 
         public string ToString(IFormatProvider provider)
         {
-            return this.ToString((string)null, (IFormatProvider)NumberFormatInfo.GetInstance(provider));
+            var quantityFormat = FormatParser<VolumetricFlowUnit>.GetOrCreate(string.Empty, SiUnit);
+            return ToString(quantityFormat, provider);
         }
 
         public string ToString(string format, IFormatProvider formatProvider)
         {
-            return this.ToString(format, formatProvider, VolumetricFlowUnit.CubicMetresPerSecond);
+            var quantityFormat = FormatParser<VolumetricFlowUnit>.GetOrCreate(format);
+            return ToString(quantityFormat, formatProvider);
         }
 
         public string ToString(VolumetricFlowUnit unit)
         {
-            return this.ToString((string)null, (IFormatProvider)NumberFormatInfo.CurrentInfo, unit);
+            var quantityFormat = FormatParser<VolumetricFlowUnit>.GetOrCreate(string.Empty, unit);
+            return ToString(quantityFormat, null);
         }
 
         public string ToString(string valueFormat, VolumetricFlowUnit unit)
         {
-            return this.ToString(valueFormat, (IFormatProvider)NumberFormatInfo.CurrentInfo, unit);
+            var quantityFormat = FormatParser<VolumetricFlowUnit>.GetOrCreate(valueFormat, unit);
+            return ToString(quantityFormat, null);
         }
 
         public string ToString(string valueFormat, IFormatProvider formatProvider, VolumetricFlowUnit unit)
         {
-            var quantity = unit.FromSiUnit(this.cubicMetresPerSecond);
-            return string.Format("{0}{1}", quantity.ToString(valueFormat, formatProvider), unit.Symbol);
+            var quantityFormat = FormatParser<VolumetricFlowUnit>.GetOrCreate(valueFormat, unit);
+            return ToString(quantityFormat, formatProvider);
+        }
+
+        private string ToString(QuantityFormat<VolumetricFlowUnit> format, IFormatProvider formatProvider)
+        {
+            var scalarValue = format.Unit.GetScalarValue(this);
+            var provider = formatProvider ?? (IFormatProvider)NumberFormatInfo.CurrentInfo;
+            return string.Format(provider, format.Format, scalarValue);
         }
 
         /// <summary>

@@ -403,7 +403,7 @@ namespace <#= Settings.Namespace #>
  
         public override string ToString()
         {
-            var quantityFormat = FormatParser<LengthUnit>.GetOrCreate(string.Empty, this.SiUnit);
+            var quantityFormat = FormatParser<<#= quantity.ClassName #>Unit>.GetOrCreate(string.Empty, this.SiUnit);
             return this.ToString(quantityFormat, null);
         }
  

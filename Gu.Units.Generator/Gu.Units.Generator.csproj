@@ -55,11 +55,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>false</SignAssembly>
+    <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>
-    </AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>Key.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'GeneratorOnly|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -160,6 +159,7 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <None Include="Key.snk" />
     <None Include="paket.references" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -269,6 +269,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Quantties.tt</DependentUpon>
     </Content>
+    <Resource Include="Templates\Readme.txt" />
     <Content Include="Templates\Units.txt">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

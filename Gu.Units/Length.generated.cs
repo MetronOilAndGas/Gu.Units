@@ -556,8 +556,8 @@
 
         public override string ToString()
         {
-            var quantityFormat = FormatParser<LengthUnit>.GetOrCreate(string.Empty, SiUnit);
-            return ToString(quantityFormat, null);
+            var quantityFormat = FormatParser<LengthUnit>.GetOrCreate(string.Empty, this.SiUnit);
+            return this.ToString(quantityFormat, null);
         }
 
         public string ToString(string format)
