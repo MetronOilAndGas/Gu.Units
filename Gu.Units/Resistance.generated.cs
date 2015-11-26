@@ -446,7 +446,7 @@
         }
 
         /// <summary>
-        /// Compares this instance to a specified <see cref="MathNet.Spatial.Units.Resistance"/> object and returns an integer that indicates whether this <see cref="quantity"/> is smaller than, equal to, or greater than the <see cref="MathNet.Spatial.Units.Resistance"/> object.
+        /// Compares this instance to a specified <see cref="Gu.Units.Resistance"/> object and returns an integer that indicates whether this <see cref="quantity"/> is smaller than, equal to, or greater than the <see cref="Gu.Units.Resistance"/> object.
         /// </summary>
         /// <returns>
         /// A signed number indicating the relative quantitys of this instance and <paramref name="quantity"/>.
@@ -468,7 +468,7 @@
         ///                     This instance is larger than <paramref name="quantity"/>.
         /// 
         /// </returns>
-        /// <param name="quantity">An instance of <see cref="MathNet.Spatial.Units.Resistance"/> object to compare to this instance.</param>
+        /// <param name="quantity">An instance of <see cref="Gu.Units.Resistance"/> object to compare to this instance.</param>
         public int CompareTo(Resistance quantity)
         {
             return this.ohm.CompareTo(quantity.ohm);

@@ -496,7 +496,7 @@
         }
 
         /// <summary>
-        /// Compares this instance to a specified <see cref="MathNet.Spatial.Units.Time"/> object and returns an integer that indicates whether this <see cref="quantity"/> is smaller than, equal to, or greater than the <see cref="MathNet.Spatial.Units.Time"/> object.
+        /// Compares this instance to a specified <see cref="Gu.Units.Time"/> object and returns an integer that indicates whether this <see cref="quantity"/> is smaller than, equal to, or greater than the <see cref="Gu.Units.Time"/> object.
         /// </summary>
         /// <returns>
         /// A signed number indicating the relative quantitys of this instance and <paramref name="quantity"/>.
@@ -518,7 +518,7 @@
         ///                     This instance is larger than <paramref name="quantity"/>.
         /// 
         /// </returns>
-        /// <param name="quantity">An instance of <see cref="MathNet.Spatial.Units.Time"/> object to compare to this instance.</param>
+        /// <param name="quantity">An instance of <see cref="Gu.Units.Time"/> object to compare to this instance.</param>
         public int CompareTo(Time quantity)
         {
             return this.seconds.CompareTo(quantity.seconds);

@@ -591,7 +591,7 @@
         }
 
         /// <summary>
-        /// Compares this instance to a specified <see cref="MathNet.Spatial.Units.Length"/> object and returns an integer that indicates whether this <see cref="quantity"/> is smaller than, equal to, or greater than the <see cref="MathNet.Spatial.Units.Length"/> object.
+        /// Compares this instance to a specified <see cref="Gu.Units.Length"/> object and returns an integer that indicates whether this <see cref="quantity"/> is smaller than, equal to, or greater than the <see cref="Gu.Units.Length"/> object.
         /// </summary>
         /// <returns>
         /// A signed number indicating the relative quantitys of this instance and <paramref name="quantity"/>.
@@ -613,7 +613,7 @@
         ///                     This instance is larger than <paramref name="quantity"/>.
         /// 
         /// </returns>
-        /// <param name="quantity">An instance of <see cref="MathNet.Spatial.Units.Length"/> object to compare to this instance.</param>
+        /// <param name="quantity">An instance of <see cref="Gu.Units.Length"/> object to compare to this instance.</param>
         public int CompareTo(Length quantity)
         {
             return this.metres.CompareTo(quantity.metres);
