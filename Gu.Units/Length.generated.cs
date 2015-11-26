@@ -556,38 +556,51 @@
 
         public override string ToString()
         {
-            return this.ToString((string)null, (IFormatProvider)NumberFormatInfo.CurrentInfo);
+            var quantityFormat = FormatParser<LengthUnit>.GetOrCreate(string.Empty, SiUnit);
+            return ToString(quantityFormat, null);
         }
 
         public string ToString(string format)
         {
-            return this.ToString(format, (IFormatProvider)NumberFormatInfo.CurrentInfo);
+            var quantityFormat = FormatParser<LengthUnit>.GetOrCreate(format);
+            return ToString(quantityFormat, null);
         }
 
         public string ToString(IFormatProvider provider)
         {
-            return this.ToString((string)null, (IFormatProvider)NumberFormatInfo.GetInstance(provider));
+            var quantityFormat = FormatParser<LengthUnit>.GetOrCreate(string.Empty, SiUnit);
+            return ToString(quantityFormat, provider);
         }
 
         public string ToString(string format, IFormatProvider formatProvider)
         {
-            return this.ToString(format, formatProvider, LengthUnit.Metres);
+            var quantityFormat = FormatParser<LengthUnit>.GetOrCreate(format);
+            return ToString(quantityFormat, formatProvider);
         }
 
         public string ToString(LengthUnit unit)
         {
-            return this.ToString((string)null, (IFormatProvider)NumberFormatInfo.CurrentInfo, unit);
+            var quantityFormat = FormatParser<LengthUnit>.GetOrCreate(string.Empty, unit);
+            return ToString(quantityFormat, null);
         }
 
         public string ToString(string valueFormat, LengthUnit unit)
         {
-            return this.ToString(valueFormat, (IFormatProvider)NumberFormatInfo.CurrentInfo, unit);
+            var quantityFormat = FormatParser<LengthUnit>.GetOrCreate(valueFormat, unit);
+            return ToString(quantityFormat, null);
         }
 
         public string ToString(string valueFormat, IFormatProvider formatProvider, LengthUnit unit)
         {
-            var quantity = unit.FromSiUnit(this.metres);
-            return string.Format("{0}{1}", quantity.ToString(valueFormat, formatProvider), unit.Symbol);
+            var quantityFormat = FormatParser<LengthUnit>.GetOrCreate(valueFormat, unit);
+            return ToString(quantityFormat, formatProvider);
+        }
+
+        private string ToString(QuantityFormat<LengthUnit> format, IFormatProvider formatProvider)
+        {
+            var scalarValue = format.Unit.GetScalarValue(this);
+            var provider = formatProvider ?? (IFormatProvider)NumberFormatInfo.CurrentInfo;
+            return string.Format(provider, format.Format, scalarValue);
         }
 
         /// <summary>

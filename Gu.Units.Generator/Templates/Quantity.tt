@@ -17,6 +17,7 @@ else
                         QuantityName = "Length"
                     };
     unit.Conversions.Add(new Conversion("Centimetres", "cm"));
+    unit.Conversions.Add(new Conversion("Centimetres", "cm"));
     unit.Conversions.Add(new Conversion("Millimetres", "mm"));
     quantity = unit.Quantity;
 }
@@ -402,40 +403,53 @@ namespace <#= Settings.Namespace #>
  
         public override string ToString()
         {
-            return this.ToString((string)null, (IFormatProvider)NumberFormatInfo.CurrentInfo);
+            var quantityFormat = FormatParser<LengthUnit>.GetOrCreate(string.Empty, this.SiUnit);
+            return this.ToString(quantityFormat, null);
         }
  
         public string ToString(string format)
         {
-            return this.ToString(format, (IFormatProvider)NumberFormatInfo.CurrentInfo);
+            var quantityFormat = FormatParser<<#= quantity.ClassName #>Unit>.GetOrCreate(format);
+            return ToString(quantityFormat, null);
         }
  
         public string ToString(IFormatProvider provider)
         {
-            return this.ToString((string)null, (IFormatProvider)NumberFormatInfo.GetInstance(provider));
+            var quantityFormat = FormatParser<<#= quantity.ClassName #>Unit>.GetOrCreate(string.Empty, SiUnit);
+            return ToString(quantityFormat, provider);
         }
  
         public string ToString(string format, IFormatProvider formatProvider)
         {
-            return this.ToString(format, formatProvider, <#= quantity.ClassName #>Unit.<#= quantity.Unit.ClassName #>);
+            var quantityFormat = FormatParser<<#= quantity.ClassName #>Unit>.GetOrCreate(format);
+            return ToString(quantityFormat, formatProvider);
         }
  
         public string ToString(<#= quantity.ClassName #>Unit unit)
         {
-            return this.ToString((string)null, (IFormatProvider)NumberFormatInfo.CurrentInfo, unit);
+            var quantityFormat = FormatParser<<#= quantity.ClassName #>Unit>.GetOrCreate(string.Empty, unit);
+            return ToString(quantityFormat, null);
         }
 
         public string ToString(string valueFormat, <#= quantity.ClassName #>Unit unit)
         {
-            return this.ToString(valueFormat, (IFormatProvider)NumberFormatInfo.CurrentInfo, unit);
+            var quantityFormat = FormatParser<<#= quantity.ClassName #>Unit>.GetOrCreate(valueFormat, unit);
+            return ToString(quantityFormat, null);
         }
 
         public string ToString(string valueFormat, IFormatProvider formatProvider, <#= quantity.ClassName #>Unit unit)
         {
-            var quantity = unit.<#= Names.FromSiUnit #>(this.<#= quantity.Unit.ParameterName #>);
-            return string.Format("{0}{1}", quantity.ToString(valueFormat, formatProvider), unit.Symbol);
+            var quantityFormat = FormatParser<<#= quantity.ClassName #>Unit>.GetOrCreate(valueFormat, unit);
+            return ToString(quantityFormat, formatProvider);
         }
  
+        private string ToString(QuantityFormat<<#= quantity.ClassName #>Unit> format, IFormatProvider formatProvider)
+        {
+            var scalarValue = format.Unit.GetScalarValue(this);
+            var provider = formatProvider ?? (IFormatProvider)NumberFormatInfo.CurrentInfo;
+            return string.Format(provider, format.Format, scalarValue);
+        }
+
         /// <summary>
         /// Compares this instance to a specified <see cref="<#= Settings.Namespace #>.<#= quantity.ClassName #>"/> object and returns an integer that indicates whether this <see cref="quantity"/> is smaller than, equal to, or greater than the <see cref="<#= Settings.Namespace #>.<#= quantity.ClassName #>"/> object.
         /// </summary>
