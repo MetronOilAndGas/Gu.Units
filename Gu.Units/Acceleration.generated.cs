@@ -10,7 +10,8 @@
     /// <summary>
     /// A type for the quantity <see cref="Gu.Units.Acceleration"/>.
     /// </summary>
-    [Serializable, TypeConverter(typeof(AccelerationTypeConverter))]
+    // [TypeConverter(typeof(AccelerationTypeConverter))]
+    [Serializable]
     public partial struct Acceleration : IComparable<Acceleration>, IEquatable<Acceleration>, IFormattable, IXmlSerializable, IQuantity<LengthUnit, I1, TimeUnit, INeg2>, IQuantity<AccelerationUnit>
     {
         public static readonly Acceleration Zero = new Acceleration();

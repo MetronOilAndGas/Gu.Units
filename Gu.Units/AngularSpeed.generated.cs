@@ -10,7 +10,8 @@
     /// <summary>
     /// A type for the quantity <see cref="Gu.Units.AngularSpeed"/>.
     /// </summary>
-    [Serializable, TypeConverter(typeof(AngularSpeedTypeConverter))]
+    // [TypeConverter(typeof(AngularSpeedTypeConverter))]
+    [Serializable]
     public partial struct AngularSpeed : IComparable<AngularSpeed>, IEquatable<AngularSpeed>, IFormattable, IXmlSerializable, IQuantity<AngleUnit, I1, TimeUnit, INeg1>, IQuantity<AngularSpeedUnit>
     {
         public static readonly AngularSpeed Zero = new AngularSpeed();

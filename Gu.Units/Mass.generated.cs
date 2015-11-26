@@ -10,7 +10,8 @@
     /// <summary>
     /// A type for the quantity <see cref="Gu.Units.Mass"/>.
     /// </summary>
-    [Serializable, TypeConverter(typeof(MassTypeConverter))]
+    // [TypeConverter(typeof(MassTypeConverter))]
+    [Serializable]
     public partial struct Mass : IComparable<Mass>, IEquatable<Mass>, IFormattable, IXmlSerializable, IQuantity<MassUnit, I1>, IQuantity<MassUnit>
     {
         public static readonly Mass Zero = new Mass();

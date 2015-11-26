@@ -10,7 +10,8 @@
     /// <summary>
     /// A type for the quantity <see cref="Gu.Units.Volume"/>.
     /// </summary>
-    [Serializable, TypeConverter(typeof(VolumeTypeConverter))]
+    // [TypeConverter(typeof(VolumeTypeConverter))]
+    [Serializable]
     public partial struct Volume : IComparable<Volume>, IEquatable<Volume>, IFormattable, IXmlSerializable, IQuantity<LengthUnit, I3>, IQuantity<VolumeUnit>
     {
         public static readonly Volume Zero = new Volume();

@@ -10,7 +10,8 @@
     /// <summary>
     /// A type for the quantity <see cref="Gu.Units.Torque"/>.
     /// </summary>
-    [Serializable, TypeConverter(typeof(TorqueTypeConverter))]
+    // [TypeConverter(typeof(TorqueTypeConverter))]
+    [Serializable]
     public partial struct Torque : IComparable<Torque>, IEquatable<Torque>, IFormattable, IXmlSerializable, IQuantity<MassUnit, I1, LengthUnit, I2, TimeUnit, INeg2, AngleUnit, INeg1>, IQuantity<TorqueUnit>
     {
         public static readonly Torque Zero = new Torque();

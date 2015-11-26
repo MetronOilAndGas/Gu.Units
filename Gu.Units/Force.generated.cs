@@ -10,7 +10,8 @@
     /// <summary>
     /// A type for the quantity <see cref="Gu.Units.Force"/>.
     /// </summary>
-    [Serializable, TypeConverter(typeof(ForceTypeConverter))]
+    // [TypeConverter(typeof(ForceTypeConverter))]
+    [Serializable]
     public partial struct Force : IComparable<Force>, IEquatable<Force>, IFormattable, IXmlSerializable, IQuantity<MassUnit, I1, LengthUnit, I1, TimeUnit, INeg2>, IQuantity<ForceUnit>
     {
         public static readonly Force Zero = new Force();

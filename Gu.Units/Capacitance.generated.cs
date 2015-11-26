@@ -10,7 +10,8 @@
     /// <summary>
     /// A type for the quantity <see cref="Gu.Units.Capacitance"/>.
     /// </summary>
-    [Serializable, TypeConverter(typeof(CapacitanceTypeConverter))]
+    // [TypeConverter(typeof(CapacitanceTypeConverter))]
+    [Serializable]
     public partial struct Capacitance : IComparable<Capacitance>, IEquatable<Capacitance>, IFormattable, IXmlSerializable, IQuantity<TimeUnit, I4, CurrentUnit, I2, MassUnit, INeg1, LengthUnit, INeg2>, IQuantity<CapacitanceUnit>
     {
         public static readonly Capacitance Zero = new Capacitance();

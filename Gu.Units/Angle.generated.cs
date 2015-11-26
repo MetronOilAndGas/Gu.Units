@@ -10,7 +10,8 @@
     /// <summary>
     /// A type for the quantity <see cref="Gu.Units.Angle"/>.
     /// </summary>
-    [Serializable, TypeConverter(typeof(AngleTypeConverter))]
+    // [TypeConverter(typeof(AngleTypeConverter))]
+    [Serializable]
     public partial struct Angle : IComparable<Angle>, IEquatable<Angle>, IFormattable, IXmlSerializable, IQuantity<AngleUnit, I1>, IQuantity<AngleUnit>
     {
         public static readonly Angle Zero = new Angle();

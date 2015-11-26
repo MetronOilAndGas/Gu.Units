@@ -464,7 +464,6 @@
     <None Include="paket.template" />
     <None Include="QuantityTypeConverters.txt4" />
     <None Include="Quantties.txt4" />
-    <None Include="UnitGenerator.txt4" />
     <None Include="Units.txt4" />
     <None Include="UnitTypeConverters.txt4" />
   </ItemGroup>

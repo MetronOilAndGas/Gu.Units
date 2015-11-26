@@ -10,7 +10,8 @@
     /// <summary>
     /// A type for the quantity <see cref="Gu.Units.Unitless"/>.
     /// </summary>
-    [Serializable, TypeConverter(typeof(UnitlessTypeConverter))]
+    // [TypeConverter(typeof(UnitlessTypeConverter))]
+    [Serializable]
     public partial struct Unitless : IComparable<Unitless>, IEquatable<Unitless>, IFormattable, IXmlSerializable, IQuantity<UnitlessUnit, I1>, IQuantity<UnitlessUnit>
     {
         public static readonly Unitless Zero = new Unitless();

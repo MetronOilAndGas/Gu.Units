@@ -6,7 +6,7 @@ namespace Gu.Units.Wpf.Demo
 
     public class ViewModel : INotifyPropertyChanged
     {
-        private Length _length;
+        private Length _length = Length.FromMillimetres(1234.567);
 
         public event PropertyChangedEventHandler PropertyChanged;
 

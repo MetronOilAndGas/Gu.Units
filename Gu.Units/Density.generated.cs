@@ -10,7 +10,8 @@
     /// <summary>
     /// A type for the quantity <see cref="Gu.Units.Density"/>.
     /// </summary>
-    [Serializable, TypeConverter(typeof(DensityTypeConverter))]
+    // [TypeConverter(typeof(DensityTypeConverter))]
+    [Serializable]
     public partial struct Density : IComparable<Density>, IEquatable<Density>, IFormattable, IXmlSerializable, IQuantity<MassUnit, I1, LengthUnit, INeg3>, IQuantity<DensityUnit>
     {
         public static readonly Density Zero = new Density();

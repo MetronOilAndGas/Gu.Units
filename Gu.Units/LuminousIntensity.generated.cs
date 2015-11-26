@@ -10,7 +10,8 @@
     /// <summary>
     /// A type for the quantity <see cref="Gu.Units.LuminousIntensity"/>.
     /// </summary>
-    [Serializable, TypeConverter(typeof(LuminousIntensityTypeConverter))]
+    // [TypeConverter(typeof(LuminousIntensityTypeConverter))]
+    [Serializable]
     public partial struct LuminousIntensity : IComparable<LuminousIntensity>, IEquatable<LuminousIntensity>, IFormattable, IXmlSerializable, IQuantity<LuminousIntensityUnit, I1>, IQuantity<LuminousIntensityUnit>
     {
         public static readonly LuminousIntensity Zero = new LuminousIntensity();

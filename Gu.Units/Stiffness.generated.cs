@@ -10,7 +10,8 @@
     /// <summary>
     /// A type for the quantity <see cref="Gu.Units.Stiffness"/>.
     /// </summary>
-    [Serializable, TypeConverter(typeof(StiffnessTypeConverter))]
+    // [TypeConverter(typeof(StiffnessTypeConverter))]
+    [Serializable]
     public partial struct Stiffness : IComparable<Stiffness>, IEquatable<Stiffness>, IFormattable, IXmlSerializable, IQuantity<MassUnit, I1, TimeUnit, INeg2>, IQuantity<StiffnessUnit>
     {
         public static readonly Stiffness Zero = new Stiffness();

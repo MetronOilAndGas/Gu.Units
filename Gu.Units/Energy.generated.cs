@@ -10,7 +10,8 @@
     /// <summary>
     /// A type for the quantity <see cref="Gu.Units.Energy"/>.
     /// </summary>
-    [Serializable, TypeConverter(typeof(EnergyTypeConverter))]
+    // [TypeConverter(typeof(EnergyTypeConverter))]
+    [Serializable]
     public partial struct Energy : IComparable<Energy>, IEquatable<Energy>, IFormattable, IXmlSerializable, IQuantity<MassUnit, I1, LengthUnit, I2, TimeUnit, INeg2>, IQuantity<EnergyUnit>
     {
         public static readonly Energy Zero = new Energy();

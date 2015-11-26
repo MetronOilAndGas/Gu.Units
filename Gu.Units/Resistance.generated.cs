@@ -10,7 +10,8 @@
     /// <summary>
     /// A type for the quantity <see cref="Gu.Units.Resistance"/>.
     /// </summary>
-    [Serializable, TypeConverter(typeof(ResistanceTypeConverter))]
+    // [TypeConverter(typeof(ResistanceTypeConverter))]
+    [Serializable]
     public partial struct Resistance : IComparable<Resistance>, IEquatable<Resistance>, IFormattable, IXmlSerializable, IQuantity<MassUnit, I1, LengthUnit, I2, TimeUnit, INeg3, CurrentUnit, INeg2>, IQuantity<ResistanceUnit>
     {
         public static readonly Resistance Zero = new Resistance();

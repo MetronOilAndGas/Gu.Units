@@ -10,7 +10,8 @@
     /// <summary>
     /// A type for the quantity <see cref="Gu.Units.Pressure"/>.
     /// </summary>
-    [Serializable, TypeConverter(typeof(PressureTypeConverter))]
+    // [TypeConverter(typeof(PressureTypeConverter))]
+    [Serializable]
     public partial struct Pressure : IComparable<Pressure>, IEquatable<Pressure>, IFormattable, IXmlSerializable, IQuantity<MassUnit, I1, LengthUnit, INeg1, TimeUnit, INeg2>, IQuantity<PressureUnit>
     {
         public static readonly Pressure Zero = new Pressure();

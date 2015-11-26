@@ -2,6 +2,7 @@
 {
     using System.Windows;
     using System.Windows.Controls;
+    using System.Windows.Data;
 
     public class DoubleControl : Control
     {
@@ -9,7 +10,7 @@
             "Value",
             typeof(double),
             typeof(DoubleControl),
-            new PropertyMetadata(default(double)));
+            new FrameworkPropertyMetadata(default(double), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault) {DefaultUpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged});
 
         public double Value
         {

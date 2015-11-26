@@ -3,6 +3,7 @@
     using System;
     using System.ComponentModel;
     using System.Globalization;
+    using System.Windows;
     using System.Windows.Data;
     using System.Windows.Markup;
 
@@ -10,6 +11,8 @@
     public class LengthConverter : MarkupExtension, IValueConverter
     {
         private LengthUnit? _unit;
+        private string _stringFormat;
+        private IProvideValueTarget _provideValueTarget;
 
         public LengthConverter()
         {
@@ -32,29 +35,17 @@
                     throw new ArgumentException(message, nameof(value));
                 }
 
-                this._unit = value;
+                this._unit = value.Value;
             }
         }
 
+        public bool AllowSymbol { get; set; } = false;
+
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
-            if (Unit == null)
-            {
-                var pvt = (IProvideValueTarget)serviceProvider.GetService(typeof(IProvideValueTarget));
-                var binding = pvt.TargetObject as Binding;
-                var stringFormat = binding?.StringFormat;
-                if (stringFormat != null)
-                {
-                    throw new NotImplementedException("Use string format from binding");
-                }
-            }
-
-            if (Unit == null)
-            {
-                var message = $"{nameof(Unit)} cannot be null";
-                throw new InvalidOperationException(message);
-            }
-
+            // the binding does not have stringformat set at this point
+            // caching IProvideValueTarget to resolve later.
+            this._provideValueTarget = (IProvideValueTarget)serviceProvider.GetService(typeof(IProvideValueTarget));
             return this;
         }
 
@@ -68,6 +59,11 @@
                 return string.Empty;
             }
 
+            if (this._unit == null && this._stringFormat == null)
+            {
+                GetStringFormat();
+            }
+
             if (!(value is Length))
             {
                 var message = $"{GetType().Name} only supports converting from {nameof(Length)}";
@@ -75,18 +71,17 @@
             }
 
             var length = (Length)value;
-
-            if (targetType == typeof(string))
+            if (this._stringFormat != null)
             {
-
-                return Unit.Value.GetScalarValue(length).ToString(culture);
+                return value;
             }
 
-            if (targetType == typeof(double))
+            if (targetType == typeof(string) ||
+                targetType == typeof(double) ||
+                targetType == typeof(object))
             {
-                return Unit.Value.GetScalarValue(length);
+                return length.GetValue(this._unit.Value);
             }
-
             {
                 var message = $"{GetType().Name} does not support converting to {targetType.Name}";
                 throw new ArgumentException(message, nameof(targetType));
@@ -109,10 +104,30 @@
                 return null;
             }
 
+            if (this._unit == null && this._stringFormat == null)
+            {
+                GetStringFormat();
+            }
+
+            if (value is double)
+            {
+                return new Length((double) value, Unit.Value);
+            }
+
             var text = value as string;
             if (string.IsNullOrEmpty(text))
             {
                 return null;
+            }
+
+            if (AllowSymbol)
+            {
+                Length result;
+                if (Length.TryParse(text, NumberStyles.Float, culture, out result))
+                {
+                    return result;
+                }
+                return text;
             }
 
             double d;
@@ -121,13 +136,33 @@
                 return new Length(d, Unit.Value);
             }
 
-            Length result;
-            if (Length.TryParse(text, NumberStyles.Float, culture, out result))
-            {
-                return result;
-            }
+            return value; // returning raw to trigger error
+        }
 
-            return value;
+        private void GetStringFormat()
+        {
+            var target = this._provideValueTarget.TargetObject as DependencyObject;
+            Binding binding = null;
+            if (target != null)
+            {
+                var targetProperty = this._provideValueTarget.TargetProperty as DependencyProperty;
+                if (targetProperty != null)
+                {
+                    binding = BindingOperations.GetBinding(target, targetProperty);
+                }
+            }
+            binding = binding ?? this._provideValueTarget.TargetObject as Binding;
+            _stringFormat = binding?.StringFormat;
+            if (_stringFormat != null)
+            {
+                QuantityFormat<LengthUnit> format;
+                if (FormatParser.TryParse(_stringFormat.Trim('{','}'), out format))
+                {
+                    this._unit = format.Unit;
+                    this._stringFormat = format.Format;
+                    AllowSymbol = true;
+                }
+            }
         }
     }
 }

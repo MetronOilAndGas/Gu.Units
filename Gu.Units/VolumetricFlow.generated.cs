@@ -10,7 +10,8 @@
     /// <summary>
     /// A type for the quantity <see cref="Gu.Units.VolumetricFlow"/>.
     /// </summary>
-    [Serializable, TypeConverter(typeof(VolumetricFlowTypeConverter))]
+    // [TypeConverter(typeof(VolumetricFlowTypeConverter))]
+    [Serializable]
     public partial struct VolumetricFlow : IComparable<VolumetricFlow>, IEquatable<VolumetricFlow>, IFormattable, IXmlSerializable, IQuantity<LengthUnit, I3, TimeUnit, INeg1>, IQuantity<VolumetricFlowUnit>
     {
         public static readonly VolumetricFlow Zero = new VolumetricFlow();

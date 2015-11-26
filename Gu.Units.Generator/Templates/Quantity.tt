@@ -34,7 +34,8 @@ namespace <#= Settings.Namespace #>
 	/// <summary>
     /// A type for the quantity <see cref="<#= Settings.Namespace #>.<#= quantity.ClassName #>"/>.
     /// </summary>
-    [Serializable, TypeConverter(typeof(<#= quantity.ClassName #>TypeConverter))]
+	// [TypeConverter(typeof(<#= quantity.ClassName #>TypeConverter))]
+    [Serializable]
 	public partial struct <#= quantity.ClassName #> : IComparable<<#= quantity.ClassName #>>, IEquatable<<#= quantity.ClassName #>>, IFormattable, IXmlSerializable, <#= quantity.Interface #>, IQuantity<<#= quantity.ClassName #>Unit>
 	{
 		public static readonly <#= quantity.ClassName #> Zero = new <#= quantity.ClassName #>();

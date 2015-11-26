@@ -10,7 +10,8 @@
     /// <summary>
     /// A type for the quantity <see cref="Gu.Units.Power"/>.
     /// </summary>
-    [Serializable, TypeConverter(typeof(PowerTypeConverter))]
+    // [TypeConverter(typeof(PowerTypeConverter))]
+    [Serializable]
     public partial struct Power : IComparable<Power>, IEquatable<Power>, IFormattable, IXmlSerializable, IQuantity<MassUnit, I1, LengthUnit, I2, TimeUnit, INeg3>, IQuantity<PowerUnit>
     {
         public static readonly Power Zero = new Power();

@@ -10,7 +10,8 @@
     /// <summary>
     /// A type for the quantity <see cref="Gu.Units.Current"/>.
     /// </summary>
-    [Serializable, TypeConverter(typeof(CurrentTypeConverter))]
+    // [TypeConverter(typeof(CurrentTypeConverter))]
+    [Serializable]
     public partial struct Current : IComparable<Current>, IEquatable<Current>, IFormattable, IXmlSerializable, IQuantity<CurrentUnit, I1>, IQuantity<CurrentUnit>
     {
         public static readonly Current Zero = new Current();

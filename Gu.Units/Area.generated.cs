@@ -10,7 +10,8 @@
     /// <summary>
     /// A type for the quantity <see cref="Gu.Units.Area"/>.
     /// </summary>
-    [Serializable, TypeConverter(typeof(AreaTypeConverter))]
+    // [TypeConverter(typeof(AreaTypeConverter))]
+    [Serializable]
     public partial struct Area : IComparable<Area>, IEquatable<Area>, IFormattable, IXmlSerializable, IQuantity<LengthUnit, I2>, IQuantity<AreaUnit>
     {
         public static readonly Area Zero = new Area();

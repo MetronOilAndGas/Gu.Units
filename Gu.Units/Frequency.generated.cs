@@ -10,7 +10,8 @@
     /// <summary>
     /// A type for the quantity <see cref="Gu.Units.Frequency"/>.
     /// </summary>
-    [Serializable, TypeConverter(typeof(FrequencyTypeConverter))]
+    // [TypeConverter(typeof(FrequencyTypeConverter))]
+    [Serializable]
     public partial struct Frequency : IComparable<Frequency>, IEquatable<Frequency>, IFormattable, IXmlSerializable, IQuantity<TimeUnit, INeg1>, IQuantity<FrequencyUnit>
     {
         public static readonly Frequency Zero = new Frequency();

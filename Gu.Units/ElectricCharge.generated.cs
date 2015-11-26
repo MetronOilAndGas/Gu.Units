@@ -10,7 +10,8 @@
     /// <summary>
     /// A type for the quantity <see cref="Gu.Units.ElectricCharge"/>.
     /// </summary>
-    [Serializable, TypeConverter(typeof(ElectricChargeTypeConverter))]
+    // [TypeConverter(typeof(ElectricChargeTypeConverter))]
+    [Serializable]
     public partial struct ElectricCharge : IComparable<ElectricCharge>, IEquatable<ElectricCharge>, IFormattable, IXmlSerializable, IQuantity<TimeUnit, I1, CurrentUnit, I1>, IQuantity<ElectricChargeUnit>
     {
         public static readonly ElectricCharge Zero = new ElectricCharge();
