@@ -1,16 +1,15 @@
 ﻿<#@ template debug="false" hostspecific="false" language="C#" #>
-<#@ CleanupBehavior processor="T4VSHost" CleanupAfterProcessingtemplate="true" #>
 <#@ import namespace="System.Globalization" #>
-<#@ assembly name="$(SolutionDir)Generator\Gu.Units.Generator.exe" #>
+<#@ assembly name="$(TargetPath)" #>
 <#@ import namespace="Gu.Units.Generator" #>
-<#@ parameter name="UnitMetaData" type="Gu.Units.Generator.IUnit" #>
+<#@ parameter name="UnitData" type="Gu.Units.Generator.IUnit" #>
 <#@ output extension=".txt" #>
 <#
 // Template used by UnitGenerator.tt
 IUnit unit;
-if(UnitMetaData != null)
+if(UnitData != null)
 {
-    unit = UnitMetaData;
+    unit = UnitData;
 }
 else
 {

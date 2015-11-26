@@ -49,6 +49,16 @@
             }
         }
 
+        /// <summary>
+        /// The default unit for <see cref="Gu.Units.AccelerationUnit"/>
+        /// </summary>
+        public AccelerationUnit SiUnit => AccelerationUnit.MetresPerSecondSquared;
+
+        /// <summary>
+        /// The default <see cref="Gu.Units.IUnit"/> for <see cref="Gu.Units.AccelerationUnit"/>
+        /// </summary>
+        IUnit IUnit.SiUnit => AccelerationUnit.MetresPerSecondSquared;
+
         public static Acceleration operator *(double left, AccelerationUnit right)
         {
             return Acceleration.From(left, right);

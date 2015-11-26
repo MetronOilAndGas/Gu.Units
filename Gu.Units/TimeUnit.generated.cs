@@ -103,6 +103,16 @@
             }
         }
 
+        /// <summary>
+        /// The default unit for <see cref="Gu.Units.TimeUnit"/>
+        /// </summary>
+        public TimeUnit SiUnit => TimeUnit.Seconds;
+
+        /// <summary>
+        /// The default <see cref="Gu.Units.IUnit"/> for <see cref="Gu.Units.TimeUnit"/>
+        /// </summary>
+        IUnit IUnit.SiUnit => TimeUnit.Seconds;
+
         public static Time operator *(double left, TimeUnit right)
         {
             return Time.From(left, right);

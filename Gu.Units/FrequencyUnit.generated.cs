@@ -91,6 +91,16 @@
             }
         }
 
+        /// <summary>
+        /// The default unit for <see cref="Gu.Units.FrequencyUnit"/>
+        /// </summary>
+        public FrequencyUnit SiUnit => FrequencyUnit.Hertz;
+
+        /// <summary>
+        /// The default <see cref="Gu.Units.IUnit"/> for <see cref="Gu.Units.FrequencyUnit"/>
+        /// </summary>
+        IUnit IUnit.SiUnit => FrequencyUnit.Hertz;
+
         public static Frequency operator *(double left, FrequencyUnit right)
         {
             return Frequency.From(left, right);

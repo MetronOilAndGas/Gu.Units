@@ -79,6 +79,16 @@
             }
         }
 
+        /// <summary>
+        /// The default unit for <see cref="Gu.Units.MassUnit"/>
+        /// </summary>
+        public MassUnit SiUnit => MassUnit.Kilograms;
+
+        /// <summary>
+        /// The default <see cref="Gu.Units.IUnit"/> for <see cref="Gu.Units.MassUnit"/>
+        /// </summary>
+        IUnit IUnit.SiUnit => MassUnit.Kilograms;
+
         public static Mass operator *(double left, MassUnit right)
         {
             return Mass.From(left, right);

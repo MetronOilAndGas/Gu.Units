@@ -67,6 +67,16 @@
             }
         }
 
+        /// <summary>
+        /// The default unit for <see cref="Gu.Units.AngularJerkUnit"/>
+        /// </summary>
+        public AngularJerkUnit SiUnit => AngularJerkUnit.RadiansPerSecondCubed;
+
+        /// <summary>
+        /// The default <see cref="Gu.Units.IUnit"/> for <see cref="Gu.Units.AngularJerkUnit"/>
+        /// </summary>
+        IUnit IUnit.SiUnit => AngularJerkUnit.RadiansPerSecondCubed;
+
         public static AngularJerk operator *(double left, AngularJerkUnit right)
         {
             return AngularJerk.From(left, right);

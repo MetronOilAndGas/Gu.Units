@@ -91,6 +91,16 @@
             }
         }
 
+        /// <summary>
+        /// The default unit for <see cref="Gu.Units.VoltageUnit"/>
+        /// </summary>
+        public VoltageUnit SiUnit => VoltageUnit.Volts;
+
+        /// <summary>
+        /// The default <see cref="Gu.Units.IUnit"/> for <see cref="Gu.Units.VoltageUnit"/>
+        /// </summary>
+        IUnit IUnit.SiUnit => VoltageUnit.Volts;
+
         public static Voltage operator *(double left, VoltageUnit right)
         {
             return Voltage.From(left, right);

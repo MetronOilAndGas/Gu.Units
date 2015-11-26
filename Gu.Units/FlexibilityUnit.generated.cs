@@ -55,6 +55,16 @@
             }
         }
 
+        /// <summary>
+        /// The default unit for <see cref="Gu.Units.FlexibilityUnit"/>
+        /// </summary>
+        public FlexibilityUnit SiUnit => FlexibilityUnit.MetresPerNewton;
+
+        /// <summary>
+        /// The default <see cref="Gu.Units.IUnit"/> for <see cref="Gu.Units.FlexibilityUnit"/>
+        /// </summary>
+        IUnit IUnit.SiUnit => FlexibilityUnit.MetresPerNewton;
+
         public static Flexibility operator *(double left, FlexibilityUnit right)
         {
             return Flexibility.From(left, right);

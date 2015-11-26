@@ -67,6 +67,16 @@
             }
         }
 
+        /// <summary>
+        /// The default unit for <see cref="Gu.Units.UnitlessUnit"/>
+        /// </summary>
+        public UnitlessUnit SiUnit => UnitlessUnit.Scalar;
+
+        /// <summary>
+        /// The default <see cref="Gu.Units.IUnit"/> for <see cref="Gu.Units.UnitlessUnit"/>
+        /// </summary>
+        IUnit IUnit.SiUnit => UnitlessUnit.Scalar;
+
         public static Unitless operator *(double left, UnitlessUnit right)
         {
             return Unitless.From(left, right);

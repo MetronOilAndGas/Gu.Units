@@ -37,6 +37,16 @@
             }
         }
 
+        /// <summary>
+        /// The default unit for <see cref="Gu.Units.TorqueUnit"/>
+        /// </summary>
+        public TorqueUnit SiUnit => TorqueUnit.NewtonMetres;
+
+        /// <summary>
+        /// The default <see cref="Gu.Units.IUnit"/> for <see cref="Gu.Units.TorqueUnit"/>
+        /// </summary>
+        IUnit IUnit.SiUnit => TorqueUnit.NewtonMetres;
+
         public static Torque operator *(double left, TorqueUnit right)
         {
             return Torque.From(left, right);

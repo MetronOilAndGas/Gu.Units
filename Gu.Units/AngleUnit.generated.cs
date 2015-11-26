@@ -49,6 +49,16 @@
             }
         }
 
+        /// <summary>
+        /// The default unit for <see cref="Gu.Units.AngleUnit"/>
+        /// </summary>
+        public AngleUnit SiUnit => AngleUnit.Radians;
+
+        /// <summary>
+        /// The default <see cref="Gu.Units.IUnit"/> for <see cref="Gu.Units.AngleUnit"/>
+        /// </summary>
+        IUnit IUnit.SiUnit => AngleUnit.Radians;
+
         public static Angle operator *(double left, AngleUnit right)
         {
             return Angle.From(left, right);

@@ -37,6 +37,16 @@
             }
         }
 
+        /// <summary>
+        /// The default unit for <see cref="Gu.Units.StiffnessUnit"/>
+        /// </summary>
+        public StiffnessUnit SiUnit => StiffnessUnit.NewtonsPerMetre;
+
+        /// <summary>
+        /// The default <see cref="Gu.Units.IUnit"/> for <see cref="Gu.Units.StiffnessUnit"/>
+        /// </summary>
+        IUnit IUnit.SiUnit => StiffnessUnit.NewtonsPerMetre;
+
         public static Stiffness operator *(double left, StiffnessUnit right)
         {
             return Stiffness.From(left, right);

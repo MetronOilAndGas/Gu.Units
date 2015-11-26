@@ -43,6 +43,16 @@
             }
         }
 
+        /// <summary>
+        /// The default unit for <see cref="Gu.Units.LuminousIntensityUnit"/>
+        /// </summary>
+        public LuminousIntensityUnit SiUnit => LuminousIntensityUnit.Candelas;
+
+        /// <summary>
+        /// The default <see cref="Gu.Units.IUnit"/> for <see cref="Gu.Units.LuminousIntensityUnit"/>
+        /// </summary>
+        IUnit IUnit.SiUnit => LuminousIntensityUnit.Candelas;
+
         public static LuminousIntensity operator *(double left, LuminousIntensityUnit right)
         {
             return LuminousIntensity.From(left, right);

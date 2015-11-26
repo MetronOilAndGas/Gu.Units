@@ -49,6 +49,16 @@
             }
         }
 
+        /// <summary>
+        /// The default unit for <see cref="Gu.Units.DensityUnit"/>
+        /// </summary>
+        public DensityUnit SiUnit => DensityUnit.KilogramsPerCubicMetre;
+
+        /// <summary>
+        /// The default <see cref="Gu.Units.IUnit"/> for <see cref="Gu.Units.DensityUnit"/>
+        /// </summary>
+        IUnit IUnit.SiUnit => DensityUnit.KilogramsPerCubicMetre;
+
         public static Density operator *(double left, DensityUnit right)
         {
             return Density.From(left, right);

@@ -91,6 +91,16 @@
             }
         }
 
+        /// <summary>
+        /// The default unit for <see cref="Gu.Units.CurrentUnit"/>
+        /// </summary>
+        public CurrentUnit SiUnit => CurrentUnit.Amperes;
+
+        /// <summary>
+        /// The default <see cref="Gu.Units.IUnit"/> for <see cref="Gu.Units.CurrentUnit"/>
+        /// </summary>
+        IUnit IUnit.SiUnit => CurrentUnit.Amperes;
+
         public static Current operator *(double left, CurrentUnit right)
         {
             return Current.From(left, right);

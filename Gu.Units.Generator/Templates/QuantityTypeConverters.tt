@@ -3,14 +3,9 @@
 <#@ include file="$(SolutionDir)Packages\T4.TemplateFileManager\tools\ttinc\TemplateFilemanager.CS.ttinclude" #>
 <#@ output extension=".txt" #>
 <#@ assembly name="System.Core" #>
-<#@ assembly name="$(SolutionDir)Generator\Gu.Units.Generator.exe" #>
+<#@ assembly name="$(TargetPath)" #>
 <#@ import namespace="Gu.Units.Generator" #>
 <# 
-// after save QuantityGenerator.tt, the output will be generated in the target project
-//var fileProperties = new FileProperties()
-//{
-//	BuildAction = BuildAction.Compile
-//};
 
 var fileManager = TemplateFileManager.Create(this);
 fileManager.IsAutoIndentEnabled = true;
@@ -25,8 +20,13 @@ foreach (var quantity in settings.Quantities)
 {
     var fileName = quantity.ClassName + "TypeConverter.generated." + Settings.Extension;
     fileManager.StartNewFile(fileName , Settings.ProjectName, null, null);
-	session["QuantityMetaData"] = quantity;
+	session["QuantityTypeConverterData"] = quantity;
 	string output = paramTmpl.TransformText("QuantityTypeConverter.tt", session);
+	if (output == "ErrorGeneratingOutput")
+    {
+		this.WriteLine("Error transforming {0}", quantity.ClassName);
+        throw new InvalidOperationException("output");
+    }
 	this.Write(output);
 }
 

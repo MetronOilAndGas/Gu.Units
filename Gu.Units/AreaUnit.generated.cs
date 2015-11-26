@@ -91,6 +91,16 @@
             }
         }
 
+        /// <summary>
+        /// The default unit for <see cref="Gu.Units.AreaUnit"/>
+        /// </summary>
+        public AreaUnit SiUnit => AreaUnit.SquareMetres;
+
+        /// <summary>
+        /// The default <see cref="Gu.Units.IUnit"/> for <see cref="Gu.Units.AreaUnit"/>
+        /// </summary>
+        IUnit IUnit.SiUnit => AreaUnit.SquareMetres;
+
         public static Area operator *(double left, AreaUnit right)
         {
             return Area.From(left, right);

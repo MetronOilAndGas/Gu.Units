@@ -1,15 +1,14 @@
-﻿<#@ template debug="true" hostspecific="false" language="C#" #>
-<#@ CleanupBehavior processor="T4VSHost" CleanupAfterProcessingtemplate="true" #>
-<#@ assembly name="$(SolutionDir)Generator\Gu.Units.Generator.exe" #>
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ assembly name="$(TargetPath)" #>
 <#@ import namespace="Gu.Units.Generator" #>
-<#@ parameter name="QuantityMetaData" type="Gu.Units.Generator.Quantity" #>
+<#@ parameter name="QuantityData" type="Gu.Units.Generator.Quantity" #>
 <#@ output extension=".txt" #>
 <#
 // Template used by QuantityGenerator.tt
 Quantity quantity = null;
-if(QuantityMetaData != null)
+if(QuantityData != null)
 {
-    quantity = QuantityMetaData;
+    quantity = QuantityData;
 }
 else
 {

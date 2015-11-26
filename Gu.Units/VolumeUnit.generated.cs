@@ -67,6 +67,16 @@
             }
         }
 
+        /// <summary>
+        /// The default unit for <see cref="Gu.Units.VolumeUnit"/>
+        /// </summary>
+        public VolumeUnit SiUnit => VolumeUnit.CubicMetres;
+
+        /// <summary>
+        /// The default <see cref="Gu.Units.IUnit"/> for <see cref="Gu.Units.VolumeUnit"/>
+        /// </summary>
+        IUnit IUnit.SiUnit => VolumeUnit.CubicMetres;
+
         public static Volume operator *(double left, VolumeUnit right)
         {
             return Volume.From(left, right);

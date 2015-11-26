@@ -79,6 +79,16 @@
             }
         }
 
+        /// <summary>
+        /// The default unit for <see cref="Gu.Units.AngularSpeedUnit"/>
+        /// </summary>
+        public AngularSpeedUnit SiUnit => AngularSpeedUnit.RadiansPerSecond;
+
+        /// <summary>
+        /// The default <see cref="Gu.Units.IUnit"/> for <see cref="Gu.Units.AngularSpeedUnit"/>
+        /// </summary>
+        IUnit IUnit.SiUnit => AngularSpeedUnit.RadiansPerSecond;
+
         public static AngularSpeed operator *(double left, AngularSpeedUnit right)
         {
             return AngularSpeed.From(left, right);

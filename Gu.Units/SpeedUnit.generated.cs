@@ -91,6 +91,16 @@
             }
         }
 
+        /// <summary>
+        /// The default unit for <see cref="Gu.Units.SpeedUnit"/>
+        /// </summary>
+        public SpeedUnit SiUnit => SpeedUnit.MetresPerSecond;
+
+        /// <summary>
+        /// The default <see cref="Gu.Units.IUnit"/> for <see cref="Gu.Units.SpeedUnit"/>
+        /// </summary>
+        IUnit IUnit.SiUnit => SpeedUnit.MetresPerSecond;
+
         public static Speed operator *(double left, SpeedUnit right)
         {
             return Speed.From(left, right);

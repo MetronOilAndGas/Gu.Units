@@ -139,6 +139,16 @@
             }
         }
 
+        /// <summary>
+        /// The default unit for <see cref="Gu.Units.PressureUnit"/>
+        /// </summary>
+        public PressureUnit SiUnit => PressureUnit.Pascals;
+
+        /// <summary>
+        /// The default <see cref="Gu.Units.IUnit"/> for <see cref="Gu.Units.PressureUnit"/>
+        /// </summary>
+        IUnit IUnit.SiUnit => PressureUnit.Pascals;
+
         public static Pressure operator *(double left, PressureUnit right)
         {
             return Pressure.From(left, right);

@@ -43,6 +43,16 @@
             }
         }
 
+        /// <summary>
+        /// The default unit for <see cref="Gu.Units.InductanceUnit"/>
+        /// </summary>
+        public InductanceUnit SiUnit => InductanceUnit.Henrys;
+
+        /// <summary>
+        /// The default <see cref="Gu.Units.IUnit"/> for <see cref="Gu.Units.InductanceUnit"/>
+        /// </summary>
+        IUnit IUnit.SiUnit => InductanceUnit.Henrys;
+
         public static Inductance operator *(double left, InductanceUnit right)
         {
             return Inductance.From(left, right);

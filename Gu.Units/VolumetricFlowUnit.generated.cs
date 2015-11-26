@@ -37,6 +37,16 @@
             }
         }
 
+        /// <summary>
+        /// The default unit for <see cref="Gu.Units.VolumetricFlowUnit"/>
+        /// </summary>
+        public VolumetricFlowUnit SiUnit => VolumetricFlowUnit.CubicMetresPerSecond;
+
+        /// <summary>
+        /// The default <see cref="Gu.Units.IUnit"/> for <see cref="Gu.Units.VolumetricFlowUnit"/>
+        /// </summary>
+        IUnit IUnit.SiUnit => VolumetricFlowUnit.CubicMetresPerSecond;
+
         public static VolumetricFlow operator *(double left, VolumetricFlowUnit right)
         {
             return VolumetricFlow.From(left, right);

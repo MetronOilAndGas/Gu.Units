@@ -115,6 +115,16 @@
             }
         }
 
+        /// <summary>
+        /// The default unit for <see cref="Gu.Units.PowerUnit"/>
+        /// </summary>
+        public PowerUnit SiUnit => PowerUnit.Watts;
+
+        /// <summary>
+        /// The default <see cref="Gu.Units.IUnit"/> for <see cref="Gu.Units.PowerUnit"/>
+        /// </summary>
+        IUnit IUnit.SiUnit => PowerUnit.Watts;
+
         public static Power operator *(double left, PowerUnit right)
         {
             return Power.From(left, right);

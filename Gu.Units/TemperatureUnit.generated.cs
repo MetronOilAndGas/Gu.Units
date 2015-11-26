@@ -57,6 +57,16 @@
             }
         }
 
+        /// <summary>
+        /// The default unit for <see cref="Gu.Units.TemperatureUnit"/>
+        /// </summary>
+        public TemperatureUnit SiUnit => TemperatureUnit.Kelvin;
+
+        /// <summary>
+        /// The default <see cref="Gu.Units.IUnit"/> for <see cref="Gu.Units.TemperatureUnit"/>
+        /// </summary>
+        IUnit IUnit.SiUnit => TemperatureUnit.Kelvin;
+
         public static Temperature operator *(double left, TemperatureUnit right)
         {
             return Temperature.From(left, right);

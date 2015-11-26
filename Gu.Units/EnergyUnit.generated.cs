@@ -127,6 +127,16 @@
             }
         }
 
+        /// <summary>
+        /// The default unit for <see cref="Gu.Units.EnergyUnit"/>
+        /// </summary>
+        public EnergyUnit SiUnit => EnergyUnit.Joules;
+
+        /// <summary>
+        /// The default <see cref="Gu.Units.IUnit"/> for <see cref="Gu.Units.EnergyUnit"/>
+        /// </summary>
+        IUnit IUnit.SiUnit => EnergyUnit.Joules;
+
         public static Energy operator *(double left, EnergyUnit right)
         {
             return Energy.From(left, right);

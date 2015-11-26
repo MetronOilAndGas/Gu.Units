@@ -91,6 +91,16 @@
             }
         }
 
+        /// <summary>
+        /// The default unit for <see cref="Gu.Units.ResistanceUnit"/>
+        /// </summary>
+        public ResistanceUnit SiUnit => ResistanceUnit.Ohm;
+
+        /// <summary>
+        /// The default <see cref="Gu.Units.IUnit"/> for <see cref="Gu.Units.ResistanceUnit"/>
+        /// </summary>
+        IUnit IUnit.SiUnit => ResistanceUnit.Ohm;
+
         public static Resistance operator *(double left, ResistanceUnit right)
         {
             return Resistance.From(left, right);

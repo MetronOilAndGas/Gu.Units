@@ -37,6 +37,16 @@
             }
         }
 
+        /// <summary>
+        /// The default unit for <see cref="Gu.Units.SpecificEnergyUnit"/>
+        /// </summary>
+        public SpecificEnergyUnit SiUnit => SpecificEnergyUnit.JoulesPerKilogram;
+
+        /// <summary>
+        /// The default <see cref="Gu.Units.IUnit"/> for <see cref="Gu.Units.SpecificEnergyUnit"/>
+        /// </summary>
+        IUnit IUnit.SiUnit => SpecificEnergyUnit.JoulesPerKilogram;
+
         public static SpecificEnergy operator *(double left, SpecificEnergyUnit right)
         {
             return SpecificEnergy.From(left, right);

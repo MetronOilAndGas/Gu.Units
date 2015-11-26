@@ -115,6 +115,16 @@
             }
         }
 
+        /// <summary>
+        /// The default unit for <see cref="Gu.Units.ForceUnit"/>
+        /// </summary>
+        public ForceUnit SiUnit => ForceUnit.Newtons;
+
+        /// <summary>
+        /// The default <see cref="Gu.Units.IUnit"/> for <see cref="Gu.Units.ForceUnit"/>
+        /// </summary>
+        IUnit IUnit.SiUnit => ForceUnit.Newtons;
+
         public static Force operator *(double left, ForceUnit right)
         {
             return Force.From(left, right);

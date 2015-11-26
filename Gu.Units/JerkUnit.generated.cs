@@ -97,6 +97,16 @@
             }
         }
 
+        /// <summary>
+        /// The default unit for <see cref="Gu.Units.JerkUnit"/>
+        /// </summary>
+        public JerkUnit SiUnit => JerkUnit.MetresPerSecondCubed;
+
+        /// <summary>
+        /// The default <see cref="Gu.Units.IUnit"/> for <see cref="Gu.Units.JerkUnit"/>
+        /// </summary>
+        IUnit IUnit.SiUnit => JerkUnit.MetresPerSecondCubed;
+
         public static Jerk operator *(double left, JerkUnit right)
         {
             return Jerk.From(left, right);

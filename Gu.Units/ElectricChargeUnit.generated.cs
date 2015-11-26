@@ -43,6 +43,16 @@
             }
         }
 
+        /// <summary>
+        /// The default unit for <see cref="Gu.Units.ElectricChargeUnit"/>
+        /// </summary>
+        public ElectricChargeUnit SiUnit => ElectricChargeUnit.Coulombs;
+
+        /// <summary>
+        /// The default <see cref="Gu.Units.IUnit"/> for <see cref="Gu.Units.ElectricChargeUnit"/>
+        /// </summary>
+        IUnit IUnit.SiUnit => ElectricChargeUnit.Coulombs;
+
         public static ElectricCharge operator *(double left, ElectricChargeUnit right)
         {
             return ElectricCharge.From(left, right);
