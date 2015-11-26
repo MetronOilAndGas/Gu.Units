@@ -34,7 +34,7 @@
                 return success;
             }
 
-            if (text[pos].IsSuperscriptDigit())
+            if (text[pos].IsSuperscriptDigitOrSign())
             {
                 var success = TryReadSuperScriptPower(text, ref pos, out result);
                 pos = success
@@ -84,7 +84,7 @@
 
         private static bool TryReadSuperScriptPower(string text, ref int pos, out int power)
         {
-            if (text[pos].IsSuperscriptDigit())
+            if (!text[pos].IsSuperscriptDigitOrSign())
             {
                 power = 0;
                 return false;
@@ -117,12 +117,12 @@
         private static Sign TryReadSuperScriptSign(string text, ref int pos)
         {
             var sign = Sign.None;
-            if (text[pos] == '⁺')
+            if (text[pos] == SuperScript.Plus)
             {
                 pos++;
                 sign = Sign.Positive;
             }
-            else if (text[pos] == '⁻')
+            else if (text[pos] == SuperScript.Minus)
             {
                 pos++;
                 sign = Sign.Negative;
@@ -155,6 +155,17 @@
 
         private static bool IsSuperscriptDigit(this char c)
         {
+            return SuperScript.SuperscriptDigits.IndexOf(c) > -1;
+        }
+
+        private static bool IsSuperscriptDigitOrSign(this char c)
+        {
+            if (c == SuperScript.Minus ||
+                c == SuperScript.Plus)
+            {
+                return true;
+            }
+
             return SuperScript.SuperscriptDigits.IndexOf(c) > -1;
         }
     }

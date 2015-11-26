@@ -23,7 +23,6 @@
                 if (!Builders.TryDequeue(out _builder))
                 {
                     _builder = new StringBuilder(12);
-                    Builders.Enqueue(_builder);
                 }
             }
 

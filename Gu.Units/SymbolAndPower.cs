@@ -10,7 +10,9 @@
         public SymbolAndPower(string symbol, int power)
         {
             Ensure.NotNullOrEmpty(symbol, nameof(symbol));
-
+            Ensure.LessThan(power, 5, nameof(power));
+            Ensure.GreaterThan(power, -5, nameof(power));
+            // not sure about throwing here but I think it means something is wrong more often.
             Symbol = symbol;
             Power = power;
         }
@@ -34,11 +36,11 @@
             }
             else if (Power > 1)
             {
-                p = new string(PowerReader.SuperscriptDigits[Power], 1);
+                p = new string(SuperScript.GetChar(Power), 1);
             }
             else
             {
-                p = new string(new[] { '⁻', PowerReader.SuperscriptDigits[-1 * Power] });
+                p = new string(new[] { '⁻', SuperScript.GetChar(-1 * Power) });
             }
 
             return $"{this.Symbol}{p}";

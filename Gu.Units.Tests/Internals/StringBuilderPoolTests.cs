@@ -1,5 +1,6 @@
 ﻿namespace Gu.Units.Tests.Internals
 {
+    using System.Collections.Concurrent;
     using System.Reflection;
     using System.Text;
     using NUnit.Framework;
@@ -9,6 +10,7 @@
         [Test]
         public void UseTwice()
         {
+            Clear(); // testrunner may run in parallel creating more than one builder.
             StringBuilder inner1;
             using (var builder = StringBuilderPool.Borrow())
             {
@@ -26,10 +28,33 @@
             }
         }
 
+        [Test]
+        public void Parallel()
+        {
+            using (var builder1 = StringBuilderPool.Borrow())
+            using (var builder2 = StringBuilderPool.Borrow())
+            {
+                builder1.Append("a");
+                builder2.Append("b");
+                Assert.AreEqual("a", builder1.ToString());
+                Assert.AreEqual("b", builder2.ToString());
+            }
+        }
+
         private static StringBuilder GetInner(StringBuilderPool.Builder outer)
         {
             var fieldInfo = typeof(StringBuilderPool.Builder).GetField("_builder", BindingFlags.Instance | BindingFlags.NonPublic);
             return (StringBuilder)fieldInfo.GetValue(outer);
+        }
+
+        private static void Clear()
+        {
+            var buildersField = typeof (StringBuilderPool).GetField("Builders", BindingFlags.Static | BindingFlags.NonPublic);
+            var builders =(ConcurrentQueue<StringBuilder>) buildersField.GetValue(null);
+            StringBuilder temp;
+            while (builders.TryDequeue(out temp))
+            {
+            }
         }
     }
 }
