@@ -5,6 +5,9 @@
 
     public class FormatParserTests
     {
+        private const string Superscripts = "⁺⁻⁰¹²³⁴⁵⁶⁷⁸⁹";
+        private const char MultiplyDot = '⋅';
+
         [TestCase(null, "{0}\u00A0m", "1.2\u00A0m")]
         [TestCase("", "{0}\u00A0m", "1.2\u00A0m")]
         [TestCase("E", "{0:E}\u00A0m", "1.200000E+000\u00A0m")]
@@ -83,6 +86,18 @@
             var length = Length.FromMetres(1.2);
             var actualFormatted = length.ToString(format, CultureInfo.InvariantCulture);
             Assert.AreEqual(expectedFormatted, actualFormatted);
+        }
+
+        [TestCase("F3 N/mm^2", "{0:F3} N/m^2", "MPa")]
+        [TestCase("F3 N⋅mm⁻²", "{0:F3} N⋅m⁻²", "MPa")]
+        [TestCase("E Pa", "{0:E} Pa", "Pa")]
+        public void TryParsePressure(string format, string expectedFormat, string expectedSymbol)
+        {
+            QuantityFormat<PressureUnit> actual;
+            var success = FormatParser.TryParse(format, out actual);
+            Assert.AreEqual(true, success);
+            Assert.AreEqual(expectedFormat, actual.Format);
+            Assert.AreEqual(expectedSymbol, actual.Unit.Symbol);
         }
     }
 }

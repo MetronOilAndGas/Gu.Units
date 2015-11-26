@@ -23,8 +23,7 @@ namespace Gu.Units
             throw new FormatException(message);
         }
 
-        internal static TUnit Parse<TUnit>(string text, ref int pos)
-    where TUnit : IUnit
+        internal static TUnit Parse<TUnit>(string text, ref int pos) where TUnit : IUnit
         {
             TUnit result;
             if (TryParse(text, ref pos, out result))

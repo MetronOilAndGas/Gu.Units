@@ -14,21 +14,21 @@
         public void FormatAngle()
         {
             var angle = Angle.FromDegrees(1.2);
-            Assert.AreEqual("1.20°", angle.ToString("F2°"));
             using (Thread.CurrentThread.UsingTempCulture(CultureInfo.InvariantCulture))
             {
-                Assert.AreEqual("1.2\u00A0rad", angle.ToString());
-                Assert.AreEqual("120°", angle.ToString(AngleUnit.Degrees));
-                Assert.AreEqual(" 1200.0 ° ", angle.ToString(" F1 ° "));
-                Assert.AreEqual(" 1.2 rad", angle.ToString(" F1 "));
-                Assert.AreEqual("12.0°", angle.ToString("F1", AngleUnit.Degrees));
-                Assert.AreEqual("12.0\u00A0dm", angle.ToString("F1", AngleUnit.Radians));
+                Assert.AreEqual("1.20°", angle.ToString("F2°"));
+                Assert.AreEqual("0.020943951023932\u00A0rad", angle.ToString());
+                Assert.AreEqual("1.2°", angle.ToString(AngleUnit.Degrees));
+                Assert.AreEqual(" 1.2 ° ", angle.ToString(" F1 ° "));
+                Assert.AreEqual(" 0.02 rad", angle.ToString(" F2 "));
+                Assert.AreEqual("1.2°", angle.ToString("F1", AngleUnit.Degrees));
+                Assert.AreEqual("0.02\u00A0rad", angle.ToString("F2", AngleUnit.Radians));
             }
 
             var sv = CultureInfo.GetCultureInfo("sv-SE");
-            Assert.AreEqual("1,2\u00A0 radians", angle.ToString(sv));
-            Assert.AreEqual(" 1200,0° ", angle.ToString(" F1° ", sv));
-            Assert.AreEqual("1200,0°", angle.ToString("F1", sv, AngleUnit.Degrees));
+            Assert.AreEqual("0,020943951023932\u00A0rad", angle.ToString(sv));
+            Assert.AreEqual(" 1,2° ", angle.ToString(" F1° ", sv));
+            Assert.AreEqual("1,2°", angle.ToString("F1", sv, AngleUnit.Degrees));
         }
 
         [Test]
