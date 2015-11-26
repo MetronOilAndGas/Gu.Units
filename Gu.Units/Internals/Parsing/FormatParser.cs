@@ -1,23 +1,21 @@
 ﻿namespace Gu.Units
 {
     using System;
-    using System.Collections.Concurrent;
     using System.Collections.Generic;
+    using System.Text;
     using System.Text.RegularExpressions;
 
     internal static class FormatParser
     {
         internal static readonly IReadOnlyList<string> DoubleFormatPatterns = new[]
         {
-            CreateDoubleFormat(@"(?:E|e)\d*"),
-            CreateDoubleFormat(@"(?:F|f)\d*"),
-            CreateDoubleFormat(@"(?:G|g)\d*"),
-            CreateDoubleFormat(@"(?:N|n)\d*"),
-            CreateDoubleFormat(@"(?:R|r)"),
-            CreateDoubleFormat(@"[0,#]*(?:\.[0,#]+)?"),
+            CreateDoubleFormat(@"(E|e)\d*"),
+            CreateDoubleFormat(@"(F|f)\d*"),
+            CreateDoubleFormat(@"(G|g)\d*"),
+            CreateDoubleFormat(@"(N|n)\d*"),
+            CreateDoubleFormat(@"(R|r)"),
+            CreateDoubleFormat(@"[0,#]*(\.[0,#]+)?"),
         };
-
-        private static readonly ConcurrentDictionary<string, IQuantityFormat> Cache = new ConcurrentDictionary<string, IQuantityFormat>();
 
         internal static bool TryParse<TUnit>(
             string format,
@@ -27,16 +25,51 @@
             string doubleFormat;
             string unitFormat;
             TUnit unit;
-            var readDf = TryReadDoubleFormat(format, ref pos, out doubleFormat);
-            var readUf = TryReadUnit(format, ref pos, out unitFormat, out unit);
-            if (!(readDf || readUf))
+            format.ReadWhiteSpace(ref pos);
+            var start = pos;
+            var readDoubleFormat = TryReadDoubleFormat(format, ref pos, out doubleFormat);
+
+            var spaceStart = pos;
+            format.ReadWhiteSpace(ref pos);
+            var spaceEnd = pos;
+
+            var readUnitFormat = TryReadUnit(format, ref pos, out unitFormat, out unit);
+            if (!(readDoubleFormat || readUnitFormat))
             {
                 result = QuantityFormat<TUnit>.Default;
                 return false;
             }
 
-            throw new NotImplementedException();
-            //actual = new QuantityFormat<TUnit>(doubleFormat, unitFormat, unit);
+            var builder = new StringBuilder();
+            for (int i = 0; i < start; i++)
+            {
+                builder.Append(format[i]);
+            }
+
+            if (!string.IsNullOrEmpty(doubleFormat))
+            {
+                builder.Append($"{{0:{doubleFormat}}}");
+            }
+            else
+            {
+                builder.Append($"{{0}}");
+            }
+
+            for (int i = spaceStart; i < spaceEnd; i++)
+            {
+                builder.Append(format[i]);
+            }
+
+            if (readUnitFormat)
+            {
+                builder.Append(unitFormat ?? unit.Symbol);
+            }
+
+            for (int i = pos; i < format.Length; i++)
+            {
+                builder.Append(format[i]);
+            }
+            result = new QuantityFormat<TUnit>(builder.ToString(), unit);
             return true;
         }
 
@@ -44,7 +77,7 @@
         {
             foreach (var pattern in DoubleFormatPatterns)
             {
-                var match = Regex.Match(format, pattern);
+                var match = Regex.Match(format, pattern, RegexOptions.Singleline | RegexOptions.ExplicitCapture);
                 if (match.Success && match.Value != string.Empty)
                 {
                     pos = match.Index + match.Length;
@@ -63,7 +96,6 @@
             out TUnit unit) where TUnit : IUnit
         {
             var start = pos;
-            format.ReadWhiteSpace(ref pos);
             if (pos == format.Length)
             {
                 unit = (TUnit)default(TUnit).SiUnit;

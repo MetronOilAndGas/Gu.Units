@@ -207,7 +207,6 @@
     <Compile Include="Internals\Ensure\Ensure.string.cs" />
     <Compile Include="Internals\Parsing\FormatParser.cs" />
     <Compile Include="Internals\Parsing\IntReader.cs" />
-    <Compile Include="Internals\Parsing\Results\IQuantityFormat.cs" />
     <Compile Include="Internals\Parsing\Results\QuantityFormat.cs" />
     <Compile Include="Internals\Parsing\SymbolAndPowerParser.cs" />
     <Compile Include="Jerk.generated.cs">
