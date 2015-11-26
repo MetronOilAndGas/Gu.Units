@@ -1,8 +1,11 @@
 ﻿namespace Gu.Units
 {
-    internal class QuantityFormat<TUnit>  where TUnit : IUnit
+    using System.Diagnostics;
+
+    [DebuggerDisplay("{Format}")]
+    internal class QuantityFormat<TUnit>  where TUnit : struct, IUnit
     {
-        public static readonly QuantityFormat<TUnit> Default = new QuantityFormat<TUnit>("", (TUnit)default(TUnit).SiUnit);
+        public static QuantityFormat<TUnit> Default => FormatParser<TUnit>.DefaultFormat;
 
         internal QuantityFormat(string format, TUnit unit)
         {

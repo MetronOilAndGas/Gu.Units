@@ -210,6 +210,8 @@
     <Compile Include="Internals\Parsing\IntReader.cs" />
     <Compile Include="Internals\Parsing\Results\QuantityFormat.cs" />
     <Compile Include="Internals\Parsing\SymbolAndPowerParser.cs" />
+    <Compile Include="Internals\Parsing\Results\FormatAndUnit.cs" />
+    <Compile Include="Internals\StringBuilderPool.cs" />
     <Compile Include="Jerk.generated.cs">
       <DependentUpon>Quantties.txt4</DependentUpon>
     </Compile>

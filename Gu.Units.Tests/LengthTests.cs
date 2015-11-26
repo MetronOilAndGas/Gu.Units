@@ -1,11 +1,14 @@
 ﻿namespace Gu.Units.Tests
 {
+    using System.Globalization;
+    using System.Threading;
+    using Internals.Parsing;
     using NUnit.Framework;
 
     /// <summary>
     /// Just testing for length assuming the other generated units will work.
     /// </summary>
-    public class QuantityTests
+    public class LengthTests
     {
         [Test]
         public void Equality()
@@ -38,7 +41,7 @@
             var l2 = Length.FromCentimetres(1);
             var sums = new[]
                            {
-                               l1 + l2, 
+                               l1 + l2,
                                l2 + l1
                            };
             var expected = Length.FromCentimetres(101);
@@ -66,7 +69,7 @@
             var l = Length.FromMetres(1);
             var prods = new[]
                            {
-                               l*2, 
+                               l*2,
                                2*l
                            };
             var expected = Length.FromMetres(2);
@@ -85,6 +88,26 @@
             var expected = Length.FromMetres(0.5);
             Assert.IsInstanceOf<Length>(divided);
             Assert.AreEqual(expected, divided);
+        }
+
+        [Test]
+        public void ToString()
+        {
+            var length = Length.FromMetres(1.2);
+
+            using (Thread.CurrentThread.UsingTempCulture(CultureInfo.InvariantCulture))
+            {
+                Assert.AreEqual("1.2\u00A0m", length.ToString());
+                Assert.AreEqual("120\u00A0cm", length.ToString(LengthUnit.Centimetres));
+                Assert.AreEqual(" 1200.0 mm ", length.ToString(" F1 mm "));
+                Assert.AreEqual(" 1.2 m", length.ToString(" F1 "));
+                Assert.AreEqual("12.0\u00A0dm", length.ToString("F1", LengthUnit.Decimetres));
+            }
+
+            var sv = CultureInfo.GetCultureInfo("sv-SE");
+            Assert.AreEqual("1,2\u00A0m", length.ToString(sv));
+            Assert.AreEqual(" 1200,0 mm ", length.ToString(" F1 mm ", sv));
+            Assert.AreEqual("1200,0\u00A0mm", length.ToString("F1", sv, LengthUnit.Millimetres));
         }
     }
 }

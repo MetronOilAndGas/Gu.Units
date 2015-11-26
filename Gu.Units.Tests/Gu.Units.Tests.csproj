@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="ArithmeticsTests.cs" />
     <Compile Include="ConversionTests.cs" />
+    <Compile Include="FormatTests.cs" />
     <Compile Include="Internals\Parsing\DoubleReaderTests.cs" />
     <Compile Include="EnumerableTests.cs" />
     <Compile Include="Internals\Parsing\Extensions\ThreadExt.cs" />
@@ -62,7 +63,8 @@
     <Compile Include="Internals\Parsing\Sources\SuccessData{T}.cs" />
     <Compile Include="Internals\Parsing\SymbolTests.cs" />
     <Compile Include="Internals\Parsing\UnitParserTests.cs" />
-    <Compile Include="QuantityTests.cs" />
+    <Compile Include="Internals\StringBuilderPoolTests.cs" />
+    <Compile Include="LengthTests.cs" />
     <Compile Include="Samples\Samples.cs" />
     <Compile Include="Sources\ConversionProvider.cs" />
     <Compile Include="Helpers\DummyUnit.cs" />
