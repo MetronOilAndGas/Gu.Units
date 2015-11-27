@@ -81,7 +81,7 @@
                     throw new ArgumentException(message);
                 }
 
-                return string.Empty;
+                return "No unit set";
             }
 
             if (value == null)
@@ -195,7 +195,7 @@
 
         private void GetStringFormat()
         {
-            var target = this.provideValueTarget.TargetObject as DependencyObject;
+            var target = this.provideValueTarget?.TargetObject as DependencyObject;
             Binding binding = null;
             if (target != null)
             {
@@ -206,7 +206,7 @@
                 }
             }
 
-            binding = binding ?? this.provideValueTarget.TargetObject as Binding;
+            binding = binding ?? this.provideValueTarget?.TargetObject as Binding;
             this.stringFormat = binding?.StringFormat;
             if (this.stringFormat != null)
             {
