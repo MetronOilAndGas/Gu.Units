@@ -1,15 +1,19 @@
 namespace Gu.Units
 {
-    using System;
-
     internal static class StringExt
     {
-        internal static void ReadWhiteSpace(this string s, ref int pos)
+        internal static void ReadWhiteSpace(this string text, ref int pos)
         {
-            while (s.Length > pos && char.IsWhiteSpace(s[pos]))
+            while (text.Length > pos && char.IsWhiteSpace(text[pos]))
             {
                 pos++;
             }
+        }
+
+        internal static bool IsRestWhiteSpace(this string text, int position)
+        {
+           text.ReadWhiteSpace(ref position);
+            return position == text.Length;
         }
     }
 }

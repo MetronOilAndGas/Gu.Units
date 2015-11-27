@@ -1,21 +1,7 @@
 ﻿namespace Gu.Units
 {
-    using System.Collections.Generic;
-    using System.Text;
-    using System.Text.RegularExpressions;
-
     internal static class FormatParser
     {
-        internal static readonly IReadOnlyList<Regex> DoubleFormatRegexes = new[]
-        {
-            CreateDoubleFormatPattern(@"(E|e)\d*"),
-            CreateDoubleFormatPattern(@"(F|f)\d*"),
-            CreateDoubleFormatPattern(@"(G|g)\d*"),
-            CreateDoubleFormatPattern(@"(N|n)\d*"),
-            CreateDoubleFormatPattern(@"(R|r)"),
-            CreateDoubleFormatPattern(@"[0,#]*(\.[0,#]+)?"),
-        };
-
         internal static bool TryParse<TUnit>(string format, out QuantityFormat<TUnit> result)
             where TUnit : struct, IUnit
         {
@@ -29,7 +15,7 @@
             string doubleFormat;
             format.ReadWhiteSpace(ref pos);
             var prePaddingEnd = pos;
-            var readDoubleFormat = TryReadDoubleFormat(format, ref pos, out doubleFormat);
+            var readDoubleFormat = DoubleFormatReader.TryReadDoubleFormat(format, ref pos, out doubleFormat);
 
             var spaceStart = pos;
             format.ReadWhiteSpace(ref pos);
@@ -58,7 +44,7 @@
             string doubleFormat;
             format.ReadWhiteSpace(ref pos);
             var prePaddingEnd = pos;
-            var readDoubleFormat = TryReadDoubleFormat(format, ref pos, out doubleFormat);
+            var readDoubleFormat = DoubleFormatReader.TryReadDoubleFormat(format, ref pos, out doubleFormat);
             var spaceStart = pos;
             format.ReadWhiteSpace(ref pos);
             var spaceEnd = pos;
@@ -86,7 +72,7 @@
 
             var compositeFormat = string.IsNullOrEmpty(unitFormat) && spaceStart == spaceEnd
                 ? CreateCompositeFormat<TUnit>(format, prePaddingEnd, doubleFormat, unit)
-                : CreateCompositeFormat<TUnit>(format, prePaddingEnd, doubleFormat, spaceStart, spaceEnd, unitFormat?? unit.Symbol, unitEnd);
+                : CreateCompositeFormat<TUnit>(format, prePaddingEnd, doubleFormat, spaceStart, spaceEnd, unitFormat ?? unit.Symbol, unitEnd);
             result = new QuantityFormat<TUnit>(compositeFormat, unit);
             return true;
         }
@@ -117,23 +103,6 @@
             return result;
         }
 
-        private static bool TryReadDoubleFormat(string format, ref int pos, out string doubleFormat)
-        {
-            foreach (var regex in DoubleFormatRegexes)
-            {
-                var match = regex.Match(format, pos);
-                if (!string.IsNullOrEmpty(match.Value))
-                {
-                    pos += match.Length;
-                    doubleFormat = match.Value;
-                    return true;
-                }
-            }
-
-            doubleFormat = null;
-            return false;
-        }
-
         private static bool TryReadUnit<TUnit>(string format,
             ref int pos,
             out string unitFormat,
@@ -156,12 +125,6 @@
             unit = (TUnit)default(TUnit).SiUnit;
             unitFormat = null;
             return false;
-        }
-
-        private static Regex CreateDoubleFormatPattern(string format)
-        {
-            var regex = new Regex($@"\G(?<format>{format})", RegexOptions.Singleline | RegexOptions.ExplicitCapture | RegexOptions.Compiled);
-            return regex;
         }
 
         private static string CreateCompositeFormat<TUnit>(string format,
