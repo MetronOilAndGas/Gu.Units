@@ -106,12 +106,12 @@
 
         public static MassUnit Parse(string text)
         {
-            return UnitParser.Parse<MassUnit>(text);
+            return UnitParser<MassUnit>.Parse(text);
         }
 
         public static bool TryParse(string text, out MassUnit value)
         {
-            return UnitParser.TryParse<MassUnit>(text, out value);
+            return UnitParser<MassUnit>.TryParse(text, out value);
         }
 
         /// <summary>

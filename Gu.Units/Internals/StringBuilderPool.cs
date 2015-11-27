@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Concurrent;
-    using System.Globalization;
     using System.Text;
 
     internal static class StringBuilderPool

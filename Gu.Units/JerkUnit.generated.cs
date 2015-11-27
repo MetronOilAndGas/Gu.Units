@@ -124,12 +124,12 @@
 
         public static JerkUnit Parse(string text)
         {
-            return UnitParser.Parse<JerkUnit>(text);
+            return UnitParser<JerkUnit>.Parse(text);
         }
 
         public static bool TryParse(string text, out JerkUnit value)
         {
-            return UnitParser.TryParse<JerkUnit>(text, out value);
+            return UnitParser<JerkUnit>.TryParse(text, out value);
         }
 
         /// <summary>

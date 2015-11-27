@@ -118,12 +118,12 @@
 
         public static AreaUnit Parse(string text)
         {
-            return UnitParser.Parse<AreaUnit>(text);
+            return UnitParser<AreaUnit>.Parse(text);
         }
 
         public static bool TryParse(string text, out AreaUnit value)
         {
-            return UnitParser.TryParse<AreaUnit>(text, out value);
+            return UnitParser<AreaUnit>.TryParse(text, out value);
         }
 
         /// <summary>

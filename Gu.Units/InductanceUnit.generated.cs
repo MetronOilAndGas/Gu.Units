@@ -70,12 +70,12 @@
 
         public static InductanceUnit Parse(string text)
         {
-            return UnitParser.Parse<InductanceUnit>(text);
+            return UnitParser<InductanceUnit>.Parse(text);
         }
 
         public static bool TryParse(string text, out InductanceUnit value)
         {
-            return UnitParser.TryParse<InductanceUnit>(text, out value);
+            return UnitParser<InductanceUnit>.TryParse(text, out value);
         }
 
         /// <summary>

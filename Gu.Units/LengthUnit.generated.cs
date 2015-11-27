@@ -184,12 +184,12 @@
 
         public static LengthUnit Parse(string text)
         {
-            return UnitParser.Parse<LengthUnit>(text);
+            return UnitParser<LengthUnit>.Parse(text);
         }
 
         public static bool TryParse(string text, out LengthUnit value)
         {
-            return UnitParser.TryParse<LengthUnit>(text, out value);
+            return UnitParser<LengthUnit>.TryParse(text, out value);
         }
 
         /// <summary>

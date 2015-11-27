@@ -1,6 +1,6 @@
-namespace Gu.Units.Tests
+﻿namespace Gu.Units.Wpf.Tests
 {
-    public class Reminder
+    public static class Reminder
     {
         public const string ToDo = "Fix so this test passes!";
     }

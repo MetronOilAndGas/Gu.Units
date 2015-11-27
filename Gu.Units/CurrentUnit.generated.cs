@@ -118,12 +118,12 @@
 
         public static CurrentUnit Parse(string text)
         {
-            return UnitParser.Parse<CurrentUnit>(text);
+            return UnitParser<CurrentUnit>.Parse(text);
         }
 
         public static bool TryParse(string text, out CurrentUnit value)
         {
-            return UnitParser.TryParse<CurrentUnit>(text, out value);
+            return UnitParser<CurrentUnit>.TryParse(text, out value);
         }
 
         /// <summary>

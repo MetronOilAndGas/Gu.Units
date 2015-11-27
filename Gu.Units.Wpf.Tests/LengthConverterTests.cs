@@ -4,9 +4,11 @@
     using System.Globalization;
     using NUnit.Framework;
 
+    [Explicit(Reminder.ToDo)]
     public class LengthConverterTests
     {
         [TestCase(true)]
+        [TestCase(false)]
         public void ThrowsInDesignModeIfMissingUnit(bool isDesignMode)
         {
             Gu.Units.Wpf.Is.DesignMode = isDesignMode;

@@ -70,12 +70,12 @@
 
         public static LuminousIntensityUnit Parse(string text)
         {
-            return UnitParser.Parse<LuminousIntensityUnit>(text);
+            return UnitParser<LuminousIntensityUnit>.Parse(text);
         }
 
         public static bool TryParse(string text, out LuminousIntensityUnit value)
         {
-            return UnitParser.TryParse<LuminousIntensityUnit>(text, out value);
+            return UnitParser<LuminousIntensityUnit>.TryParse(text, out value);
         }
 
         /// <summary>

@@ -82,12 +82,12 @@
 
         public static FlexibilityUnit Parse(string text)
         {
-            return UnitParser.Parse<FlexibilityUnit>(text);
+            return UnitParser<FlexibilityUnit>.Parse(text);
         }
 
         public static bool TryParse(string text, out FlexibilityUnit value)
         {
-            return UnitParser.TryParse<FlexibilityUnit>(text, out value);
+            return UnitParser<FlexibilityUnit>.TryParse(text, out value);
         }
 
         /// <summary>

@@ -76,12 +76,12 @@
 
         public static DensityUnit Parse(string text)
         {
-            return UnitParser.Parse<DensityUnit>(text);
+            return UnitParser<DensityUnit>.Parse(text);
         }
 
         public static bool TryParse(string text, out DensityUnit value)
         {
-            return UnitParser.TryParse<DensityUnit>(text, out value);
+            return UnitParser<DensityUnit>.TryParse(text, out value);
         }
 
         /// <summary>

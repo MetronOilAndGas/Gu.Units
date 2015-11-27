@@ -94,12 +94,12 @@
 
         public static UnitlessUnit Parse(string text)
         {
-            return UnitParser.Parse<UnitlessUnit>(text);
+            return UnitParser<UnitlessUnit>.Parse(text);
         }
 
         public static bool TryParse(string text, out UnitlessUnit value)
         {
-            return UnitParser.TryParse<UnitlessUnit>(text, out value);
+            return UnitParser<UnitlessUnit>.TryParse(text, out value);
         }
 
         /// <summary>

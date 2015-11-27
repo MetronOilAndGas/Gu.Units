@@ -166,12 +166,12 @@
 
         public static PressureUnit Parse(string text)
         {
-            return UnitParser.Parse<PressureUnit>(text);
+            return UnitParser<PressureUnit>.Parse(text);
         }
 
         public static bool TryParse(string text, out PressureUnit value)
         {
-            return UnitParser.TryParse<PressureUnit>(text, out value);
+            return UnitParser<PressureUnit>.TryParse(text, out value);
         }
 
         /// <summary>

@@ -49,7 +49,7 @@ namespace Gu.Units
             text.ReadWhiteSpace(ref pos);
             while (pos < text.Length)
             {
-                var sap = SymbolAndPowerParser.Parse(text, ref pos);
+                var sap = SymbolAndPowerParser.Read(text, ref pos);
                 if (sap.Power < 0 && sign == Sign.Negative)
                 {
                     throw new FormatException($"Power cannot be negative after / error at {pos} in {text}");
@@ -105,7 +105,7 @@ namespace Gu.Units
             while (pos < text.Length)
             {
                 SymbolAndPower sap;
-                if (!SymbolAndPowerParser.TryParse(text, ref pos, out sap))
+                if (!SymbolAndPowerParser.TryRead(text, ref pos, out sap))
                 {
                     pos = start;
                     result = Empty;

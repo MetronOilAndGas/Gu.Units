@@ -1,10 +1,13 @@
 ﻿namespace Gu.Units
 {
     using System;
+    using System.Collections.Generic;
 
     internal static class SymbolAndPowerParser
     {
-        internal static SymbolAndPower Parse(string text, ref int pos)
+        private static readonly ReadonlySet<SymbolAndPower> Empty = ReadonlySet<SymbolAndPower>.Empty;
+
+        internal static SymbolAndPower Read(string text, ref int pos)
         {
             if (pos == text.Length)
             {
@@ -12,7 +15,7 @@
             }
 
             SymbolAndPower result;
-            if (TryParse(text, ref pos, out result))
+            if (TryRead(text, ref pos, out result))
             {
                 return result;
             }
@@ -20,7 +23,73 @@
             throw new FormatException($"No symbol found at {pos} in {text}");
         }
 
-        internal static bool TryParse(string text, ref int pos, out SymbolAndPower result)
+        internal static bool TryRead(string text, ref int pos, out ReadonlySet<SymbolAndPower> result)
+        {
+            int start = pos;
+            var sign = Sign.Positive;
+            var tokens = new SortedSet<SymbolAndPower>(SymbolComparer.Default);
+            text.ReadWhiteSpace(ref pos);
+            while (pos < text.Length)
+            {
+                SymbolAndPower sap;
+                if (!TryRead(text, ref pos, out sap))
+                {
+                    pos = start;
+                    result = Empty;
+                    return false;
+                }
+
+                if (sap.Power < 0 && sign == Sign.Negative)
+                {
+                    pos = start;
+                    result = Empty;
+                    return false;
+                }
+
+                if (sign == Sign.Negative)
+                {
+                    sap = new SymbolAndPower(sap.Symbol, -1 * sap.Power);
+                }
+
+                if (!tokens.Add(sap))
+                {
+                    pos = start;
+                    result = Empty;
+                    return false;
+                }
+
+                var op = OperatorReader.TryReadMultiplyOrDivide(text, ref pos);
+                if (op != MultiplyOrDivide.None)
+                {
+                    text.ReadWhiteSpace(ref pos);
+                    if (OperatorReader.TryReadMultiplyOrDivide(text, ref pos) != MultiplyOrDivide.None)
+                    {
+                        pos = start;
+                        result = Empty;
+                        return false;
+                    }
+
+                    if (op == MultiplyOrDivide.Division)
+                    {
+                        if (sign == Sign.Negative)
+                        {
+                            pos = start;
+                            result = Empty;
+                            return false;
+                        }
+
+                        sign = Sign.Negative;
+                    }
+                }
+
+                text.ReadWhiteSpace(ref pos);
+            }
+
+            result = tokens.AsReadOnly();
+            return true;
+        }
+
+        internal static bool TryRead(string text, ref int pos, out SymbolAndPower result)
         {
             if (pos == text.Length)
             {

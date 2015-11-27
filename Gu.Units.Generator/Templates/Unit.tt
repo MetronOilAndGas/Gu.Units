@@ -178,12 +178,12 @@ namespace <#= Settings.Namespace #>
 
         public static <#= unit.UnitName #> Parse(string text)
         {
-            return UnitParser.Parse<<#= unit.UnitName #>>(text);
+            return UnitParser<<#= unit.UnitName #>>.Parse(text);
         }
 
         public static bool TryParse(string text, out <#= unit.UnitName #> value)
         {
-            return UnitParser.TryParse<<#= unit.UnitName #>>(text, out value);
+            return UnitParser<<#= unit.UnitName #>>.TryParse(text, out value);
         }
 
         /// <summary>

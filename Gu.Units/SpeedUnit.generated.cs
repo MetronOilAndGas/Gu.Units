@@ -118,12 +118,12 @@
 
         public static SpeedUnit Parse(string text)
         {
-            return UnitParser.Parse<SpeedUnit>(text);
+            return UnitParser<SpeedUnit>.Parse(text);
         }
 
         public static bool TryParse(string text, out SpeedUnit value)
         {
-            return UnitParser.TryParse<SpeedUnit>(text, out value);
+            return UnitParser<SpeedUnit>.TryParse(text, out value);
         }
 
         /// <summary>

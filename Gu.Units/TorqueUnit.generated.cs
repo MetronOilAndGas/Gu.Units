@@ -64,12 +64,12 @@
 
         public static TorqueUnit Parse(string text)
         {
-            return UnitParser.Parse<TorqueUnit>(text);
+            return UnitParser<TorqueUnit>.Parse(text);
         }
 
         public static bool TryParse(string text, out TorqueUnit value)
         {
-            return UnitParser.TryParse<TorqueUnit>(text, out value);
+            return UnitParser<TorqueUnit>.TryParse(text, out value);
         }
 
         /// <summary>

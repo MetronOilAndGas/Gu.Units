@@ -94,12 +94,12 @@
 
         public static AngularJerkUnit Parse(string text)
         {
-            return UnitParser.Parse<AngularJerkUnit>(text);
+            return UnitParser<AngularJerkUnit>.Parse(text);
         }
 
         public static bool TryParse(string text, out AngularJerkUnit value)
         {
-            return UnitParser.TryParse<AngularJerkUnit>(text, out value);
+            return UnitParser<AngularJerkUnit>.TryParse(text, out value);
         }
 
         /// <summary>

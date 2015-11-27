@@ -118,12 +118,12 @@
 
         public static ResistanceUnit Parse(string text)
         {
-            return UnitParser.Parse<ResistanceUnit>(text);
+            return UnitParser<ResistanceUnit>.Parse(text);
         }
 
         public static bool TryParse(string text, out ResistanceUnit value)
         {
-            return UnitParser.TryParse<ResistanceUnit>(text, out value);
+            return UnitParser<ResistanceUnit>.TryParse(text, out value);
         }
 
         /// <summary>

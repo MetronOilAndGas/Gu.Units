@@ -13,14 +13,14 @@
             var expected = LengthUnit.Metres;
             Assert.AreEqual(expected, actual);
 
-            actual = UnitParser.Parse<LengthUnit>(s);
+            actual = UnitParser<LengthUnit>.Parse(s);
             Assert.AreEqual(expected, actual);
 
             var success = LengthUnit.TryParse(s, out actual);
             Assert.AreEqual(true, success);
             Assert.AreEqual(expected, actual);
 
-            success = UnitParser.TryParse<LengthUnit>(s, out actual);
+            success = UnitParser<LengthUnit>.TryParse(s, out actual);
             Assert.AreEqual(true, success);
             Assert.AreEqual(expected, actual);
         }
@@ -34,14 +34,14 @@
             var expected = AreaUnit.SquareMetres;
             Assert.AreEqual(expected, actual);
 
-            actual = UnitParser.Parse<AreaUnit>(s);
+            actual = UnitParser<AreaUnit>.Parse(s);
             Assert.AreEqual(expected, actual);
 
             var success = AreaUnit.TryParse(s, out actual);
             Assert.AreEqual(true, success);
             Assert.AreEqual(expected, actual);
 
-            success = UnitParser.TryParse<AreaUnit>(s, out actual);
+            success = UnitParser<AreaUnit>.TryParse(s, out actual);
             Assert.AreEqual(true, success);
             Assert.AreEqual(expected, actual);
         }
@@ -55,14 +55,14 @@
             var squareMillimetres = AreaUnit.SquareMillimetres;
             Assert.AreEqual(squareMillimetres, actual);
 
-            actual = UnitParser.Parse<AreaUnit>(s);
+            actual = UnitParser<AreaUnit>.Parse(s);
             Assert.AreEqual(squareMillimetres, actual);
 
             var success = AreaUnit.TryParse(s, out actual);
             Assert.AreEqual(true, success);
             Assert.AreEqual(squareMillimetres, actual);
 
-            success = UnitParser.TryParse<AreaUnit>(s, out actual);
+            success = UnitParser<AreaUnit>.TryParse(s, out actual);
             Assert.AreEqual(true, success);
             Assert.AreEqual(squareMillimetres, actual);
         }

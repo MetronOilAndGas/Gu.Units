@@ -142,12 +142,12 @@
 
         public static PowerUnit Parse(string text)
         {
-            return UnitParser.Parse<PowerUnit>(text);
+            return UnitParser<PowerUnit>.Parse(text);
         }
 
         public static bool TryParse(string text, out PowerUnit value)
         {
-            return UnitParser.TryParse<PowerUnit>(text, out value);
+            return UnitParser<PowerUnit>.TryParse(text, out value);
         }
 
         /// <summary>

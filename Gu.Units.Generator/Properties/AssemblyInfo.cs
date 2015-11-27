@@ -51,6 +51,6 @@ using System.Windows;
 // You can specify all the quantitys or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.0.0.1")]
-[assembly: AssemblyFileVersion("1.0.0.1")]
+[assembly: AssemblyVersion("1.0.0.2")]
+[assembly: AssemblyFileVersion("1.0.0.2")]
 [assembly: GuidAttribute("81B9504D-1DC6-4062-AA92-82E0BBBB343B")]

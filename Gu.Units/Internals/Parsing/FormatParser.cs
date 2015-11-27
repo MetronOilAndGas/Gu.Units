@@ -99,7 +99,7 @@
         private static bool TryReadUnit<TUnit>(string format,
             ref int pos,
             out string unitFormat,
-            out TUnit unit) where TUnit : IUnit
+            out TUnit unit) where TUnit : struct, IUnit
         {
             var start = pos;
             if (pos == format.Length)
@@ -109,7 +109,7 @@
                 return false;
             }
 
-            if (UnitParser.TryParse<TUnit>(format, ref pos, out unit))
+            if (UnitParser<TUnit>.TryParse(format, ref pos, out unit))
             {
                 unitFormat = format.Substring(start, pos - start);
                 return true;

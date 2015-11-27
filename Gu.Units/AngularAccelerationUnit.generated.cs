@@ -94,12 +94,12 @@
 
         public static AngularAccelerationUnit Parse(string text)
         {
-            return UnitParser.Parse<AngularAccelerationUnit>(text);
+            return UnitParser<AngularAccelerationUnit>.Parse(text);
         }
 
         public static bool TryParse(string text, out AngularAccelerationUnit value)
         {
-            return UnitParser.TryParse<AngularAccelerationUnit>(text, out value);
+            return UnitParser<AngularAccelerationUnit>.TryParse(text, out value);
         }
 
         /// <summary>

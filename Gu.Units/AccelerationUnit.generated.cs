@@ -76,12 +76,12 @@
 
         public static AccelerationUnit Parse(string text)
         {
-            return UnitParser.Parse<AccelerationUnit>(text);
+            return UnitParser<AccelerationUnit>.Parse(text);
         }
 
         public static bool TryParse(string text, out AccelerationUnit value)
         {
-            return UnitParser.TryParse<AccelerationUnit>(text, out value);
+            return UnitParser<AccelerationUnit>.TryParse(text, out value);
         }
 
         /// <summary>

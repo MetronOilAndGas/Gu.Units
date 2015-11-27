@@ -10,7 +10,7 @@
         public void ParseSuccess(ISuccessData data)
         {
             var pos = data.Start;
-            var actual = SymbolAndPowerParser.Parse(data.Text, ref pos);
+            var actual = SymbolAndPowerParser.Read(data.Text, ref pos);
             Assert.AreEqual(data.Expected, actual);
             Assert.AreEqual(data.ExpectedEnd, pos);
         }
@@ -19,7 +19,7 @@
         public void ParseError(IErrorData data)
         {
             var pos = data.Start;
-            Assert.Throws<FormatException>(() => SymbolAndPowerParser.Parse(data.Text, ref pos));
+            Assert.Throws<FormatException>(() => SymbolAndPowerParser.Read(data.Text, ref pos));
             Assert.AreEqual(data.ExpectedEnd, pos);
         }
 
@@ -28,7 +28,7 @@
         {
             var pos = data.Start;
             SymbolAndPower actual;
-            var success = SymbolAndPowerParser.TryParse(data.Text, ref pos, out actual);
+            var success = SymbolAndPowerParser.TryRead(data.Text, ref pos, out actual);
             Assert.AreEqual(true, success);
             Assert.AreEqual(data.Expected, actual);
             Assert.AreEqual(data.ExpectedEnd, pos);
@@ -39,7 +39,7 @@
         {
             var pos = data.Start;
             SymbolAndPower sap;
-            var success = SymbolAndPowerParser.TryParse(data.Text, ref pos, out sap);
+            var success = SymbolAndPowerParser.TryRead(data.Text, ref pos, out sap);
             Assert.AreEqual(false, success);
             Assert.AreEqual(default(SymbolAndPower), sap);
             Assert.AreEqual(data.ExpectedEnd, pos);
