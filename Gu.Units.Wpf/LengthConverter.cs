@@ -10,6 +10,7 @@
     [MarkupExtensionReturnType(typeof(IValueConverter))]
     public class LengthConverter : MarkupExtension, IValueConverter
     {
+        private static readonly string StringFormatNotSet = "Not Set";
         private LengthUnit? unit;
         private string stringFormat;
         private IProvideValueTarget provideValueTarget;
@@ -66,7 +67,7 @@
                 throw new ArgumentException(message, nameof(value));
             }
 
-            if (this.unit == null && this.stringFormat == null)
+            if (this.stringFormat == null)
             {
                 GetStringFormat();
             }
@@ -91,7 +92,7 @@
             }
 
             var length = (Length)value;
-            if (this.stringFormat != null)
+            if (this.stringFormat != StringFormatNotSet)
             {
                 return value;
             }
@@ -120,10 +121,11 @@
                 return null;
             }
 
-            if (this.unit == null && this.stringFormat == null)
+            if (this.stringFormat == null)
             {
                 GetStringFormat();
             }
+
             if (this.unit == null)
             {
                 if (Is.DesignMode)
@@ -217,8 +219,11 @@
                     {
                         Symbol = SymbolOptions.Required;
                     }
+                    return;
                 }
             }
+
+            this.stringFormat = StringFormatNotSet;
         }
 
         private bool IsValidConvertTargetType(Type targetType)

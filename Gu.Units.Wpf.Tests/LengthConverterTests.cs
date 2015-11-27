@@ -14,6 +14,7 @@
             {
                 Symbol = SymbolOptions.NotAllowed
             };
+
             var length = Length.FromMetres(1.2);
             Assert.AreEqual(null, converter.Unit);
             if (isDesignMode)
