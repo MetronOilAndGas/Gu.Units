@@ -211,7 +211,7 @@
             if (this.stringFormat != null)
             {
                 QuantityFormat<LengthUnit> format;
-                if (FormatParser.TryParse(this.stringFormat.Trim('{', '}'), out format))
+                if (StringFormatParser.TryParse(this.stringFormat, out format))
                 {
                     this.unit = format.Unit;
                     this.stringFormat = format.ValueFormat;

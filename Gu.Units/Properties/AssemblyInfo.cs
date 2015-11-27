@@ -38,5 +38,6 @@ using System.Resources;
 [assembly: NeutralResourcesLanguage("en")]
 [assembly: InternalsVisibleTo("Gu.Units.Tests")]
 [assembly: InternalsVisibleTo("Gu.Units.Wpf")]
+[assembly: InternalsVisibleTo("Gu.Units.Wpf.Tests")]
 [assembly: InternalsVisibleTo("Gu.Units.Generator")]
 [assembly: InternalsVisibleTo("Gu.Units.Generator.Tests")]

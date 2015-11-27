@@ -5,13 +5,20 @@
         internal static bool TryParse<TUnit>(string format, out QuantityFormat<TUnit> result)
             where TUnit : struct, IUnit
         {
+            int pos = 0;
+            return TryParse(format, ref pos, format?.Length ?? 0, out result);
+        }
+
+        internal static bool TryParse<TUnit>(string format, ref int pos, int end, out QuantityFormat<TUnit> result)
+                where TUnit : struct, IUnit
+        {
             if (string.IsNullOrWhiteSpace(format))
             {
                 result = QuantityFormat<TUnit>.Default;
                 return true;
             }
 
-            int pos = 0;
+            var prePaddingStart = pos;
             string doubleFormat;
             format.ReadWhiteSpace(ref pos);
             var prePaddingEnd = pos;
@@ -25,24 +32,25 @@
             TryReadUnit(format, ref pos, out symbolFormat, out unit);
             var symbolEnd = pos;
 
-            if (!format.IsRestWhiteSpace(pos))
+            if (!format.IsRestWhiteSpace(ref pos, end))
             {
                 result = QuantityFormat<TUnit>.Default;
                 return false;
             }
 
-            var prePadding = GetPrePadding(format, prePaddingEnd, doubleFormat);
+            var prePadding = GetPrePadding(format, prePaddingStart, prePaddingEnd, doubleFormat);
             var padding = GetPadding(format, doubleFormat, padStart, padEnd, symbolFormat);
-            var postPadding = GetPostPadding(format, symbolEnd);
+            var postPadding = GetPostPadding(format, symbolEnd, pos);
             result = new QuantityFormat<TUnit>(prePadding, doubleFormat, padding, symbolFormat, postPadding, unit);
             return true;
         }
 
-        internal static bool TryParse<TUnit>(string format, TUnit unit, out QuantityFormat<TUnit> result)
+        private static bool TryParse<TUnit>(string format, TUnit unit, out QuantityFormat<TUnit> result)
             where TUnit : struct, IUnit
         {
             int pos = 0;
             string doubleFormat;
+            var prePaddingStart = pos;
             format.ReadWhiteSpace(ref pos);
             var prePaddingEnd = pos;
             DoubleFormatReader.TryReadDoubleFormat(format, ref pos, out doubleFormat);
@@ -60,9 +68,9 @@
                 return false;
             }
 
-            var prePadding = GetPrePadding(format, prePaddingEnd, doubleFormat);
+            var prePadding = GetPrePadding(format, prePaddingStart, prePaddingEnd, doubleFormat);
             var padding = GetPadding(format, doubleFormat, padStart, padEnd, symbolFormat);
-            var postPadding = GetPostPadding(format, symbolEnd);
+            var postPadding = GetPostPadding(format, symbolEnd, pos);
 
             if (readUnitFormat && !Equals(readUnit, unit))
             {
@@ -120,15 +128,14 @@
             return false;
         }
 
-        private static string GetPrePadding(string format, int endPos, string doubleFormat)
+        private static string GetPrePadding(string format, int startPos, int endPos, string doubleFormat)
         {
-            if (endPos == 0 ||
-                string.IsNullOrEmpty(doubleFormat))
+            if (startPos == endPos || string.IsNullOrEmpty(doubleFormat))
             {
                 return null;
             }
 
-            return format.Substring(0, endPos);
+            return format.Substring(startPos, endPos);
         }
 
         private static string GetPadding(string format,
@@ -155,14 +162,14 @@
             return format.Substring(spaceStart, spaceEnd - spaceStart);
         }
 
-        private static string GetPostPadding(string format, int symbolEnd)
+        private static string GetPostPadding(string format, int symbolEnd, int postPaddingEnd)
         {
-            if (symbolEnd == format.Length)
+            if (symbolEnd == postPaddingEnd || symbolEnd == format.Length)
             {
                 return null;
             }
 
-            return format.Substring(symbolEnd, format.Length - symbolEnd);
+            return format.Substring(symbolEnd, postPaddingEnd - symbolEnd);
         }
     }
 }

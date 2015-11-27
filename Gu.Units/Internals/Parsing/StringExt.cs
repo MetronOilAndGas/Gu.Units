@@ -12,8 +12,14 @@ namespace Gu.Units
 
         internal static bool IsRestWhiteSpace(this string text, int position)
         {
-           text.ReadWhiteSpace(ref position);
+            text.ReadWhiteSpace(ref position);
             return position == text.Length;
+        }
+
+        internal static bool IsRestWhiteSpace(this string text, ref int position, int end)
+        {
+            text.ReadWhiteSpace(ref position);
+            return position == text.Length || position >= end;
         }
     }
 }
