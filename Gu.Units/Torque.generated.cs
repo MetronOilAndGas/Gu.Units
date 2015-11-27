@@ -360,13 +360,19 @@
             return ToString(quantityFormat, null);
         }
 
+        public string ToString(TorqueUnit unit, IFormatProvider formatProvider)
+        {
+            var quantityFormat = FormatParser<TorqueUnit>.GetOrCreate(string.Empty, unit);
+            return ToString(quantityFormat, formatProvider);
+        }
+
         public string ToString(string valueFormat, TorqueUnit unit)
         {
             var quantityFormat = FormatParser<TorqueUnit>.GetOrCreate(valueFormat, unit);
             return ToString(quantityFormat, null);
         }
 
-        public string ToString(string valueFormat, IFormatProvider formatProvider, TorqueUnit unit)
+        public string ToString(string valueFormat, TorqueUnit unit, IFormatProvider formatProvider)
         {
             var quantityFormat = FormatParser<TorqueUnit>.GetOrCreate(valueFormat, unit);
             return ToString(quantityFormat, formatProvider);

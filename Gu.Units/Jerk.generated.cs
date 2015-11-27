@@ -560,13 +560,19 @@
             return ToString(quantityFormat, null);
         }
 
+        public string ToString(JerkUnit unit, IFormatProvider formatProvider)
+        {
+            var quantityFormat = FormatParser<JerkUnit>.GetOrCreate(string.Empty, unit);
+            return ToString(quantityFormat, formatProvider);
+        }
+
         public string ToString(string valueFormat, JerkUnit unit)
         {
             var quantityFormat = FormatParser<JerkUnit>.GetOrCreate(valueFormat, unit);
             return ToString(quantityFormat, null);
         }
 
-        public string ToString(string valueFormat, IFormatProvider formatProvider, JerkUnit unit)
+        public string ToString(string valueFormat, JerkUnit unit, IFormatProvider formatProvider)
         {
             var quantityFormat = FormatParser<JerkUnit>.GetOrCreate(valueFormat, unit);
             return ToString(quantityFormat, formatProvider);

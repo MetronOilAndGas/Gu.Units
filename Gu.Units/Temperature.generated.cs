@@ -390,13 +390,19 @@
             return ToString(quantityFormat, null);
         }
 
+        public string ToString(TemperatureUnit unit, IFormatProvider formatProvider)
+        {
+            var quantityFormat = FormatParser<TemperatureUnit>.GetOrCreate(string.Empty, unit);
+            return ToString(quantityFormat, formatProvider);
+        }
+
         public string ToString(string valueFormat, TemperatureUnit unit)
         {
             var quantityFormat = FormatParser<TemperatureUnit>.GetOrCreate(valueFormat, unit);
             return ToString(quantityFormat, null);
         }
 
-        public string ToString(string valueFormat, IFormatProvider formatProvider, TemperatureUnit unit)
+        public string ToString(string valueFormat, TemperatureUnit unit, IFormatProvider formatProvider)
         {
             var quantityFormat = FormatParser<TemperatureUnit>.GetOrCreate(valueFormat, unit);
             return ToString(quantityFormat, formatProvider);

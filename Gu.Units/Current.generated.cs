@@ -440,13 +440,19 @@
             return ToString(quantityFormat, null);
         }
 
+        public string ToString(CurrentUnit unit, IFormatProvider formatProvider)
+        {
+            var quantityFormat = FormatParser<CurrentUnit>.GetOrCreate(string.Empty, unit);
+            return ToString(quantityFormat, formatProvider);
+        }
+
         public string ToString(string valueFormat, CurrentUnit unit)
         {
             var quantityFormat = FormatParser<CurrentUnit>.GetOrCreate(valueFormat, unit);
             return ToString(quantityFormat, null);
         }
 
-        public string ToString(string valueFormat, IFormatProvider formatProvider, CurrentUnit unit)
+        public string ToString(string valueFormat, CurrentUnit unit, IFormatProvider formatProvider)
         {
             var quantityFormat = FormatParser<CurrentUnit>.GetOrCreate(valueFormat, unit);
             return ToString(quantityFormat, formatProvider);

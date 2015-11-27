@@ -107,7 +107,7 @@
             var sv = CultureInfo.GetCultureInfo("sv-SE");
             Assert.AreEqual("1,2\u00A0m", length.ToString(sv));
             Assert.AreEqual(" 1200,0 mm ", length.ToString(" F1 mm ", sv));
-            Assert.AreEqual("1200,0\u00A0mm", length.ToString("F1", sv, LengthUnit.Millimetres));
+            Assert.AreEqual("1200,0\u00A0mm", length.ToString("F1", LengthUnit.Millimetres, sv));
         }
     }
 }

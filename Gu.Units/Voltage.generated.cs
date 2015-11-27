@@ -445,13 +445,19 @@
             return ToString(quantityFormat, null);
         }
 
+        public string ToString(VoltageUnit unit, IFormatProvider formatProvider)
+        {
+            var quantityFormat = FormatParser<VoltageUnit>.GetOrCreate(string.Empty, unit);
+            return ToString(quantityFormat, formatProvider);
+        }
+
         public string ToString(string valueFormat, VoltageUnit unit)
         {
             var quantityFormat = FormatParser<VoltageUnit>.GetOrCreate(valueFormat, unit);
             return ToString(quantityFormat, null);
         }
 
-        public string ToString(string valueFormat, IFormatProvider formatProvider, VoltageUnit unit)
+        public string ToString(string valueFormat, VoltageUnit unit, IFormatProvider formatProvider)
         {
             var quantityFormat = FormatParser<VoltageUnit>.GetOrCreate(valueFormat, unit);
             return ToString(quantityFormat, formatProvider);

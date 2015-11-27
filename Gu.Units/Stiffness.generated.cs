@@ -370,13 +370,19 @@
             return ToString(quantityFormat, null);
         }
 
+        public string ToString(StiffnessUnit unit, IFormatProvider formatProvider)
+        {
+            var quantityFormat = FormatParser<StiffnessUnit>.GetOrCreate(string.Empty, unit);
+            return ToString(quantityFormat, formatProvider);
+        }
+
         public string ToString(string valueFormat, StiffnessUnit unit)
         {
             var quantityFormat = FormatParser<StiffnessUnit>.GetOrCreate(valueFormat, unit);
             return ToString(quantityFormat, null);
         }
 
-        public string ToString(string valueFormat, IFormatProvider formatProvider, StiffnessUnit unit)
+        public string ToString(string valueFormat, StiffnessUnit unit, IFormatProvider formatProvider)
         {
             var quantityFormat = FormatParser<StiffnessUnit>.GetOrCreate(valueFormat, unit);
             return ToString(quantityFormat, formatProvider);

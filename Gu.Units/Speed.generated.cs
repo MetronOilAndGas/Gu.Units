@@ -565,13 +565,19 @@
             return ToString(quantityFormat, null);
         }
 
+        public string ToString(SpeedUnit unit, IFormatProvider formatProvider)
+        {
+            var quantityFormat = FormatParser<SpeedUnit>.GetOrCreate(string.Empty, unit);
+            return ToString(quantityFormat, formatProvider);
+        }
+
         public string ToString(string valueFormat, SpeedUnit unit)
         {
             var quantityFormat = FormatParser<SpeedUnit>.GetOrCreate(valueFormat, unit);
             return ToString(quantityFormat, null);
         }
 
-        public string ToString(string valueFormat, IFormatProvider formatProvider, SpeedUnit unit)
+        public string ToString(string valueFormat, SpeedUnit unit, IFormatProvider formatProvider)
         {
             var quantityFormat = FormatParser<SpeedUnit>.GetOrCreate(valueFormat, unit);
             return ToString(quantityFormat, formatProvider);

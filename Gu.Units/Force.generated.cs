@@ -500,13 +500,19 @@
             return ToString(quantityFormat, null);
         }
 
+        public string ToString(ForceUnit unit, IFormatProvider formatProvider)
+        {
+            var quantityFormat = FormatParser<ForceUnit>.GetOrCreate(string.Empty, unit);
+            return ToString(quantityFormat, formatProvider);
+        }
+
         public string ToString(string valueFormat, ForceUnit unit)
         {
             var quantityFormat = FormatParser<ForceUnit>.GetOrCreate(valueFormat, unit);
             return ToString(quantityFormat, null);
         }
 
-        public string ToString(string valueFormat, IFormatProvider formatProvider, ForceUnit unit)
+        public string ToString(string valueFormat, ForceUnit unit, IFormatProvider formatProvider)
         {
             var quantityFormat = FormatParser<ForceUnit>.GetOrCreate(valueFormat, unit);
             return ToString(quantityFormat, formatProvider);

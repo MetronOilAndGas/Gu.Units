@@ -490,13 +490,19 @@
             return ToString(quantityFormat, null);
         }
 
+        public string ToString(AngularSpeedUnit unit, IFormatProvider formatProvider)
+        {
+            var quantityFormat = FormatParser<AngularSpeedUnit>.GetOrCreate(string.Empty, unit);
+            return ToString(quantityFormat, formatProvider);
+        }
+
         public string ToString(string valueFormat, AngularSpeedUnit unit)
         {
             var quantityFormat = FormatParser<AngularSpeedUnit>.GetOrCreate(valueFormat, unit);
             return ToString(quantityFormat, null);
         }
 
-        public string ToString(string valueFormat, IFormatProvider formatProvider, AngularSpeedUnit unit)
+        public string ToString(string valueFormat, AngularSpeedUnit unit, IFormatProvider formatProvider)
         {
             var quantityFormat = FormatParser<AngularSpeedUnit>.GetOrCreate(valueFormat, unit);
             return ToString(quantityFormat, formatProvider);

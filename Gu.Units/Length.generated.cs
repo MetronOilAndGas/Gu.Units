@@ -10,7 +10,8 @@
     /// <summary>
     /// A type for the quantity <see cref="Gu.Units.Length"/>.
     /// </summary>
-    [Serializable, TypeConverter(typeof(LengthTypeConverter))]
+    // [TypeConverter(typeof(LengthTypeConverter))]
+    [Serializable]
     public partial struct Length : IComparable<Length>, IEquatable<Length>, IFormattable, IXmlSerializable, IQuantity<LengthUnit, I1>, IQuantity<LengthUnit>
     {
         public static readonly Length Zero = new Length();
@@ -584,13 +585,19 @@
             return ToString(quantityFormat, null);
         }
 
+        public string ToString(LengthUnit unit, IFormatProvider formatProvider)
+        {
+            var quantityFormat = FormatParser<LengthUnit>.GetOrCreate(string.Empty, unit);
+            return ToString(quantityFormat, formatProvider);
+        }
+
         public string ToString(string valueFormat, LengthUnit unit)
         {
             var quantityFormat = FormatParser<LengthUnit>.GetOrCreate(valueFormat, unit);
             return ToString(quantityFormat, null);
         }
 
-        public string ToString(string valueFormat, IFormatProvider formatProvider, LengthUnit unit)
+        public string ToString(string valueFormat, LengthUnit unit, IFormatProvider formatProvider)
         {
             var quantityFormat = FormatParser<LengthUnit>.GetOrCreate(valueFormat, unit);
             return ToString(quantityFormat, formatProvider);

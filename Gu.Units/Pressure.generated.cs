@@ -530,13 +530,19 @@
             return ToString(quantityFormat, null);
         }
 
+        public string ToString(PressureUnit unit, IFormatProvider formatProvider)
+        {
+            var quantityFormat = FormatParser<PressureUnit>.GetOrCreate(string.Empty, unit);
+            return ToString(quantityFormat, formatProvider);
+        }
+
         public string ToString(string valueFormat, PressureUnit unit)
         {
             var quantityFormat = FormatParser<PressureUnit>.GetOrCreate(valueFormat, unit);
             return ToString(quantityFormat, null);
         }
 
-        public string ToString(string valueFormat, IFormatProvider formatProvider, PressureUnit unit)
+        public string ToString(string valueFormat, PressureUnit unit, IFormatProvider formatProvider)
         {
             var quantityFormat = FormatParser<PressureUnit>.GetOrCreate(valueFormat, unit);
             return ToString(quantityFormat, formatProvider);

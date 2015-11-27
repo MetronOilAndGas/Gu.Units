@@ -370,13 +370,19 @@
             return ToString(quantityFormat, null);
         }
 
+        public string ToString(VolumetricFlowUnit unit, IFormatProvider formatProvider)
+        {
+            var quantityFormat = FormatParser<VolumetricFlowUnit>.GetOrCreate(string.Empty, unit);
+            return ToString(quantityFormat, formatProvider);
+        }
+
         public string ToString(string valueFormat, VolumetricFlowUnit unit)
         {
             var quantityFormat = FormatParser<VolumetricFlowUnit>.GetOrCreate(valueFormat, unit);
             return ToString(quantityFormat, null);
         }
 
-        public string ToString(string valueFormat, IFormatProvider formatProvider, VolumetricFlowUnit unit)
+        public string ToString(string valueFormat, VolumetricFlowUnit unit, IFormatProvider formatProvider)
         {
             var quantityFormat = FormatParser<VolumetricFlowUnit>.GetOrCreate(valueFormat, unit);
             return ToString(quantityFormat, formatProvider);

@@ -380,13 +380,19 @@
             return ToString(quantityFormat, null);
         }
 
+        public string ToString(AngleUnit unit, IFormatProvider formatProvider)
+        {
+            var quantityFormat = FormatParser<AngleUnit>.GetOrCreate(string.Empty, unit);
+            return ToString(quantityFormat, formatProvider);
+        }
+
         public string ToString(string valueFormat, AngleUnit unit)
         {
             var quantityFormat = FormatParser<AngleUnit>.GetOrCreate(valueFormat, unit);
             return ToString(quantityFormat, null);
         }
 
-        public string ToString(string valueFormat, IFormatProvider formatProvider, AngleUnit unit)
+        public string ToString(string valueFormat, AngleUnit unit, IFormatProvider formatProvider)
         {
             var quantityFormat = FormatParser<AngleUnit>.GetOrCreate(valueFormat, unit);
             return ToString(quantityFormat, formatProvider);

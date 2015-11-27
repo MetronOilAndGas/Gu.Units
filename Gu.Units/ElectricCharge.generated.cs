@@ -360,13 +360,19 @@
             return ToString(quantityFormat, null);
         }
 
+        public string ToString(ElectricChargeUnit unit, IFormatProvider formatProvider)
+        {
+            var quantityFormat = FormatParser<ElectricChargeUnit>.GetOrCreate(string.Empty, unit);
+            return ToString(quantityFormat, formatProvider);
+        }
+
         public string ToString(string valueFormat, ElectricChargeUnit unit)
         {
             var quantityFormat = FormatParser<ElectricChargeUnit>.GetOrCreate(valueFormat, unit);
             return ToString(quantityFormat, null);
         }
 
-        public string ToString(string valueFormat, IFormatProvider formatProvider, ElectricChargeUnit unit)
+        public string ToString(string valueFormat, ElectricChargeUnit unit, IFormatProvider formatProvider)
         {
             var quantityFormat = FormatParser<ElectricChargeUnit>.GetOrCreate(valueFormat, unit);
             return ToString(quantityFormat, formatProvider);

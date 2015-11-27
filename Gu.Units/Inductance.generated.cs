@@ -355,13 +355,19 @@
             return ToString(quantityFormat, null);
         }
 
+        public string ToString(InductanceUnit unit, IFormatProvider formatProvider)
+        {
+            var quantityFormat = FormatParser<InductanceUnit>.GetOrCreate(string.Empty, unit);
+            return ToString(quantityFormat, formatProvider);
+        }
+
         public string ToString(string valueFormat, InductanceUnit unit)
         {
             var quantityFormat = FormatParser<InductanceUnit>.GetOrCreate(valueFormat, unit);
             return ToString(quantityFormat, null);
         }
 
-        public string ToString(string valueFormat, IFormatProvider formatProvider, InductanceUnit unit)
+        public string ToString(string valueFormat, InductanceUnit unit, IFormatProvider formatProvider)
         {
             var quantityFormat = FormatParser<InductanceUnit>.GetOrCreate(valueFormat, unit);
             return ToString(quantityFormat, formatProvider);

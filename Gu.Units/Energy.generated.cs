@@ -530,13 +530,19 @@
             return ToString(quantityFormat, null);
         }
 
+        public string ToString(EnergyUnit unit, IFormatProvider formatProvider)
+        {
+            var quantityFormat = FormatParser<EnergyUnit>.GetOrCreate(string.Empty, unit);
+            return ToString(quantityFormat, formatProvider);
+        }
+
         public string ToString(string valueFormat, EnergyUnit unit)
         {
             var quantityFormat = FormatParser<EnergyUnit>.GetOrCreate(valueFormat, unit);
             return ToString(quantityFormat, null);
         }
 
-        public string ToString(string valueFormat, IFormatProvider formatProvider, EnergyUnit unit)
+        public string ToString(string valueFormat, EnergyUnit unit, IFormatProvider formatProvider)
         {
             var quantityFormat = FormatParser<EnergyUnit>.GetOrCreate(valueFormat, unit);
             return ToString(quantityFormat, formatProvider);

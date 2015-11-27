@@ -350,13 +350,19 @@
             return ToString(quantityFormat, null);
         }
 
+        public string ToString(LuminousIntensityUnit unit, IFormatProvider formatProvider)
+        {
+            var quantityFormat = FormatParser<LuminousIntensityUnit>.GetOrCreate(string.Empty, unit);
+            return ToString(quantityFormat, formatProvider);
+        }
+
         public string ToString(string valueFormat, LuminousIntensityUnit unit)
         {
             var quantityFormat = FormatParser<LuminousIntensityUnit>.GetOrCreate(valueFormat, unit);
             return ToString(quantityFormat, null);
         }
 
-        public string ToString(string valueFormat, IFormatProvider formatProvider, LuminousIntensityUnit unit)
+        public string ToString(string valueFormat, LuminousIntensityUnit unit, IFormatProvider formatProvider)
         {
             var quantityFormat = FormatParser<LuminousIntensityUnit>.GetOrCreate(valueFormat, unit);
             return ToString(quantityFormat, formatProvider);

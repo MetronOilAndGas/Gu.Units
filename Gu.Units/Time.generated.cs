@@ -490,13 +490,19 @@
             return ToString(quantityFormat, null);
         }
 
+        public string ToString(TimeUnit unit, IFormatProvider formatProvider)
+        {
+            var quantityFormat = FormatParser<TimeUnit>.GetOrCreate(string.Empty, unit);
+            return ToString(quantityFormat, formatProvider);
+        }
+
         public string ToString(string valueFormat, TimeUnit unit)
         {
             var quantityFormat = FormatParser<TimeUnit>.GetOrCreate(valueFormat, unit);
             return ToString(quantityFormat, null);
         }
 
-        public string ToString(string valueFormat, IFormatProvider formatProvider, TimeUnit unit)
+        public string ToString(string valueFormat, TimeUnit unit, IFormatProvider formatProvider)
         {
             var quantityFormat = FormatParser<TimeUnit>.GetOrCreate(valueFormat, unit);
             return ToString(quantityFormat, formatProvider);

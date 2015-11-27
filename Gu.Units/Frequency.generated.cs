@@ -480,13 +480,19 @@
             return ToString(quantityFormat, null);
         }
 
+        public string ToString(FrequencyUnit unit, IFormatProvider formatProvider)
+        {
+            var quantityFormat = FormatParser<FrequencyUnit>.GetOrCreate(string.Empty, unit);
+            return ToString(quantityFormat, formatProvider);
+        }
+
         public string ToString(string valueFormat, FrequencyUnit unit)
         {
             var quantityFormat = FormatParser<FrequencyUnit>.GetOrCreate(valueFormat, unit);
             return ToString(quantityFormat, null);
         }
 
-        public string ToString(string valueFormat, IFormatProvider formatProvider, FrequencyUnit unit)
+        public string ToString(string valueFormat, FrequencyUnit unit, IFormatProvider formatProvider)
         {
             var quantityFormat = FormatParser<FrequencyUnit>.GetOrCreate(valueFormat, unit);
             return ToString(quantityFormat, formatProvider);

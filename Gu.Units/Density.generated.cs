@@ -395,13 +395,19 @@
             return ToString(quantityFormat, null);
         }
 
+        public string ToString(DensityUnit unit, IFormatProvider formatProvider)
+        {
+            var quantityFormat = FormatParser<DensityUnit>.GetOrCreate(string.Empty, unit);
+            return ToString(quantityFormat, formatProvider);
+        }
+
         public string ToString(string valueFormat, DensityUnit unit)
         {
             var quantityFormat = FormatParser<DensityUnit>.GetOrCreate(valueFormat, unit);
             return ToString(quantityFormat, null);
         }
 
-        public string ToString(string valueFormat, IFormatProvider formatProvider, DensityUnit unit)
+        public string ToString(string valueFormat, DensityUnit unit, IFormatProvider formatProvider)
         {
             var quantityFormat = FormatParser<DensityUnit>.GetOrCreate(valueFormat, unit);
             return ToString(quantityFormat, formatProvider);

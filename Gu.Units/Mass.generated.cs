@@ -425,13 +425,19 @@
             return ToString(quantityFormat, null);
         }
 
+        public string ToString(MassUnit unit, IFormatProvider formatProvider)
+        {
+            var quantityFormat = FormatParser<MassUnit>.GetOrCreate(string.Empty, unit);
+            return ToString(quantityFormat, formatProvider);
+        }
+
         public string ToString(string valueFormat, MassUnit unit)
         {
             var quantityFormat = FormatParser<MassUnit>.GetOrCreate(valueFormat, unit);
             return ToString(quantityFormat, null);
         }
 
-        public string ToString(string valueFormat, IFormatProvider formatProvider, MassUnit unit)
+        public string ToString(string valueFormat, MassUnit unit, IFormatProvider formatProvider)
         {
             var quantityFormat = FormatParser<MassUnit>.GetOrCreate(valueFormat, unit);
             return ToString(quantityFormat, formatProvider);

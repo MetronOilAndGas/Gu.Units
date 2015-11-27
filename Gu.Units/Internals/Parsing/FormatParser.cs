@@ -184,6 +184,13 @@
                     return builder.ToString();
                 }
 
+                if (spaceStart == spaceEnd &&
+    string.IsNullOrEmpty(doubleFormat))
+                {
+                    builder.AppendUnit(unitFormat);
+                    return builder.ToString();
+                }
+
                 builder.AppendWhiteSpace(format, spaceStart, spaceEnd);
                 builder.Append(unitFormat ?? default(TUnit).SiUnit.Symbol);
                 builder.AppendWhiteSpace(format, unitEnd, format.Length);
@@ -216,6 +223,7 @@
             {
                 return builder;
             }
+
             for (int i = from; i < to; i++)
             {
                 builder.Append(source[i]);
@@ -229,6 +237,7 @@
             {
                 builder.Append("{0}");
             }
+
             else
             {
                 builder.Append("{0:");
@@ -241,12 +250,17 @@
 
         private static StringBuilderPool.Builder AppendUnit(this StringBuilderPool.Builder builder, IUnit unit)
         {
-            if (ShouldSpace(unit.Symbol))
+            return builder.AppendUnit(unit.Symbol);
+        }
+
+        private static StringBuilderPool.Builder AppendUnit(this StringBuilderPool.Builder builder, string symbol)
+        {
+            if (ShouldSpace(symbol))
             {
                 builder.Append('\u00A0');
             }
 
-            builder.Append(unit.Symbol);
+            builder.Append(symbol);
 
             return builder;
         }
