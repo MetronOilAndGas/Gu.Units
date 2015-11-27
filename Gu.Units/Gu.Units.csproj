@@ -422,8 +422,7 @@
     <Compile Include="Internals\Parsing\QuantityParser.cs" />
     <Compile Include="Internals\Parsing\Results\Sign.cs" />
     <Compile Include="Internals\Parsing\StringExt.cs" />
-    <Compile Include="Internals\Parsing\Results\Symbol.cs" />
-    <Compile Include="SymbolAndPower.cs" />
+    <Compile Include="Internals\SymbolAndPower.cs" />
     <Compile Include="Internals\Parsing\UnitParser.cs" />
     <Compile Include="Internals\Parsing\XmlExt.cs" />
     <Compile Include="Voltage.generated.cs">

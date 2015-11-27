@@ -2,7 +2,7 @@
 {
     using System;
 
-    public struct SymbolAndPower : IEquatable<SymbolAndPower>
+    internal struct SymbolAndPower : IEquatable<SymbolAndPower>
     {
         public readonly string Symbol;
         public readonly int Power;
