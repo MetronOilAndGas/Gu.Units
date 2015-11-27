@@ -39,7 +39,6 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Properties\AssemblyInfo.generated.cs" />
     <Compile Include="Is.cs" />
     <Compile Include="LengthConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

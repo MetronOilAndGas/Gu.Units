@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Concurrent;
+    using System.Globalization;
     using System.Text;
 
     internal static class StringBuilderPool
@@ -51,6 +52,19 @@
             public override string ToString()
             {
                 return _builder.ToString();
+            }
+
+            internal void Append<TQuantity, TUnit>(TQuantity quantity, QuantityFormat<TUnit> format, IFormatProvider formatProvider)
+                where TQuantity : IQuantity<TUnit>
+                where TUnit : struct, IUnit
+            {
+                Append(format.PrePadding);
+                var scalarValue = quantity.GetValue(format.Unit);
+                //var formatProvider = formatProvider ?? (IFormatProvider)NumberFormatInfo.CurrentInfo;
+                Append(scalarValue.ToString(format.ValueFormat, formatProvider));
+                Append(format.Padding);
+                Append(format.SymbolFormat);
+                Append(format.PostPadding);
             }
         }
     }

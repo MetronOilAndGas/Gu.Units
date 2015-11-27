@@ -20,6 +20,7 @@
     public interface IQuantity<TUnit> : IQuantity
         where TUnit : IUnit
     {
+        double GetValue(TUnit unit);
     }
 
     public interface IQuantity<TUnit, TPower> : IQuantity

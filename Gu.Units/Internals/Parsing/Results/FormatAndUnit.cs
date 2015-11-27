@@ -3,7 +3,7 @@
     using System;
     using System.Diagnostics;
 
-    [DebuggerDisplay("Format: {_format} Unit: {_unit}")]
+    [DebuggerDisplay("ValueFormat: {_format} Unit: {_unit}")]
     internal struct FormatAndUnit<TUnit> : IEquatable<FormatAndUnit<TUnit>> 
         where TUnit: struct, IUnit
     {

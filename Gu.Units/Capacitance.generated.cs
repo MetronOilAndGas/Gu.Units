@@ -1,7 +1,6 @@
 ﻿namespace Gu.Units
 {
     using System;
-    using System.ComponentModel;
     using System.Globalization;
     using System.Xml;
     using System.Xml.Schema;
@@ -370,9 +369,11 @@
 
         private string ToString(QuantityFormat<CapacitanceUnit> format, IFormatProvider formatProvider)
         {
-            var scalarValue = format.Unit.GetScalarValue(this);
-            var provider = formatProvider ?? (IFormatProvider)NumberFormatInfo.CurrentInfo;
-            return string.Format(provider, format.Format, scalarValue);
+            using (var builder = StringBuilderPool.Borrow())
+            {
+                builder.Append(this, format, formatProvider);
+                return builder.ToString();
+            }
         }
 
         /// <summary>

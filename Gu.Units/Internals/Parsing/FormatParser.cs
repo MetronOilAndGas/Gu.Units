@@ -15,25 +15,26 @@
             string doubleFormat;
             format.ReadWhiteSpace(ref pos);
             var prePaddingEnd = pos;
-            var readDoubleFormat = DoubleFormatReader.TryReadDoubleFormat(format, ref pos, out doubleFormat);
+            DoubleFormatReader.TryReadDoubleFormat(format, ref pos, out doubleFormat);
 
-            var spaceStart = pos;
+            var padStart = pos;
             format.ReadWhiteSpace(ref pos);
-            var spaceEnd = pos;
-            string unitFormat;
+            var padEnd = pos;
+            string symbolFormat;
             TUnit unit;
-            var readUnitFormat = TryReadUnit(format, ref pos, out unitFormat, out unit);
-            var unitEnd = pos;
-            format.ReadWhiteSpace(ref pos);
+            TryReadUnit(format, ref pos, out symbolFormat, out unit);
+            var symbolEnd = pos;
 
-            if (!(readDoubleFormat || readUnitFormat) || pos != format.Length)
+            if (!format.IsRestWhiteSpace(pos))
             {
                 result = QuantityFormat<TUnit>.Default;
                 return false;
             }
 
-            var compositeFormat = CreateCompositeFormat<TUnit>(format, prePaddingEnd, doubleFormat, spaceStart, spaceEnd, unitFormat, unitEnd);
-            result = new QuantityFormat<TUnit>(compositeFormat, unit);
+            var prePadding = GetPrePadding(format, prePaddingEnd, doubleFormat);
+            var padding = GetPadding(format, doubleFormat, padStart, padEnd, symbolFormat);
+            var postPadding = GetPostPadding(format, symbolEnd);
+            result = new QuantityFormat<TUnit>(prePadding, doubleFormat, padding, symbolFormat, postPadding, unit);
             return true;
         }
 
@@ -44,51 +45,43 @@
             string doubleFormat;
             format.ReadWhiteSpace(ref pos);
             var prePaddingEnd = pos;
-            var readDoubleFormat = DoubleFormatReader.TryReadDoubleFormat(format, ref pos, out doubleFormat);
-            var spaceStart = pos;
+            DoubleFormatReader.TryReadDoubleFormat(format, ref pos, out doubleFormat);
+            var padStart = pos;
             format.ReadWhiteSpace(ref pos);
-            var spaceEnd = pos;
-            string unitFormat;
+            var padEnd = pos;
+            string symbolFormat;
             TUnit readUnit;
-            var readUnitFormat = TryReadUnit(format, ref pos, out unitFormat, out readUnit);
-            var unitEnd = pos;
+            var readUnitFormat = TryReadUnit(format, ref pos, out symbolFormat, out readUnit);
+            var symbolEnd = pos;
 
-            format.ReadWhiteSpace(ref pos);
-
-            if (!(readDoubleFormat || readUnitFormat) || pos != format.Length)
+            if (!format.IsRestWhiteSpace(pos))
             {
                 result = QuantityFormat<TUnit>.Default;
                 return false;
             }
 
+            var prePadding = GetPrePadding(format, prePaddingEnd, doubleFormat);
+            var padding = GetPadding(format, doubleFormat, padStart, padEnd, symbolFormat);
+            var postPadding = GetPostPadding(format, symbolEnd);
+
             if (readUnitFormat && !Equals(readUnit, unit))
             {
-                // choosing the format unit here
-                var cf = CreateCompositeFormat<TUnit>(format, prePaddingEnd, doubleFormat, spaceStart, spaceEnd, unitFormat, unitEnd);
-                result = new QuantityFormat<TUnit>(cf, readUnit);
+                // choosing the parsed format for symbol
+                result = new QuantityFormat<TUnit>(prePadding, doubleFormat, padding, symbolFormat, postPadding, unit);
                 return false;
             }
 
-
-            var compositeFormat = string.IsNullOrEmpty(unitFormat) && spaceStart == spaceEnd
-                ? CreateCompositeFormat<TUnit>(format, prePaddingEnd, doubleFormat, unit)
-                : CreateCompositeFormat<TUnit>(format, prePaddingEnd, doubleFormat, spaceStart, spaceEnd, unitFormat ?? unit.Symbol, unitEnd);
-            result = new QuantityFormat<TUnit>(compositeFormat, unit);
+            result = new QuantityFormat<TUnit>(prePadding, doubleFormat, padding, symbolFormat, postPadding, unit);
             return true;
         }
 
-        internal static QuantityFormat<TUnit> Create<TUnit>(FormatAndUnit<TUnit> fau) where TUnit : struct, IUnit
+        internal static QuantityFormat<TUnit> Create<TUnit>(FormatAndUnit<TUnit> fau)
+            where TUnit : struct, IUnit
         {
             if (string.IsNullOrEmpty(fau._format))
             {
-                using (var builder = StringBuilderPool.Borrow())
-                {
-                    builder.AppendDoubleFormat(null);
-                    var unit = fau._unit ?? (TUnit)default(TUnit).SiUnit;
-
-                    builder.AppendUnit(unit);
-                    return new QuantityFormat<TUnit>(builder.ToString(), unit);
-                }
+                var unit = fau._unit ?? (TUnit)default(TUnit).SiUnit;
+                return new QuantityFormat<TUnit>(null, null, null, unit.Symbol, null, unit);
             }
 
             QuantityFormat<TUnit> result;
@@ -127,114 +120,49 @@
             return false;
         }
 
-        private static string CreateCompositeFormat<TUnit>(string format,
-            int prePaddingEnd,
+        private static string GetPrePadding(string format, int endPos, string doubleFormat)
+        {
+            if (endPos == 0 ||
+                string.IsNullOrEmpty(doubleFormat))
+            {
+                return null;
+            }
+
+            return format.Substring(0, endPos);
+        }
+
+        private static string GetPadding(string format,
             string doubleFormat,
             int spaceStart,
             int spaceEnd,
-            string unitFormat,
-            int unitEnd) where TUnit : struct, IUnit
+            string unitFormat)
         {
-            using (var builder = StringBuilderPool.Borrow())
+            if (spaceStart == format.Length)
             {
-                builder.AppendWhiteSpace(format, 0, prePaddingEnd);
-                builder.AppendDoubleFormat(doubleFormat);
+                return null;
+            }
 
-                if (spaceStart == spaceEnd &&
-                    string.IsNullOrEmpty(unitFormat))
+            if (spaceStart == spaceEnd)
+            {
+                if (string.IsNullOrEmpty(doubleFormat) || string.IsNullOrEmpty(unitFormat))
                 {
-                    builder.AppendUnit(default(TUnit).SiUnit);
-                    return builder.ToString();
+                    return null;
                 }
 
-                if (spaceStart == spaceEnd &&
-    string.IsNullOrEmpty(doubleFormat))
-                {
-                    builder.AppendUnit(unitFormat);
-                    return builder.ToString();
-                }
-
-                builder.AppendWhiteSpace(format, spaceStart, spaceEnd);
-                builder.Append(unitFormat ?? default(TUnit).SiUnit.Symbol);
-                builder.AppendWhiteSpace(format, unitEnd, format.Length);
-                var compositeFormat = builder.ToString();
-                return compositeFormat;
+                return string.Empty;
             }
+
+            return format.Substring(spaceStart, spaceEnd - spaceStart);
         }
 
-        private static string CreateCompositeFormat<TUnit>(string format,
-            int prePaddingEnd,
-            string doubleFormat,
-            TUnit unit) where TUnit : struct, IUnit
+        private static string GetPostPadding(string format, int symbolEnd)
         {
-            using (var builder = StringBuilderPool.Borrow())
+            if (symbolEnd == format.Length)
             {
-                builder.AppendWhiteSpace(format, 0, prePaddingEnd);
-                builder.AppendDoubleFormat(doubleFormat);
-                builder.AppendUnit(unit);
-                var compositeFormat = builder.ToString();
-                return compositeFormat;
-            }
-        }
-
-        private static StringBuilderPool.Builder AppendWhiteSpace(this StringBuilderPool.Builder builder,
-            string source,
-            int from,
-            int to)
-        {
-            if (from == to)
-            {
-                return builder;
+                return null;
             }
 
-            for (int i = from; i < to; i++)
-            {
-                builder.Append(source[i]);
-            }
-            return builder;
-        }
-
-        private static StringBuilderPool.Builder AppendDoubleFormat(this StringBuilderPool.Builder builder, string format)
-        {
-            if (string.IsNullOrEmpty(format))
-            {
-                builder.Append("{0}");
-            }
-
-            else
-            {
-                builder.Append("{0:");
-                builder.Append(format);
-                builder.Append("}");
-            }
-
-            return builder;
-        }
-
-        private static StringBuilderPool.Builder AppendUnit(this StringBuilderPool.Builder builder, IUnit unit)
-        {
-            return builder.AppendUnit(unit.Symbol);
-        }
-
-        private static StringBuilderPool.Builder AppendUnit(this StringBuilderPool.Builder builder, string symbol)
-        {
-            if (ShouldSpace(symbol))
-            {
-                builder.Append('\u00A0');
-            }
-
-            builder.Append(symbol);
-
-            return builder;
-        }
-
-        private static bool ShouldSpace(string symbol)
-        {
-            if (symbol.Length > 1)
-            {
-                return true;
-            }
-            return char.IsLetter(symbol[0]);
+            return format.Substring(symbolEnd, format.Length - symbolEnd);
         }
     }
 }

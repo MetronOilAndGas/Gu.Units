@@ -214,7 +214,7 @@
                 if (FormatParser.TryParse(this.stringFormat.Trim('{', '}'), out format))
                 {
                     this.unit = format.Unit;
-                    this.stringFormat = format.Format;
+                    this.stringFormat = format.ValueFormat;
                     if (Symbol == SymbolOptions.Default)
                     {
                         Symbol = SymbolOptions.Required;

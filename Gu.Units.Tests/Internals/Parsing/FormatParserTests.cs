@@ -40,9 +40,21 @@
             var success = FormatParser.TryParse(format, out actual);
 
             Assert.AreEqual(true, success);
-            Assert.AreEqual(expectedFormat, actual.Format);
+            Assert.AreEqual(null, actual.PrePadding);
+            if (string.IsNullOrEmpty(format))
+            {
+                Assert.AreEqual(null, actual.ValueFormat);
+            }
+            else
+            {
+                Assert.AreEqual(format, actual.ValueFormat);
+            }
+            Assert.AreEqual(QuantityFormat<LengthUnit>.NoBreakingSpaceString, actual.Padding);
+            Assert.AreEqual(LengthUnit.Metres.Symbol, actual.SymbolFormat);
+            Assert.AreEqual(null, actual.PostPadding);
             Assert.AreEqual(LengthUnit.Metres, actual.Unit);
-            var actualFormatted = string.Format(CultureInfo.InvariantCulture, actual.Format, 1.2, LengthUnit.Metres);
+            Assert.AreEqual(expectedFormat, actual.CompositeFormat);
+            var actualFormatted = string.Format(CultureInfo.InvariantCulture, actual.CompositeFormat, 1.2, LengthUnit.Metres);
             Assert.AreEqual(expectedFormatted, actualFormatted);
 
             var length = Length.FromMetres(1.2);
@@ -50,7 +62,7 @@
             Assert.AreEqual(expectedFormatted, actualFormatted);
         }
 
-        [TestCase("mm", "{0}mm", "1200mm")]
+        [TestCase("mm", "{0}\u00A0mm", "1200\u00A0mm")]
         [TestCase("E mm", "{0:E} mm", "1.200000E+003 mm")]
         [TestCase("ecm", "{0:e}cm", "1.200000e+002cm")]
         [TestCase("E5m", "{0:E5}m", "1.20000E+000m")]
@@ -81,13 +93,15 @@
             var success = FormatParser.TryParse(format, out actual);
 
             Assert.AreEqual(true, success);
-            Assert.AreEqual(expectedFormat, actual.Format);
+            Assert.AreEqual(expectedFormat, actual.CompositeFormat);
 
             var length = Length.FromMetres(1.2);
             var actualFormatted = length.ToString(format, CultureInfo.InvariantCulture);
             Assert.AreEqual(expectedFormatted, actualFormatted);
         }
 
+        [Explicit(Reminder.ToDo)]
+        [TestCase("1\u00A0200,00 mm⋅s⁻¹", "#_##0.00 mm⋅s⁻¹", "meh")]
         [TestCase("F3 N/mm^2", "{0:F3} N/m^2", "MPa")]
         [TestCase("F3 N⋅mm⁻²", "{0:F3} N⋅m⁻²", "MPa")]
         [TestCase("E Pa", "{0:E} Pa", "Pa")]
@@ -96,7 +110,7 @@
             QuantityFormat<PressureUnit> actual;
             var success = FormatParser.TryParse(format, out actual);
             Assert.AreEqual(true, success);
-            Assert.AreEqual(expectedFormat, actual.Format);
+            Assert.AreEqual(expectedFormat, actual.CompositeFormat);
             Assert.AreEqual(expectedSymbol, actual.Unit.Symbol);
         }
     }
