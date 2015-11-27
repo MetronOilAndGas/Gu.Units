@@ -4,10 +4,10 @@
 
     public class StringFormatParserTests
     {
-        [Test]
-        public void TryParse()
+        [TestCase("{0:F1 mm}")]
+        [TestCase("F1 mm")]
+        public void TryParse(string format)
         {
-            var format = "{0:F1 mm}";
             QuantityFormat<LengthUnit> actual;
             var success = StringFormatParser.TryParse(format, out actual);
             Assert.AreEqual(true, success);

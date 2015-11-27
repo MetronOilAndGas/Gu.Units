@@ -30,8 +30,10 @@
             }
         }
 
-        [Test]
-        public void ConvertToString()
+        [TestCase(typeof(string), 1.2)]
+        [TestCase(typeof(object), 1.2)]
+        [TestCase(typeof(double), 1.2)]
+        public void ConvertTo(Type targetType, object expected)
         {
             var converter = new LengthConverter
             {
@@ -40,8 +42,8 @@
             };
 
             var length = Length.FromMillimetres(12);
-            var actual = converter.Convert(length, typeof(string), null, null);
-            Assert.AreEqual(1.2, actual);
+            var actual = converter.Convert(length, targetType, null, null);
+            Assert.AreEqual(expected, actual);
             // Yes we want a double here. Reason is to be as similar to double as possible to not cause localization issues.
             // Maybe it needs to be changed.
         }
@@ -63,7 +65,7 @@
 
         [TestCase("1.2")]
         [TestCase(1.2)]
-        public void ConvertBackFromString(object value)
+        public void ConvertBack(object value)
         {
             var converter = new LengthConverter
             {
@@ -74,6 +76,32 @@
             var actual = converter.ConvertBack(value, typeof(Length), null, CultureInfo.InvariantCulture);
             var expected = Length.FromCentimetres(1.2);
             Assert.AreEqual(expected, actual);
+        }
+
+        [TestCase("1.2", SymbolOptions.NotAllowed, true)]
+        [TestCase("1.2 mm", SymbolOptions.NotAllowed, false)]
+        [TestCase("1.2", SymbolOptions.Allowed, true)]
+        [TestCase("12 mm", SymbolOptions.Allowed, true)]
+        [TestCase("1.2", SymbolOptions.Required, false)]
+        [TestCase("12 mm", SymbolOptions.Required, true)]
+        public void ConvertBackSymbolSettings(string value, SymbolOptions options, bool expectSuccess)
+        {
+            var converter = new LengthConverter
+            {
+                Unit = LengthUnit.Centimetres,
+                Symbol = SymbolOptions.NotAllowed
+            };
+
+            var actual = converter.ConvertBack(value, typeof(Length), null, CultureInfo.InvariantCulture);
+            if (expectSuccess)
+            {
+                var expected = Length.FromCentimetres(1.2);
+                Assert.AreEqual(expected, actual);
+            }
+            else
+            {
+                Assert.AreEqual(value, actual);
+            }
         }
     }
 }

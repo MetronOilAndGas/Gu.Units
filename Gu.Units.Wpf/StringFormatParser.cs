@@ -9,28 +9,32 @@
             out QuantityFormat<TUnit> result)
             where TUnit : struct, IUnit
         {
+            if (string.IsNullOrWhiteSpace(format))
+            {
+                result = QuantityFormat<TUnit>.Default;
+                return false;
+            }
+
             int pos = 0;
             format.ReadWhiteSpace(ref pos);
-            if (!TryReadPrefix(format, ref pos))
+            int end = format.Length;
+            if (TryReadPrefix(format, ref pos))
             {
-                result = QuantityFormat<TUnit>.Default;
-                return false;
+                end = format.LastIndexOf('}') - 1;
+                if (end < 0)
+                {
+                    result = QuantityFormat<TUnit>.Default;
+                    return false;
+                }
+
+                if (!format.IsRestWhiteSpace(end + 2))
+                {
+                    result = QuantityFormat<TUnit>.Default;
+                    return false;
+                }
             }
 
-            var lastIndexOf = format.LastIndexOf('}');
-            if (lastIndexOf < 0)
-            {
-                result = QuantityFormat<TUnit>.Default;
-                return false;
-            }
-
-            if (!format.IsRestWhiteSpace(lastIndexOf + 1))
-            {
-                result = QuantityFormat<TUnit>.Default;
-                return false;
-            }
-
-            return FormatParser.TryParse(format, ref pos, lastIndexOf - 1, out result);
+            return FormatParser.TryParse(format, ref pos, end, out result);
         }
 
         private static bool TryReadPrefix(string format,

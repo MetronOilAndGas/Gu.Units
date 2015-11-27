@@ -12,8 +12,9 @@
     {
         private static readonly string StringFormatNotSet = "Not Set";
         private LengthUnit? unit;
-        private string stringFormat;
         private IProvideValueTarget provideValueTarget;
+        private string stringFormat;
+        private QuantityFormat<LengthUnit> format;
 
         public LengthConverter()
         {
@@ -42,6 +43,16 @@
 
         public SymbolOptions Symbol { get; set; } = SymbolOptions.Default;
 
+        public string StringFormat
+        {
+            get { return this.stringFormat; }
+            set
+            {
+                this.stringFormat = value;
+                OnStringFormatChanged();
+            }
+        }
+
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
             // the binding does not have stringformat set at this point
@@ -67,9 +78,9 @@
                 throw new ArgumentException(message, nameof(value));
             }
 
-            if (this.stringFormat == null)
+            if (this.StringFormat == null)
             {
-                GetStringFormat();
+                TryGetStringFormatFromTarget();
             }
 
             if (this.unit == null)
@@ -92,7 +103,7 @@
             }
 
             var length = (Length)value;
-            if (this.stringFormat != StringFormatNotSet)
+            if (this.StringFormat != StringFormatNotSet)
             {
                 return value;
             }
@@ -121,9 +132,9 @@
                 return null;
             }
 
-            if (this.stringFormat == null)
+            if (this.StringFormat == null)
             {
-                GetStringFormat();
+                TryGetStringFormatFromTarget();
             }
 
             if (this.unit == null)
@@ -193,7 +204,7 @@
             }
         }
 
-        private void GetStringFormat()
+        private void TryGetStringFormatFromTarget()
         {
             var target = this.provideValueTarget?.TargetObject as DependencyObject;
             Binding binding = null;
@@ -207,23 +218,36 @@
             }
 
             binding = binding ?? this.provideValueTarget?.TargetObject as Binding;
-            this.stringFormat = binding?.StringFormat;
-            if (this.stringFormat != null)
+            this.StringFormat = binding?.StringFormat;
+        }
+
+        private void OnStringFormatChanged()
+        {
+            if (StringFormatParser.TryParse(this.stringFormat, out this.format))
             {
-                QuantityFormat<LengthUnit> format;
-                if (StringFormatParser.TryParse(this.stringFormat, out format))
+                if (Symbol == SymbolOptions.Default)
                 {
-                    this.unit = format.Unit;
-                    this.stringFormat = format.ValueFormat;
-                    if (Symbol == SymbolOptions.Default)
-                    {
-                        Symbol = SymbolOptions.Required;
-                    }
-                    return;
+                    Symbol = SymbolOptions.Required;
                 }
+
+                if (Unit == null)
+                {
+                    this.unit = this.format.Unit;
+                }
+
+                else if(this.unit != this.format.Unit)
+                {
+                    if (Is.DesignMode)
+                    {
+                        throw new InvalidOperationException($"The Unit is set to {Unit} but the stringformat has unit: {this.format.Unit}");
+                    }
+
+                    this.unit = this.format.Unit;
+                }
+                return;
             }
 
-            this.stringFormat = StringFormatNotSet;
+            this.stringFormat = null;
         }
 
         private bool IsValidConvertTargetType(Type targetType)
