@@ -12,21 +12,23 @@
             where TQuantity : IQuantity<TUnit>
             where TUnit : struct, IUnit
         {
-            int pos;
+            int pos = 0;
+            text.TryReadWhiteSpace(ref pos);
+
             double d;
-            if (!DoubleReader.TryRead(text, 0, style, provider, out d, out pos))
+            if (!DoubleReader.TryRead(text, ref pos, style, provider, out d))
             {
                 throw new FormatException("Could not parse the scalar value from: " + text);
             }
 
-            text.ReadWhiteSpace(ref pos);
+            text.TryReadWhiteSpace(ref pos);
             TUnit unit;
             if (!UnitParser<TUnit>.TryParse(text, ref pos, out unit))
             {
                 throw new FormatException("Could not parse the unit value from: " + text);
             }
 
-            text.ReadWhiteSpace(ref pos);
+            text.TryReadWhiteSpace(ref pos);
             if (pos != text.Length)
             {
                 throw new FormatException("Could not parse the unit value from: " + text);
@@ -39,19 +41,20 @@
             Func<double, TUnit, TQuantity> creator,
             NumberStyles style,
             IFormatProvider provider,
-            out TQuantity value) 
+            out TQuantity value)
             where TQuantity : IQuantity<TUnit>
             where TUnit : struct, IUnit
         {
-            int pos;
+            int pos = 0;
+            text.TryReadWhiteSpace(ref pos);
             double d;
-            if (!DoubleReader.TryRead(text, 0, style, provider, out d, out pos))
+            if (!DoubleReader.TryRead(text, ref pos, style, provider, out d))
             {
                 value = default(TQuantity);
                 return false;
             }
 
-            text.ReadWhiteSpace(ref pos);
+            text.TryReadWhiteSpace(ref pos);
 
             TUnit unit;
             if (!UnitParser<TUnit>.TryParse(text, ref pos, out unit))
@@ -60,7 +63,7 @@
                 return false;
             }
 
-            text.ReadWhiteSpace(ref pos);
+            text.TryReadWhiteSpace(ref pos);
             if (pos != text.Length)
             {
                 value = default(TQuantity);

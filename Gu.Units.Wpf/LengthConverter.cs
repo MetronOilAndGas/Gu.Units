@@ -177,10 +177,10 @@
                     {
                         double d;
                         int pos = 0;
-                        text.ReadWhiteSpace(ref pos);
-                        if (DoubleReader.TryRead(text, pos, NumberStyles.Float, culture, out d, out pos))
+                        text.TryReadWhiteSpace(ref pos);
+                        if (DoubleReader.TryRead(text, ref pos, NumberStyles.Float, culture, out d))
                         {
-                            text.ReadWhiteSpace(ref pos);
+                            text.TryReadWhiteSpace(ref pos);
                             if (pos == text.Length)
                             {
                                 return new Length(d, this.unit.Value);

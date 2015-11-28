@@ -18,13 +18,13 @@
             foreach (var format in Formats)
             {
                 var ns = string.Format(format, s);
-                var start = format.IndexOf('{');
-                int end;
+                var pos = format.IndexOf('{');
+                var start = pos;
                 double expected = double.Parse(s, style, culture);
-                var actual = DoubleReader.Read(ns, start, style, culture, out end);
+                var actual = DoubleReader.Read(ns, ref pos, style, culture);
                 Assert.AreEqual(expected, actual);
                 var expectedEnd = start + s.Length;
-                Assert.AreEqual(expectedEnd, end);
+                Assert.AreEqual(expectedEnd, pos);
             }
         }
 
@@ -37,11 +37,11 @@
             foreach (var format in Formats)
             {
                 var ns = string.Format(format, s);
-                var start = format.IndexOf('{');
-                int end = -1;
+                var pos = format.IndexOf('{');
+                var start = pos;
                 Assert.Throws<FormatException>(() => double.Parse(s, style, culture));
-                Assert.Throws<FormatException>(() => DoubleReader.Read(ns, start, style, culture, out end));
-                Assert.AreEqual(start, end);
+                Assert.Throws<FormatException>(() => DoubleReader.Read(ns, ref pos, style, culture));
+                Assert.AreEqual(start, pos);
             }
         }
 
@@ -51,7 +51,8 @@
             int endPos;
             var text = "abcdef";
             var culture = CultureInfo.InvariantCulture;
-            var e = Assert.Throws<FormatException>(() => DoubleReader.Read(text, 3, NumberStyles.Float, culture, out endPos));
+            var pos = 3;
+            var e = Assert.Throws<FormatException>(() => DoubleReader.Read(text, ref pos, NumberStyles.Float, culture));
             var expected = "Expected to find a double starting at index 3\r\n" +
                            "String: abcdef\r\n" +
                            "           ^";
@@ -63,19 +64,19 @@
         {
             var culture = data.Culture;
             var style = data.Styles;
-            var s = data.Text;
+            var text = data.Text;
             foreach (var format in Formats)
             {
-                var ns = string.Format(format, s);
-                var start = format.IndexOf('{');
-                int end;
+                var ns = string.Format(format, text);
+                var pos = format.IndexOf('{');
+                var start = pos;
                 double expected;
-                Assert.IsTrue(double.TryParse(s, style, culture, out expected));
+                Assert.IsTrue(double.TryParse(text, style, culture, out expected));
                 double actual;
-                Assert.IsTrue(DoubleReader.TryRead(ns, start, style, culture, out actual, out end));
+                Assert.IsTrue(DoubleReader.TryRead(ns, ref pos, style, culture, out actual));
                 Assert.AreEqual(expected, actual);
-                var expectedEnd = start + s.Length;
-                Assert.AreEqual(expectedEnd, end);
+                var expectedEnd = start + text.Length;
+                Assert.AreEqual(expectedEnd, pos);
             }
         }
 
@@ -88,14 +89,14 @@
             foreach (var format in Formats)
             {
                 var ns = string.Format(format, s);
-                var start = format.IndexOf('{');
-                int end;
+                var pos = format.IndexOf('{');
+                var start = pos;
                 double expected;
                 Assert.IsFalse(double.TryParse(s, style, culture, out expected));
                 double actual;
-                Assert.IsFalse(DoubleReader.TryRead(ns, start, style, culture, out actual, out end));
+                Assert.IsFalse(DoubleReader.TryRead(ns, ref pos, style, culture, out actual));
                 Assert.AreEqual(expected, actual);
-                Assert.AreEqual(start, end);
+                Assert.AreEqual(start, pos);
             }
         }
 

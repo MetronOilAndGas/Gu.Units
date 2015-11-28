@@ -1,7 +1,6 @@
 ﻿namespace Gu.Units.Tests.Internals
 {
     using System;
-    using System.Collections.Generic;
     using System.Reflection;
     using NUnit.Framework;
 
@@ -38,15 +37,15 @@
             var item4 = new SubstringCache<string>.CachedItem("bar", "4");
             cache.Add(item4);
             var actual = GetInnerCache(cache);
-            var expected = new[] { item1, item3, item2, item4 };
+            var expected = new[] { item2, item3, item1, item4 };
             CollectionAssert.AreEqual(expected, actual);
         }
 
-        [TestCase("abc", 0, "2")]
-        [TestCase("abcdef", 0, "1")]
-        [TestCase(" abc", 1, "2")]
-        [TestCase(" abcd", 1, "3")]
-        public void AddThenGetSuccess(string key, int pos, string expectedValue)
+        [TestCase("abc", 0, "abc", "2")]
+        [TestCase("abcdef", 0, "abcde", "1")]
+        [TestCase(" abc", 1, "abc", "2")]
+        [TestCase(" abcd", 1, "abcd", "3")]
+        public void AddThenGetSuccess(string key, int pos, string expectedKey, string expectedValue)
         {
             var cache = new SubstringCache<string>();
             cache.Add(new SubstringCache<string>.CachedItem("abcde", "1"));
@@ -54,9 +53,9 @@
             cache.Add(new SubstringCache<string>.CachedItem("abcd", "3"));
             cache.Add(new SubstringCache<string>.CachedItem("bar", "4"));
             SubstringCache<string>.CachedItem actual;
-            var success = cache.TryFind(key, pos, out actual);
+            var success = cache.TryFindSubString(key, pos, out actual);
             Assert.AreEqual(true, success);
-            Assert.AreEqual(key, actual.Key);
+            Assert.AreEqual(expectedKey, actual.Key);
             Assert.AreEqual(expectedValue, actual.Value);
         }
 
@@ -72,7 +71,7 @@
             cache.Add(new SubstringCache<string>.CachedItem("foo", "e"));
             cache.Add(new SubstringCache<string>.CachedItem("bar", "f"));
             SubstringCache<string>.CachedItem actual;
-            var success = cache.TryFind(key, pos, out actual);
+            var success = cache.TryFindSubString(key, pos, out actual);
             Assert.AreEqual(false, success);
             Assert.AreEqual(null, actual.Key);
             Assert.AreEqual(null, actual.Value);

@@ -19,13 +19,13 @@
             }
 
             var prePaddingStart = pos;
-            format.ReadWhiteSpace(ref pos);
+            format.TryReadWhiteSpace(ref pos);
             var prePaddingEnd = pos;
             string doubleFormat;
             DoubleFormatReader.TryReadDoubleFormat(format, ref pos, out doubleFormat);
 
             var padStart = pos;
-            format.ReadWhiteSpace(ref pos);
+            format.TryReadWhiteSpace(ref pos);
             var padEnd = pos;
             string symbolFormat;
             TUnit unit;
@@ -52,11 +52,11 @@
             int pos = 0;
             string doubleFormat;
             var prePaddingStart = pos;
-            format.ReadWhiteSpace(ref pos);
+            format.TryReadWhiteSpace(ref pos);
             var prePaddingEnd = pos;
             DoubleFormatReader.TryReadDoubleFormat(format, ref pos, out doubleFormat);
             var padStart = pos;
-            format.ReadWhiteSpace(ref pos);
+            format.TryReadWhiteSpace(ref pos);
             var padEnd = pos;
             string symbolFormat;
             TUnit readUnit;
@@ -90,7 +90,7 @@
             if (string.IsNullOrEmpty(fau._format))
             {
                 var unit = fau._unit ?? Unit<TUnit>.Default;
-                return new QuantityFormat<TUnit>(null, null, null, unit.Symbol, null, unit);
+                return new QuantityFormat<TUnit>(null, null, null, null, null, unit);
             }
 
             QuantityFormat<TUnit> result;

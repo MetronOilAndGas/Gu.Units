@@ -9,26 +9,26 @@
     [Explicit(Benchmarks.LongRunning)]
     public class FormattingBenchmarks
     {
-        // 2015-11-28| speed.ToString("F1 m/s") 1 000 000 times took: 938 ms
-        // 2015-11-28| $"{ speed.metresPerSecond:F1} {SpeedUnit.MetresPerSecond}" 1 000 000 times took: 765 ms
+        // 2015-11-28| speed.ToString("F1 m/s")                                   1 000 000 times took: 995 ms
+        // 2015-11-28| $"{ speed.metresPerSecond:F1} {SpeedUnit.MetresPerSecond}" 1 000 000 times took: 742 ms
         [Test]
         public void Benchmark()
         {
+            // this is not a fair comparison as .ToString parses the arguments. Still interesting as a base line.
             var speed = Speed.FromMetresPerSecond(1.2);
             var toString = speed.ToString("F1 m/s");
             var string_Format = $"{speed.metresPerSecond:F1} {SpeedUnit.MetresPerSecond}";
-
             // end warmup
 
             var sw = Stopwatch.StartNew();
-            var n = 100000;
+            var n = 1000000;
             for (int i = 0; i < n; i++)
             {
                 toString = speed.ToString("F1 m/s");
             }
 
             sw.Stop();
-            Console.WriteLine($"// {DateTime.Today.ToShortDateString()}| speed.ToString(\"F1 m/s\") {n:N0} times took: {sw.ElapsedMilliseconds} ms");
+            Console.WriteLine($"// {DateTime.Today.ToShortDateString()}| speed.ToString(\"F1 m/s\")                                   {n:N0} times took: {sw.ElapsedMilliseconds} ms");
 
             sw.Restart();
             for (int i = 0; i < n; i++)

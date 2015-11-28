@@ -1,8 +1,6 @@
 namespace Gu.Units
 {
     using System;
-    using System.Collections.Generic;
-    using System.Globalization;
 
     internal class SubstringCache<TItem>
     {
@@ -10,7 +8,7 @@ namespace Gu.Units
         private readonly object gate = new object();
         private CachedItem[] cache = Empty;
 
-        internal bool TryFind(string text, int pos, out CachedItem result)
+        internal bool TryFindSubString(string text, int pos, out CachedItem result)
         {
             if (text == null)
             {
@@ -18,14 +16,47 @@ namespace Gu.Units
                 return false;
             }
 
+            CachedItem? tempResult = null;
             var temp = this.cache;
-            for (int i = 0; i < temp.Length; i++)
+            int lo = 0;
+            int hi = temp.Length - 1;
+            int i = 0;
+            while (lo <= hi)
             {
-                var symbolAndUnit = temp[i];
-                if (Compare(symbolAndUnit.Key, text, pos) == 0)
+                if (tempResult == null)
                 {
-                    result = symbolAndUnit;
+                    i = GetMedian(lo, hi);
+                }
+                else
+                {
+                    i = i + 1; // searching linearly for longest match after finding one
+                    if (i == temp.Length)
+                    {
+                        result = tempResult.Value;
+                        return true;
+                    }
+                }
+
+                var symbolAndUnit = temp[i];
+                var c = Compare(symbolAndUnit.Key, text, pos);
+                if (c == 0)
+                {
+                    tempResult = symbolAndUnit;
+                    continue;
+                }
+                else if (tempResult != null)
+                {
+                    result = tempResult.Value;
                     return true;
+                }
+
+                if (c < 0)
+                {
+                    lo = i + 1;
+                }
+                else
+                {
+                    hi = i - 1;
                 }
             }
 
@@ -36,7 +67,7 @@ namespace Gu.Units
         internal void Add(CachedItem item)
         {
             Ensure.NotNull(item.Key, $"{nameof(item)}.{item.Key}");
-            lock (this.gate)
+            lock (this.gate) // this was five times faster than ReaderWriterLockSlim in benchmarks.
             {
                 for (int i = 0; i < this.cache.Length; i++)
                 {
@@ -62,12 +93,6 @@ namespace Gu.Units
 
         private static int Compare(string cached, string key, int pos)
         {
-            var compare = (key.Length - pos) - cached.Length;
-            if (compare < 0)
-            {
-                return compare;
-            }
-
             return CompareChars(cached, key, pos);
         }
 
@@ -75,7 +100,13 @@ namespace Gu.Units
         {
             for (int i = 0; i < cached.Length; i++)
             {
-                var compare = cached[i] - key[i + pos];
+                var j = i + pos;
+                if (key.Length == j)
+                {
+                    return 1;
+                }
+
+                var compare = cached[i] - key[j];
                 if (compare != 0)
                 {
                     return compare;
@@ -83,6 +114,12 @@ namespace Gu.Units
             }
 
             return 0;
+        }
+
+        private static int GetMedian(int low, int high)
+        {
+            Ensure.LessThanOrEqual(low, high, nameof(low));
+            return low + ((high - low) >> 1);
         }
 
         internal struct CachedItem : IComparable<CachedItem>
@@ -98,7 +135,7 @@ namespace Gu.Units
 
             public int CompareTo(CachedItem other)
             {
-                return string.CompareOrdinal(this.Key, other.Key);
+                return CompareChars(this.Key, other.Key, 0);
             }
 
             public override string ToString() => this.Key;

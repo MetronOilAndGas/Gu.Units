@@ -9,12 +9,12 @@
     [Explicit(Benchmarks.LongRunning)]
     public class QuantityBenchmark
     {
-        private const int n = 10000000;
+        private const int n = 1000000;
 
         // Summing 1E+007 Doubles took: 11 ms
         // Summing 1E+007 Lengths took: 8 ms
-        // 2015-11-28|  Summing 10 000 000 doubles took: 14 ms
-        // 2015-11-28|  Summing 10 000 000 Lengths took: 63 ms
+        // 2015-11-28|  Summing 1 000 000 doubles took: 1 ms
+        // 2015-11-28|  Summing 1 000 000 Lengths took: 6 ms
         [Test]
         public void CompareLengthAndDouble()
         {
@@ -40,8 +40,8 @@
 
         // Summing 1E+007 Int32s took: 5 ms
         // Summing 1E+007 Lengths took: 8 ms
-        // 2015-11-28|  Summing 10 000 000 ints took: 5 ms
-        // 2015-11-28|  Summing 10 000 000 Lengths took: 61 ms
+        // 2015-11-28|  Summing 1 000 000 ints    took: 17 ms
+        // 2015-11-28|  Summing 1 000 000 Lengths took: 6 ms
         [Test]
         public void CompareLengthAndInt()
         {
@@ -52,7 +52,7 @@
                 sum1 += i;
             }
 
-            Console.WriteLine($"// {DateTime.Today.ToShortDateString()}|  Summing {n:N0} ints took: {sw.ElapsedMilliseconds} ms");
+            Console.WriteLine($"// {DateTime.Today.ToShortDateString()}|  Summing {n:N0} ints    took: {sw.ElapsedMilliseconds} ms");
             sw.Restart();
             var sum2 = Length.FromMetres(1);
             for (var i = 0; i < n; i++)

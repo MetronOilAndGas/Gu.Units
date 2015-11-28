@@ -16,7 +16,7 @@
             }
 
             int pos = 0;
-            format.ReadWhiteSpace(ref pos);
+            format.TryReadWhiteSpace(ref pos);
             int end = format.Length;
             if (TryReadPrefix(format, ref pos))
             {

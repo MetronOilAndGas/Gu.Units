@@ -97,7 +97,6 @@
             int intResult;
             if (IntReader.TryReadInt32(format, ref pos, out intResult))
             {
-
                 if (intResult < 0 || intResult >= 100)
                 {
                     result = $"{c}{intResult}";
@@ -140,9 +139,8 @@
                     }
                 }
 
-                result = format;
-                pos = start;
-                return false;
+                result = $"{c}{intResult}";
+                return true;
             }
 
             switch (c)

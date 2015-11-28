@@ -9,14 +9,14 @@
     [Explicit(Benchmarks.LongRunning)]
     public class SubstringCacheBenchmarks
     {
-        // 2015-11-28| cache.TryFind(text, 3, out cached) 10 000 000 times with cache took: 595 ms using ReaderWriterLoclSlim
-        // 2015-11-28| cache.TryFind(text, 3, out cached) 10 000 000 times with cache took: 408 ms
-        // 2015-11-28| text.Substring(3, 3)               10 000 000 times                  took: 205 ms
+        // 2015-11-28| cache.TryFind(text, 4, out cached) 1 000 000 times with cache took: 87 ms
+        // 2015-11-28| text.Substring(3, 4)               1 000 000 times            took: 18 ms
         [Test]
-        public void BenchmarkWorstCase()
+        public void TryFindSubStringWorstCase()
         {
             // this is not a really meaningful comparison as Find does much more work
             // finding the end while substring gets the end for free.
+            // interesting as a base line.
             var cache = new SubstringCache<string>();
             cache.Add(new SubstringCache<string>.CachedItem("abc0", "d"));
             cache.Add(new SubstringCache<string>.CachedItem("abc01", "e"));
@@ -29,24 +29,24 @@
             const string text1 = "   abc1   ";
             const string text2 = "   abc2   ";
             SubstringCache<string>.CachedItem cached;
-            cache.TryFind(text0, 4, out cached);
+            cache.TryFindSubString(text0, 4, out cached);
 
             var subString = text0.Substring(3, 4);
 
             var sw = Stopwatch.StartNew();
-            var n = 10000000;
+            var n = 1000000;
             for (int i = 0; i < n; i++)
             {
                 switch (i % 3)
                 {
                     case 0:
-                        cache.TryFind(text0, 4, out cached);
+                        cache.TryFindSubString(text0, 4, out cached);
                         continue;
                     case 1:
-                        cache.TryFind(text1, 4, out cached);
+                        cache.TryFindSubString(text1, 4, out cached);
                         continue;
                     case 2:
-                        cache.TryFind(text2, 4, out cached);
+                        cache.TryFindSubString(text2, 4, out cached);
                         continue;
                     default:
                         throw new Exception();

@@ -47,7 +47,6 @@ namespace Gu.Units.Tests.Internals.Parsing
         [TestCase("E102", 0, "E112")] 
         [TestCase("E-1", 0, "E-1")] 
         [TestCase("abc", 0, "abc")]
-        [TestCase("efg", 0, "efg")] 
         public void TryReadError(string text, int pos, string expectedFormatted)
         {
             string actual;

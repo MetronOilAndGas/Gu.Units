@@ -126,7 +126,7 @@ namespace Gu.Units
 
             internal bool TryGetForSymbol(string text, int pos, out SubstringCache<TUnit>.CachedItem item)
             {
-                return this.SubStrings.TryFind(text, pos, out item);
+                return this.SubStrings.TryFindSubString(text, pos, out item);
             }
 
             private static IReadOnlyList<TUnit> GetUnits()
