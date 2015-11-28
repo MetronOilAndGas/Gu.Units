@@ -44,6 +44,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ArithmeticsTests.cs" />
+    <Compile Include="BenchMarks\FormattingBenchmarks.cs" />
+    <Compile Include="BenchMarks\ParsingBenchMarks.cs" />
     <Compile Include="ConversionTests.cs" />
     <Compile Include="FormatTests.cs" />
     <Compile Include="Constants\Benchmarks.cs" />
@@ -76,7 +78,7 @@
     <Compile Include="Sources\QuantityTypesProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Sources\UnitsProvider.cs" />
-    <Compile Include="Sandbox\SandboxTests.cs" />
+    <Compile Include="BenchMarks\QuantityBenchmark.cs" />
     <Compile Include="Internals\Parsing\SymbolAndPowerParserTests.cs" />
     <Compile Include="SerializationTests.cs" />
     <Compile Include="UnitlessTests.cs" />
@@ -135,5 +137,8 @@
       <Private>True</Private>
       <Paket>True</Paket>
     </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Sandbox\" />
   </ItemGroup>
 </Project>

@@ -69,38 +69,6 @@ namespace Gu.Units.Tests.Internals.Parsing
             Assert.AreEqual(expectedFormatted, formatted);
         }
 
-        // 2015-11-28| 10 000 000 times with optimized took: 497 ms
-        // 2015-11-28| 10 000 000 times with regex     took: 3548 ms
-        [Test, Explicit(Benchmarks.LongRunning)]
-        public void Benchmark()
-        {
-            int pos = 0;
-            string actual;
-            DoubleFormatReader.TryReadDoubleFormat("e5", ref pos, out actual);
-            pos = 0;
-            DoubleFormatReader.TryReadDoubleFormat("#0.00#", ref pos, out actual);
-            var sw = Stopwatch.StartNew();
-            var n = 10000000;
-            for (int i = 0; i < n; i++)
-            {
-                pos = 0;
-                DoubleFormatReader.TryReadDoubleFormat("e5", ref pos, out actual);
-            }
-
-            sw.Stop();
-            Console.WriteLine($"{DateTime.Today.ToShortDateString()}| {n:N0} times with optimized took: {sw.ElapsedMilliseconds} ms");
-
-            sw.Restart();
-            for (int i = 0; i < n; i++)
-            {
-                pos = 0;
-                DoubleFormatReader.TryReadDoubleFormat("#0.00#", ref pos, out actual);
-            }
-
-            sw.Stop();
-            Console.WriteLine($"{DateTime.Today.ToShortDateString()}| {n:N0} times with regex     took: {sw.ElapsedMilliseconds} ms");
-        }
-
         [Test]
         public void Reminders()
         {

@@ -1,7 +1,5 @@
 ﻿namespace Gu.Units
 {
-    using System;
-    using System.Collections.Generic;
     using System.Text.RegularExpressions;
 
     internal static partial class DoubleFormatReader
@@ -14,8 +12,6 @@
         private static PrefixFormat GFormats = new PrefixFormat('G');
         private static PrefixFormat nFormats = new PrefixFormat('n');
         private static PrefixFormat NFormats = new PrefixFormat('N');
-
-        private static readonly Regex HashRegex = CreateDoubleFormatPattern(@"[0,#]*(\.[0,#]+)?");
 
         internal static bool TryReadDoubleFormat(string format, ref int pos, out string result)
         {
@@ -51,9 +47,51 @@
             return false;
         }
 
-        private static bool TryReadPoundAndZeroFormat(string format, ref int pos, out string result)
+        private static bool TryReadPoundAndZeroFormat(string format,
+            ref int pos,
+            out string result)
         {
-            throw new NotImplementedException();
+            var start = pos;
+            pos++;
+            while (pos < format.Length)
+            {
+                switch (format[pos])
+                {
+                    case '#':
+                    case '0':
+                    case '.':
+                    case ',':
+                        pos++;
+                        continue;
+                    case ' ':
+                    case '\u00A0':
+                        {
+                            if (format.Length == pos + 1)
+                            {
+                                break;
+                            }
+                            switch (format[pos + 1])
+                            {
+                                case '#':
+                                case '0':
+                                    {
+                                        pos++;
+                                        continue;
+                                    }
+                            }
+                            goto default;
+                        }
+                    default:
+                        {
+                            result = format;
+                            pos = start;
+                            return false;
+                        }
+                }
+            }
+
+            result = format.Substring(start, pos - start);
+            return true;
         }
 
         private static bool TryReadPrefixNumberFormat(string format, ref int pos, out string result)
@@ -194,12 +232,6 @@
             }
 
             return format[pos] == '}';
-        }
-
-        private static Regex CreateDoubleFormatPattern(string format)
-        {
-            var regex = new Regex($@"\G(?<format>{format})", RegexOptions.Singleline | RegexOptions.ExplicitCapture | RegexOptions.Compiled);
-            return regex;
         }
 
         private class PrefixFormat
