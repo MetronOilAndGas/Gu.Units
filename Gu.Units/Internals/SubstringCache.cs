@@ -2,12 +2,13 @@ namespace Gu.Units
 {
     using System;
     using System.Collections.Generic;
-    using System.Threading;
+    using System.Globalization;
 
     internal class SubstringCache<TItem>
     {
+        private static readonly CachedItem[] Empty = new CachedItem[0];
         private readonly object gate = new object();
-        private List<CachedItem> cache = new List<CachedItem>();
+        private CachedItem[] cache = Empty;
 
         internal bool TryFind(string text, int pos, out CachedItem result)
         {
@@ -18,10 +19,10 @@ namespace Gu.Units
             }
 
             var temp = this.cache;
-            for (int i = 0; i < temp.Count; i++)
+            for (int i = 0; i < temp.Length; i++)
             {
                 var symbolAndUnit = temp[i];
-                if (IsSubstringEqual(symbolAndUnit.Key, text, pos))
+                if (Compare(symbolAndUnit.Key, text, pos) == 0)
                 {
                     result = symbolAndUnit;
                     return true;
@@ -37,7 +38,7 @@ namespace Gu.Units
             Ensure.NotNull(item.Key, $"{nameof(item)}.{item.Key}");
             lock (this.gate)
             {
-                for (int i = 0; i < this.cache.Count; i++)
+                for (int i = 0; i < this.cache.Length; i++)
                 {
                     var cachedItem = this.cache[i];
                     if (cachedItem.Key == item.Key)
@@ -51,30 +52,37 @@ namespace Gu.Units
                                                             $"The key is {item.Key} and the values are {{{item.Value}, {cachedItem.Value}}}");
                     }
                 }
-                var updated = new List<CachedItem>(this.cache.Count + 1);
-                updated.AddRange(this.cache);
-                updated.Add(item);
-                updated.Sort();
+                var updated = new CachedItem[this.cache.Length + 1];
+                Array.Copy(this.cache, 0, updated, 0, this.cache.Length);
+                updated[this.cache.Length] = item;
+                Array.Sort(updated);
                 this.cache = updated;
             }
         }
 
-        private static bool IsSubstringEqual(string cached, string key, int pos)
+        private static int Compare(string cached, string key, int pos)
         {
-            if (cached.Length > key.Length - pos)
+            var compare = (key.Length - pos) - cached.Length;
+            if (compare < 0)
             {
-                return false;
+                return compare;
             }
 
+            return CompareChars(cached, key, pos);
+        }
+
+        private static int CompareChars(string cached, string key, int pos)
+        {
             for (int i = 0; i < cached.Length; i++)
             {
-                if (cached[i] != key[i + pos])
+                var compare = cached[i] - key[i + pos];
+                if (compare != 0)
                 {
-                    return false;
+                    return compare;
                 }
             }
 
-            return true;
+            return 0;
         }
 
         internal struct CachedItem : IComparable<CachedItem>
@@ -90,11 +98,6 @@ namespace Gu.Units
 
             public int CompareTo(CachedItem other)
             {
-                if (this.Key.Length != other.Key.Length)
-                {
-                    return other.Key.Length.CompareTo(this.Key.Length);
-                }
-
                 return string.CompareOrdinal(this.Key, other.Key);
             }
 
