@@ -19,9 +19,9 @@
             }
 
             var prePaddingStart = pos;
-            string doubleFormat;
             format.ReadWhiteSpace(ref pos);
             var prePaddingEnd = pos;
+            string doubleFormat;
             DoubleFormatReader.TryReadDoubleFormat(format, ref pos, out doubleFormat);
 
             var padStart = pos;

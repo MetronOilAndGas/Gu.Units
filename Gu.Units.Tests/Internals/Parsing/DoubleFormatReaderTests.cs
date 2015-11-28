@@ -1,7 +1,5 @@
 namespace Gu.Units.Tests.Internals.Parsing
 {
-    using System;
-    using System.Diagnostics;
     using NUnit.Framework;
 
     public class DoubleFormatReaderTests
@@ -67,12 +65,6 @@ namespace Gu.Units.Tests.Internals.Parsing
             }
 
             Assert.AreEqual(expectedFormatted, formatted);
-        }
-
-        [Test]
-        public void Reminders()
-        {
-            Assert.Fail("Remove regexes :)");
         }
     }
 }

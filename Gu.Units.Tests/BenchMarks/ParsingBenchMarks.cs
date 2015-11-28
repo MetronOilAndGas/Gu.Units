@@ -7,7 +7,7 @@
 
     // run benchmarks in release build
     [Explicit(Benchmarks.LongRunning)]
-    public class ParsingBenchMarks
+    public class ParsingBenchmarks
     {
         // 2015-11-28| TryReadDoubleFormat("e5") 10 000 000 times with optimized took: 497 ms
         // 2015-11-28| TryReadDoubleFormat("#0.00#") 10 000 000 times with regex     took: 3548 ms

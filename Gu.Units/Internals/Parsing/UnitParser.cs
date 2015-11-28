@@ -4,7 +4,6 @@ namespace Gu.Units
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
-    using System.Threading;
 
     internal static class UnitParser<TUnit> where TUnit : struct, IUnit
     {
@@ -43,13 +42,13 @@ namespace Gu.Units
         internal static bool TryParse(string text, ref int pos, out TUnit result)
         {
             var start = pos;
-            SymbolAndUnit resultSymbolAndUnit;
-            if (Cache.Value.TryGetForSymbol(text, pos, out resultSymbolAndUnit))
+            SubstringCache<TUnit>.CachedItem cached;
+            if (Cache.Value.TryGetForSymbol(text, pos, out cached))
             {
                 if (IsEndOfSymbol(text, pos))
                 {
-                    pos += resultSymbolAndUnit.Symbol.Length;
-                    result = resultSymbolAndUnit.Unit;
+                    pos += cached.Key.Length;
+                    result = cached.Value;
                     return true;
                 }
             }
@@ -68,8 +67,7 @@ namespace Gu.Units
                 if (Cache.Value.SymbolAndPowers.TryGetValue(sapResult, out result))
                 {
                     var symbol = text.Substring(start, pos - start);
-                    var symbolAndUnit = new SymbolAndUnit(symbol, result);
-                    Cache.Value.Add(symbolAndUnit);
+                    Cache.Value.CacheSymbol(symbol, result);
                     return true;
                 }
             }
@@ -90,49 +88,17 @@ namespace Gu.Units
                    char.IsWhiteSpace(text[pos]);
         }
 
-        private struct SymbolAndUnit : IComparable<SymbolAndUnit>
-        {
-            internal readonly string Symbol;
-            internal readonly TUnit Unit;
-
-            public SymbolAndUnit(TUnit unit)
-            {
-                this.Unit = unit;
-                this.Symbol = unit.Symbol;
-            }
-
-            public SymbolAndUnit(string symbol, TUnit unit)
-            {
-                this.Symbol = symbol;
-                this.Unit = unit;
-            }
-
-            public int CompareTo(SymbolAndUnit other)
-            {
-                if (this.Symbol.Length != other.Symbol.Length)
-                {
-                    return other.Symbol.Length.CompareTo(this.Symbol.Length); 
-                }
-
-                return string.CompareOrdinal(this.Symbol, other.Symbol);
-            }
-
-            public override string ToString() => this.Symbol;
-        }
-
         private class Caches
         {
-            private readonly List<SymbolAndUnit> symbolAndUnits = new List<SymbolAndUnit>();
-            private readonly ReaderWriterLockSlim gate = new ReaderWriterLockSlim();
             internal readonly Dictionary<ReadonlySet<SymbolAndPower>, TUnit> SymbolAndPowers = new Dictionary<ReadonlySet<SymbolAndPower>, TUnit>();
+            private readonly SubstringCache<TUnit> SubStrings = new SubstringCache<TUnit>();
 
             internal Caches()
             {
                 var units = GetUnits();
                 foreach (var unit in units)
                 {
-                    var stringAndIndex = new SymbolAndUnit(unit);
-                    this.symbolAndUnits.Add(stringAndIndex);
+                    CacheSymbol(unit.Symbol, unit);
 
                     int pos = 0;
                     ReadonlySet<SymbolAndPower> result;
@@ -151,53 +117,16 @@ namespace Gu.Units
                         this.SymbolAndPowers.Add(result, unit);
                     }
                 }
-
-                this.symbolAndUnits.Sort();
             }
 
-            internal bool TryGetForSymbol(string text, int pos, out SymbolAndUnit result)
+            internal void CacheSymbol(string symbol, TUnit unit)
             {
-                this.gate.EnterReadLock();
-                for (int i = 0; i < this.symbolAndUnits.Count; i++)
-                {
-                    var symbolAndUnit = this.symbolAndUnits[i];
-                    if (IsSubstringEqual(symbolAndUnit.Symbol, text, pos))
-                    {
-                        this.gate.ExitReadLock();
-                        result = symbolAndUnit;
-                        return true;
-                    }
-                }
-
-                this.gate.ExitReadLock();
-                result = default(SymbolAndUnit);
-                return false;
+                this.SubStrings.Add(new SubstringCache<TUnit>.CachedItem(symbol, unit));
             }
 
-            internal void Add(SymbolAndUnit symbolAndUnit)
+            internal bool TryGetForSymbol(string text, int pos, out SubstringCache<TUnit>.CachedItem item)
             {
-                this.gate.EnterWriteLock();
-                this.symbolAndUnits.Add(symbolAndUnit);
-                this.symbolAndUnits.Sort();
-                this.gate.ExitWriteLock();
-            }
-
-            private static bool IsSubstringEqual(string cached, string key, int pos)
-            {
-                if (cached.Length > key.Length - pos)
-                {
-                    return false;
-                }
-
-                for (int i = 0; i < cached.Length; i++)
-                {
-                    if (cached[i] != key[i + pos])
-                    {
-                        return false;
-                    }
-                }
-
-                return true;
+                return this.SubStrings.TryFind(text, pos, out item);
             }
 
             private static IReadOnlyList<TUnit> GetUnits()

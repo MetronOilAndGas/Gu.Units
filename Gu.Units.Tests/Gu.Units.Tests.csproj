@@ -45,7 +45,8 @@
   <ItemGroup>
     <Compile Include="ArithmeticsTests.cs" />
     <Compile Include="BenchMarks\FormattingBenchmarks.cs" />
-    <Compile Include="BenchMarks\ParsingBenchMarks.cs" />
+    <Compile Include="BenchMarks\ParsingBenchmarks.cs" />
+    <Compile Include="BenchMarks\SubstringCacheBenchmarks.cs" />
     <Compile Include="ConversionTests.cs" />
     <Compile Include="FormatTests.cs" />
     <Compile Include="Constants\Benchmarks.cs" />
@@ -69,6 +70,7 @@
     <Compile Include="Internals\Parsing\SymbolAndPowerParserSetTests.cs" />
     <Compile Include="Internals\Parsing\UnitParserTests.cs" />
     <Compile Include="Internals\StringBuilderPoolTests.cs" />
+    <Compile Include="Internals\SubstringCacheTests.cs" />
     <Compile Include="LengthTests.cs" />
     <Compile Include="Samples\Samples.cs" />
     <Compile Include="Sources\ConversionProvider.cs" />

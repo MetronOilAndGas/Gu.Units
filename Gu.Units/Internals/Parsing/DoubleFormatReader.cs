@@ -1,7 +1,5 @@
 ﻿namespace Gu.Units
 {
-    using System.Text.RegularExpressions;
-
     internal static partial class DoubleFormatReader
     {
         private static PrefixFormat eFormats = new PrefixFormat('e');
@@ -42,9 +40,6 @@
                     result = format;
                     return false;
             }
-
-            result = null;
-            return false;
         }
 
         private static bool TryReadPoundAndZeroFormat(string format,
@@ -102,52 +97,47 @@
             int intResult;
             if (IntReader.TryReadInt32(format, ref pos, out intResult))
             {
-                if (IsEndOfFormat(format, pos))
+
+                if (intResult < 0 || intResult >= 100)
                 {
-                    if (intResult < 0 || intResult >= 100)
-                    {
-                        result = $"{c}{intResult}";
-                        pos = start;
-                        return false;
-                    }
-
-                    if (intResult < 18)
-                    {
-                        switch (c)
-                        {
-                            case 'e':
-                                result = eFormats.Formats[intResult];
-                                return true;
-                            case 'E':
-                                result = EFormats.Formats[intResult];
-                                return true;
-                            case 'f':
-                                result = fFormats.Formats[intResult];
-                                return true;
-                            case 'F':
-                                result = FFormats.Formats[intResult];
-                                return true;
-                            case 'g':
-                                result = gFormats.Formats[intResult];
-                                return true;
-                            case 'G':
-                                result = GFormats.Formats[intResult];
-                                return true;
-                            case 'n':
-                                result = nFormats.Formats[intResult];
-                                return true;
-                            case 'N':
-                                result = NFormats.Formats[intResult]; ;
-                                return true;
-                            default:
-                                result = format;
-                                pos = start;
-                                return false;
-                        }
-                    }
-
                     result = $"{c}{intResult}";
-                    return true;
+                    pos = start;
+                    return false;
+                }
+
+                if (intResult < 18)
+                {
+                    switch (c)
+                    {
+                        case 'e':
+                            result = eFormats.Formats[intResult];
+                            return true;
+                        case 'E':
+                            result = EFormats.Formats[intResult];
+                            return true;
+                        case 'f':
+                            result = fFormats.Formats[intResult];
+                            return true;
+                        case 'F':
+                            result = FFormats.Formats[intResult];
+                            return true;
+                        case 'g':
+                            result = gFormats.Formats[intResult];
+                            return true;
+                        case 'G':
+                            result = GFormats.Formats[intResult];
+                            return true;
+                        case 'n':
+                            result = nFormats.Formats[intResult];
+                            return true;
+                        case 'N':
+                            result = NFormats.Formats[intResult]; ;
+                            return true;
+                        default:
+                            result = format;
+                            pos = start;
+                            return false;
+                    }
                 }
 
                 result = format;
@@ -155,39 +145,36 @@
                 return false;
             }
 
-            if (IsEndOfFormat(format, pos))
+            switch (c)
             {
-                switch (c)
-                {
-                    case 'e':
-                        result = "e";
-                        return true;
-                    case 'E':
-                        result = "E";
-                        return true;
-                    case 'f':
-                        result = "f";
-                        return true;
-                    case 'F':
-                        result = "F";
-                        return true;
-                    case 'g':
-                        result = "g";
-                        return true;
-                    case 'G':
-                        result = "G";
-                        return true;
-                    case 'n':
-                        result = "n";
-                        return true;
-                    case 'N':
-                        result = "N";
-                        return true;
-                    default:
-                        result = format;
-                        pos = start;
-                        return false;
-                }
+                case 'e':
+                    result = "e";
+                    return true;
+                case 'E':
+                    result = "E";
+                    return true;
+                case 'f':
+                    result = "f";
+                    return true;
+                case 'F':
+                    result = "F";
+                    return true;
+                case 'g':
+                    result = "g";
+                    return true;
+                case 'G':
+                    result = "G";
+                    return true;
+                case 'n':
+                    result = "n";
+                    return true;
+                case 'N':
+                    result = "N";
+                    return true;
+                default:
+                    result = format;
+                    pos = start;
+                    return false;
             }
 
             result = format;
@@ -197,26 +184,20 @@
 
         private static bool TryReadRFormat(string format, ref int pos, out string result)
         {
-            var r = format[pos];
-            pos++;
-            if (IsEndOfFormat(format, pos))
+            switch (format[pos])
             {
-                switch (r)
-                {
-                    case 'r':
-                        result = "r";
-                        return true;
-                    case 'R':
-                        result = "R";
-                        return true;
-                    default:
-                        result = r.ToString();
-                        return false;
-                }
+                case 'r':
+                    result = "r";
+                    pos++;
+                    return true;
+                case 'R':
+                    result = "R";
+                    pos++;
+                    return true;
+                default:
+                    result = format;
+                    return false;
             }
-
-            result = format;
-            return false;
         }
 
         private static bool IsEndOfFormat(string format, int pos)
