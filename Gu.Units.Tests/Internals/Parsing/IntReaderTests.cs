@@ -48,9 +48,14 @@
         private static readonly IReadOnlyList<SuccessData<int>> SuccessSource = new[]
         {
             SuccessData.Create("1", 0, 1, 1),
+            SuccessData.Create("01", 0, 1, 2),
             SuccessData.Create("12", 0, 12, 2),
+            SuccessData.Create(" 12", 1, 12, 3),
+            SuccessData.Create(" 12 ", 1, 12, 3),
             SuccessData.Create("-1", 0, -1, 2),
             SuccessData.Create("-12", 0, -12, 3),
+            SuccessData.Create("12345", 0, 12345, 5),
+            SuccessData.Create("67890", 0, 67890, 5),
         };
 
         private static readonly IReadOnlyList<SuccessData<int>> ErrorSource = new[]

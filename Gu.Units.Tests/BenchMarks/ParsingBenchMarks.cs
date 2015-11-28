@@ -1,8 +1,11 @@
 ﻿namespace Gu.Units.Tests
 {
     using System;
+    using System.Collections.Concurrent;
+    using System.Collections.Generic;
     using System.Diagnostics;
     using System.Globalization;
+    using System.Linq;
     using Internals.Parsing;
     using NUnit.Framework;
 
@@ -106,6 +109,89 @@
 
             sw.Stop();
             Console.WriteLine($"// {DateTime.Today.ToShortDateString()}| int.TryParse(substring, ...)           {n:N0} times               took: {sw.ElapsedMilliseconds} ms");
+        }
+
+        // 2015-11-28| IntReader.TryReadInt32("  12", 4, ...) 1 000 000 times               took: 40 ms
+        // 2015-11-28| int.TryParse(substring, ...)           1 000 000 times               took: 134 ms
+        [Test]
+        public void TryGetValue()
+        {
+            string actual;
+            var dict = new Dictionary<int, string>();
+            for (int i = 0; i < 10; i++)
+            {
+                dict[i] = i.ToString();
+            }
+            dict.TryGetValue(2, out actual);
+            var sw = Stopwatch.StartNew();
+            var n = 1000000;
+            for (int i = 0; i < n; i++)
+            {
+                dict.TryGetValue(i % 10, out actual);
+            }
+
+            sw.Stop();
+            Console.WriteLine($"// {DateTime.Today.ToShortDateString()}| dict.TryGetValue(i % 10, out actual)       {n:N0} times {sw.ElapsedMilliseconds} ms");
+
+            var cdict = new ConcurrentDictionary<int, string>();
+            for (int i = 0; i < 10; i++)
+            {
+                cdict[i] = i.ToString();
+            }
+
+            cdict.TryGetValue(2, out actual);
+            sw.Restart();
+            for (int i = 0; i < n; i++)
+            {
+                cdict.TryGetValue(i % 10, out actual);
+            }
+
+            sw.Stop();
+            Console.WriteLine($"// {DateTime.Today.ToShortDateString()}| cdict.TryGetValue(i % 10, out actual);     {n:N0} times {sw.ElapsedMilliseconds} ms");
+
+            var array = new KeyValuePair<int, string>[10];
+            for (int i = 0; i < 10; i++)
+            {
+                array[i] = new KeyValuePair<int, string>(i, i.ToString());
+            }
+            var kvp = Array.Find(array, x => x.Key == 2);
+            sw.Restart();
+            for (int i = 0; i < n; i++)
+            {
+                kvp = Array.Find(array, x => x.Key == i % 10);
+            }
+
+            sw.Stop();
+            Console.WriteLine($"// {DateTime.Today.ToShortDateString()}| Array.Find(array, x => x.Key == i % 10)    {n:N0} times {sw.ElapsedMilliseconds} ms");
+
+            sw.Restart();
+            var kvpComparer = new KvpComparer();
+
+            for (int i = 0; i < n; i++)
+            {
+                var j = Array.BinarySearch(array, array[i % 10], kvpComparer);
+            }
+
+            sw.Stop();
+            Console.WriteLine($"// {DateTime.Today.ToShortDateString()}| Array.BinarySearch(array, array[i % 10])   {n:N0} times {sw.ElapsedMilliseconds} ms");
+
+            sw.Restart();
+
+            for (int i = 0; i < n; i++)
+            {
+                kvp = array.First(x => x.Key == i % 10);
+            }
+
+            sw.Stop();
+            Console.WriteLine($"// {DateTime.Today.ToShortDateString()}| array.First(x => x.Key == i % 10)          {n:N0} times {sw.ElapsedMilliseconds} ms");
+        }
+
+        private class KvpComparer : IComparer<KeyValuePair<int, string>>
+        {
+            public int Compare(KeyValuePair<int, string> x, KeyValuePair<int, string> y)
+            {
+                return x.Key.CompareTo(y.Key);
+            }
         }
     }
 }
