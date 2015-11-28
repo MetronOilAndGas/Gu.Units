@@ -425,6 +425,7 @@
     <Compile Include="Internals\SymbolAndPower.cs" />
     <Compile Include="Internals\Parsing\UnitParser.cs" />
     <Compile Include="Internals\Parsing\XmlExt.cs" />
+    <Compile Include="Internals\Unit{T}.cs" />
     <Compile Include="Voltage.generated.cs">
       <DependentUpon>Quantties.txt4</DependentUpon>
     </Compile>

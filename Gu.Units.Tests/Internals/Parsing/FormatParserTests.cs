@@ -49,8 +49,9 @@
             {
                 Assert.AreEqual(format, actual.ValueFormat);
             }
+
             Assert.AreEqual(QuantityFormat<LengthUnit>.NoBreakingSpaceString, actual.Padding);
-            Assert.AreEqual(LengthUnit.Metres.Symbol, actual.SymbolFormat);
+            Assert.AreEqual(null, actual.SymbolFormat);
             Assert.AreEqual(null, actual.PostPadding);
             Assert.AreEqual(LengthUnit.Metres, actual.Unit);
             Assert.AreEqual(expectedFormat, actual.CompositeFormat);
@@ -112,6 +113,12 @@
             Assert.AreEqual(true, success);
             Assert.AreEqual(expectedFormat, actual.CompositeFormat);
             Assert.AreEqual(expectedSymbol, actual.Unit.Symbol);
+        }
+
+        [Test]
+        public void Reminders()
+        {
+            Assert.Fail("Remove regexes :)");
         }
     }
 }

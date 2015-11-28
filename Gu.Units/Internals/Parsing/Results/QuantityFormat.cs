@@ -31,8 +31,17 @@
                 Padding = padding;
             }
 
-            SymbolFormat = symbolFormat ?? unit.Symbol;
+            SymbolFormat = symbolFormat;
             PostPadding = postPadding;
+            ErrorFormat = null;
+            Unit = unit;
+        }
+
+        public QuantityFormat(
+            string errorFormat,
+            TUnit unit)
+        {
+            ErrorFormat = errorFormat;
             Unit = unit;
         }
 
@@ -45,6 +54,8 @@
         internal string SymbolFormat { get; }
 
         internal string PostPadding { get; }
+
+        internal string ErrorFormat { get; }
 
         internal string CompositeFormat => _compositeFormat ?? (_compositeFormat = CreateCompositeFormat());
 
@@ -74,8 +85,10 @@
 
             return string.Equals(PrePadding, other.PrePadding) &&
                    string.Equals(ValueFormat, other.ValueFormat) &&
+                   string.Equals(Padding, other.Padding) &&
                    string.Equals(SymbolFormat, other.SymbolFormat) &&
                    string.Equals(PostPadding, other.PostPadding) &&
+                   string.Equals(ErrorFormat, other.ErrorFormat) &&
                    Unit.Equals(other.Unit);
         }
 
@@ -105,11 +118,18 @@
             {
                 var hashCode = PrePadding?.GetHashCode() ?? 0;
                 hashCode = (hashCode * 397) ^ (ValueFormat?.GetHashCode() ?? 0);
+                hashCode = (hashCode * 397) ^ (Padding?.GetHashCode() ?? 0);
                 hashCode = (hashCode * 397) ^ (SymbolFormat?.GetHashCode() ?? 0);
                 hashCode = (hashCode * 397) ^ (PostPadding?.GetHashCode() ?? 0);
+                hashCode = (hashCode * 397) ^ (ErrorFormat?.GetHashCode() ?? 0);
                 hashCode = (hashCode * 397) ^ Unit.GetHashCode();
                 return hashCode;
             }
+        }
+
+        internal static QuantityFormat<TUnit> CreateUnknown(string errorFormat, TUnit unit)
+        {
+            return new QuantityFormat<TUnit>(errorFormat, unit);
         }
 
         private static bool ShouldSpace(string symbol)
@@ -125,6 +145,11 @@
         {
             using (var builder = StringBuilderPool.Borrow())
             {
+                if (ErrorFormat != null)
+                {
+                    builder.Append("Error: ");
+                    builder.Append(ErrorFormat);
+                }
                 builder.Append(PrePadding);
 
                 if (string.IsNullOrEmpty(ValueFormat))
@@ -139,7 +164,7 @@
                 }
 
                 builder.Append(Padding);
-                builder.Append(SymbolFormat);
+                builder.Append(SymbolFormat ?? Unit.Symbol);
                 builder.Append(PostPadding);
                 var compositeFormat = builder.ToString();
                 return compositeFormat;

@@ -36,6 +36,7 @@
             {
                 builder1.Append("a");
                 builder2.Append("b");
+                Assert.AreNotSame(GetInner(builder1), GetInner(builder2));
                 Assert.AreEqual("a", builder1.ToString());
                 Assert.AreEqual("b", builder2.ToString());
             }
@@ -43,7 +44,7 @@
 
         private static StringBuilder GetInner(StringBuilderPool.Builder outer)
         {
-            var fieldInfo = typeof(StringBuilderPool.Builder).GetField("_builder", BindingFlags.Instance | BindingFlags.NonPublic);
+            var fieldInfo = typeof(StringBuilderPool.Builder).GetField("builder", BindingFlags.Instance | BindingFlags.NonPublic);
             return (StringBuilder)fieldInfo.GetValue(outer);
         }
 

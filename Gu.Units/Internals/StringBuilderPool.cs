@@ -15,54 +15,61 @@
 
         internal sealed class Builder : IDisposable
         {
-            private readonly StringBuilder _builder;
-            private bool _disposed;
+            private readonly StringBuilder builder;
+            private bool disposed;
 
             internal Builder()
             {
-                if (!Builders.TryDequeue(out _builder))
+                if (!Builders.TryDequeue(out this.builder))
                 {
-                    _builder = new StringBuilder(12);
+                    this.builder = new StringBuilder(12);
                 }
             }
 
             public void Dispose()
             {
-                if (_disposed)
+                if (this.disposed)
                 {
                     return;
                 }
 
-                _disposed = true;
-                _builder.Clear();
-                Builders.Enqueue(_builder);
+                this.disposed = true;
+                this.builder.Clear();
+                Builders.Enqueue(this.builder);
             }
 
             public void Append(char c)
             {
-                _builder.Append(c);
+                this.builder.Append(c);
             }
 
             public void Append(string s)
             {
-                _builder.Append(s);
+                this.builder.Append(s);
             }
 
             public override string ToString()
             {
-                return _builder.ToString();
+                return this.builder.ToString();
             }
 
-            internal void Append<TQuantity, TUnit>(TQuantity quantity, QuantityFormat<TUnit> format, IFormatProvider formatProvider)
+            internal void Append<TQuantity, TUnit>(
+                TQuantity quantity,
+                QuantityFormat<TUnit> format, 
+                IFormatProvider formatProvider)
                 where TQuantity : IQuantity<TUnit>
                 where TUnit : struct, IUnit
             {
+                if (format.ErrorFormat != null)
+                {
+                    Append(format.ErrorFormat);
+                    return;
+                }
                 Append(format.PrePadding);
                 var scalarValue = quantity.GetValue(format.Unit);
-                //var formatProvider = formatProvider ?? (IFormatProvider)NumberFormatInfo.CurrentInfo;
                 Append(scalarValue.ToString(format.ValueFormat, formatProvider));
                 Append(format.Padding);
-                Append(format.SymbolFormat);
+                Append(format.SymbolFormat ?? format.Unit.Symbol);
                 Append(format.PostPadding);
             }
         }

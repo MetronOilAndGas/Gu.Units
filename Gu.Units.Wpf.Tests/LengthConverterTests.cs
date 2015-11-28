@@ -7,6 +7,13 @@
     //[Explicit(Reminder.ToDo)]
     public class LengthConverterTests
     {
+        [Test]
+        public void Reminders()
+        {
+            Assert.Fail("Return errors in string in runtime");
+            Assert.Fail("Throw in designtime");
+        }
+
         [TestCase(true)]
         [TestCase(false)]
         public void ThrowsInDesignModeIfMissingUnit(bool isDesignMode)

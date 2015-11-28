@@ -8,7 +8,6 @@ namespace Gu.Units
 
     internal static class UnitParser<TUnit> where TUnit : struct, IUnit
     {
-        private static readonly TUnit Default = (TUnit)default(TUnit).SiUnit;
         private static readonly Lazy<Caches> Cache = new Lazy<Caches>(() => new Caches());
 
         internal static TUnit Parse(string text)
@@ -47,9 +46,12 @@ namespace Gu.Units
             SymbolAndUnit resultSymbolAndUnit;
             if (Cache.Value.TryGetForSymbol(text, pos, out resultSymbolAndUnit))
             {
-                pos += resultSymbolAndUnit.Symbol.Length;
-                result = resultSymbolAndUnit.Unit;
-                return true;
+                if (IsEndOfSymbol(text, pos))
+                {
+                    pos += resultSymbolAndUnit.Symbol.Length;
+                    result = resultSymbolAndUnit.Unit;
+                    return true;
+                }
             }
 
             ReadonlySet<SymbolAndPower> sapResult;
@@ -58,7 +60,7 @@ namespace Gu.Units
                 if (!text.IsRestWhiteSpace(pos) ||
                     !sapResult.Any())
                 {
-                    result = Default;
+                    result = Unit<TUnit>.Default;
                     pos = start;
                     return false;
                 }
@@ -73,8 +75,19 @@ namespace Gu.Units
             }
 
             pos = start;
-            result = Default;
+            result = Unit<TUnit>.Default;
             return false;
+        }
+
+        private static bool IsEndOfSymbol(string text, int pos)
+        {
+            if (pos == text.Length)
+            {
+                return true;
+            }
+
+            return text[pos] == '}' ||
+                   char.IsWhiteSpace(text[pos]);
         }
 
         private struct SymbolAndUnit : IComparable<SymbolAndUnit>

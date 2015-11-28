@@ -6,7 +6,7 @@
     internal static class DoubleFormatReader
     {
         internal static readonly IReadOnlyList<Regex> DoubleFormatRegexes = new[]
-{
+        {
             CreateDoubleFormatPattern(@"(E|e)\d*"),
             CreateDoubleFormatPattern(@"(F|f)\d*"),
             CreateDoubleFormatPattern(@"(G|g)\d*"),
@@ -15,23 +15,28 @@
             CreateDoubleFormatPattern(@"[0,#]*(\.[0,#]+)?"),
         };
 
-        internal static bool TryReadDoubleFormat(string format, ref int pos, out string doubleFormat)
+        internal static bool TryReadDoubleFormat(string format, ref int pos, out string result)
         {
+            if (string.IsNullOrEmpty(format))
+            {
+                result = null;
+                return true;
+            }
+
             foreach (var regex in DoubleFormatRegexes)
             {
                 var match = regex.Match(format, pos);
                 if (!string.IsNullOrEmpty(match.Value))
                 {
                     pos += match.Length;
-                    doubleFormat = match.Value;
+                    result = match.Value;
                     return true;
                 }
             }
 
-            doubleFormat = null;
+            result = null;
             return false;
         }
-
 
         private static Regex CreateDoubleFormatPattern(string format)
         {

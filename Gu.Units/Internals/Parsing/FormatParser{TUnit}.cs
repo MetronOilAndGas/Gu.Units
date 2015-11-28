@@ -4,7 +4,7 @@
 
     internal class FormatParser<TUnit> where TUnit : struct, IUnit
     {
-        internal static readonly QuantityFormat<TUnit> DefaultFormat = FormatParser.Create(new FormatAndUnit<TUnit>(null, (TUnit)default(TUnit).SiUnit));
+        internal static readonly QuantityFormat<TUnit> DefaultFormat = FormatParser.Create(new FormatAndUnit<TUnit>(null, Unit<TUnit>.Default));
         private static readonly ConcurrentDictionary<FormatAndUnit<TUnit>, QuantityFormat<TUnit>> Cache = new ConcurrentDictionary<FormatAndUnit<TUnit>, QuantityFormat<TUnit>>();
 
         internal static QuantityFormat<TUnit> GetOrCreate(string format)

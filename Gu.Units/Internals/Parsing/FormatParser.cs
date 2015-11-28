@@ -14,7 +14,7 @@
         {
             if (string.IsNullOrWhiteSpace(format))
             {
-                result = QuantityFormat<TUnit>.Default;
+                result = QuantityFormat<TUnit>.CreateUnknown("null", Unit<TUnit>.Default);
                 return true;
             }
 
@@ -34,7 +34,8 @@
 
             if (!format.IsRestWhiteSpace(ref pos, end))
             {
-                result = QuantityFormat<TUnit>.Default;
+                result = QuantityFormat<TUnit>.CreateUnknown(format, Unit<TUnit>.Default);
+                pos = padStart;
                 return false;
             }
 
@@ -64,7 +65,7 @@
 
             if (!format.IsRestWhiteSpace(pos))
             {
-                result = QuantityFormat<TUnit>.Default;
+                result = QuantityFormat<TUnit>.CreateUnknown(format, unit);
                 return false;
             }
 
@@ -88,7 +89,7 @@
         {
             if (string.IsNullOrEmpty(fau._format))
             {
-                var unit = fau._unit ?? (TUnit)default(TUnit).SiUnit;
+                var unit = fau._unit ?? Unit<TUnit>.Default;
                 return new QuantityFormat<TUnit>(null, null, null, unit.Symbol, null, unit);
             }
 
@@ -112,7 +113,7 @@
             var start = pos;
             if (pos == format.Length)
             {
-                unit = (TUnit)default(TUnit).SiUnit;
+                unit = Unit<TUnit>.Default;
                 unitFormat = null;
                 return false;
             }
@@ -123,7 +124,7 @@
                 return true;
             }
 
-            unit = (TUnit)default(TUnit).SiUnit;
+            unit = Unit<TUnit>.Default;
             unitFormat = null;
             return false;
         }
