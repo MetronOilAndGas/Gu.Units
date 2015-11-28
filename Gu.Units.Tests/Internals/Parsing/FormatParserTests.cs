@@ -8,6 +8,7 @@
         private const string Superscripts = "⁺⁻⁰¹²³⁴⁵⁶⁷⁸⁹";
         private const char MultiplyDot = '⋅';
 
+        [Explicit(Reminder.CandidateForRemoval)]
         [TestCase(null, "{0}\u00A0m", "1.2\u00A0m")]
         [TestCase("", "{0}\u00A0m", "1.2\u00A0m")]
         [TestCase("E", "{0:E}\u00A0m", "1.200000E+000\u00A0m")]
@@ -113,12 +114,6 @@
             Assert.AreEqual(true, success);
             Assert.AreEqual(expectedFormat, actual.CompositeFormat);
             Assert.AreEqual(expectedSymbol, actual.Unit.Symbol);
-        }
-
-        [Test]
-        public void Reminders()
-        {
-            Assert.Fail("Remove regexes :)");
         }
     }
 }

@@ -46,6 +46,7 @@
     <Compile Include="ArithmeticsTests.cs" />
     <Compile Include="ConversionTests.cs" />
     <Compile Include="FormatTests.cs" />
+    <Compile Include="Constants\Benchmarks.cs" />
     <Compile Include="Internals\Parsing\DoubleFormatReaderTests.cs" />
     <Compile Include="Internals\Parsing\DoubleReaderTests.cs" />
     <Compile Include="EnumerableTests.cs" />
@@ -53,7 +54,7 @@
     <Compile Include="Internals\Parsing\FormatParserTests.cs" />
     <Compile Include="Internals\Parsing\ParseLengthTests.cs" />
     <Compile Include="Internals\Parsing\ParseRoundtripTests.cs" />
-    <Compile Include="Reminder.cs" />
+    <Compile Include="Constants\Reminder.cs" />
     <Compile Include="Internals\Parsing\Sources\ErrorData.cs" />
     <Compile Include="Internals\Parsing\Sources\ErrorData{T}.cs" />
     <Compile Include="Internals\Parsing\IntReaderTests.cs" />

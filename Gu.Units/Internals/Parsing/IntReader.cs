@@ -17,6 +17,12 @@
 
         internal static bool TryReadInt32(string text, ref int pos, out int result)
         {
+            if (pos == text.Length)
+            {
+                result = 0;
+                return false;
+            }
+
             var start = pos;
             var sign = OperatorReader.TryReadSign(text, ref pos);
 
