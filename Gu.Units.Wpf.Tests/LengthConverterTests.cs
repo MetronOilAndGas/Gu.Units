@@ -21,7 +21,7 @@
             Gu.Units.Wpf.Is.DesignMode = isDesignMode;
             var converter = new LengthConverter
             {
-                Symbol = SymbolOptions.NotAllowed
+                UnitInput = UnitInputOptions.ScalarOnly
             };
 
             var length = Length.FromMetres(1.2);
@@ -45,7 +45,7 @@
             var converter = new LengthConverter
             {
                 Unit = LengthUnit.Centimetres,
-                Symbol = SymbolOptions.NotAllowed
+                UnitInput = UnitInputOptions.ScalarOnly
             };
 
             var length = Length.FromMillimetres(12);
@@ -63,7 +63,7 @@
             var converter = new LengthConverter
             {
                 Unit = LengthUnit.Centimetres,
-                Symbol = SymbolOptions.NotAllowed
+                UnitInput = UnitInputOptions.ScalarOnly
             };
 
             var actual = converter.Convert(null, targetType, null, null);
@@ -77,7 +77,7 @@
             var converter = new LengthConverter
             {
                 Unit = LengthUnit.Centimetres,
-                Symbol = SymbolOptions.NotAllowed
+                UnitInput = UnitInputOptions.ScalarOnly
             };
 
             var actual = converter.ConvertBack(value, typeof(Length), null, CultureInfo.InvariantCulture);
@@ -85,18 +85,18 @@
             Assert.AreEqual(expected, actual);
         }
 
-        [TestCase("1.2", SymbolOptions.NotAllowed, true)]
-        [TestCase("1.2 mm", SymbolOptions.NotAllowed, false)]
-        [TestCase("1.2", SymbolOptions.Allowed, true)]
-        [TestCase("12 mm", SymbolOptions.Allowed, true)]
-        [TestCase("1.2", SymbolOptions.Required, false)]
-        [TestCase("12 mm", SymbolOptions.Required, true)]
-        public void ConvertBackSymbolSettings(string value, SymbolOptions options, bool expectSuccess)
+        [TestCase("1.2", UnitInputOptions.ScalarOnly, true)]
+        [TestCase("1.2 mm", UnitInputOptions.ScalarOnly, false)]
+        [TestCase("1.2", UnitInputOptions.SymbolAllowed, true)]
+        [TestCase("12 mm", UnitInputOptions.SymbolAllowed, true)]
+        [TestCase("1.2", UnitInputOptions.SymbolRequired, false)]
+        [TestCase("12 mm", UnitInputOptions.SymbolRequired, true)]
+        public void ConvertBackSymbolSettings(string value, UnitInputOptions options, bool expectSuccess)
         {
             var converter = new LengthConverter
             {
                 Unit = LengthUnit.Centimetres,
-                Symbol = SymbolOptions.NotAllowed
+                UnitInput = UnitInputOptions.ScalarOnly
             };
 
             var actual = converter.ConvertBack(value, typeof(Length), null, CultureInfo.InvariantCulture);

@@ -41,7 +41,7 @@
             }
         }
 
-        public SymbolOptions Symbol { get; set; } = SymbolOptions.Default;
+        public UnitInputOptions UnitInput { get; set; } = UnitInputOptions.Default;
 
         public string StringFormat
         {
@@ -160,10 +160,10 @@
                 return null;
             }
 
-            switch (Symbol)
+            switch (UnitInput)
             {
-                case SymbolOptions.Default:
-                case SymbolOptions.NotAllowed:
+                case UnitInputOptions.Default:
+                case UnitInputOptions.ScalarOnly:
                     {
                         double d;
                         if (double.TryParse(text, NumberStyles.Float, culture, out d))
@@ -173,7 +173,7 @@
 
                         return value; // returning raw to trigger error
                     }
-                case SymbolOptions.Allowed:
+                case UnitInputOptions.SymbolAllowed:
                     {
                         double d;
                         int pos = 0;
@@ -187,9 +187,9 @@
                             }
                         }
 
-                        goto case SymbolOptions.Required;
+                        goto case UnitInputOptions.SymbolRequired;
                     }
-                case SymbolOptions.Required:
+                case UnitInputOptions.SymbolRequired:
                     {
                         Length result;
                         if (Length.TryParse(text, NumberStyles.Float, culture, out result))
@@ -225,9 +225,9 @@
         {
             if (StringFormatParser.TryParse(this.stringFormat, out this.format))
             {
-                if (Symbol == SymbolOptions.Default)
+                if (UnitInput == UnitInputOptions.Default)
                 {
-                    Symbol = SymbolOptions.Required;
+                    UnitInput = UnitInputOptions.SymbolRequired;
                 }
 
                 if (Unit == null)

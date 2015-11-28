@@ -311,6 +311,7 @@
       <DependentUpon>UnitTypeConverters.txt4</DependentUpon>
     </Compile>
     <Compile Include="SuperScript.cs" />
+    <Compile Include="SymbolFormat.cs" />
     <Compile Include="Temperature.generated.cs">
       <DependentUpon>Quantties.txt4</DependentUpon>
     </Compile>
