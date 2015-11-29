@@ -50,16 +50,16 @@
             Console.WriteLine($"// {DateTime.Today.ToShortDateString()}| TryReadDoubleFormat(\"#0.00#\") {n:N0} times                 took: {sw.ElapsedMilliseconds} ms");
         }
 
-        // 2015-11-28| DoubleReader.TryRead("  1.2", 2, ...) 1 000 000 times               took: 273 ms
-        // 2015-11-28| double.TryParse(substring, ...)        1 000 000 times              took: 112 ms
+        // 2015-11-29| DoubleReader.TryRead("  1.2", 4, ...)  1 000 000 times              took: 110 ms
+        // 2015-11-29| double.TryParse(substring, ...)        1 000 000 times              took: 139 ms
         [Test]
         public void TryReadDouble()
         {
             int pos = 4;
             double actual;
-            const string text = "ab  1.2";
-            //DoubleReader.TryRead(text, ref pos, NumberStyles.Float, CultureInfo.InvariantCulture, out actual);
-            //var sw = Stopwatch.StartNew();
+            const string text = "ab  123.45";
+            DoubleReader.TryRead(text, ref pos, NumberStyles.Float, CultureInfo.InvariantCulture, out actual);
+            var sw = Stopwatch.StartNew();
             var n = 1000000;
             for (int i = 0; i < n; i++)
             {
@@ -67,18 +67,30 @@
                 DoubleReader.TryRead(text, ref pos, NumberStyles.Float, CultureInfo.InvariantCulture, out actual);
             }
 
-            //sw.Stop();
-            //Console.WriteLine($"// {DateTime.Today.ToShortDateString()}| DoubleReader.TryRead(\"  1.2\", 4, ...)  {n:N0} times              took: {sw.ElapsedMilliseconds} ms");
+            sw.Stop();
+            Console.WriteLine($"// {DateTime.Today.ToShortDateString()}| DoubleReader.TryRead(\"  123.45\", 4, ...)  {n:N0} times {sw.ElapsedMilliseconds} ms");
 
-            //sw.Restart();
-            //for (int i = 0; i < n; i++)
-            //{
-            //    var substring = text.Substring(4);
-            //    double.TryParse(substring, NumberStyles.Float, CultureInfo.InvariantCulture, out actual);
-            //}
+            sw.Restart();
+            string substring;
+            for (int i = 0; i < n; i++)
+            {
+                substring = text.Substring(4);
+                double.TryParse(substring, NumberStyles.Float, CultureInfo.InvariantCulture, out actual);
+            }
 
-            //sw.Stop();
-            //Console.WriteLine($"// {DateTime.Today.ToShortDateString()}| double.TryParse(substring, ...)        {n:N0} times              took: {sw.ElapsedMilliseconds} ms");
+            sw.Stop();
+            Console.WriteLine($"// {DateTime.Today.ToShortDateString()}| double.TryParse(substring, ...)           {n:N0} times {sw.ElapsedMilliseconds} ms");
+
+            sw.Restart();
+            substring = text.Substring(4);
+
+            for (int i = 0; i < n; i++)
+            {
+                double.TryParse(substring, NumberStyles.Float, CultureInfo.InvariantCulture, out actual);
+            }
+
+            sw.Stop();
+            Console.WriteLine($"// {DateTime.Today.ToShortDateString()}| double.TryParse(\"{substring}\", ...)            {n:N0} times {sw.ElapsedMilliseconds} ms");
         }
 
         // 2015-11-28| IntReader.TryReadInt32("  12", 4, ...) 1 000 000 times               took: 40 ms
@@ -88,7 +100,7 @@
         {
             int pos = 4;
             int actual;
-            const string text = "ab  12";
+            const string text = "ab  12345";
             IntReader.TryReadInt32(text, ref pos, out actual);
             var sw = Stopwatch.StartNew();
             var n = 1000000;
@@ -99,17 +111,27 @@
             }
 
             sw.Stop();
-            Console.WriteLine($"// {DateTime.Today.ToShortDateString()}| IntReader.TryReadInt32(\"  12\", 4, ...) {n:N0} times               took: {sw.ElapsedMilliseconds} ms");
+            Console.WriteLine($"// {DateTime.Today.ToShortDateString()}| IntReader.TryReadInt32(\"{text}\", 4, ...) {n:N0} times {sw.ElapsedMilliseconds} ms");
 
             sw.Restart();
+            string substring = null;
             for (int i = 0; i < n; i++)
             {
-                var substring = text.Substring(4);
+                substring = text.Substring(4);
                 int.TryParse(substring, out actual);
             }
 
             sw.Stop();
-            Console.WriteLine($"// {DateTime.Today.ToShortDateString()}| int.TryParse(substring, ...)           {n:N0} times               took: {sw.ElapsedMilliseconds} ms");
+            Console.WriteLine($"// {DateTime.Today.ToShortDateString()}| int.TryParse(substring: {substring}, ...)         {n:N0} times {sw.ElapsedMilliseconds} ms");
+
+            sw.Restart();
+            for (int i = 0; i < n; i++)
+            {
+                int.TryParse(substring, out actual);
+            }
+
+            sw.Stop();
+            Console.WriteLine($"// {DateTime.Today.ToShortDateString()}| int.TryParse({substring}, ...)                    {n:N0} times {sw.ElapsedMilliseconds} ms");
         }
 
         // 2015-11-28| IntReader.TryReadInt32("  12", 4, ...) 1 000 000 times               took: 40 ms

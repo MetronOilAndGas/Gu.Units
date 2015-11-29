@@ -154,6 +154,7 @@
             CreateParseData(" 1", NumberStyles.None, en),
             CreateParseData("-1", NumberStyles.None, en),
             CreateParseData(".1", NumberStyles.None, en),
+            CreateParseData(",.1", NumberStyles.Float, en),
             //Add("1.", NumberStyles.Float | NumberStyles.AllowHexSpecifier, en),
             CreateParseData(".", NumberStyles.Float, en),
             //Add("+1,2", NumberStyles.Float, en),

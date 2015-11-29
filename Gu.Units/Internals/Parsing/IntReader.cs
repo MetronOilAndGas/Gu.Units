@@ -1,6 +1,7 @@
 ﻿namespace Gu.Units
 {
     using System;
+    using System.Runtime.CompilerServices;
 
     internal static class IntReader
     {
@@ -26,20 +27,20 @@
             var start = pos;
             var sign = OperatorReader.TryReadSign(text, ref pos);
 
-            if (!IsDigit(text[pos]))
+            long temp = GetDigitOrMinusOne(text[pos]);
+            if (temp < 0)
             {
                 result = 0;
                 pos = start;
                 return false;
             }
-
-            long temp = GetDigit(text[pos]);
+            int i;
             pos++;
             while (pos < text.Length &&
-                   IsDigit(text[pos]))
+                   (i = GetDigitOrMinusOne(text[pos])) != -1)
             {
                 temp *= 10;
-                temp += GetDigit(text[pos]);
+                temp += i;
                 pos++;
                 if (temp > int.MaxValue)
                 {
@@ -71,6 +72,7 @@
             return true;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static bool IsDigit(char c)
         {
             switch (c)
@@ -91,6 +93,7 @@
             }
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static int GetDigit(char c)
         {
             switch (c)
@@ -118,6 +121,15 @@
                 default:
                     throw new ArgumentOutOfRangeException(nameof(c), $"{c} is not a digit, check before calling");
             }
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal static int GetDigitOrMinusOne(char c)
+        {
+            var i = c - '0';
+            return i < 0 || i > 9
+                ? -1
+                : i;
         }
     }
 }

@@ -67,12 +67,12 @@
                 return false;
             }
 
-            if (style.HasFlag(NumberStyles.AllowHexSpecifier))
+            if ((style & NumberStyles.AllowHexSpecifier) != 0)
             {
                 return false;
             }
 
-            if (style.HasFlag(NumberStyles.AllowLeadingWhite))
+            if ((style & NumberStyles.AllowLeadingWhite) != 0)
             {
                 text.TryReadWhiteSpace(ref pos);
             }
@@ -82,7 +82,7 @@
                 return false;
             }
 
-            if (TryParseDigits(text, ref pos, style, provider, out result))
+            if (TryReadDigitsOnly(text, ref pos, style, provider, out result))
             {
                 return true;
             }
@@ -116,7 +116,7 @@
         }
 
         // Try parse a double from digits ignoring +-Inf and NaN
-        private static bool TryParseDigits(
+        private static bool TryReadDigitsOnly(
             string text,
             ref int pos,
             NumberStyles style,
@@ -128,7 +128,7 @@
             Sign sign;
             if (TryReadSign(text, ref pos, format, out sign))
             {
-                if (!style.HasFlag(NumberStyles.AllowLeadingSign))
+                if ((style & NumberStyles.AllowDecimalPoint) == 0)
                 {
                     result = 0;
                     pos = start;
@@ -136,23 +136,31 @@
                 }
             }
 
-            TryReadDigits(text, ref pos, style, format);
+            result = 0;
+            if (TryReadIntegerDigits(text, ref pos, style, format, ref result))
+            {
+                pos = start;
+                return false;
+            }
 
             if (TryRead(text, ref pos, format.NumberDecimalSeparator))
             {
-                if (!style.HasFlag(NumberStyles.AllowDecimalPoint))
+                if ((style & NumberStyles.AllowDecimalPoint) == 0)
                 {
                     result = 0;
                     pos = start;
                     return false;
                 }
 
-                TryReadDigits(text, ref pos, style, format);
+                TryReadFractionDigits(text, ref pos, ref result);
             }
-
+            if (sign == Sign.Negative)
+            {
+                result *= -1;
+            }
             if (TryReadExponent(text, ref pos))
             {
-                if (!style.HasFlag(NumberStyles.AllowExponent))
+                if ((style & NumberStyles.AllowExponent) == 0)
                 {
                     result = 0;
                     pos = start;
@@ -160,7 +168,7 @@
                 }
 
                 TryReadSign(text, ref pos, format, out sign);
-                if (TryReadDigits(text, ref pos, style, format))
+                if (TryReadExponentDigits(text, ref pos))
                 {
                     return TryParseSubString(text, start, ref pos, style, provider, out result);
                 }
@@ -173,10 +181,10 @@
                     ? 1
                     : 2;
                 pos -= backStep;
-                return TryParseSubString(text, start, ref pos, style, provider, out result);
+                return true;
             }
 
-            return TryParseSubString(text, start, ref pos, style, provider, out result);
+            return true;
         }
 
         private static bool TryParseSubString(
@@ -234,14 +242,17 @@
             return false;
         }
 
-        private static bool TryReadDigits(string text, ref int pos, NumberStyles styles, NumberFormatInfo format)
+        private static bool TryReadIntegerDigits(string text, ref int pos, NumberStyles styles, NumberFormatInfo format, ref double result)
         {
             var start = pos;
             bool readThousandSeparator = false;
             while (pos < text.Length)
             {
-                if (IntReader.IsDigit(text[pos]))
+                var i = IntReader.GetDigitOrMinusOne(text[pos]);
+                if (i != -1)
                 {
+                    result *= 10;
+                    result += i;
                     pos++;
                     readThousandSeparator = false;
                     continue;
@@ -262,6 +273,38 @@
                     return false;
                 }
                 break;
+            }
+
+            return readThousandSeparator;
+        }
+
+        private static bool TryReadFractionDigits(string text, ref int pos, ref double result)
+        {
+            double d = 0.1;
+            var start = pos;
+            while (pos < text.Length)
+            {
+                var i = IntReader.GetDigitOrMinusOne(text[pos]);
+                if (i == -1)
+                {
+                    break;
+                }
+
+                result += d * i;
+                d *= 0.1;
+                pos++;
+            }
+
+            return pos != start;
+        }
+
+        private static bool TryReadExponentDigits(string text, ref int pos)
+        {
+            var start = pos;
+            while (pos < text.Length &&
+                   IntReader.IsDigit(text[pos]))
+            {
+                pos++;
             }
 
             return pos != start;
