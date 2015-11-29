@@ -4,14 +4,13 @@
     using System.Globalization;
     using System.Xml;
     using System.Xml.Schema;
-    using System.Xml.Serialization;
 
     /// <summary>
     /// A type for the quantity <see cref="Gu.Units.Time"/>.
     /// </summary>
     // [TypeConverter(typeof(TimeTypeConverter))]
     [Serializable]
-    public partial struct Time : IComparable<Time>, IEquatable<Time>, IFormattable, IXmlSerializable, IQuantity<TimeUnit, I1>, IQuantity<TimeUnit>
+    public partial struct Time : IQuantity<TimeUnit>, IComparable<Time>, IEquatable<Time>
     {
         public static readonly Time Zero = new Time();
 

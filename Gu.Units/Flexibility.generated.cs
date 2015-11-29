@@ -4,14 +4,13 @@
     using System.Globalization;
     using System.Xml;
     using System.Xml.Schema;
-    using System.Xml.Serialization;
 
     /// <summary>
     /// A type for the quantity <see cref="Gu.Units.Flexibility"/>.
     /// </summary>
     // [TypeConverter(typeof(FlexibilityTypeConverter))]
     [Serializable]
-    public partial struct Flexibility : IComparable<Flexibility>, IEquatable<Flexibility>, IFormattable, IXmlSerializable, IQuantity<MassUnit, INeg1, TimeUnit, I2>, IQuantity<FlexibilityUnit>
+    public partial struct Flexibility : IQuantity<FlexibilityUnit>, IComparable<Flexibility>, IEquatable<Flexibility>
     {
         public static readonly Flexibility Zero = new Flexibility();
 

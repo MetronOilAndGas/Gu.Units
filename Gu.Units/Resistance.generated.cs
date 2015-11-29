@@ -4,14 +4,13 @@
     using System.Globalization;
     using System.Xml;
     using System.Xml.Schema;
-    using System.Xml.Serialization;
 
     /// <summary>
     /// A type for the quantity <see cref="Gu.Units.Resistance"/>.
     /// </summary>
     // [TypeConverter(typeof(ResistanceTypeConverter))]
     [Serializable]
-    public partial struct Resistance : IComparable<Resistance>, IEquatable<Resistance>, IFormattable, IXmlSerializable, IQuantity<MassUnit, I1, LengthUnit, I2, TimeUnit, INeg3, CurrentUnit, INeg2>, IQuantity<ResistanceUnit>
+    public partial struct Resistance : IQuantity<ResistanceUnit>, IComparable<Resistance>, IEquatable<Resistance>
     {
         public static readonly Resistance Zero = new Resistance();
 

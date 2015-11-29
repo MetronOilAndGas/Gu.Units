@@ -4,14 +4,13 @@
     using System.Globalization;
     using System.Xml;
     using System.Xml.Schema;
-    using System.Xml.Serialization;
 
     /// <summary>
     /// A type for the quantity <see cref="Gu.Units.ElectricCharge"/>.
     /// </summary>
     // [TypeConverter(typeof(ElectricChargeTypeConverter))]
     [Serializable]
-    public partial struct ElectricCharge : IComparable<ElectricCharge>, IEquatable<ElectricCharge>, IFormattable, IXmlSerializable, IQuantity<TimeUnit, I1, CurrentUnit, I1>, IQuantity<ElectricChargeUnit>
+    public partial struct ElectricCharge : IQuantity<ElectricChargeUnit>, IComparable<ElectricCharge>, IEquatable<ElectricCharge>
     {
         public static readonly ElectricCharge Zero = new ElectricCharge();
 

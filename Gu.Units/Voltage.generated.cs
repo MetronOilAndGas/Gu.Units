@@ -4,14 +4,13 @@
     using System.Globalization;
     using System.Xml;
     using System.Xml.Schema;
-    using System.Xml.Serialization;
 
     /// <summary>
     /// A type for the quantity <see cref="Gu.Units.Voltage"/>.
     /// </summary>
     // [TypeConverter(typeof(VoltageTypeConverter))]
     [Serializable]
-    public partial struct Voltage : IComparable<Voltage>, IEquatable<Voltage>, IFormattable, IXmlSerializable, IQuantity<MassUnit, I1, LengthUnit, I2, TimeUnit, INeg3, CurrentUnit, INeg1>, IQuantity<VoltageUnit>
+    public partial struct Voltage : IQuantity<VoltageUnit>, IComparable<Voltage>, IEquatable<Voltage>
     {
         public static readonly Voltage Zero = new Voltage();
 

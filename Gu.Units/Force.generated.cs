@@ -4,14 +4,13 @@
     using System.Globalization;
     using System.Xml;
     using System.Xml.Schema;
-    using System.Xml.Serialization;
 
     /// <summary>
     /// A type for the quantity <see cref="Gu.Units.Force"/>.
     /// </summary>
     // [TypeConverter(typeof(ForceTypeConverter))]
     [Serializable]
-    public partial struct Force : IComparable<Force>, IEquatable<Force>, IFormattable, IXmlSerializable, IQuantity<MassUnit, I1, LengthUnit, I1, TimeUnit, INeg2>, IQuantity<ForceUnit>
+    public partial struct Force : IQuantity<ForceUnit>, IComparable<Force>, IEquatable<Force>
     {
         public static readonly Force Zero = new Force();
 

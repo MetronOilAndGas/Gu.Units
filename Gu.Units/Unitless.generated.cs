@@ -4,14 +4,13 @@
     using System.Globalization;
     using System.Xml;
     using System.Xml.Schema;
-    using System.Xml.Serialization;
 
     /// <summary>
     /// A type for the quantity <see cref="Gu.Units.Unitless"/>.
     /// </summary>
     // [TypeConverter(typeof(UnitlessTypeConverter))]
     [Serializable]
-    public partial struct Unitless : IComparable<Unitless>, IEquatable<Unitless>, IFormattable, IXmlSerializable, IQuantity<UnitlessUnit, I1>, IQuantity<UnitlessUnit>
+    public partial struct Unitless : IQuantity<UnitlessUnit>, IComparable<Unitless>, IEquatable<Unitless>
     {
         public static readonly Unitless Zero = new Unitless();
 

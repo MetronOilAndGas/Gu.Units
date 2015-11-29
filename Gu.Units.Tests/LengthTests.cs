@@ -91,7 +91,7 @@
         }
 
         [Test]
-        public void ToString()
+        public new void ToString()
         {
             var length = Length.FromMetres(1.2);
 

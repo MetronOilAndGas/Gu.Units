@@ -4,14 +4,13 @@
     using System.Globalization;
     using System.Xml;
     using System.Xml.Schema;
-    using System.Xml.Serialization;
 
     /// <summary>
     /// A type for the quantity <see cref="Gu.Units.AngularJerk"/>.
     /// </summary>
     // [TypeConverter(typeof(AngularJerkTypeConverter))]
     [Serializable]
-    public partial struct AngularJerk : IComparable<AngularJerk>, IEquatable<AngularJerk>, IFormattable, IXmlSerializable, IQuantity<AngleUnit, I1, TimeUnit, INeg3>, IQuantity<AngularJerkUnit>
+    public partial struct AngularJerk : IQuantity<AngularJerkUnit>, IComparable<AngularJerk>, IEquatable<AngularJerk>
     {
         public static readonly AngularJerk Zero = new AngularJerk();
 

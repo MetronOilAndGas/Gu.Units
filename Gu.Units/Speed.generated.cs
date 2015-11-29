@@ -4,14 +4,13 @@
     using System.Globalization;
     using System.Xml;
     using System.Xml.Schema;
-    using System.Xml.Serialization;
 
     /// <summary>
     /// A type for the quantity <see cref="Gu.Units.Speed"/>.
     /// </summary>
     // [TypeConverter(typeof(SpeedTypeConverter))]
     [Serializable]
-    public partial struct Speed : IComparable<Speed>, IEquatable<Speed>, IFormattable, IXmlSerializable, IQuantity<LengthUnit, I1, TimeUnit, INeg1>, IQuantity<SpeedUnit>
+    public partial struct Speed : IQuantity<SpeedUnit>, IComparable<Speed>, IEquatable<Speed>
     {
         public static readonly Speed Zero = new Speed();
 

@@ -4,14 +4,13 @@
     using System.Globalization;
     using System.Xml;
     using System.Xml.Schema;
-    using System.Xml.Serialization;
 
     /// <summary>
     /// A type for the quantity <see cref="Gu.Units.Stiffness"/>.
     /// </summary>
     // [TypeConverter(typeof(StiffnessTypeConverter))]
     [Serializable]
-    public partial struct Stiffness : IComparable<Stiffness>, IEquatable<Stiffness>, IFormattable, IXmlSerializable, IQuantity<MassUnit, I1, TimeUnit, INeg2>, IQuantity<StiffnessUnit>
+    public partial struct Stiffness : IQuantity<StiffnessUnit>, IComparable<Stiffness>, IEquatable<Stiffness>
     {
         public static readonly Stiffness Zero = new Stiffness();
 

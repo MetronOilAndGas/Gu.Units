@@ -201,8 +201,8 @@
     <Compile Include="InductanceUnitTypeConverter.generated.cs">
       <DependentUpon>UnitTypeConverters.txt4</DependentUpon>
     </Compile>
-    <Compile Include="Interfaces\IPower.cs" />
-    <Compile Include="Interfaces\IUnit`1.cs" />
+    <Compile Include="Interfaces\IQuantity.cs" />
+    <Compile Include="Interfaces\IUnit{TQuantity}.cs" />
     <Compile Include="Internals\Ensure\Ensure.compare.cs" />
     <Compile Include="Internals\Ensure\Ensure.cs" />
     <Compile Include="Internals\Ensure\Ensure.string.cs" />
@@ -385,7 +385,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Interfaces\IUnit.cs" />
-    <Compile Include="Interfaces\IQuantity.cs" />
+    <Compile Include="Interfaces\IQuantity{TUnit}.cs" />
     <Compile Include="ResistanceUnit.generated.cs">
       <DependentUpon>Units.txt4</DependentUpon>
     </Compile>

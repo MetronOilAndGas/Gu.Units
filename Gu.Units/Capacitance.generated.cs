@@ -4,14 +4,13 @@
     using System.Globalization;
     using System.Xml;
     using System.Xml.Schema;
-    using System.Xml.Serialization;
 
     /// <summary>
     /// A type for the quantity <see cref="Gu.Units.Capacitance"/>.
     /// </summary>
     // [TypeConverter(typeof(CapacitanceTypeConverter))]
     [Serializable]
-    public partial struct Capacitance : IComparable<Capacitance>, IEquatable<Capacitance>, IFormattable, IXmlSerializable, IQuantity<TimeUnit, I4, CurrentUnit, I2, MassUnit, INeg1, LengthUnit, INeg2>, IQuantity<CapacitanceUnit>
+    public partial struct Capacitance : IQuantity<CapacitanceUnit>, IComparable<Capacitance>, IEquatable<Capacitance>
     {
         public static readonly Capacitance Zero = new Capacitance();
 

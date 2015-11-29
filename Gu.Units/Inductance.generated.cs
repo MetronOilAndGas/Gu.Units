@@ -4,14 +4,13 @@
     using System.Globalization;
     using System.Xml;
     using System.Xml.Schema;
-    using System.Xml.Serialization;
 
     /// <summary>
     /// A type for the quantity <see cref="Gu.Units.Inductance"/>.
     /// </summary>
     // [TypeConverter(typeof(InductanceTypeConverter))]
     [Serializable]
-    public partial struct Inductance : IComparable<Inductance>, IEquatable<Inductance>, IFormattable, IXmlSerializable, IQuantity<MassUnit, I1, LengthUnit, I2, TimeUnit, INeg2, CurrentUnit, INeg2>, IQuantity<InductanceUnit>
+    public partial struct Inductance : IQuantity<InductanceUnit>, IComparable<Inductance>, IEquatable<Inductance>
     {
         public static readonly Inductance Zero = new Inductance();
 

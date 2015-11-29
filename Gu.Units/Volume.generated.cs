@@ -4,14 +4,13 @@
     using System.Globalization;
     using System.Xml;
     using System.Xml.Schema;
-    using System.Xml.Serialization;
 
     /// <summary>
     /// A type for the quantity <see cref="Gu.Units.Volume"/>.
     /// </summary>
     // [TypeConverter(typeof(VolumeTypeConverter))]
     [Serializable]
-    public partial struct Volume : IComparable<Volume>, IEquatable<Volume>, IFormattable, IXmlSerializable, IQuantity<LengthUnit, I3>, IQuantity<VolumeUnit>
+    public partial struct Volume : IQuantity<VolumeUnit>, IComparable<Volume>, IEquatable<Volume>
     {
         public static readonly Volume Zero = new Volume();
 

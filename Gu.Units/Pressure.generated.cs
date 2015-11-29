@@ -4,14 +4,13 @@
     using System.Globalization;
     using System.Xml;
     using System.Xml.Schema;
-    using System.Xml.Serialization;
 
     /// <summary>
     /// A type for the quantity <see cref="Gu.Units.Pressure"/>.
     /// </summary>
     // [TypeConverter(typeof(PressureTypeConverter))]
     [Serializable]
-    public partial struct Pressure : IComparable<Pressure>, IEquatable<Pressure>, IFormattable, IXmlSerializable, IQuantity<MassUnit, I1, LengthUnit, INeg1, TimeUnit, INeg2>, IQuantity<PressureUnit>
+    public partial struct Pressure : IQuantity<PressureUnit>, IComparable<Pressure>, IEquatable<Pressure>
     {
         public static readonly Pressure Zero = new Pressure();
 

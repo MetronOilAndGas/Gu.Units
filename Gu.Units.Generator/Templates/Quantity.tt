@@ -28,14 +28,13 @@ namespace <#= Settings.Namespace #>
     using System.Globalization;
     using System.Xml;
     using System.Xml.Schema;
-    using System.Xml.Serialization;
 
 	/// <summary>
     /// A type for the quantity <see cref="<#= Settings.Namespace #>.<#= quantity.ClassName #>"/>.
     /// </summary>
 	// [TypeConverter(typeof(<#= quantity.ClassName #>TypeConverter))]
     [Serializable]
-	public partial struct <#= quantity.ClassName #> : IComparable<<#= quantity.ClassName #>>, IEquatable<<#= quantity.ClassName #>>, IFormattable, IXmlSerializable, IQuantity<<#= quantity.ClassName #>Unit>
+	public partial struct <#= quantity.ClassName #> : IQuantity<<#= quantity.ClassName #>Unit>, IComparable<<#= quantity.ClassName #>>, IEquatable<<#= quantity.ClassName #>>
 	{
 		public static readonly <#= quantity.ClassName #> Zero = new <#= quantity.ClassName #>();
 	    

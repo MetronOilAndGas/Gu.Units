@@ -4,14 +4,13 @@
     using System.Globalization;
     using System.Xml;
     using System.Xml.Schema;
-    using System.Xml.Serialization;
 
     /// <summary>
     /// A type for the quantity <see cref="Gu.Units.VolumetricFlow"/>.
     /// </summary>
     // [TypeConverter(typeof(VolumetricFlowTypeConverter))]
     [Serializable]
-    public partial struct VolumetricFlow : IComparable<VolumetricFlow>, IEquatable<VolumetricFlow>, IFormattable, IXmlSerializable, IQuantity<LengthUnit, I3, TimeUnit, INeg1>, IQuantity<VolumetricFlowUnit>
+    public partial struct VolumetricFlow : IQuantity<VolumetricFlowUnit>, IComparable<VolumetricFlow>, IEquatable<VolumetricFlow>
     {
         public static readonly VolumetricFlow Zero = new VolumetricFlow();
 

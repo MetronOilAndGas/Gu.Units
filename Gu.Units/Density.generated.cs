@@ -4,14 +4,13 @@
     using System.Globalization;
     using System.Xml;
     using System.Xml.Schema;
-    using System.Xml.Serialization;
 
     /// <summary>
     /// A type for the quantity <see cref="Gu.Units.Density"/>.
     /// </summary>
     // [TypeConverter(typeof(DensityTypeConverter))]
     [Serializable]
-    public partial struct Density : IComparable<Density>, IEquatable<Density>, IFormattable, IXmlSerializable, IQuantity<MassUnit, I1, LengthUnit, INeg3>, IQuantity<DensityUnit>
+    public partial struct Density : IQuantity<DensityUnit>, IComparable<Density>, IEquatable<Density>
     {
         public static readonly Density Zero = new Density();
 

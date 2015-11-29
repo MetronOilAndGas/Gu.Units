@@ -4,14 +4,13 @@
     using System.Globalization;
     using System.Xml;
     using System.Xml.Schema;
-    using System.Xml.Serialization;
 
     /// <summary>
     /// A type for the quantity <see cref="Gu.Units.Frequency"/>.
     /// </summary>
     // [TypeConverter(typeof(FrequencyTypeConverter))]
     [Serializable]
-    public partial struct Frequency : IComparable<Frequency>, IEquatable<Frequency>, IFormattable, IXmlSerializable, IQuantity<TimeUnit, INeg1>, IQuantity<FrequencyUnit>
+    public partial struct Frequency : IQuantity<FrequencyUnit>, IComparable<Frequency>, IEquatable<Frequency>
     {
         public static readonly Frequency Zero = new Frequency();
 

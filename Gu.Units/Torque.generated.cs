@@ -4,14 +4,13 @@
     using System.Globalization;
     using System.Xml;
     using System.Xml.Schema;
-    using System.Xml.Serialization;
 
     /// <summary>
     /// A type for the quantity <see cref="Gu.Units.Torque"/>.
     /// </summary>
     // [TypeConverter(typeof(TorqueTypeConverter))]
     [Serializable]
-    public partial struct Torque : IComparable<Torque>, IEquatable<Torque>, IFormattable, IXmlSerializable, IQuantity<MassUnit, I1, LengthUnit, I2, TimeUnit, INeg2, AngleUnit, INeg1>, IQuantity<TorqueUnit>
+    public partial struct Torque : IQuantity<TorqueUnit>, IComparable<Torque>, IEquatable<Torque>
     {
         public static readonly Torque Zero = new Torque();
 

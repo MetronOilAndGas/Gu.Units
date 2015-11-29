@@ -4,14 +4,13 @@
     using System.Globalization;
     using System.Xml;
     using System.Xml.Schema;
-    using System.Xml.Serialization;
 
     /// <summary>
     /// A type for the quantity <see cref="Gu.Units.Jerk"/>.
     /// </summary>
     // [TypeConverter(typeof(JerkTypeConverter))]
     [Serializable]
-    public partial struct Jerk : IComparable<Jerk>, IEquatable<Jerk>, IFormattable, IXmlSerializable, IQuantity<LengthUnit, I1, TimeUnit, INeg3>, IQuantity<JerkUnit>
+    public partial struct Jerk : IQuantity<JerkUnit>, IComparable<Jerk>, IEquatable<Jerk>
     {
         public static readonly Jerk Zero = new Jerk();
 

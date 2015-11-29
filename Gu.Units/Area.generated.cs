@@ -4,14 +4,13 @@
     using System.Globalization;
     using System.Xml;
     using System.Xml.Schema;
-    using System.Xml.Serialization;
 
     /// <summary>
     /// A type for the quantity <see cref="Gu.Units.Area"/>.
     /// </summary>
     // [TypeConverter(typeof(AreaTypeConverter))]
     [Serializable]
-    public partial struct Area : IComparable<Area>, IEquatable<Area>, IFormattable, IXmlSerializable, IQuantity<LengthUnit, I2>, IQuantity<AreaUnit>
+    public partial struct Area : IQuantity<AreaUnit>, IComparable<Area>, IEquatable<Area>
     {
         public static readonly Area Zero = new Area();
 

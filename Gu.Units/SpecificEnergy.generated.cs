@@ -4,14 +4,13 @@
     using System.Globalization;
     using System.Xml;
     using System.Xml.Schema;
-    using System.Xml.Serialization;
 
     /// <summary>
     /// A type for the quantity <see cref="Gu.Units.SpecificEnergy"/>.
     /// </summary>
     // [TypeConverter(typeof(SpecificEnergyTypeConverter))]
     [Serializable]
-    public partial struct SpecificEnergy : IComparable<SpecificEnergy>, IEquatable<SpecificEnergy>, IFormattable, IXmlSerializable, IQuantity<LengthUnit, I2, TimeUnit, INeg2>, IQuantity<SpecificEnergyUnit>
+    public partial struct SpecificEnergy : IQuantity<SpecificEnergyUnit>, IComparable<SpecificEnergy>, IEquatable<SpecificEnergy>
     {
         public static readonly SpecificEnergy Zero = new SpecificEnergy();
 

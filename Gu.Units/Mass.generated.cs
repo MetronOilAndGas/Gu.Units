@@ -4,14 +4,13 @@
     using System.Globalization;
     using System.Xml;
     using System.Xml.Schema;
-    using System.Xml.Serialization;
 
     /// <summary>
     /// A type for the quantity <see cref="Gu.Units.Mass"/>.
     /// </summary>
     // [TypeConverter(typeof(MassTypeConverter))]
     [Serializable]
-    public partial struct Mass : IComparable<Mass>, IEquatable<Mass>, IFormattable, IXmlSerializable, IQuantity<MassUnit, I1>, IQuantity<MassUnit>
+    public partial struct Mass : IQuantity<MassUnit>, IComparable<Mass>, IEquatable<Mass>
     {
         public static readonly Mass Zero = new Mass();
 

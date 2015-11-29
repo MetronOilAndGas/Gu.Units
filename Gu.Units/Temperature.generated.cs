@@ -4,14 +4,13 @@
     using System.Globalization;
     using System.Xml;
     using System.Xml.Schema;
-    using System.Xml.Serialization;
 
     /// <summary>
     /// A type for the quantity <see cref="Gu.Units.Temperature"/>.
     /// </summary>
     // [TypeConverter(typeof(TemperatureTypeConverter))]
     [Serializable]
-    public partial struct Temperature : IComparable<Temperature>, IEquatable<Temperature>, IFormattable, IXmlSerializable, IQuantity<TemperatureUnit, I1>, IQuantity<TemperatureUnit>
+    public partial struct Temperature : IQuantity<TemperatureUnit>, IComparable<Temperature>, IEquatable<Temperature>
     {
         public static readonly Temperature Zero = new Temperature();
 
