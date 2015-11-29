@@ -64,7 +64,8 @@
             Assert.AreEqual(expectedFormatted, actualFormatted);
         }
 
-        [TestCase("mm", "{0}\u00A0mm", "1200\u00A0mm")]
+        [TestCase("", "{0}\u00A0m", "1.2\u00A0m")]
+        [TestCase(null, "{0}\u00A0m", "1.2\u00A0m")]
         [TestCase("E mm", "{0:E} mm", "1.200000E+003 mm")]
         [TestCase("ecm", "{0:e}cm", "1.200000e+002cm")]
         [TestCase("E5m", "{0:E5}m", "1.20000E+000m")]
@@ -89,7 +90,7 @@
         [TestCase("#.# m", "{0:#.#} m", "1.2 m")]
         [TestCase("#.0#m", "{0:#.0#}m", "1.2m")]
         [TestCase("#0.00# m", "{0:#0.00#} m", "1.20 m")]
-        public void TryParseWithUnit(string format, string expectedFormat, string expectedFormatted)
+        public void TryParseComposite(string format, string expectedFormat, string expectedFormatted)
         {
             QuantityFormat<LengthUnit> actual;
             var success = FormatParser.TryParse(format, out actual);
@@ -114,6 +115,15 @@
             Assert.AreEqual(true, success);
             Assert.AreEqual(expectedFormat, actual.CompositeFormat);
             Assert.AreEqual(expectedSymbol, actual.Unit.Symbol);
+        }
+
+        [TestCase("mm")]
+        public void TryParseError(string text)
+        {
+            QuantityFormat<LengthUnit> actual;
+            var success = FormatParser.TryParse(text, out actual);
+            Assert.AreEqual(false, success);
+            Assert.AreEqual(text, actual.ErrorFormat);
         }
     }
 }

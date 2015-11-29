@@ -55,7 +55,7 @@
 
             public Conversion(string from, string to, Func<string, T> parser)
             {
-                using (Thread.CurrentThread.UsingTempCulture(CultureInfo.GetCultureInfo("en-US")))
+                using (Thread.CurrentThread.UsingTempCulture(CultureInfo.InvariantCulture))
                 {
                     this._parser = parser;
                     this.From = @from;

@@ -44,9 +44,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ArithmeticsTests.cs" />
-    <Compile Include="BenchMarks\FormattingBenchmarks.cs" />
-    <Compile Include="BenchMarks\ParsingBenchmarks.cs" />
-    <Compile Include="BenchMarks\SubstringCacheBenchmarks.cs" />
+    <Compile Include="Benchmarks\FormattingBenchmarks.cs" />
+    <Compile Include="Benchmarks\ParsingBenchmarks.cs" />
+    <Compile Include="Benchmarks\SubstringCacheBenchmarks.cs" />
     <Compile Include="ConversionTests.cs" />
     <Compile Include="FormatTests.cs" />
     <Compile Include="Constants\Benchmarks.cs" />
@@ -80,7 +80,7 @@
     <Compile Include="Sources\QuantityTypesProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Sources\UnitsProvider.cs" />
-    <Compile Include="BenchMarks\QuantityBenchmark.cs" />
+    <Compile Include="Benchmarks\QuantityBenchmark.cs" />
     <Compile Include="Internals\Parsing\SymbolAndPowerParserTests.cs" />
     <Compile Include="SerializationTests.cs" />
     <Compile Include="UnitlessTests.cs" />

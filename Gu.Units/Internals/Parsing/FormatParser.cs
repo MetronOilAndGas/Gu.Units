@@ -14,7 +14,7 @@
         {
             if (string.IsNullOrWhiteSpace(format))
             {
-                result = QuantityFormat<TUnit>.CreateUnknown("null", Unit<TUnit>.Default);
+                result = QuantityFormat<TUnit>.Default;
                 return true;
             }
 

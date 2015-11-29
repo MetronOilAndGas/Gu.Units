@@ -144,6 +144,7 @@
                 return false;
             }
 
+            int fractionDigits = 0;
             ulong fraction = 0;
             if (TryRead(text, ref pos, format.NumberDecimalSeparator))
             {
@@ -153,8 +154,7 @@
                     pos = start;
                     return false;
                 }
-
-                TryReadFractionDigits(text, ref pos, ref fraction);
+                TryReadFractionDigits(text, ref pos, ref fraction, out fractionDigits);
             }
 
             if (TryReadExponent(text, ref pos))
@@ -181,56 +181,62 @@
                     : 2;
                 pos -= backStep;
                 result = sign == Sign.Negative
-                    ? -Combine(integral, fraction)
-                    : Combine(integral, fraction);
+                    ? -Combine(integral, fraction, fractionDigits)
+                    : Combine(integral, fraction, fractionDigits);
 
                 return true;
             }
 
             result = sign == Sign.Negative
-                ? -Combine(integral, fraction)
-                : Combine(integral, fraction);
+                ? -Combine(integral, fraction, fractionDigits)
+                : Combine(integral, fraction, fractionDigits);
 
             return true;
         }
 
-        private static double Combine(ulong integral, ulong fraction)
+        private static double Combine(ulong integral, ulong fraction, int fractionDigits)
         {
-            if (fraction < 1E1)
-                return integral + 1E-1 * fraction;
-            if (fraction < 1E2)
-                return integral + 1E-2 * fraction;
-            if (fraction < 1E3)
-                return integral + 1E-3 * fraction;
-            if (fraction < 1E4)
-                return integral + 1E-4 * fraction;
-            if (fraction < 1E5)
-                return integral + 1E-5 * fraction;
-            if (fraction < 1E6)
-                return integral + 1E-6 * fraction;
-            if (fraction < 1E7)
-                return integral + 1E-7 * fraction;
-            if (fraction < 1E8)
-                return integral + 1E-8 * fraction;
-            if (fraction < 1E9)
-                return integral + 1E-9 * fraction;
-            if (fraction < 1E10)
-                return integral + 1E-10 * fraction;
-            if (fraction < 1E11)
-                return integral + 1E-11 * fraction;
-            if (fraction < 1E12)
-                return integral + 1E-12 * fraction;
-            if (fraction < 1E13)
-                return integral + 1E-13 * fraction;
-            if (fraction < 1E14)
-                return integral + 1E-14 * fraction;
-            if (fraction < 1E15)
-                return integral + 1E-15 * fraction;
-            if (fraction < 1E16)
-                return integral + 1E-16 * fraction;
-            if (fraction < 1E17)
-                return integral + 1E-17 * fraction;
-            throw new ArgumentOutOfRangeException("Fraction must be truncated before calling this");
+            switch (fractionDigits)
+            {
+                case 0:
+                    return integral;
+                case 1:
+                    return integral + 1E-1 * fraction;
+                case 2:
+                    return integral + 1E-2 * fraction;
+                case 3:
+                    return integral + 1E-3 * fraction;
+                case 4:
+                    return integral + 1E-4 * fraction;
+                case 5:
+                    return integral + 1E-5 * fraction;
+                case 6:
+                    return integral + 1E-6 * fraction;
+                case 7:
+                    return integral + 1E-7 * fraction;
+                case 8:
+                    return integral + 1E-8 * fraction;
+                case 9:
+                    return integral + 1E-9 * fraction;
+                case 10:
+                    return integral + 1E-10 * fraction;
+                case 11:
+                    return integral + 1E-11 * fraction;
+                case 12:
+                    return integral + 1E-12 * fraction;
+                case 13:
+                    return integral + 1E-13 * fraction;
+                case 14:
+                    return integral + 1E-14 * fraction;
+                case 15:
+                    return integral + 1E-15 * fraction;
+                case 16:
+                    return integral + 1E-16 * fraction;
+                case 17:
+                    return integral + 1E-17 * fraction;
+                default:
+                    throw new ArgumentOutOfRangeException("Fraction must be truncated before calling this");
+            }
         }
 
         private static bool TryParseSubString(
@@ -347,8 +353,9 @@
             return !readThousandSeparator;
         }
 
-        private static bool TryReadFractionDigits(string text, ref int pos, ref ulong result)
+        private static bool TryReadFractionDigits(string text, ref int pos, ref ulong result, out int digits)
         {
+            digits = 0;
             var start = pos;
             while (pos < text.Length)
             {
@@ -363,6 +370,7 @@
                 {
                     result *= 10;
                     result += (uint)i;
+                    digits++;
                 }
             }
 

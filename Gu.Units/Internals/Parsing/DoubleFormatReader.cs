@@ -47,8 +47,7 @@
             out string result)
         {
             var start = pos;
-            pos++;
-            while (pos < format.Length)
+            while (!IsEndOfPoundAndZeroFormat(format, pos))
             {
                 switch (format[pos])
                 {
@@ -198,19 +197,55 @@
             }
         }
 
-        private static bool IsEndOfFormat(string format, int pos)
+        private static bool IsEndOfPoundAndZeroFormat(string format, int pos)
         {
             if (format.Length == pos)
             {
                 return true;
             }
 
-            if (char.IsWhiteSpace(format[pos]))
+            switch (format[pos])
             {
-                return true;
+                case '}':
+                    return true;
+                case '#':
+                case '0':
+                    return false;
+                case ',':
+                case '.':
+                    if (format.Length == pos + 1)
+                    {
+                        return true;
+                    }
+
+                    switch (format[pos + 1])
+                    {
+                        case '#':
+                        case '0':
+                            return false;
+                        default:
+                            return true;
+                    }
             }
 
-            return format[pos] == '}';
+            if (char.IsWhiteSpace(format[pos]))
+            {
+                if (format.Length == pos + 1)
+                {
+                    return true;
+                }
+
+                switch (format[pos+1])
+                {
+                    case '#':
+                    case '0':
+                        return false;
+                    default:
+                        return true;
+                }
+            }
+
+            return true;
         }
 
         private class PrefixFormat
