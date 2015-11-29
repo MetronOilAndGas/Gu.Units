@@ -113,6 +113,7 @@
             CreateParseData("+1", NumberStyles.Float, en),
             CreateParseData(".1", NumberStyles.Float, en),
             CreateParseData("1.", NumberStyles.Float, en),
+            CreateParseData("12,345.67", NumberStyles.Float | NumberStyles.AllowThousands, en),
             CreateParseData("+1.2", NumberStyles.Float, en),
             CreateParseData("+1,2", NumberStyles.Float, sv),
             CreateParseData("+1.2e3", NumberStyles.Float, en),
@@ -120,10 +121,32 @@
             CreateParseData("+1.2e-3", NumberStyles.Float, en),
             CreateParseData("+1.2E-3", NumberStyles.Float, en),
             CreateParseData("+1.2e+3", NumberStyles.Float, en),
+            CreateParseData(12345.678910, NumberStyles.Float, en, "e"),
+            CreateParseData(12345.678910, NumberStyles.Float, en, "E"),
+            CreateParseData(12345.678910, NumberStyles.Float, en, "E5"),
+            CreateParseData(12345.678910, NumberStyles.Float, en, "F"),
+            CreateParseData(12345.678910, NumberStyles.Float, en, "f"),
+            CreateParseData(12345.678910, NumberStyles.Float, en, "F20"),
+            CreateParseData(12345.678910, NumberStyles.Float, en, "G"),
+            CreateParseData(12345.678910, NumberStyles.Float, en, "g"),
+            CreateParseData(12345.678910, NumberStyles.Float, en, "g5"),
+            CreateParseData(12345.678910, NumberStyles.Float |NumberStyles.AllowThousands, en, "n"),
+            CreateParseData(12345.678910, NumberStyles.Float |NumberStyles.AllowThousands, en, "N"),
+            CreateParseData(12345.678910, NumberStyles.Float |NumberStyles.AllowThousands, en, "N5"),
+            CreateParseData(12345.678910, NumberStyles.Float, en, "R"),
+            CreateParseData(12345.678910, NumberStyles.Float, en, "r"),
             CreateParseData(sv.NumberFormat.NaNSymbol, NumberStyles.Float, sv),
             CreateParseData(sv.NumberFormat.PositiveInfinitySymbol, NumberStyles.Float, sv),
             CreateParseData(sv.NumberFormat.NegativeInfinitySymbol, NumberStyles.Float, sv),
         };
+
+        private static DoubleData CreateParseData(double value,
+            NumberStyles styles,
+            IFormatProvider culture,
+            string format)
+        {
+            return new DoubleData(value.ToString(format, culture), styles, culture);
+        }
 
         private static readonly IReadOnlyList<DoubleData> DoubleParseErrorSource = new[]
         {
@@ -149,11 +172,11 @@
         {
             public readonly string Text;
             public readonly NumberStyles Styles;
-            public readonly CultureInfo Culture;
+            public readonly IFormatProvider Culture;
 
             public DoubleData(string text,
                 NumberStyles styles,
-                CultureInfo culture)
+                IFormatProvider culture)
             {
                 this.Text = text;
                 this.Styles = styles;

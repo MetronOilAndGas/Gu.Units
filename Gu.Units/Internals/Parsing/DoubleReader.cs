@@ -136,7 +136,7 @@
                 }
             }
 
-            TryReadDigits(text, ref pos);
+            TryReadDigits(text, ref pos, style, format);
 
             if (TryRead(text, ref pos, format.NumberDecimalSeparator))
             {
@@ -147,7 +147,7 @@
                     return false;
                 }
 
-                TryReadDigits(text, ref pos);
+                TryReadDigits(text, ref pos, style, format);
             }
 
             if (TryReadExponent(text, ref pos))
@@ -160,7 +160,7 @@
                 }
 
                 TryReadSign(text, ref pos, format, out sign);
-                if (TryReadDigits(text, ref pos))
+                if (TryReadDigits(text, ref pos, style, format))
                 {
                     return TryParseSubString(text, start, ref pos, style, provider, out result);
                 }
@@ -234,12 +234,34 @@
             return false;
         }
 
-        private static bool TryReadDigits(string s, ref int pos)
+        private static bool TryReadDigits(string text, ref int pos, NumberStyles styles, NumberFormatInfo format)
         {
             var start = pos;
-            while (pos < s.Length && IntReader.IsDigit(s[pos]))
+            bool readThousandSeparator = false;
+            while (pos < text.Length)
             {
-                pos++;
+                if (IntReader.IsDigit(text[pos]))
+                {
+                    pos++;
+                    readThousandSeparator = false;
+                    continue;
+                }
+
+                if ((styles & NumberStyles.AllowThousands) != 0 &&
+                    format?.NumberGroupSeparator != null)
+                {
+                    if (TryRead(text, ref pos, format.NumberGroupSeparator))
+                    {
+                        readThousandSeparator = true;
+                        continue;
+                    }
+                }
+                if (readThousandSeparator)
+                {
+                    pos = start;
+                    return false;
+                }
+                break;
             }
 
             return pos != start;

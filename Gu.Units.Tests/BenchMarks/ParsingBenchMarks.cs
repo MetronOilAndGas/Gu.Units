@@ -8,6 +8,7 @@
     using System.Linq;
     using Internals.Parsing;
     using NUnit.Framework;
+    using Units.Internals;
 
     // run benchmarks in release build
     [Explicit(Benchmarks.LongRunning)]
@@ -57,8 +58,8 @@
             int pos = 4;
             double actual;
             const string text = "ab  1.2";
-            DoubleReader.TryRead(text, ref pos, NumberStyles.Float, CultureInfo.InvariantCulture, out actual);
-            var sw = Stopwatch.StartNew();
+            //DoubleReader.TryRead(text, ref pos, NumberStyles.Float, CultureInfo.InvariantCulture, out actual);
+            //var sw = Stopwatch.StartNew();
             var n = 1000000;
             for (int i = 0; i < n; i++)
             {
@@ -66,18 +67,18 @@
                 DoubleReader.TryRead(text, ref pos, NumberStyles.Float, CultureInfo.InvariantCulture, out actual);
             }
 
-            sw.Stop();
-            Console.WriteLine($"// {DateTime.Today.ToShortDateString()}| DoubleReader.TryRead(\"  1.2\", 4, ...)  {n:N0} times              took: {sw.ElapsedMilliseconds} ms");
+            //sw.Stop();
+            //Console.WriteLine($"// {DateTime.Today.ToShortDateString()}| DoubleReader.TryRead(\"  1.2\", 4, ...)  {n:N0} times              took: {sw.ElapsedMilliseconds} ms");
 
-            sw.Restart();
-            for (int i = 0; i < n; i++)
-            {
-                var substring = text.Substring(4);
-                double.TryParse(substring, NumberStyles.Float, CultureInfo.InvariantCulture, out actual);
-            }
+            //sw.Restart();
+            //for (int i = 0; i < n; i++)
+            //{
+            //    var substring = text.Substring(4);
+            //    double.TryParse(substring, NumberStyles.Float, CultureInfo.InvariantCulture, out actual);
+            //}
 
-            sw.Stop();
-            Console.WriteLine($"// {DateTime.Today.ToShortDateString()}| double.TryParse(substring, ...)        {n:N0} times              took: {sw.ElapsedMilliseconds} ms");
+            //sw.Stop();
+            //Console.WriteLine($"// {DateTime.Today.ToShortDateString()}| double.TryParse(substring, ...)        {n:N0} times              took: {sw.ElapsedMilliseconds} ms");
         }
 
         // 2015-11-28| IntReader.TryReadInt32("  12", 4, ...) 1 000 000 times               took: 40 ms
@@ -149,11 +150,28 @@
             sw.Stop();
             Console.WriteLine($"// {DateTime.Today.ToShortDateString()}| cdict.TryGetValue(i % 10, out actual);     {n:N0} times {sw.ElapsedMilliseconds} ms");
 
+            var slist = new SortedList<int, string>();
+            for (int i = 0; i < 10; i++)
+            {
+                slist[i] = i.ToString();
+            }
+
+            slist.TryGetValue(2, out actual);
+            sw.Restart();
+            for (int i = 0; i < n; i++)
+            {
+                slist.TryGetValue(i % 10, out actual);
+            }
+
+            sw.Stop();
+            Console.WriteLine($"// {DateTime.Today.ToShortDateString()}| slist.TryGetValue(i % 10, out actual);     {n:N0} times {sw.ElapsedMilliseconds} ms");
+
             var array = new KeyValuePair<int, string>[10];
             for (int i = 0; i < 10; i++)
             {
                 array[i] = new KeyValuePair<int, string>(i, i.ToString());
             }
+
             var kvp = Array.Find(array, x => x.Key == 2);
             sw.Restart();
             for (int i = 0; i < n; i++)
@@ -174,6 +192,16 @@
 
             sw.Stop();
             Console.WriteLine($"// {DateTime.Today.ToShortDateString()}| Array.BinarySearch(array, array[i % 10])   {n:N0} times {sw.ElapsedMilliseconds} ms");
+
+            sw.Restart();
+
+            for (int i = 0; i < n; i++)
+            {
+                var j = array.BinarySearchBy(x => x.Key, i % 10);
+            }
+
+            sw.Stop();
+            Console.WriteLine($"// {DateTime.Today.ToShortDateString()}| array.BinarySearchBy(x => x.Key, i % 10    {n:N0} times {sw.ElapsedMilliseconds} ms");
 
             sw.Restart();
 

@@ -206,6 +206,7 @@
     <Compile Include="Internals\Ensure\Ensure.compare.cs" />
     <Compile Include="Internals\Ensure\Ensure.cs" />
     <Compile Include="Internals\Ensure\Ensure.string.cs" />
+    <Compile Include="Internals\EnumerableExt.cs" />
     <Compile Include="Internals\Parsing\DoubleFormatReader.cs" />
     <Compile Include="Internals\Parsing\FormatParser.cs" />
     <Compile Include="Internals\Parsing\FormatParser{TUnit}.cs" />
