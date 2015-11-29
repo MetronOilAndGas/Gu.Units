@@ -50,8 +50,9 @@
             Console.WriteLine($"// {DateTime.Today.ToShortDateString()}| TryReadDoubleFormat(\"#0.00#\") {n:N0} times                 took: {sw.ElapsedMilliseconds} ms");
         }
 
-        // 2015-11-29| DoubleReader.TryRead("  1.2", 4, ...)  1 000 000 times              took: 110 ms
-        // 2015-11-29| double.TryParse(substring, ...)        1 000 000 times              took: 139 ms
+        // 2015-11-29| DoubleReader.TryRead("  123.45", 4, ...)  1 000 000 times 78 ms
+        // 2015-11-29| double.TryParse(substring, ...)           1 000 000 times 168 ms
+        // 2015-11-29| double.TryParse("123.45", ...)            1 000 000 times 121 ms
         [Test]
         public void TryReadDouble()
         {

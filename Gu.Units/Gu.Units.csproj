@@ -208,7 +208,7 @@
     <Compile Include="Internals\Ensure\Ensure.string.cs" />
     <Compile Include="Internals\EnumerableExt.cs" />
     <Compile Include="Internals\Parsing\DoubleFormatReader.cs" />
-    <Compile Include="Internals\Parsing\FormatParser.cs" />
+    <Compile Include="Internals\Parsing\CompositeFormatParser.cs" />
     <Compile Include="Internals\Parsing\FormatParser{TUnit}.cs" />
     <Compile Include="Internals\Parsing\IntReader.cs" />
     <Compile Include="Internals\Parsing\Results\QuantityFormat.cs" />

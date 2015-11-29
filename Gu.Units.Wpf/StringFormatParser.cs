@@ -34,7 +34,7 @@
                 }
             }
 
-            return FormatParser.TryParse(format, ref pos, end, out result);
+            return CompositeFormatParser.TryParse(format, ref pos, end, out result);
         }
 
         private static bool TryReadPrefix(string format,

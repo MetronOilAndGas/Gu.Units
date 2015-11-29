@@ -9,7 +9,7 @@
         public static QuantityFormat<TUnit> Default => FormatParser<TUnit>.DefaultFormat;
         internal static readonly char NoBreakingSpace = '\u00A0';
         internal static readonly string NoBreakingSpaceString = "\u00A0";
-        private string _compositeFormat;
+        private string compositeFormat;
 
         public QuantityFormat(string prePadding,
             string valueFormat,
@@ -38,8 +38,24 @@
         }
 
         public QuantityFormat(
+            string prePadding,
+            string valueFormat,
+            string padding,
+            string symbolFormat,
+            string postPadding,
             string errorFormat,
             TUnit unit)
+        {
+            PrePadding = prePadding;
+            ValueFormat = valueFormat;
+            Padding = padding;
+            SymbolFormat = symbolFormat;
+            PostPadding = postPadding;
+            ErrorFormat = errorFormat;
+            Unit = unit;
+        }
+
+        public QuantityFormat(string errorFormat, TUnit unit)
         {
             ErrorFormat = errorFormat;
             Unit = unit;
@@ -57,7 +73,7 @@
 
         internal string ErrorFormat { get; }
 
-        internal string CompositeFormat => _compositeFormat ?? (_compositeFormat = CreateCompositeFormat());
+        internal string CompositeFormat => this.compositeFormat ?? (this.compositeFormat = CreateCompositeFormat());
 
         internal TUnit Unit { get; }
 
@@ -69,6 +85,17 @@
         public static bool operator !=(QuantityFormat<TUnit> left, QuantityFormat<TUnit> right)
         {
             return !Equals(left, right);
+        }
+
+        public static QuantityFormat<TUnit> CreateFromParsedCompositeFormat(
+            string prePadding,
+            string valueFormat,
+            string padding,
+            string symbolFormat,
+            string postPadding,
+            TUnit unit)
+        {
+            return new QuantityFormat<TUnit>(prePadding, valueFormat, padding, symbolFormat, postPadding, $"{{value: {valueFormat ?? "??"}}}\u00A0{{unit: {symbolFormat ?? "??"}}}", unit);
         }
 
         public bool Equals(QuantityFormat<TUnit> other)

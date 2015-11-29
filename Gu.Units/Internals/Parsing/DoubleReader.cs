@@ -154,6 +154,7 @@
                     pos = start;
                     return false;
                 }
+
                 TryReadFractionDigits(text, ref pos, ref fraction, out fractionDigits);
             }
 
@@ -201,39 +202,39 @@
                 case 0:
                     return integral;
                 case 1:
-                    return integral + 1E-1 * fraction;
+                    return integral + fraction / 10.0;
                 case 2:
-                    return integral + 1E-2 * fraction;
+                    return integral + fraction / 100.0;
                 case 3:
-                    return integral + 1E-3 * fraction;
+                    return integral + fraction / 1000.0;
                 case 4:
-                    return integral + 1E-4 * fraction;
+                    return integral + fraction / 10000.0;
                 case 5:
-                    return integral + 1E-5 * fraction;
+                    return integral + fraction / 100000.0;
                 case 6:
-                    return integral + 1E-6 * fraction;
+                    return integral + fraction / 1000000.0;
                 case 7:
-                    return integral + 1E-7 * fraction;
+                    return integral + fraction / 10000000.0;
                 case 8:
-                    return integral + 1E-8 * fraction;
+                    return integral + fraction / 100000000.0;
                 case 9:
-                    return integral + 1E-9 * fraction;
+                    return integral + fraction / 1000000000.0;
                 case 10:
-                    return integral + 1E-10 * fraction;
+                    return integral + fraction / 10000000000.0;
                 case 11:
-                    return integral + 1E-11 * fraction;
+                    return integral + fraction / 100000000000.0;
                 case 12:
-                    return integral + 1E-12 * fraction;
+                    return integral + fraction / 1000000000000.0;
                 case 13:
-                    return integral + 1E-13 * fraction;
+                    return integral + fraction / 10000000000000.0;
                 case 14:
-                    return integral + 1E-14 * fraction;
+                    return integral + fraction / 100000000000000.0;
                 case 15:
-                    return integral + 1E-15 * fraction;
+                    return integral + fraction / 1000000000000000.0;
                 case 16:
-                    return integral + 1E-16 * fraction;
+                    return integral + fraction / 10000000000000000.0;
                 case 17:
-                    return integral + 1E-17 * fraction;
+                    return integral + fraction / 100000000000000000.0;
                 default:
                     throw new ArgumentOutOfRangeException("Fraction must be truncated before calling this");
             }

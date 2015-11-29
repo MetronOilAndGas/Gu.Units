@@ -1,6 +1,6 @@
 ﻿namespace Gu.Units
 {
-    internal static class FormatParser
+    internal static class CompositeFormatParser
     {
         internal static bool TryParse<TUnit>(string format, out QuantityFormat<TUnit> result)
             where TUnit : struct, IUnit
@@ -21,15 +21,23 @@
             var prePaddingStart = pos;
             format.TryReadWhiteSpace(ref pos);
             var prePaddingEnd = pos;
-            string doubleFormat;
-            DoubleFormatReader.TryReadDoubleFormat(format, ref pos, out doubleFormat);
+            string valueFormat;
+            if (!DoubleFormatReader.TryReadDoubleFormat(format, ref pos, out valueFormat))
+            {
+                valueFormat = null;
+                prePaddingEnd = prePaddingStart;
+            }
 
             var padStart = pos;
             format.TryReadWhiteSpace(ref pos);
             var padEnd = pos;
             string symbolFormat;
             TUnit unit;
-            TryReadUnit(format, ref pos, out symbolFormat, out unit);
+            if (!TryReadUnit(format, ref pos, out symbolFormat, out unit))
+            {
+                symbolFormat = null;
+                padEnd = padStart;
+            }
             var symbolEnd = pos;
 
             if (!format.IsRestWhiteSpace(ref pos, end))
@@ -39,28 +47,45 @@
                 return false;
             }
 
-            var prePadding = GetPrePadding(format, prePaddingStart, prePaddingEnd, doubleFormat);
-            var padding = GetPadding(format, doubleFormat, padStart, padEnd, symbolFormat);
+            var prePadding = GetPrePadding(format, prePaddingStart, prePaddingEnd, valueFormat);
+            var padding = GetPadding(format, valueFormat, padStart, padEnd, symbolFormat);
             var postPadding = GetPostPadding(format, symbolEnd, pos);
-            result = new QuantityFormat<TUnit>(prePadding, doubleFormat, padding, symbolFormat, postPadding, unit);
-            return true;
+            result = QuantityFormat<TUnit>.CreateFromParsedCompositeFormat(prePadding, valueFormat, padding, symbolFormat, postPadding, unit);
+            return valueFormat != null && symbolFormat != null;
         }
 
         private static bool TryParse<TUnit>(string format, TUnit unit, out QuantityFormat<TUnit> result)
             where TUnit : struct, IUnit
         {
             int pos = 0;
-            string doubleFormat;
+            string valueFormat;
             var prePaddingStart = pos;
             format.TryReadWhiteSpace(ref pos);
             var prePaddingEnd = pos;
-            DoubleFormatReader.TryReadDoubleFormat(format, ref pos, out doubleFormat);
+            if (!DoubleFormatReader.TryReadDoubleFormat(format, ref pos, out valueFormat))
+            {
+                valueFormat = null;
+                prePaddingEnd = prePaddingStart;
+            }
+
             var padStart = pos;
             format.TryReadWhiteSpace(ref pos);
             var padEnd = pos;
             string symbolFormat;
             TUnit readUnit;
-            var readUnitFormat = TryReadUnit(format, ref pos, out symbolFormat, out readUnit);
+            if (TryReadUnit(format, ref pos, out symbolFormat, out readUnit))
+            {
+                if (!Equals(readUnit, unit))
+                {
+                    symbolFormat = null;
+                    padEnd = padStart;
+                }
+            }
+            else
+            {
+                symbolFormat = unit.Symbol;
+            }
+
             var symbolEnd = pos;
 
             if (!format.IsRestWhiteSpace(pos))
@@ -69,19 +94,14 @@
                 return false;
             }
 
-            var prePadding = GetPrePadding(format, prePaddingStart, prePaddingEnd, doubleFormat);
-            var padding = GetPadding(format, doubleFormat, padStart, padEnd, symbolFormat);
+            var prePadding = GetPrePadding(format, prePaddingStart, prePaddingEnd, valueFormat);
+            var padding = GetPadding(format, valueFormat, padStart, padEnd, symbolFormat);
             var postPadding = GetPostPadding(format, symbolEnd, pos);
 
-            if (readUnitFormat && !Equals(readUnit, unit))
-            {
-                // choosing the parsed format for symbol
-                result = new QuantityFormat<TUnit>(prePadding, doubleFormat, padding, symbolFormat, postPadding, unit);
-                return false;
-            }
 
-            result = new QuantityFormat<TUnit>(prePadding, doubleFormat, padding, symbolFormat, postPadding, unit);
-            return true;
+
+            result = QuantityFormat<TUnit>.CreateFromParsedCompositeFormat(prePadding, valueFormat, padding, symbolFormat, postPadding, unit);
+            return valueFormat != null && symbolFormat != null;
         }
 
         internal static QuantityFormat<TUnit> Create<TUnit>(FormatAndUnit<TUnit> fau)

@@ -54,7 +54,7 @@
     <Compile Include="Internals\Parsing\DoubleReaderTests.cs" />
     <Compile Include="EnumerableTests.cs" />
     <Compile Include="Internals\Parsing\Extensions\ThreadExt.cs" />
-    <Compile Include="Internals\Parsing\FormatParserTests.cs" />
+    <Compile Include="Internals\Parsing\CompositeFormatParserTests.cs" />
     <Compile Include="Internals\Parsing\ParseLengthTests.cs" />
     <Compile Include="Internals\Parsing\ParseRoundtripTests.cs" />
     <Compile Include="Constants\Reminder.cs" />

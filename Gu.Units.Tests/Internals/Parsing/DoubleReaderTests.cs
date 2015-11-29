@@ -112,6 +112,7 @@
             CreateParseData("0.0", NumberStyles.Float, en),
             CreateParseData("1.2", NumberStyles.Float, en),
             CreateParseData("0.012", NumberStyles.Float, en),
+            CreateParseData("0.0012", NumberStyles.Float, en),
             CreateParseData("0.001", NumberStyles.Float, en),
             CreateParseData("1", NumberStyles.Float, en),
             CreateParseData(" 1", NumberStyles.Float, en),
