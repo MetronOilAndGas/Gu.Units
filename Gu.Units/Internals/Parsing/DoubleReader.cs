@@ -31,7 +31,7 @@
                 throw new ArgumentException("Invalid NumberStyles", nameof(style));
             }
 
-            if (style.HasFlag(NumberStyles.AllowHexSpecifier))
+            if ((style & NumberStyles.AllowHexSpecifier) != 0)
             {
                 throw new ArgumentException("Hex not supported", nameof(style));
             }
@@ -235,6 +235,10 @@
                     return integral + fraction / 10000000000000000.0;
                 case 17:
                     return integral + fraction / 100000000000000000.0;
+                case 18:
+                    return integral + fraction / 1000000000000000000.0;
+                case 19:
+                    return integral + fraction / 10000000000000000000.0;
                 default:
                     throw new ArgumentOutOfRangeException("Fraction must be truncated before calling this");
             }
@@ -340,6 +344,11 @@
                         return false;
                     }
 
+                    if (pos == text.Length)
+                    {
+                        return false;
+                    }
+
                     if (IntReader.GetDigitOrMinusOne(text[pos]) == -1)
                     {
                         pos = start;
@@ -367,7 +376,7 @@
                 }
 
                 pos++;
-                if (pos - start < 18)
+                if (pos - start < 20)
                 {
                     result *= 10;
                     result += (uint)i;

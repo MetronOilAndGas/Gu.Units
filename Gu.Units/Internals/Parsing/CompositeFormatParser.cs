@@ -31,7 +31,7 @@
             string valueFormat;
             if (!DoubleFormatReader.TryReadDoubleFormat(format, ref pos, out valueFormat))
             {
-                valueFormat = null;
+                valueFormat = FormatCache.UnknownFormat;
                 prePaddingEnd = prePaddingStart;
             }
 
@@ -42,23 +42,29 @@
             TUnit unit;
             if (!TryReadUnit(format, ref pos, out symbolFormat, out unit))
             {
-                symbolFormat = null;
+                symbolFormat = FormatCache.UnknownFormat;
                 padEnd = padStart;
             }
 
             var symbolEnd = pos;
             if (!format.IsRestWhiteSpace(ref pos, end))
             {
-                result = QuantityFormat<TUnit>.CreateUnknown(format, Unit<TUnit>.Default);
-                pos = padStart;
-                return false;
+                symbolFormat = FormatCache.UnknownFormat;
             }
 
             var prePadding = GetPrePadding(format, prePaddingStart, prePaddingEnd, valueFormat);
             var padding = GetPadding(format, valueFormat, padStart, padEnd, symbolFormat);
             var postPadding = GetPostPadding(format, symbolEnd, pos);
-            result = QuantityFormat<TUnit>.CreateFromParsedCompositeFormat(prePadding, valueFormat, padding, symbolFormat, postPadding, unit);
-            return valueFormat != null && symbolFormat != null;
+            if (valueFormat == FormatCache.UnknownFormat &&
+                symbolFormat == FormatCache.UnknownFormat)
+            {
+                result = QuantityFormat<TUnit>.CreateUnknown(format, unit);
+            }
+            else
+            {
+                result = QuantityFormat<TUnit>.CreateFromParsedCompositeFormat(prePadding, valueFormat, padding, symbolFormat, postPadding, unit);
+            }
+            return valueFormat != FormatCache.UnknownFormat && symbolFormat != FormatCache.UnknownFormat;
         }
 
         private static bool TryReadUnit<TUnit>(string format,

@@ -209,8 +209,8 @@
     <Compile Include="Internals\EnumerableExt.cs" />
     <Compile Include="Internals\Parsing\DoubleFormatReader.cs" />
     <Compile Include="Internals\Parsing\CompositeFormatParser.cs" />
-    <Compile Include="Internals\Parsing\FormatCache.cs" />
-    <Compile Include="Internals\Parsing\FormatCache{TUnit}.cs" />
+    <Compile Include="Internals\FormatCache.cs" />
+    <Compile Include="Internals\FormatCache{TUnit}.cs" />
     <Compile Include="Internals\Parsing\IntReader.cs" />
     <Compile Include="Internals\Parsing\Results\QuantityFormat.cs" />
     <Compile Include="Internals\SubstringCache.cs" />

@@ -100,7 +100,7 @@
                 Assert.AreEqual("1.2\u00A0m", length.ToString());
                 Assert.AreEqual("120\u00A0cm", length.ToString(LengthUnit.Centimetres));
                 Assert.AreEqual(" 1200.0 mm ", length.ToString(" F1 mm "));
-                Assert.AreEqual(" 1.2 m", length.ToString(" F1 "));
+                Assert.AreEqual("{value: F1} {unit: ??}", length.ToString(" F1 "));
                 Assert.AreEqual("12.0\u00A0dm", length.ToString("F1", LengthUnit.Decimetres));
             }
 

@@ -318,27 +318,72 @@
             return unit.FromSiUnit(this.candelas);
         }
 
+        /// <summary>
+        /// Returns a string with the <see cref="SiValue"/> and <see cref="SiUnit"/>
+        /// </summary>
+        /// <returns>The string representation of the <see cref="LuminousIntensity"/></returns>
         public override string ToString()
         {
             var quantityFormat = FormatCache<LuminousIntensityUnit>.GetOrCreate(null, this.SiUnit);
-            return this.ToString(quantityFormat, null);
+            return this.ToString(quantityFormat, (IFormatProvider)null);
         }
 
-        public string ToString(string format)
-        {
-            var quantityFormat = FormatCache<LuminousIntensityUnit>.GetOrCreate(format);
-            return ToString(quantityFormat, null);
-        }
-
+        /// <summary>
+        /// Returns a string with the <see cref="SiValue"/> and <see cref="SiUnit"/>
+        /// </summary>
+        /// <returns>The string representation of the <see cref="LuminousIntensity"/></returns>
         public string ToString(IFormatProvider provider)
         {
             var quantityFormat = FormatCache<LuminousIntensityUnit>.GetOrCreate(string.Empty, SiUnit);
             return ToString(quantityFormat, provider);
         }
 
+        /// <summary>
+        /// If an invalid format is provided the string will look like: {value: ??} {unit: ??}
+        /// </summary>
+        /// <param name="format">Must be a composite format ex: \"F2 cd\"</param>
+        /// <returns>The string representation of the <see cref="LuminousIntensity"/></returns>
+        public string ToString(string format)
+        {
+            var quantityFormat = FormatCache<LuminousIntensityUnit>.GetOrCreate(format);
+            return ToString(quantityFormat, (IFormatProvider)null);
+        }
+
+        /// <summary>
+        /// If an invalid format is provided the string will look like: {value: ??} {unit: ??}
+        /// </summary>
+        /// <param name="format">Must be a composite format ex: \"F2 cd\"</param>
+        /// <returns>The string representation of the <see cref="LuminousIntensity"/></returns> 
         public string ToString(string format, IFormatProvider formatProvider)
         {
             var quantityFormat = FormatCache<LuminousIntensityUnit>.GetOrCreate(format);
+            return ToString(quantityFormat, formatProvider);
+        }
+
+        /// <summary>
+        ///  If an invalid format is provided the string will look like: {value: ??} {unit: ??}
+        /// </summary>
+        /// <param name="valueFormat">For formatting the scalar, format stings valid for <see cref="System.double"/> are valid
+        ///  ex: F2</param>
+        /// <param name="symbolFormat">For formatting of the unit ex cd</param>
+        /// <returns>The string representation of the <see cref="LuminousIntensity"/></returns>
+        public string ToString(string valueFormat, string symbolFormat)
+        {
+            var quantityFormat = FormatCache<LuminousIntensityUnit>.GetOrCreate(valueFormat, symbolFormat);
+            return ToString(quantityFormat, (IFormatProvider)null);
+        }
+
+        /// <summary>
+        ///  If an invalid format is provided the string will look like: {value: ??} {unit: ??}
+        /// </summary>
+        /// <param name="valueFormat">For formatting the scalar, format stings valid for <see cref="System.double"/> are valid
+        ///  ex: F2</param>
+        /// <param name="symbolFormat">For formatting the unit ex cd</param>
+        /// <param name="formatProvider"></param>
+        /// <returns>The string representation of the <see cref="LuminousIntensity"/></returns>
+        public string ToString(string valueFormat, string symbolFormat, IFormatProvider formatProvider)
+        {
+            var quantityFormat = FormatCache<LuminousIntensityUnit>.GetOrCreate(valueFormat, symbolFormat);
             return ToString(quantityFormat, formatProvider);
         }
 

@@ -69,22 +69,49 @@
             string postPadding,
             TUnit unit)
         {
-            var formattableString = valueFormat == null || symbolFormat == null
+            string errorFormat = valueFormat == FormatCache.UnknownFormat || symbolFormat == FormatCache.UnknownFormat
                 ? $"{{value: {valueFormat ?? FormatCache.UnknownFormat}}}\u00A0{{unit: {symbolFormat ?? FormatCache.UnknownFormat}}}"
                 : null;
 
-            return new QuantityFormat<TUnit>(prePadding, valueFormat, padding, symbolFormat, postPadding, formattableString, unit);
+            return new QuantityFormat<TUnit>(prePadding, valueFormat, padding, symbolFormat, postPadding, errorFormat, unit);
         }
 
-        public static QuantityFormat<TUnit> CreateFromValueAndUnit(string prePadding, string valueFormat, string padding, TUnit unit)
+        public static QuantityFormat<TUnit> CreateFromValueAndSymbolFormats(string prePadding, string valueFormat, string padding, TUnit unit)
         {
             var errorFormat = valueFormat == FormatCache.UnknownFormat
                 ? $"{{value: {valueFormat}}}\u00A0{{unit: {unit.Symbol}}}"
                 : null;
-            padding =padding == null && ShouldSpace(unit.Symbol)
+            padding = padding == null && ShouldSpace(unit.Symbol)
                 ? NoBreakingSpaceString
                 : null;
-            return new QuantityFormat<TUnit>(prePadding, valueFormat, padding, unit.Symbol, padding, errorFormat, unit);
+            return new QuantityFormat<TUnit>(prePadding, valueFormat, padding, unit.Symbol, null, errorFormat, unit);
+        }
+
+        public static QuantityFormat<TUnit> CreateFromValueAndSymbolFormats(string prePadding,
+            string valueFormat,
+            string valuePadding,
+            string symbolPadding,
+            string symbolFormat,
+            string postPadding,
+            TUnit unit)
+        {
+            var errorFormat = valueFormat == FormatCache.UnknownFormat || symbolFormat == FormatCache.UnknownFormat
+                ? $"{{value: {valueFormat}}}\u00A0{{unit: {symbolFormat}}}"
+                : null;
+
+            string padding = null;
+            if (valuePadding == null &&
+                symbolPadding == null &&
+                ShouldSpace(symbolFormat))
+            {
+                padding = NoBreakingSpaceString;
+            }
+            else
+            {
+                padding = valuePadding + symbolPadding;
+            }
+
+            return new QuantityFormat<TUnit>(prePadding, valueFormat, padding, symbolFormat, postPadding, errorFormat, unit);
         }
 
         public bool Equals(QuantityFormat<TUnit> other)

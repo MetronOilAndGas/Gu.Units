@@ -30,7 +30,7 @@
             Assert.AreEqual("1,200°", angle.ToString("F3°", sv));
             Assert.AreEqual("1,2°", angle.ToString(AngleUnit.Degrees, sv));
             Assert.AreEqual(" 1,2 ° ", angle.ToString(" F1 ° ", sv));
-            Assert.AreEqual(" 0,02 rad", angle.ToString(" F2 ", sv));
+            Assert.AreEqual(" 0,02 rad", angle.ToString(" F2 rad", sv));
             Assert.AreEqual("1,200°", angle.ToString("F3", AngleUnit.Degrees, sv));
             Assert.AreEqual("0,02\u00A0rad", angle.ToString("F2", AngleUnit.Radians, sv));
         }
@@ -42,25 +42,29 @@
             const string UnknownFormat = "unknown format";
             using (Thread.CurrentThread.UsingTempCulture(CultureInfo.InvariantCulture))
             {
-                Assert.AreEqual("1.20\u00A0m/s", speed.ToString("F2"));
+                Assert.AreEqual("1.20 m/s", speed.ToString("F2 m/s"));
                 Assert.AreEqual(UnknownFormat, 1.2.ToString(UnknownFormat)); // for comparison
                 Assert.AreEqual(UnknownFormat, speed.ToString(UnknownFormat));
+                Assert.AreEqual("F1 {unit:??}", speed.ToString("F1 invalid"));
                 Assert.AreEqual("1.20 m⋅s⁻¹", speed.ToString("F2 m⋅s⁻¹"));
                 Assert.AreEqual("1.2\u00A0m/s", speed.ToString());
-                Assert.AreEqual("1.2\u00A0m⋅s⁻¹", speed.ToString("m⋅s⁻¹"));
+                Assert.AreEqual("1.2\u00A0m⋅s⁻¹", speed.ToString("f1", "m⋅s⁻¹"));
+                Assert.AreEqual("1.2 m⋅s⁻¹", speed.ToString("f1 ", "m⋅s⁻¹"));
+                Assert.AreEqual("1.2 m⋅s⁻¹", speed.ToString("f1", " m⋅s⁻¹"));
+                Assert.AreEqual("1.2  m⋅s⁻¹", speed.ToString("f1 ", " m⋅s⁻¹"));
                 Assert.AreEqual("1200\u00A0mm⋅s⁻¹", speed.ToString("mm⋅s⁻¹"));
-                Assert.AreEqual("1200\u00A0s⁻¹⋅mm", speed.ToString("s⁻¹⋅mm"));
-                Assert.AreEqual("1200\u00A0s⁻¹⋅mm¹", speed.ToString("s⁻¹⋅mm¹"));
-                Assert.AreEqual("1.2\u00A0m*s^-1", speed.ToString("m*s^-1"));
-                Assert.AreEqual("1.2\u00A0s^-1*m", speed.ToString("s^-1*m"));
-                Assert.AreEqual("1.2\u00A0s^-1*m^1", speed.ToString("s^-1*m^1"));
+                Assert.AreEqual("1200\u00A0s⁻¹⋅mm", speed.ToString("F0", "s⁻¹⋅mm"));
+                Assert.AreEqual("1200\u00A0s⁻¹⋅mm¹", speed.ToString("F0", "s⁻¹⋅mm¹"));
+                Assert.AreEqual("1.2\u00A0m*s^-1", speed.ToString("F1", "m*s^-1"));
+                Assert.AreEqual("1.2\u00A0s^-1*m", speed.ToString("F1", "s^-1*m"));
+                Assert.AreEqual("1.2\u00A0s^-1*m^1", speed.ToString("F1", "s^-1*m^1"));
                 Assert.AreEqual("4.32\u00A0km/h", speed.ToString(SpeedUnit.KilometresPerHour));
                 Assert.AreEqual("4.3\u00A0km/h", speed.ToString("F1", SpeedUnit.KilometresPerHour));
                 Assert.AreEqual("1,200.00 mm⋅s⁻¹", speed.ToString("N mm⋅s⁻¹"));
             }
 
             var sv = CultureInfo.GetCultureInfo("sv-SE");
-            Assert.AreEqual("1,20\u00A0m/s", speed.ToString("F2", sv));
+            Assert.AreEqual("1,20 m/s", speed.ToString("F2 m/s", sv));
             Assert.AreEqual(UnknownFormat, 1.2.ToString(UnknownFormat, sv)); // for comparison
             Assert.AreEqual(UnknownFormat, speed.ToString(UnknownFormat, sv));
             Assert.AreEqual("1,20 m⋅s⁻¹", speed.ToString("F2 m⋅s⁻¹", sv));

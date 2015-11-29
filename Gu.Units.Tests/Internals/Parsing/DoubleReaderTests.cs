@@ -7,23 +7,22 @@
 
     public class DoubleReaderTests
     {
-        private static readonly string[] padFormat = { "abc{0}def", "abcd{0}ef" };
+        private static readonly string[] PadFormats = { "abc{0}def", "abcd{0}ef","{0}" };
 
         [TestCaseSource(nameof(DoubleParseHappyPathSource))]
         public void ReadSuccess(DoubleData data)
         {
             var culture = data.Culture;
             var style = data.Styles;
-            var s = data.Text;
-            foreach (var format in padFormat)
+            foreach (var format in PadFormats)
             {
-                var ns = string.Format(format, s);
+                var text = string.Format(format, data.Text);
                 var pos = format.IndexOf('{');
                 var start = pos;
-                double expected = double.Parse(s, style, culture);
-                var actual = DoubleReader.Read(ns, ref pos, style, culture);
+                double expected = double.Parse(data.Text, style, culture);
+                var actual = DoubleReader.Read(text, ref pos, style, culture);
                 Assert.AreEqual(expected, actual);
-                var expectedEnd = start + s.Length;
+                var expectedEnd = start + data.Text.Length;
                 Assert.AreEqual(expectedEnd, pos);
             }
         }
@@ -34,7 +33,7 @@
             var culture = data.Culture;
             var style = data.Styles;
             var s = data.Text;
-            foreach (var format in padFormat)
+            foreach (var format in PadFormats)
             {
                 var ns = string.Format(format, s);
                 var pos = format.IndexOf('{');
@@ -64,7 +63,7 @@
         {
             var culture = data.Culture;
             var style = data.Styles;
-            foreach (var format in padFormat)
+            foreach (var format in PadFormats)
             {
                 var text = string.Format(format, data.Text);
                 var pos = format.IndexOf('{');
@@ -85,7 +84,7 @@
             var culture = data.Culture;
             var style = data.Styles;
             var s = data.Text;
-            foreach (var format in padFormat)
+            foreach (var format in PadFormats)
             {
                 var ns = string.Format(format, s);
                 var pos = format.IndexOf('{');
@@ -148,8 +147,10 @@
             CreateParseData(-Math.PI, NumberStyles.Float, en, "f15"),
             CreateParseData(-Math.PI, NumberStyles.Float, en, "f16"),
             CreateParseData(-Math.PI, NumberStyles.Float, en, "f17"),
+            CreateParseData(Math.PI, NumberStyles.Float, en, "f25"),
             CreateParseData("3.141592653589793238", NumberStyles.Float, en),
             CreateParseData("-3.141592653589793238", NumberStyles.Float, en),
+            CreateParseData("0.017453292519943295", NumberStyles.Float, en),
             CreateParseData(-Math.PI, NumberStyles.Float, en, "r"),
             CreateParseData(sv.NumberFormat.NaNSymbol, NumberStyles.Float, sv),
             CreateParseData(sv.NumberFormat.PositiveInfinitySymbol, NumberStyles.Float, sv),
