@@ -1,6 +1,7 @@
 namespace Gu.Units
 {
     using System;
+    using System.Collections.Generic;
 
     internal class SubstringCache<TItem>
     {
@@ -16,52 +17,30 @@ namespace Gu.Units
                 return false;
             }
 
-            CachedItem? tempResult = null;
-            var temp = this.cache;
-            int lo = 0;
-            int hi = temp.Length - 1;
-            int i = 0;
-            while (lo <= hi)
+            var tempCache = this.cache;
+            var index = BinaryFindSubstring(this.cache, text, pos);
+            if (index < 0)
             {
-                if (tempResult == null)
+                result = default(CachedItem);
+                return false;
+            }
+
+            result = tempCache[index];
+            for (int i = index + 1; i < tempCache.Length; i++)
+            {
+                // searching linearly for longest match after finding one
+                var temp = tempCache[i];
+                if (Compare(temp.Key, text, pos) == 0)
                 {
-                    i = GetMedian(lo, hi);
+                    result = temp;
                 }
                 else
                 {
-                    i = i + 1; // searching linearly for longest match after finding one
-                    if (i == temp.Length)
-                    {
-                        result = tempResult.Value;
-                        return true;
-                    }
-                }
-
-                var symbolAndUnit = temp[i];
-                var c = Compare(symbolAndUnit.Key, text, pos);
-                if (c == 0)
-                {
-                    tempResult = symbolAndUnit;
-                    continue;
-                }
-                else if (tempResult != null)
-                {
-                    result = tempResult.Value;
                     return true;
-                }
-
-                if (c < 0)
-                {
-                    lo = i + 1;
-                }
-                else
-                {
-                    hi = i - 1;
                 }
             }
 
-            result = default(CachedItem);
-            return false;
+            return true;
         }
 
         internal void Add(CachedItem item)
@@ -89,6 +68,33 @@ namespace Gu.Units
                 Array.Sort(updated);
                 this.cache = updated;
             }
+        }
+
+        private static int BinaryFindSubstring(CachedItem[] cache, string key, int pos)
+        {
+            int lo = 0;
+            int hi = cache.Length - 1;
+            while (lo <= hi)
+            {
+                var i = (lo + hi) / 2;
+                var cached = cache[i];
+                var c = Compare(cached.Key, key, pos);
+                if (c == 0)
+                {
+                    return i;
+                }
+
+                if (c < 0)
+                {
+                    lo = i + 1;
+                }
+                else
+                {
+                    hi = i - 1;
+                }
+            }
+
+            return ~1;
         }
 
         private static int Compare(string cached, string key, int pos)

@@ -34,7 +34,7 @@ namespace Gu.Units.Tests.Internals.Parsing
         public void TryRead(string text, int pos, string expected, int expectedPos)
         {
             string actual;
-            var success = DoubleFormatReader.TryReadDoubleFormat(text, ref pos, out actual);
+            var success = DoubleFormatReader.TryRead(text, ref pos, out actual);
             Assert.AreEqual(true, success);
             Assert.AreEqual(expected, actual);
             Assert.AreEqual(expectedPos, pos);
@@ -50,7 +50,7 @@ namespace Gu.Units.Tests.Internals.Parsing
         public void TryReadError(string text, int pos, string expectedFormatted)
         {
             string actual;
-            var success = DoubleFormatReader.TryReadDoubleFormat(text, ref pos, out actual);
+            var success = DoubleFormatReader.TryRead(text, ref pos, out actual);
             Assert.AreEqual(false, success);
             Assert.AreEqual(text, actual);
             Assert.AreEqual(0, pos);

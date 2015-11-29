@@ -29,7 +29,8 @@
             Unit = unit;
         }
 
-        public QuantityFormat(string errorFormat, TUnit unit)
+        public QuantityFormat(string errorFormat,
+            TUnit unit)
         {
             ErrorFormat = errorFormat;
             Unit = unit;
@@ -51,67 +52,16 @@
 
         internal TUnit Unit { get; }
 
-        public static bool operator ==(QuantityFormat<TUnit> left, QuantityFormat<TUnit> right)
+        public static bool operator ==(QuantityFormat<TUnit> left,
+            QuantityFormat<TUnit> right)
         {
             return Equals(left, right);
         }
 
-        public static bool operator !=(QuantityFormat<TUnit> left, QuantityFormat<TUnit> right)
+        public static bool operator !=(QuantityFormat<TUnit> left,
+            QuantityFormat<TUnit> right)
         {
             return !Equals(left, right);
-        }
-
-        public static QuantityFormat<TUnit> CreateFromParsedCompositeFormat(
-            string prePadding,
-            string valueFormat,
-            string padding,
-            string symbolFormat,
-            string postPadding,
-            TUnit unit)
-        {
-            string errorFormat = valueFormat == FormatCache.UnknownFormat || symbolFormat == FormatCache.UnknownFormat
-                ? $"{{value: {valueFormat ?? FormatCache.UnknownFormat}}}\u00A0{{unit: {symbolFormat ?? FormatCache.UnknownFormat}}}"
-                : null;
-
-            return new QuantityFormat<TUnit>(prePadding, valueFormat, padding, symbolFormat, postPadding, errorFormat, unit);
-        }
-
-        public static QuantityFormat<TUnit> CreateFromValueAndSymbolFormats(string prePadding, string valueFormat, string padding, TUnit unit)
-        {
-            var errorFormat = valueFormat == FormatCache.UnknownFormat
-                ? $"{{value: {valueFormat}}}\u00A0{{unit: {unit.Symbol}}}"
-                : null;
-            padding = padding == null && ShouldSpace(unit.Symbol)
-                ? NoBreakingSpaceString
-                : null;
-            return new QuantityFormat<TUnit>(prePadding, valueFormat, padding, unit.Symbol, null, errorFormat, unit);
-        }
-
-        public static QuantityFormat<TUnit> CreateFromValueAndSymbolFormats(string prePadding,
-            string valueFormat,
-            string valuePadding,
-            string symbolPadding,
-            string symbolFormat,
-            string postPadding,
-            TUnit unit)
-        {
-            var errorFormat = valueFormat == FormatCache.UnknownFormat || symbolFormat == FormatCache.UnknownFormat
-                ? $"{{value: {valueFormat}}}\u00A0{{unit: {symbolFormat}}}"
-                : null;
-
-            string padding = null;
-            if (valuePadding == null &&
-                symbolPadding == null &&
-                ShouldSpace(symbolFormat))
-            {
-                padding = NoBreakingSpaceString;
-            }
-            else
-            {
-                padding = valuePadding + symbolPadding;
-            }
-
-            return new QuantityFormat<TUnit>(prePadding, valueFormat, padding, symbolFormat, postPadding, errorFormat, unit);
         }
 
         public bool Equals(QuantityFormat<TUnit> other)
@@ -170,6 +120,60 @@
             }
         }
 
+        internal static QuantityFormat<TUnit> CreateFromParsedCompositeFormat(
+            string prePadding,
+            string valueFormat,
+            string padding,
+            string symbolFormat,
+            string postPadding,
+            TUnit unit)
+        {
+            string errorFormat = CreateErrorFormat(valueFormat, symbolFormat);
+
+            return new QuantityFormat<TUnit>(
+                prePadding,
+                valueFormat,
+                padding,
+                symbolFormat,
+                postPadding,
+                errorFormat,
+                unit);
+        }
+
+        internal static QuantityFormat<TUnit> CreateFromValueFormatAndUnit(string prePadding, string valueFormat, string padding, TUnit unit)
+        {
+            var errorFormat = CreateErrorFormat(valueFormat, unit.Symbol);
+            padding = padding == null && ShouldSpace(unit.Symbol)
+                ? NoBreakingSpaceString
+                : null;
+            return new QuantityFormat<TUnit>(prePadding, valueFormat, padding, unit.Symbol, null, errorFormat, unit);
+        }
+
+        internal static QuantityFormat<TUnit> CreateFromValueAndSymbolFormats(string prePadding,
+            string valueFormat,
+            string valuePadding,
+            string symbolPadding,
+            string symbolFormat,
+            string postPadding,
+            TUnit unit)
+        {
+            var errorFormat = CreateErrorFormat(valueFormat, symbolFormat);
+
+            string padding = null;
+            if (valuePadding == null &&
+                symbolPadding == null &&
+                ShouldSpace(symbolFormat))
+            {
+                padding = NoBreakingSpaceString;
+            }
+            else
+            {
+                padding = valuePadding + symbolPadding;
+            }
+
+            return new QuantityFormat<TUnit>(prePadding, valueFormat, padding, symbolFormat, postPadding, errorFormat, unit);
+        }
+
         internal static QuantityFormat<TUnit> CreateUnknown(string errorFormat, TUnit unit)
         {
             return new QuantityFormat<TUnit>(errorFormat, unit);
@@ -182,6 +186,38 @@
                 return true;
             }
             return char.IsLetter(symbol[0]);
+        }
+
+        private static string CreateErrorFormat(string valueFormat,
+            string symbolFormat)
+        {
+            if (valueFormat == FormatCache.UnknownFormat ||
+                symbolFormat == FormatCache.UnknownFormat)
+            {
+                using (var writer = StringBuilderPool.Borrow())
+                {
+                    if (valueFormat == FormatCache.UnknownFormat)
+                    {
+                        writer.Append($"{{value: {valueFormat}}}");
+                    }
+                    else
+                    {
+                        writer.Append(valueFormat);
+                    }
+
+                    writer.Append(NoBreakingSpace);
+                    if (symbolFormat == FormatCache.UnknownFormat)
+                    {
+                        writer.Append($"{{unit: {symbolFormat}}}");
+                    }
+                    else
+                    {
+                        writer.Append(symbolFormat);
+                    }
+                    return writer.ToString();
+                }
+            }
+            return null;
         }
 
         private string CreateCompositeFormat()

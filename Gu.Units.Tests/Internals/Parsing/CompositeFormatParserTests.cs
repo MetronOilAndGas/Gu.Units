@@ -61,8 +61,8 @@
             Assert.AreEqual(expectedSymbol, actual.Unit.Symbol);
         }
 
-        [TestCase("E", "{value: E}\u00A0{unit: ??}")]
-        [TestCase("mm", "{value: ??}\u00A0{unit: mm}")]
+        [TestCase("E", "E\u00A0{unit: ??}")]
+        [TestCase("mm", "{value: ??}\u00A0mm")]
         public void TryParseError(string text, string expectedError)
         {
             QuantityFormat<LengthUnit> actual;

@@ -8,7 +8,7 @@
 
     public class ParseLengthTests
     {
-        [TestCaseSource(nameof(SuccessSource))]
+        [TestCaseSource(nameof(HappyPaths))]
         public void ParseLengthSuccess(SuccessData<Length> data)
         {
             var numberStyles = NumberStyles.Float;
@@ -29,7 +29,7 @@
             }
         }
 
-        [TestCaseSource(nameof(ErrorSource))]
+        [TestCaseSource(nameof(Errors))]
         public void ParseLengthThrows(ErrorData<Length> data)
         {
             var numberStyles = NumberStyles.Float;
@@ -49,7 +49,7 @@
             }
         }
 
-        [TestCaseSource(nameof(SuccessSource))]
+        [TestCaseSource(nameof(HappyPaths))]
         public void TryParseLengthSuccess(SuccessData<Length> data)
         {
             Length actual;
@@ -78,7 +78,7 @@
             }
         }
 
-        [TestCaseSource(nameof(ErrorSource))]
+        [TestCaseSource(nameof(Errors))]
         public void TryParseLengthFails(ErrorData<Length> data)
         {
             Length length;
@@ -111,7 +111,7 @@
         private static readonly CultureInfo en = CultureInfo.GetCultureInfo("en-US");
         private static readonly CultureInfo sv = CultureInfo.GetCultureInfo("sv-SE");
 
-        private static readonly IReadOnlyList<SuccessData<Length>> SuccessSource = new SuccessData<Length>[]
+        private static readonly IReadOnlyList<SuccessData<Length>> HappyPaths = new SuccessData<Length>[]
         {
             SuccessData.Create("1m", en, Length.FromMetres(1)),
             SuccessData.Create("1m", sv, Length.FromMetres(1)),
@@ -136,7 +136,7 @@
             SuccessData.Create("1.2cm",en,Length.FromCentimetres(1.2)),
         };
 
-        private static readonly IReadOnlyList<ErrorData<Length>> ErrorSource = new ErrorData<Length>[]
+        private static readonly IReadOnlyList<ErrorData<Length>> Errors = new ErrorData<Length>[]
         {
             ErrorData.Create<Length>("1.2m", sv, "Could not parse the unit value from: 1.2m"),
             ErrorData.Create<Length>("1.2", en, "Could not parse the unit value from: 1.2"),

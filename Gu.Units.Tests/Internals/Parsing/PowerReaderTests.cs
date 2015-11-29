@@ -5,7 +5,7 @@
 
     public class PowerReaderTests
     {
-        [TestCaseSource(nameof(SuccessSource))]
+        [TestCaseSource(nameof(HappyPaths))]
         public void ReadSuccess(SuccessData<int> data)
         {
             var end = data.Start;
@@ -14,7 +14,7 @@
             Assert.AreEqual(data.ExpectedEnd, end);
         }
 
-        [TestCaseSource(nameof(SuccessSource))]
+        [TestCaseSource(nameof(HappyPaths))]
         public void TryReadSuccess(SuccessData<int> data)
         {
             var end = data.Start;
@@ -26,7 +26,7 @@
         }
 
         private const string Superscripts = "⋅⁺⁻⁰¹²³⁴⁵⁶⁷⁸⁹"; // keeping this here for copy pasting
-        private static readonly IReadOnlyList<SuccessData<int>> SuccessSource = new[]
+        private static readonly IReadOnlyList<SuccessData<int>> HappyPaths = new[]
         {
             SuccessData.Create("mm", 2, 1, 2),
             SuccessData.Create("mm^2", 2, 2, 4),

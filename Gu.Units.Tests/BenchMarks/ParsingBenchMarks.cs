@@ -14,26 +14,26 @@
     [Explicit(Benchmarks.LongRunning)]
     public class ParsingBenchmarks
     {
-        // 2015-11-28| TryReadDoubleFormat("#0.00#") 1 000 000 times with regex      took: 355 ms
-        // 2015-11-28| TryReadDoubleFormat("e5")     1 000 000 times with optimized  took: 50 ms <- don't remember what was different.
-        // 2015-11-28| TryReadDoubleFormat("e5")     1 000 000 times                 took: 118 ms
-        // 2015-11-28| TryReadDoubleFormat("#0.00#") 1 000 000 times                 took: 95 ms
-        // 2015-11-28| TryReadDoubleFormat("e5")     1 000 000 times                 took: 45 ms
-        // 2015-11-28| TryReadDoubleFormat("#0.00#") 1 000 000 times                 took: 22 ms
+        // 2015-11-28| TryRead("#0.00#") 1 000 000 times with regex      took: 355 ms
+        // 2015-11-28| TryRead("e5")     1 000 000 times with optimized  took: 50 ms <- don't remember what was different.
+        // 2015-11-28| TryRead("e5")     1 000 000 times                 took: 118 ms
+        // 2015-11-28| TryRead("#0.00#") 1 000 000 times                 took: 95 ms
+        // 2015-11-28| TryRead("e5")     1 000 000 times                 took: 45 ms
+        // 2015-11-28| TryRead("#0.00#") 1 000 000 times                 took: 22 ms
         [Test]
         public void TryReadDoubleFormat()
         {
             int pos = 0;
             string actual;
-            DoubleFormatReader.TryReadDoubleFormat("e5", ref pos, out actual);
+            DoubleFormatReader.TryRead("e5", ref pos, out actual);
             pos = 0;
-            DoubleFormatReader.TryReadDoubleFormat("#0.00#", ref pos, out actual);
+            DoubleFormatReader.TryRead("#0.00#", ref pos, out actual);
             var sw = Stopwatch.StartNew();
             var n = 1000000;
             for (int i = 0; i < n; i++)
             {
                 pos = 0;
-                DoubleFormatReader.TryReadDoubleFormat("e5", ref pos, out actual);
+                DoubleFormatReader.TryRead("e5", ref pos, out actual);
             }
 
             sw.Stop();
@@ -43,7 +43,7 @@
             for (int i = 0; i < n; i++)
             {
                 pos = 0;
-                DoubleFormatReader.TryReadDoubleFormat("#0.00#", ref pos, out actual);
+                DoubleFormatReader.TryRead("#0.00#", ref pos, out actual);
             }
 
             sw.Stop();

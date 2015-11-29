@@ -9,7 +9,7 @@
     {
         private static readonly string[] PadFormats = { "abc{0}def", "abcd{0}ef","{0}" };
 
-        [TestCaseSource(nameof(DoubleParseHappyPathSource))]
+        [TestCaseSource(nameof(HappyPaths))]
         public void ReadSuccess(DoubleData data)
         {
             var culture = data.Culture;
@@ -27,7 +27,7 @@
             }
         }
 
-        [TestCaseSource(nameof(DoubleParseErrorSource))]
+        [TestCaseSource(nameof(Errors))]
         public void ReadError(DoubleData data)
         {
             var culture = data.Culture;
@@ -58,7 +58,7 @@
             Assert.AreEqual(expected, e.Message);
         }
 
-        [TestCaseSource(nameof(DoubleParseHappyPathSource))]
+        [TestCaseSource(nameof(HappyPaths))]
         public void TryReadSuccess(DoubleData data)
         {
             var culture = data.Culture;
@@ -78,7 +78,7 @@
             }
         }
 
-        [TestCaseSource(nameof(DoubleParseErrorSource))]
+        [TestCaseSource(nameof(Errors))]
         public void TryReadError(DoubleData data)
         {
             var culture = data.Culture;
@@ -103,7 +103,7 @@
         private static readonly CultureInfo en = CultureInfo.GetCultureInfo("en-US");
         private static readonly CultureInfo sv = CultureInfo.GetCultureInfo("sv-SE");
 
-        private static readonly IReadOnlyList<DoubleData> DoubleParseHappyPathSource = new[]
+        private static readonly IReadOnlyList<DoubleData> HappyPaths = new[]
         {
             CreateParseData("0", NumberStyles.Float, en),
             CreateParseData("0.", NumberStyles.Float, en),
@@ -165,7 +165,7 @@
             return new DoubleData(value.ToString(format, culture), styles, culture);
         }
 
-        private static readonly IReadOnlyList<DoubleData> DoubleParseErrorSource = new[]
+        private static readonly IReadOnlyList<DoubleData> Errors = new[]
         {
             CreateParseData("e1", NumberStyles.Float, en),
             CreateParseData(" 1", NumberStyles.None, en),

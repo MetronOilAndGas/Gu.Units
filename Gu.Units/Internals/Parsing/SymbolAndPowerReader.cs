@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
 
-    internal static class SymbolAndPowerParser
+    internal static class SymbolAndPowerReader
     {
         private static readonly ReadonlySet<SymbolAndPower> Empty = ReadonlySet<SymbolAndPower>.Empty;
 
@@ -28,9 +28,10 @@
             int start = pos;
             var sign = Sign.Positive;
             var tokens = new SortedSet<SymbolAndPower>(SymbolComparer.Default);
-            text.TryReadWhiteSpace(ref pos);
             while (pos < text.Length)
             {
+                text.TryReadWhiteSpace(ref pos);
+
                 SymbolAndPower sap;
                 if (!TryRead(text, ref pos, out sap))
                 {
@@ -81,8 +82,6 @@
                         sign = Sign.Negative;
                     }
                 }
-
-                text.TryReadWhiteSpace(ref pos);
             }
 
             result = tokens.AsReadOnly();

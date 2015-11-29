@@ -206,21 +206,23 @@
     <Compile Include="Internals\Ensure\Ensure.compare.cs" />
     <Compile Include="Internals\Ensure\Ensure.cs" />
     <Compile Include="Internals\Ensure\Ensure.string.cs" />
-    <Compile Include="Internals\EnumerableExt.cs" />
+    <Compile Include="Internals\Helpers\EnumerableExt.cs" />
+    <Compile Include="Internals\PaddedFormat.cs" />
     <Compile Include="Internals\Parsing\DoubleFormatReader.cs" />
     <Compile Include="Internals\Parsing\CompositeFormatParser.cs" />
     <Compile Include="Internals\FormatCache.cs" />
     <Compile Include="Internals\FormatCache{TUnit}.cs" />
     <Compile Include="Internals\Parsing\IntReader.cs" />
-    <Compile Include="Internals\Parsing\Results\QuantityFormat.cs" />
+    <Compile Include="Internals\QuantityFormat.cs" />
+    <Compile Include="Internals\Parsing\UnitFormatReader.cs" />
     <Compile Include="Internals\SubstringCache.cs" />
-    <Compile Include="Internals\Parsing\SymbolAndPowerParser.cs" />
-    <Compile Include="Internals\Parsing\Results\FormatKey.cs" />
-    <Compile Include="Internals\Parsing\SymbolComparer.cs" />
+    <Compile Include="Internals\Parsing\SymbolAndPowerReader.cs" />
+    <Compile Include="Internals\FormatKey.cs" />
+    <Compile Include="Internals\SymbolComparer.cs" />
     <Compile Include="Internals\ReadOnlySet.cs" />
     <Compile Include="Internals\ReadonlySet{T}.cs" />
-    <Compile Include="Internals\StringBuilderPool.cs" />
-    <Compile Include="Internals\VoidStruct.cs" />
+    <Compile Include="Internals\Helpers\StringBuilderPool.cs" />
+    <Compile Include="Internals\Helpers\VoidStruct.cs" />
     <Compile Include="Jerk.generated.cs">
       <DependentUpon>Quantties.txt4</DependentUpon>
     </Compile>

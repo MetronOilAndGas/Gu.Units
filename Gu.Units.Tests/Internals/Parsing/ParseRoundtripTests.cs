@@ -9,7 +9,7 @@
 
     public class ParseRoundtripTests
     {
-        [TestCaseSource(nameof(SuccessSource))]
+        [TestCaseSource(nameof(HappyPaths))]
         public void ParseRoundtrip(ISuccessData data)
         {
             using (Thread.CurrentThread.UsingTempCulture(data.CultureInfo))
@@ -22,7 +22,7 @@
             }
         }
 
-        [TestCaseSource(nameof(SuccessSource))]
+        [TestCaseSource(nameof(HappyPaths))]
         public void ParseRoundtripWithCulture(ISuccessData data)
         {
             var actual = data.Parse(data.Text, data.CultureInfo);
@@ -32,7 +32,7 @@
             Assert.AreEqual(data.Expected, roundtripped);
         }
 
-        [TestCaseSource(nameof(SuccessSource))]
+        [TestCaseSource(nameof(HappyPaths))]
         public void TryParseRoundtrip(ISuccessData data)
         {
             using (Thread.CurrentThread.UsingTempCulture(data.CultureInfo))
@@ -48,7 +48,7 @@
             }
         }
 
-        [TestCaseSource(nameof(SuccessSource))]
+        [TestCaseSource(nameof(HappyPaths))]
         public void TryParseRoundtripWithCulture(ISuccessData data)
         {
             object actual;
@@ -65,7 +65,7 @@
         private static readonly CultureInfo en = CultureInfo.GetCultureInfo("en-US");
         private static readonly CultureInfo sv = CultureInfo.GetCultureInfo("sv-SE");
 
-        private static readonly IReadOnlyList<ISuccessData> SuccessSource = new ISuccessData[]
+        private static readonly IReadOnlyList<ISuccessData> HappyPaths = new ISuccessData[]
         {
             SuccessData.Create("1.2m^2", en, Area.FromSquareMetres(1.2)),
             SuccessData.Create("1.2m²", en, Area.FromSquareMetres(1.2)),

@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Gu.Units.Internals
+﻿namespace Gu.Units.Internals
 {
+    using System;
+    using System.Collections.Generic;
+
     internal static class EnumerableExt
     {
         /// <summary>

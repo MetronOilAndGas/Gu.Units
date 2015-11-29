@@ -6,7 +6,7 @@
 
     public class IntReaderTests
     {
-        [TestCaseSource(nameof(SuccessSource))]
+        [TestCaseSource(nameof(HappyPaths))]
         public void ParseSuccess(SuccessData<int> data)
         {
             int pos = data.Start;
@@ -15,7 +15,7 @@
             Assert.AreEqual(pos, data.ExpectedEnd);
         }
 
-        [TestCaseSource(nameof(ErrorSource))]
+        [TestCaseSource(nameof(Errors))]
         public void ParseError(ErrorData<int> data)
         {
             int pos = data.Start;
@@ -23,7 +23,7 @@
             Assert.AreEqual(pos, data.ExpectedEnd);
         }
 
-        [TestCaseSource(nameof(SuccessSource))]
+        [TestCaseSource(nameof(HappyPaths))]
         public void TryParseSuccess(SuccessData<int> data)
         {
             int pos = data.Start;
@@ -34,7 +34,7 @@
             Assert.AreEqual(data.ExpectedEnd, pos);
         }
 
-        [TestCaseSource(nameof(ErrorSource))]
+        [TestCaseSource(nameof(Errors))]
         public void TryParseError(ErrorData<int> data)
         {
             int pos = data.Start;
@@ -45,7 +45,7 @@
             Assert.AreEqual(data.ExpectedEnd, pos);
         }
 
-        private static readonly IReadOnlyList<SuccessData<int>> SuccessSource = new[]
+        private static readonly IReadOnlyList<SuccessData<int>> HappyPaths = new[]
         {
             SuccessData.Create("1", 0, 1, 1),
             SuccessData.Create("01", 0, 1, 2),
@@ -60,7 +60,7 @@
             SuccessData.Create(int.MinValue.ToString(), 0, int.MinValue, int.MinValue.ToString().Length),
         };
 
-        private static readonly IReadOnlyList<SuccessData<int>> ErrorSource = new[]
+        private static readonly IReadOnlyList<SuccessData<int>> Errors = new[]
         {
             ErrorData.Create<int>("-2147483649",  0), // less than int.min
             ErrorData.Create<int>("2147483648",  0), // greater than int.max

@@ -45,16 +45,16 @@ namespace Gu.Units
             SubstringCache<TUnit>.CachedItem cached;
             if (Cache.Value.TryGetForSymbol(text, pos, out cached))
             {
+                pos += cached.Key.Length;
                 if (IsEndOfSymbol(text, pos))
                 {
-                    pos += cached.Key.Length;
                     result = cached.Value;
                     return true;
                 }
             }
 
             ReadonlySet<SymbolAndPower> sapResult;
-            if (SymbolAndPowerParser.TryRead(text, ref pos, out sapResult))
+            if (SymbolAndPowerReader.TryRead(text, ref pos, out sapResult))
             {
                 if (!text.IsRestWhiteSpace(pos) ||
                     !sapResult.Any())
@@ -102,7 +102,7 @@ namespace Gu.Units
 
                     int pos = 0;
                     ReadonlySet<SymbolAndPower> result;
-                    if (SymbolAndPowerParser.TryRead(((IUnit)unit).Symbol, ref pos, out result))
+                    if (SymbolAndPowerReader.TryRead(((IUnit)unit).Symbol, ref pos, out result))
                     {
                         if (!((IUnit)unit).Symbol.IsRestWhiteSpace(pos))
                         {

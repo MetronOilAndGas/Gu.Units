@@ -45,7 +45,7 @@
                 Assert.AreEqual("1.20 m/s", speed.ToString("F2 m/s"));
                 Assert.AreEqual(UnknownFormat, 1.2.ToString(UnknownFormat)); // for comparison
                 Assert.AreEqual(UnknownFormat, speed.ToString(UnknownFormat));
-                Assert.AreEqual("F1 {unit:??}", speed.ToString("F1 invalid"));
+                Assert.AreEqual("F1\u00A0{unit: ??}", speed.ToString("F1 invalid"));
                 Assert.AreEqual("1.20 m⋅s⁻¹", speed.ToString("F2 m⋅s⁻¹"));
                 Assert.AreEqual("1.2\u00A0m/s", speed.ToString());
                 Assert.AreEqual("1.2\u00A0m⋅s⁻¹", speed.ToString("f1", "m⋅s⁻¹"));

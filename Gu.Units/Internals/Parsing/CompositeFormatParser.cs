@@ -25,36 +25,30 @@
                 return true;
             }
 
-            var prePaddingStart = pos;
-            format.TryReadWhiteSpace(ref pos);
-            var prePaddingEnd = pos;
+            string prePadding = null;
+            format.TryReadPadding(ref pos, out prePadding);
             string valueFormat;
-            if (!DoubleFormatReader.TryReadDoubleFormat(format, ref pos, out valueFormat))
+            if (!DoubleFormatReader.TryRead(format, ref pos, out valueFormat))
             {
                 valueFormat = FormatCache.UnknownFormat;
-                prePaddingEnd = prePaddingStart;
             }
 
-            var padStart = pos;
-            format.TryReadWhiteSpace(ref pos);
-            var padEnd = pos;
+            string padding = null;
+            format.TryReadPadding(ref pos, out padding);
             string symbolFormat;
             TUnit unit;
-            if (!TryReadUnit(format, ref pos, out symbolFormat, out unit))
+            if (!UnitFormatReader.TryRead(format, ref pos, out symbolFormat, out unit))
             {
                 symbolFormat = FormatCache.UnknownFormat;
-                padEnd = padStart;
             }
 
-            var symbolEnd = pos;
+            string postPadding = null;
+            format.TryReadPadding(ref pos, out postPadding);
             if (!format.IsRestWhiteSpace(ref pos, end))
             {
                 symbolFormat = FormatCache.UnknownFormat;
             }
 
-            var prePadding = GetPrePadding(format, prePaddingStart, prePaddingEnd, valueFormat);
-            var padding = GetPadding(format, valueFormat, padStart, padEnd, symbolFormat);
-            var postPadding = GetPostPadding(format, symbolEnd, pos);
             if (valueFormat == FormatCache.UnknownFormat &&
                 symbolFormat == FormatCache.UnknownFormat)
             {
@@ -64,75 +58,8 @@
             {
                 result = QuantityFormat<TUnit>.CreateFromParsedCompositeFormat(prePadding, valueFormat, padding, symbolFormat, postPadding, unit);
             }
+
             return valueFormat != FormatCache.UnknownFormat && symbolFormat != FormatCache.UnknownFormat;
         }
-
-        private static bool TryReadUnit<TUnit>(string format,
-            ref int pos,
-            out string unitFormat,
-            out TUnit unit) where TUnit : struct, IUnit
-        {
-            var start = pos;
-            if (pos == format.Length)
-            {
-                unit = Unit<TUnit>.Default;
-                unitFormat = null;
-                return false;
-            }
-
-            if (UnitParser<TUnit>.TryParse(format, ref pos, out unit))
-            {
-                unitFormat = format.Substring(start, pos - start);
-                return true;
-            }
-
-            unit = Unit<TUnit>.Default;
-            unitFormat = null;
-            return false;
-        }
-
-        private static string GetPrePadding(string format, int startPos, int endPos, string doubleFormat)
-        {
-            if (startPos == endPos || string.IsNullOrEmpty(doubleFormat))
-            {
-                return null;
-            }
-
-            return format.Substring(startPos, endPos);
-        }
-
-        private static string GetPadding(string format,
-            string doubleFormat,
-            int spaceStart,
-            int spaceEnd,
-            string unitFormat)
-        {
-            if (spaceStart == format.Length)
-            {
-                return null;
-            }
-
-            if (spaceStart == spaceEnd)
-            {
-                if (string.IsNullOrEmpty(doubleFormat) || string.IsNullOrEmpty(unitFormat))
-                {
-                    return null;
-                }
-
-                return string.Empty;
-            }
-
-            return format.Substring(spaceStart, spaceEnd - spaceStart);
-        }
-
-        private static string GetPostPadding(string format, int symbolEnd, int postPaddingEnd)
-        {
-            if (symbolEnd == postPaddingEnd || symbolEnd == format.Length)
-            {
-                return null;
-            }
-
-            return format.Substring(symbolEnd, postPaddingEnd - symbolEnd);
-        }
-    }
+   }
 }

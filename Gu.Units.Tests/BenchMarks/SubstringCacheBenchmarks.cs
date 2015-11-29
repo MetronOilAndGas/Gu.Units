@@ -9,8 +9,8 @@
     [Explicit(Benchmarks.LongRunning)]
     public class SubstringCacheBenchmarks
     {
-        // 2015-11-28| cache.TryFind(text, 4, out cached) 1 000 000 times with cache took: 87 ms
-        // 2015-11-28| text.Substring(3, 4)               1 000 000 times            took: 18 ms
+        // 2015-11-29| cache.TryFind(text, 4, out cached) 1 000 000 times with cache took: 54 ms
+        // 2015-11-29| text.Substring(3, 4)               1 000 000 times            took: 34 ms
         [Test]
         public void TryFindSubStringWorstCase()
         {

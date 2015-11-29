@@ -11,7 +11,20 @@
         private static readonly PrefixFormat nFormats = new PrefixFormat('n');
         private static readonly PrefixFormat NFormats = new PrefixFormat('N');
 
-        internal static bool TryReadDoubleFormat(string format, ref int pos, out string result)
+        internal static bool TryRead(
+            string format,
+            ref int pos,
+            out  string prePadding,
+            out string valueFormat, 
+            out string postPadding)
+        {
+            format.TryReadPadding(ref pos, out prePadding);
+            var success = TryRead(format, ref pos, out valueFormat);
+            format.TryReadPadding(ref pos, out postPadding);
+            return success;
+        }
+
+        internal static bool TryRead(string format, ref int pos, out string result)
         {
             if (string.IsNullOrEmpty(format) || pos == format.Length)
             {
