@@ -50,7 +50,7 @@
 
             if (sign == Sign.Negative)
             {
-                temp *= -1;
+                temp = -temp;
                 if (temp < int.MinValue)
                 {
                     result = 0;

@@ -56,6 +56,8 @@
             SuccessData.Create("-12", 0, -12, 3),
             SuccessData.Create("12345", 0, 12345, 5),
             SuccessData.Create("67890", 0, 67890, 5),
+            SuccessData.Create(int.MaxValue.ToString(), 0, int.MaxValue, int.MaxValue.ToString().Length),
+            SuccessData.Create(int.MinValue.ToString(), 0, int.MinValue, int.MinValue.ToString().Length),
         };
 
         private static readonly IReadOnlyList<SuccessData<int>> ErrorSource = new[]

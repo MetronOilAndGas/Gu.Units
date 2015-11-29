@@ -136,13 +136,15 @@
                 }
             }
 
-            result = 0;
-            if (TryReadIntegerDigits(text, ref pos, style, format, ref result))
+            ulong integral = 0;
+            if (!TryReadIntegerDigits(text, ref pos, style, format, ref integral))
             {
                 pos = start;
+                result = 0;
                 return false;
             }
 
+            ulong fraction = 0;
             if (TryRead(text, ref pos, format.NumberDecimalSeparator))
             {
                 if ((style & NumberStyles.AllowDecimalPoint) == 0)
@@ -152,12 +154,9 @@
                     return false;
                 }
 
-                TryReadFractionDigits(text, ref pos, ref result);
+                TryReadFractionDigits(text, ref pos, ref fraction);
             }
-            if (sign == Sign.Negative)
-            {
-                result *= -1;
-            }
+
             if (TryReadExponent(text, ref pos))
             {
                 if ((style & NumberStyles.AllowExponent) == 0)
@@ -166,8 +165,8 @@
                     pos = start;
                     return false;
                 }
-
-                TryReadSign(text, ref pos, format, out sign);
+                Sign exponentSign;
+                TryReadSign(text, ref pos, format, out exponentSign);
                 if (TryReadExponentDigits(text, ref pos))
                 {
                     return TryParseSubString(text, start, ref pos, style, provider, out result);
@@ -177,14 +176,61 @@
                 // then no digits were thrown. I choose to return the double here.
                 // Both alternatives will be wrong in some situations.
                 // returning false here would make it impossible to parse 1.2eV
-                var backStep = sign == Sign.None
+                var backStep = exponentSign == Sign.None
                     ? 1
                     : 2;
                 pos -= backStep;
+                result = sign == Sign.Negative
+                    ? -Combine(integral, fraction)
+                    : Combine(integral, fraction);
+
                 return true;
             }
 
+            result = sign == Sign.Negative
+                ? -Combine(integral, fraction)
+                : Combine(integral, fraction);
+
             return true;
+        }
+
+        private static double Combine(ulong integral, ulong fraction)
+        {
+            if (fraction < 1E1)
+                return integral + 1E-1 * fraction;
+            if (fraction < 1E2)
+                return integral + 1E-2 * fraction;
+            if (fraction < 1E3)
+                return integral + 1E-3 * fraction;
+            if (fraction < 1E4)
+                return integral + 1E-4 * fraction;
+            if (fraction < 1E5)
+                return integral + 1E-5 * fraction;
+            if (fraction < 1E6)
+                return integral + 1E-6 * fraction;
+            if (fraction < 1E7)
+                return integral + 1E-7 * fraction;
+            if (fraction < 1E8)
+                return integral + 1E-8 * fraction;
+            if (fraction < 1E9)
+                return integral + 1E-9 * fraction;
+            if (fraction < 1E10)
+                return integral + 1E-10 * fraction;
+            if (fraction < 1E11)
+                return integral + 1E-11 * fraction;
+            if (fraction < 1E12)
+                return integral + 1E-12 * fraction;
+            if (fraction < 1E13)
+                return integral + 1E-13 * fraction;
+            if (fraction < 1E14)
+                return integral + 1E-14 * fraction;
+            if (fraction < 1E15)
+                return integral + 1E-15 * fraction;
+            if (fraction < 1E16)
+                return integral + 1E-16 * fraction;
+            if (fraction < 1E17)
+                return integral + 1E-17 * fraction;
+            throw new ArgumentOutOfRangeException("Fraction must be truncated before calling this");
         }
 
         private static bool TryParseSubString(
@@ -242,7 +288,7 @@
             return false;
         }
 
-        private static bool TryReadIntegerDigits(string text, ref int pos, NumberStyles styles, NumberFormatInfo format, ref double result)
+        private static bool TryReadIntegerDigits(string text, ref int pos, NumberStyles styles, NumberFormatInfo format, ref ulong result)
         {
             var start = pos;
             bool readThousandSeparator = false;
@@ -252,7 +298,7 @@
                 if (i != -1)
                 {
                     result *= 10;
-                    result += i;
+                    result += (ulong)i;
                     pos++;
                     readThousandSeparator = false;
                     continue;
@@ -267,20 +313,42 @@
                         continue;
                     }
                 }
+
                 if (readThousandSeparator)
                 {
                     pos = start;
                     return false;
                 }
+
+                if (pos == start &&
+                    i == -1)
+                {
+                    if (pos == text.Length)
+                    {
+                        return false;
+                    }
+
+                    if (!TryRead(text, ref pos, format.NumberDecimalSeparator))
+                    {
+                        return false;
+                    }
+
+                    if (IntReader.GetDigitOrMinusOne(text[pos]) == -1)
+                    {
+                        pos = start;
+                        return false;
+                    }
+
+                    pos = start;
+                }
                 break;
             }
 
-            return readThousandSeparator;
+            return !readThousandSeparator;
         }
 
-        private static bool TryReadFractionDigits(string text, ref int pos, ref double result)
+        private static bool TryReadFractionDigits(string text, ref int pos, ref ulong result)
         {
-            double d = 0.1;
             var start = pos;
             while (pos < text.Length)
             {
@@ -290,9 +358,12 @@
                     break;
                 }
 
-                result += d * i;
-                d *= 0.1;
                 pos++;
+                if (pos - start < 18)
+                {
+                    result *= 10;
+                    result += (uint)i;
+                }
             }
 
             return pos != start;

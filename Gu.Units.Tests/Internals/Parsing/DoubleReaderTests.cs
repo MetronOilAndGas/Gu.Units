@@ -7,7 +7,7 @@
 
     public class DoubleReaderTests
     {
-        private static readonly string[] Formats = { "abc{0}def", "abcd{0}ef" };
+        private static readonly string[] padFormat = { "abc{0}def", "abcd{0}ef" };
 
         [TestCaseSource(nameof(DoubleParseHappyPathSource))]
         public void ReadSuccess(DoubleData data)
@@ -15,7 +15,7 @@
             var culture = data.Culture;
             var style = data.Styles;
             var s = data.Text;
-            foreach (var format in Formats)
+            foreach (var format in padFormat)
             {
                 var ns = string.Format(format, s);
                 var pos = format.IndexOf('{');
@@ -34,7 +34,7 @@
             var culture = data.Culture;
             var style = data.Styles;
             var s = data.Text;
-            foreach (var format in Formats)
+            foreach (var format in padFormat)
             {
                 var ns = string.Format(format, s);
                 var pos = format.IndexOf('{');
@@ -64,18 +64,17 @@
         {
             var culture = data.Culture;
             var style = data.Styles;
-            var text = data.Text;
-            foreach (var format in Formats)
+            foreach (var format in padFormat)
             {
-                var ns = string.Format(format, text);
+                var text = string.Format(format, data.Text);
                 var pos = format.IndexOf('{');
                 var start = pos;
                 double expected;
-                Assert.IsTrue(double.TryParse(text, style, culture, out expected));
+                Assert.IsTrue(double.TryParse(data.Text, style, culture, out expected));
                 double actual;
-                Assert.IsTrue(DoubleReader.TryRead(ns, ref pos, style, culture, out actual));
+                Assert.IsTrue(DoubleReader.TryRead(text, ref pos, style, culture, out actual));
                 Assert.AreEqual(expected, actual);
-                var expectedEnd = start + text.Length;
+                var expectedEnd = start + data.Text.Length;
                 Assert.AreEqual(expectedEnd, pos);
             }
         }
@@ -86,7 +85,7 @@
             var culture = data.Culture;
             var style = data.Styles;
             var s = data.Text;
-            foreach (var format in Formats)
+            foreach (var format in padFormat)
             {
                 var ns = string.Format(format, s);
                 var pos = format.IndexOf('{');
@@ -107,34 +106,47 @@
 
         private static readonly IReadOnlyList<DoubleData> DoubleParseHappyPathSource = new[]
         {
+            CreateParseData("0", NumberStyles.Float, en),
+            CreateParseData("0.", NumberStyles.Float, en),
+            CreateParseData(".0", NumberStyles.Float, en),
+            CreateParseData("0.0", NumberStyles.Float, en),
             CreateParseData("1", NumberStyles.Float, en),
             CreateParseData(" 1", NumberStyles.Float, en),
             CreateParseData("-1", NumberStyles.Float, en),
             CreateParseData("+1", NumberStyles.Float, en),
             CreateParseData(".1", NumberStyles.Float, en),
+            CreateParseData("-.1", NumberStyles.Float, en),
             CreateParseData("1.", NumberStyles.Float, en),
+            CreateParseData("-1.", NumberStyles.Float, en),
             CreateParseData("12,345.67", NumberStyles.Float | NumberStyles.AllowThousands, en),
+            CreateParseData("-12,345.67", NumberStyles.Float | NumberStyles.AllowThousands, en),
             CreateParseData("+1.2", NumberStyles.Float, en),
             CreateParseData("+1,2", NumberStyles.Float, sv),
             CreateParseData("+1.2e3", NumberStyles.Float, en),
-            CreateParseData("+1.2E3", NumberStyles.Float, en),
+            CreateParseData("-1.2E3", NumberStyles.Float, en),
             CreateParseData("+1.2e-3", NumberStyles.Float, en),
             CreateParseData("+1.2E-3", NumberStyles.Float, en),
-            CreateParseData("+1.2e+3", NumberStyles.Float, en),
-            CreateParseData(12345.678910, NumberStyles.Float, en, "e"),
+            CreateParseData("-1.2e+3", NumberStyles.Float, en),
+            CreateParseData(-12345.678910, NumberStyles.Float, en, "e"),
             CreateParseData(12345.678910, NumberStyles.Float, en, "E"),
             CreateParseData(12345.678910, NumberStyles.Float, en, "E5"),
+            CreateParseData(-12345.678910, NumberStyles.Float, en, "f"),
             CreateParseData(12345.678910, NumberStyles.Float, en, "F"),
-            CreateParseData(12345.678910, NumberStyles.Float, en, "f"),
-            CreateParseData(12345.678910, NumberStyles.Float, en, "F20"),
+            CreateParseData(12345.678912, NumberStyles.Float, en, "F20"),
             CreateParseData(12345.678910, NumberStyles.Float, en, "G"),
-            CreateParseData(12345.678910, NumberStyles.Float, en, "g"),
+            CreateParseData(-12345.678910, NumberStyles.Float, en, "g"),
             CreateParseData(12345.678910, NumberStyles.Float, en, "g5"),
             CreateParseData(12345.678910, NumberStyles.Float |NumberStyles.AllowThousands, en, "n"),
             CreateParseData(12345.678910, NumberStyles.Float |NumberStyles.AllowThousands, en, "N"),
             CreateParseData(12345.678910, NumberStyles.Float |NumberStyles.AllowThousands, en, "N5"),
             CreateParseData(12345.678910, NumberStyles.Float, en, "R"),
-            CreateParseData(12345.678910, NumberStyles.Float, en, "r"),
+            CreateParseData(-12345.678910, NumberStyles.Float, en, "r"),
+            CreateParseData(-Math.PI, NumberStyles.Float, en, "f15"),
+            CreateParseData(-Math.PI, NumberStyles.Float, en, "f16"),
+            CreateParseData(-Math.PI, NumberStyles.Float, en, "f17"),
+            CreateParseData("3.141592653589793238", NumberStyles.Float, en),
+            CreateParseData("-3.141592653589793238", NumberStyles.Float, en),
+            CreateParseData(-Math.PI, NumberStyles.Float, en, "r"),
             CreateParseData(sv.NumberFormat.NaNSymbol, NumberStyles.Float, sv),
             CreateParseData(sv.NumberFormat.PositiveInfinitySymbol, NumberStyles.Float, sv),
             CreateParseData(sv.NumberFormat.NegativeInfinitySymbol, NumberStyles.Float, sv),

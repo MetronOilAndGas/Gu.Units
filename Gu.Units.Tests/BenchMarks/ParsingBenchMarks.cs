@@ -122,7 +122,7 @@
             }
 
             sw.Stop();
-            Console.WriteLine($"// {DateTime.Today.ToShortDateString()}| int.TryParse(substring: {substring}, ...)         {n:N0} times {sw.ElapsedMilliseconds} ms");
+            Console.WriteLine($"// {DateTime.Today.ToShortDateString()}| int.TryParse(substring: \"{substring}\", ...)       {n:N0} times {sw.ElapsedMilliseconds} ms");
 
             sw.Restart();
             for (int i = 0; i < n; i++)
@@ -131,7 +131,7 @@
             }
 
             sw.Stop();
-            Console.WriteLine($"// {DateTime.Today.ToShortDateString()}| int.TryParse({substring}, ...)                    {n:N0} times {sw.ElapsedMilliseconds} ms");
+            Console.WriteLine($"// {DateTime.Today.ToShortDateString()}| int.TryParse(\"{substring}\", ...)                  {n:N0} times {sw.ElapsedMilliseconds} ms");
         }
 
         // 2015-11-28| IntReader.TryReadInt32("  12", 4, ...) 1 000 000 times               took: 40 ms
