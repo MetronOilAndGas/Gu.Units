@@ -340,49 +340,49 @@
 
         public override string ToString()
         {
-            var quantityFormat = FormatParser<VolumetricFlowUnit>.GetOrCreate(string.Empty, this.SiUnit);
+            var quantityFormat = FormatCache<VolumetricFlowUnit>.GetOrCreate(null, this.SiUnit);
             return this.ToString(quantityFormat, null);
         }
 
         public string ToString(string format)
         {
-            var quantityFormat = FormatParser<VolumetricFlowUnit>.GetOrCreate(format);
+            var quantityFormat = FormatCache<VolumetricFlowUnit>.GetOrCreate(format);
             return ToString(quantityFormat, null);
         }
 
         public string ToString(IFormatProvider provider)
         {
-            var quantityFormat = FormatParser<VolumetricFlowUnit>.GetOrCreate(string.Empty, SiUnit);
+            var quantityFormat = FormatCache<VolumetricFlowUnit>.GetOrCreate(string.Empty, SiUnit);
             return ToString(quantityFormat, provider);
         }
 
         public string ToString(string format, IFormatProvider formatProvider)
         {
-            var quantityFormat = FormatParser<VolumetricFlowUnit>.GetOrCreate(format);
+            var quantityFormat = FormatCache<VolumetricFlowUnit>.GetOrCreate(format);
             return ToString(quantityFormat, formatProvider);
         }
 
         public string ToString(VolumetricFlowUnit unit)
         {
-            var quantityFormat = FormatParser<VolumetricFlowUnit>.GetOrCreate(string.Empty, unit);
+            var quantityFormat = FormatCache<VolumetricFlowUnit>.GetOrCreate(string.Empty, unit);
             return ToString(quantityFormat, null);
         }
 
         public string ToString(VolumetricFlowUnit unit, IFormatProvider formatProvider)
         {
-            var quantityFormat = FormatParser<VolumetricFlowUnit>.GetOrCreate(string.Empty, unit);
+            var quantityFormat = FormatCache<VolumetricFlowUnit>.GetOrCreate(string.Empty, unit);
             return ToString(quantityFormat, formatProvider);
         }
 
         public string ToString(string valueFormat, VolumetricFlowUnit unit)
         {
-            var quantityFormat = FormatParser<VolumetricFlowUnit>.GetOrCreate(valueFormat, unit);
+            var quantityFormat = FormatCache<VolumetricFlowUnit>.GetOrCreate(valueFormat, unit);
             return ToString(quantityFormat, null);
         }
 
         public string ToString(string valueFormat, VolumetricFlowUnit unit, IFormatProvider formatProvider)
         {
-            var quantityFormat = FormatParser<VolumetricFlowUnit>.GetOrCreate(valueFormat, unit);
+            var quantityFormat = FormatCache<VolumetricFlowUnit>.GetOrCreate(valueFormat, unit);
             return ToString(quantityFormat, formatProvider);
         }
 

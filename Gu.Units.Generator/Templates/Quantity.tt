@@ -402,49 +402,49 @@ namespace <#= Settings.Namespace #>
  
         public override string ToString()
         {
-            var quantityFormat = FormatParser<<#= quantity.ClassName #>Unit>.GetOrCreate(string.Empty, this.SiUnit);
+            var quantityFormat = FormatCache<<#= quantity.ClassName #>Unit>.GetOrCreate(null, this.SiUnit);
             return this.ToString(quantityFormat, null);
         }
  
         public string ToString(string format)
         {
-            var quantityFormat = FormatParser<<#= quantity.ClassName #>Unit>.GetOrCreate(format);
+            var quantityFormat = FormatCache<<#= quantity.ClassName #>Unit>.GetOrCreate(format);
             return ToString(quantityFormat, null);
         }
  
         public string ToString(IFormatProvider provider)
         {
-            var quantityFormat = FormatParser<<#= quantity.ClassName #>Unit>.GetOrCreate(string.Empty, SiUnit);
+            var quantityFormat = FormatCache<<#= quantity.ClassName #>Unit>.GetOrCreate(string.Empty, SiUnit);
             return ToString(quantityFormat, provider);
         }
  
         public string ToString(string format, IFormatProvider formatProvider)
         {
-            var quantityFormat = FormatParser<<#= quantity.ClassName #>Unit>.GetOrCreate(format);
+            var quantityFormat = FormatCache<<#= quantity.ClassName #>Unit>.GetOrCreate(format);
             return ToString(quantityFormat, formatProvider);
         }
  
         public string ToString(<#= quantity.ClassName #>Unit unit)
         {
-            var quantityFormat = FormatParser<<#= quantity.ClassName #>Unit>.GetOrCreate(string.Empty, unit);
+            var quantityFormat = FormatCache<<#= quantity.ClassName #>Unit>.GetOrCreate(string.Empty, unit);
             return ToString(quantityFormat, null);
         }
 
 		public string ToString(<#= quantity.ClassName #>Unit unit, IFormatProvider formatProvider)
         {
-            var quantityFormat = FormatParser<<#= quantity.ClassName #>Unit>.GetOrCreate(string.Empty, unit);
+            var quantityFormat = FormatCache<<#= quantity.ClassName #>Unit>.GetOrCreate(string.Empty, unit);
             return ToString(quantityFormat, formatProvider);
         }
 
         public string ToString(string valueFormat, <#= quantity.ClassName #>Unit unit)
         {
-            var quantityFormat = FormatParser<<#= quantity.ClassName #>Unit>.GetOrCreate(valueFormat, unit);
+            var quantityFormat = FormatCache<<#= quantity.ClassName #>Unit>.GetOrCreate(valueFormat, unit);
             return ToString(quantityFormat, null);
         }
 
         public string ToString(string valueFormat, <#= quantity.ClassName #>Unit unit, IFormatProvider formatProvider)
         {
-            var quantityFormat = FormatParser<<#= quantity.ClassName #>Unit>.GetOrCreate(valueFormat, unit);
+            var quantityFormat = FormatCache<<#= quantity.ClassName #>Unit>.GetOrCreate(valueFormat, unit);
             return ToString(quantityFormat, formatProvider);
         }
  

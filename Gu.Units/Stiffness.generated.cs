@@ -340,49 +340,49 @@
 
         public override string ToString()
         {
-            var quantityFormat = FormatParser<StiffnessUnit>.GetOrCreate(string.Empty, this.SiUnit);
+            var quantityFormat = FormatCache<StiffnessUnit>.GetOrCreate(null, this.SiUnit);
             return this.ToString(quantityFormat, null);
         }
 
         public string ToString(string format)
         {
-            var quantityFormat = FormatParser<StiffnessUnit>.GetOrCreate(format);
+            var quantityFormat = FormatCache<StiffnessUnit>.GetOrCreate(format);
             return ToString(quantityFormat, null);
         }
 
         public string ToString(IFormatProvider provider)
         {
-            var quantityFormat = FormatParser<StiffnessUnit>.GetOrCreate(string.Empty, SiUnit);
+            var quantityFormat = FormatCache<StiffnessUnit>.GetOrCreate(string.Empty, SiUnit);
             return ToString(quantityFormat, provider);
         }
 
         public string ToString(string format, IFormatProvider formatProvider)
         {
-            var quantityFormat = FormatParser<StiffnessUnit>.GetOrCreate(format);
+            var quantityFormat = FormatCache<StiffnessUnit>.GetOrCreate(format);
             return ToString(quantityFormat, formatProvider);
         }
 
         public string ToString(StiffnessUnit unit)
         {
-            var quantityFormat = FormatParser<StiffnessUnit>.GetOrCreate(string.Empty, unit);
+            var quantityFormat = FormatCache<StiffnessUnit>.GetOrCreate(string.Empty, unit);
             return ToString(quantityFormat, null);
         }
 
         public string ToString(StiffnessUnit unit, IFormatProvider formatProvider)
         {
-            var quantityFormat = FormatParser<StiffnessUnit>.GetOrCreate(string.Empty, unit);
+            var quantityFormat = FormatCache<StiffnessUnit>.GetOrCreate(string.Empty, unit);
             return ToString(quantityFormat, formatProvider);
         }
 
         public string ToString(string valueFormat, StiffnessUnit unit)
         {
-            var quantityFormat = FormatParser<StiffnessUnit>.GetOrCreate(valueFormat, unit);
+            var quantityFormat = FormatCache<StiffnessUnit>.GetOrCreate(valueFormat, unit);
             return ToString(quantityFormat, null);
         }
 
         public string ToString(string valueFormat, StiffnessUnit unit, IFormatProvider formatProvider)
         {
-            var quantityFormat = FormatParser<StiffnessUnit>.GetOrCreate(valueFormat, unit);
+            var quantityFormat = FormatCache<StiffnessUnit>.GetOrCreate(valueFormat, unit);
             return ToString(quantityFormat, formatProvider);
         }
 

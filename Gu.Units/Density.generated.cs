@@ -365,49 +365,49 @@
 
         public override string ToString()
         {
-            var quantityFormat = FormatParser<DensityUnit>.GetOrCreate(string.Empty, this.SiUnit);
+            var quantityFormat = FormatCache<DensityUnit>.GetOrCreate(null, this.SiUnit);
             return this.ToString(quantityFormat, null);
         }
 
         public string ToString(string format)
         {
-            var quantityFormat = FormatParser<DensityUnit>.GetOrCreate(format);
+            var quantityFormat = FormatCache<DensityUnit>.GetOrCreate(format);
             return ToString(quantityFormat, null);
         }
 
         public string ToString(IFormatProvider provider)
         {
-            var quantityFormat = FormatParser<DensityUnit>.GetOrCreate(string.Empty, SiUnit);
+            var quantityFormat = FormatCache<DensityUnit>.GetOrCreate(string.Empty, SiUnit);
             return ToString(quantityFormat, provider);
         }
 
         public string ToString(string format, IFormatProvider formatProvider)
         {
-            var quantityFormat = FormatParser<DensityUnit>.GetOrCreate(format);
+            var quantityFormat = FormatCache<DensityUnit>.GetOrCreate(format);
             return ToString(quantityFormat, formatProvider);
         }
 
         public string ToString(DensityUnit unit)
         {
-            var quantityFormat = FormatParser<DensityUnit>.GetOrCreate(string.Empty, unit);
+            var quantityFormat = FormatCache<DensityUnit>.GetOrCreate(string.Empty, unit);
             return ToString(quantityFormat, null);
         }
 
         public string ToString(DensityUnit unit, IFormatProvider formatProvider)
         {
-            var quantityFormat = FormatParser<DensityUnit>.GetOrCreate(string.Empty, unit);
+            var quantityFormat = FormatCache<DensityUnit>.GetOrCreate(string.Empty, unit);
             return ToString(quantityFormat, formatProvider);
         }
 
         public string ToString(string valueFormat, DensityUnit unit)
         {
-            var quantityFormat = FormatParser<DensityUnit>.GetOrCreate(valueFormat, unit);
+            var quantityFormat = FormatCache<DensityUnit>.GetOrCreate(valueFormat, unit);
             return ToString(quantityFormat, null);
         }
 
         public string ToString(string valueFormat, DensityUnit unit, IFormatProvider formatProvider)
         {
-            var quantityFormat = FormatParser<DensityUnit>.GetOrCreate(valueFormat, unit);
+            var quantityFormat = FormatCache<DensityUnit>.GetOrCreate(valueFormat, unit);
             return ToString(quantityFormat, formatProvider);
         }
 

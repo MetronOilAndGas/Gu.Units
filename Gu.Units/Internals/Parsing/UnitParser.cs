@@ -91,7 +91,7 @@ namespace Gu.Units
         private class Caches
         {
             internal readonly Dictionary<ReadonlySet<SymbolAndPower>, TUnit> SymbolAndPowers = new Dictionary<ReadonlySet<SymbolAndPower>, TUnit>();
-            private readonly SubstringCache<TUnit> SubStrings = new SubstringCache<TUnit>();
+            private readonly SubstringCache<TUnit> subStrings = new SubstringCache<TUnit>();
 
             internal Caches()
             {
@@ -121,12 +121,12 @@ namespace Gu.Units
 
             internal void CacheSymbol(string symbol, TUnit unit)
             {
-                this.SubStrings.Add(new SubstringCache<TUnit>.CachedItem(symbol, unit));
+                this.subStrings.Add(new SubstringCache<TUnit>.CachedItem(symbol, unit));
             }
 
             internal bool TryGetForSymbol(string text, int pos, out SubstringCache<TUnit>.CachedItem item)
             {
-                return this.SubStrings.TryFindSubString(text, pos, out item);
+                return this.subStrings.TryFindSubString(text, pos, out item);
             }
 
             private static IReadOnlyList<TUnit> GetUnits()

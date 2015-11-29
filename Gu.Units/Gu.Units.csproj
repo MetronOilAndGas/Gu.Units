@@ -209,12 +209,13 @@
     <Compile Include="Internals\EnumerableExt.cs" />
     <Compile Include="Internals\Parsing\DoubleFormatReader.cs" />
     <Compile Include="Internals\Parsing\CompositeFormatParser.cs" />
-    <Compile Include="Internals\Parsing\FormatParser{TUnit}.cs" />
+    <Compile Include="Internals\Parsing\FormatCache.cs" />
+    <Compile Include="Internals\Parsing\FormatCache{TUnit}.cs" />
     <Compile Include="Internals\Parsing\IntReader.cs" />
     <Compile Include="Internals\Parsing\Results\QuantityFormat.cs" />
     <Compile Include="Internals\SubstringCache.cs" />
     <Compile Include="Internals\Parsing\SymbolAndPowerParser.cs" />
-    <Compile Include="Internals\Parsing\Results\FormatAndUnit.cs" />
+    <Compile Include="Internals\Parsing\Results\FormatKey.cs" />
     <Compile Include="Internals\Parsing\SymbolComparer.cs" />
     <Compile Include="Internals\ReadOnlySet.cs" />
     <Compile Include="Internals\ReadonlySet{T}.cs" />

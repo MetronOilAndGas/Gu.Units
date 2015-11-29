@@ -350,49 +350,49 @@
 
         public override string ToString()
         {
-            var quantityFormat = FormatParser<AngleUnit>.GetOrCreate(string.Empty, this.SiUnit);
+            var quantityFormat = FormatCache<AngleUnit>.GetOrCreate(null, this.SiUnit);
             return this.ToString(quantityFormat, null);
         }
 
         public string ToString(string format)
         {
-            var quantityFormat = FormatParser<AngleUnit>.GetOrCreate(format);
+            var quantityFormat = FormatCache<AngleUnit>.GetOrCreate(format);
             return ToString(quantityFormat, null);
         }
 
         public string ToString(IFormatProvider provider)
         {
-            var quantityFormat = FormatParser<AngleUnit>.GetOrCreate(string.Empty, SiUnit);
+            var quantityFormat = FormatCache<AngleUnit>.GetOrCreate(string.Empty, SiUnit);
             return ToString(quantityFormat, provider);
         }
 
         public string ToString(string format, IFormatProvider formatProvider)
         {
-            var quantityFormat = FormatParser<AngleUnit>.GetOrCreate(format);
+            var quantityFormat = FormatCache<AngleUnit>.GetOrCreate(format);
             return ToString(quantityFormat, formatProvider);
         }
 
         public string ToString(AngleUnit unit)
         {
-            var quantityFormat = FormatParser<AngleUnit>.GetOrCreate(string.Empty, unit);
+            var quantityFormat = FormatCache<AngleUnit>.GetOrCreate(string.Empty, unit);
             return ToString(quantityFormat, null);
         }
 
         public string ToString(AngleUnit unit, IFormatProvider formatProvider)
         {
-            var quantityFormat = FormatParser<AngleUnit>.GetOrCreate(string.Empty, unit);
+            var quantityFormat = FormatCache<AngleUnit>.GetOrCreate(string.Empty, unit);
             return ToString(quantityFormat, formatProvider);
         }
 
         public string ToString(string valueFormat, AngleUnit unit)
         {
-            var quantityFormat = FormatParser<AngleUnit>.GetOrCreate(valueFormat, unit);
+            var quantityFormat = FormatCache<AngleUnit>.GetOrCreate(valueFormat, unit);
             return ToString(quantityFormat, null);
         }
 
         public string ToString(string valueFormat, AngleUnit unit, IFormatProvider formatProvider)
         {
-            var quantityFormat = FormatParser<AngleUnit>.GetOrCreate(valueFormat, unit);
+            var quantityFormat = FormatCache<AngleUnit>.GetOrCreate(valueFormat, unit);
             return ToString(quantityFormat, formatProvider);
         }
 

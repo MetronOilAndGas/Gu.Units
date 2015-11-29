@@ -20,7 +20,7 @@
                 Assert.AreEqual("1.200°", angle.ToString("F3°"));
                 Assert.AreEqual("1.2°", angle.ToString(AngleUnit.Degrees));
                 Assert.AreEqual(" 1.2 ° ", angle.ToString(" F1 ° "));
-                Assert.AreEqual(" 0.02 rad", angle.ToString(" F2 "));
+                Assert.AreEqual(" 0.02 rad ", angle.ToString(" F2 rad "));
                 Assert.AreEqual("1.200°", angle.ToString("F3", AngleUnit.Degrees));
                 Assert.AreEqual("0.02\u00A0rad", angle.ToString("F2", AngleUnit.Radians));
             }

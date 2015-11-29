@@ -345,49 +345,49 @@
 
         public override string ToString()
         {
-            var quantityFormat = FormatParser<SpecificEnergyUnit>.GetOrCreate(string.Empty, this.SiUnit);
+            var quantityFormat = FormatCache<SpecificEnergyUnit>.GetOrCreate(null, this.SiUnit);
             return this.ToString(quantityFormat, null);
         }
 
         public string ToString(string format)
         {
-            var quantityFormat = FormatParser<SpecificEnergyUnit>.GetOrCreate(format);
+            var quantityFormat = FormatCache<SpecificEnergyUnit>.GetOrCreate(format);
             return ToString(quantityFormat, null);
         }
 
         public string ToString(IFormatProvider provider)
         {
-            var quantityFormat = FormatParser<SpecificEnergyUnit>.GetOrCreate(string.Empty, SiUnit);
+            var quantityFormat = FormatCache<SpecificEnergyUnit>.GetOrCreate(string.Empty, SiUnit);
             return ToString(quantityFormat, provider);
         }
 
         public string ToString(string format, IFormatProvider formatProvider)
         {
-            var quantityFormat = FormatParser<SpecificEnergyUnit>.GetOrCreate(format);
+            var quantityFormat = FormatCache<SpecificEnergyUnit>.GetOrCreate(format);
             return ToString(quantityFormat, formatProvider);
         }
 
         public string ToString(SpecificEnergyUnit unit)
         {
-            var quantityFormat = FormatParser<SpecificEnergyUnit>.GetOrCreate(string.Empty, unit);
+            var quantityFormat = FormatCache<SpecificEnergyUnit>.GetOrCreate(string.Empty, unit);
             return ToString(quantityFormat, null);
         }
 
         public string ToString(SpecificEnergyUnit unit, IFormatProvider formatProvider)
         {
-            var quantityFormat = FormatParser<SpecificEnergyUnit>.GetOrCreate(string.Empty, unit);
+            var quantityFormat = FormatCache<SpecificEnergyUnit>.GetOrCreate(string.Empty, unit);
             return ToString(quantityFormat, formatProvider);
         }
 
         public string ToString(string valueFormat, SpecificEnergyUnit unit)
         {
-            var quantityFormat = FormatParser<SpecificEnergyUnit>.GetOrCreate(valueFormat, unit);
+            var quantityFormat = FormatCache<SpecificEnergyUnit>.GetOrCreate(valueFormat, unit);
             return ToString(quantityFormat, null);
         }
 
         public string ToString(string valueFormat, SpecificEnergyUnit unit, IFormatProvider formatProvider)
         {
-            var quantityFormat = FormatParser<SpecificEnergyUnit>.GetOrCreate(valueFormat, unit);
+            var quantityFormat = FormatCache<SpecificEnergyUnit>.GetOrCreate(valueFormat, unit);
             return ToString(quantityFormat, formatProvider);
         }
 

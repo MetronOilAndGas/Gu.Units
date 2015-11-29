@@ -325,49 +325,49 @@
 
         public override string ToString()
         {
-            var quantityFormat = FormatParser<InductanceUnit>.GetOrCreate(string.Empty, this.SiUnit);
+            var quantityFormat = FormatCache<InductanceUnit>.GetOrCreate(null, this.SiUnit);
             return this.ToString(quantityFormat, null);
         }
 
         public string ToString(string format)
         {
-            var quantityFormat = FormatParser<InductanceUnit>.GetOrCreate(format);
+            var quantityFormat = FormatCache<InductanceUnit>.GetOrCreate(format);
             return ToString(quantityFormat, null);
         }
 
         public string ToString(IFormatProvider provider)
         {
-            var quantityFormat = FormatParser<InductanceUnit>.GetOrCreate(string.Empty, SiUnit);
+            var quantityFormat = FormatCache<InductanceUnit>.GetOrCreate(string.Empty, SiUnit);
             return ToString(quantityFormat, provider);
         }
 
         public string ToString(string format, IFormatProvider formatProvider)
         {
-            var quantityFormat = FormatParser<InductanceUnit>.GetOrCreate(format);
+            var quantityFormat = FormatCache<InductanceUnit>.GetOrCreate(format);
             return ToString(quantityFormat, formatProvider);
         }
 
         public string ToString(InductanceUnit unit)
         {
-            var quantityFormat = FormatParser<InductanceUnit>.GetOrCreate(string.Empty, unit);
+            var quantityFormat = FormatCache<InductanceUnit>.GetOrCreate(string.Empty, unit);
             return ToString(quantityFormat, null);
         }
 
         public string ToString(InductanceUnit unit, IFormatProvider formatProvider)
         {
-            var quantityFormat = FormatParser<InductanceUnit>.GetOrCreate(string.Empty, unit);
+            var quantityFormat = FormatCache<InductanceUnit>.GetOrCreate(string.Empty, unit);
             return ToString(quantityFormat, formatProvider);
         }
 
         public string ToString(string valueFormat, InductanceUnit unit)
         {
-            var quantityFormat = FormatParser<InductanceUnit>.GetOrCreate(valueFormat, unit);
+            var quantityFormat = FormatCache<InductanceUnit>.GetOrCreate(valueFormat, unit);
             return ToString(quantityFormat, null);
         }
 
         public string ToString(string valueFormat, InductanceUnit unit, IFormatProvider formatProvider)
         {
-            var quantityFormat = FormatParser<InductanceUnit>.GetOrCreate(valueFormat, unit);
+            var quantityFormat = FormatCache<InductanceUnit>.GetOrCreate(valueFormat, unit);
             return ToString(quantityFormat, formatProvider);
         }
 

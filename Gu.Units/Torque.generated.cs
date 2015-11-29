@@ -330,49 +330,49 @@
 
         public override string ToString()
         {
-            var quantityFormat = FormatParser<TorqueUnit>.GetOrCreate(string.Empty, this.SiUnit);
+            var quantityFormat = FormatCache<TorqueUnit>.GetOrCreate(null, this.SiUnit);
             return this.ToString(quantityFormat, null);
         }
 
         public string ToString(string format)
         {
-            var quantityFormat = FormatParser<TorqueUnit>.GetOrCreate(format);
+            var quantityFormat = FormatCache<TorqueUnit>.GetOrCreate(format);
             return ToString(quantityFormat, null);
         }
 
         public string ToString(IFormatProvider provider)
         {
-            var quantityFormat = FormatParser<TorqueUnit>.GetOrCreate(string.Empty, SiUnit);
+            var quantityFormat = FormatCache<TorqueUnit>.GetOrCreate(string.Empty, SiUnit);
             return ToString(quantityFormat, provider);
         }
 
         public string ToString(string format, IFormatProvider formatProvider)
         {
-            var quantityFormat = FormatParser<TorqueUnit>.GetOrCreate(format);
+            var quantityFormat = FormatCache<TorqueUnit>.GetOrCreate(format);
             return ToString(quantityFormat, formatProvider);
         }
 
         public string ToString(TorqueUnit unit)
         {
-            var quantityFormat = FormatParser<TorqueUnit>.GetOrCreate(string.Empty, unit);
+            var quantityFormat = FormatCache<TorqueUnit>.GetOrCreate(string.Empty, unit);
             return ToString(quantityFormat, null);
         }
 
         public string ToString(TorqueUnit unit, IFormatProvider formatProvider)
         {
-            var quantityFormat = FormatParser<TorqueUnit>.GetOrCreate(string.Empty, unit);
+            var quantityFormat = FormatCache<TorqueUnit>.GetOrCreate(string.Empty, unit);
             return ToString(quantityFormat, formatProvider);
         }
 
         public string ToString(string valueFormat, TorqueUnit unit)
         {
-            var quantityFormat = FormatParser<TorqueUnit>.GetOrCreate(valueFormat, unit);
+            var quantityFormat = FormatCache<TorqueUnit>.GetOrCreate(valueFormat, unit);
             return ToString(quantityFormat, null);
         }
 
         public string ToString(string valueFormat, TorqueUnit unit, IFormatProvider formatProvider)
         {
-            var quantityFormat = FormatParser<TorqueUnit>.GetOrCreate(valueFormat, unit);
+            var quantityFormat = FormatCache<TorqueUnit>.GetOrCreate(valueFormat, unit);
             return ToString(quantityFormat, formatProvider);
         }
 

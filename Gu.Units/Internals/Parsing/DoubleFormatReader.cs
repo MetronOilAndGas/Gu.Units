@@ -1,15 +1,15 @@
 ﻿namespace Gu.Units
 {
-    internal static partial class DoubleFormatReader
+    internal static class DoubleFormatReader
     {
-        private static PrefixFormat eFormats = new PrefixFormat('e');
-        private static PrefixFormat EFormats = new PrefixFormat('E');
-        private static PrefixFormat fFormats = new PrefixFormat('f');
-        private static PrefixFormat FFormats = new PrefixFormat('F');
-        private static PrefixFormat gFormats = new PrefixFormat('g');
-        private static PrefixFormat GFormats = new PrefixFormat('G');
-        private static PrefixFormat nFormats = new PrefixFormat('n');
-        private static PrefixFormat NFormats = new PrefixFormat('N');
+        private static readonly PrefixFormat eFormats = new PrefixFormat('e');
+        private static readonly PrefixFormat EFormats = new PrefixFormat('E');
+        private static readonly PrefixFormat fFormats = new PrefixFormat('f');
+        private static readonly PrefixFormat FFormats = new PrefixFormat('F');
+        private static readonly PrefixFormat gFormats = new PrefixFormat('g');
+        private static readonly PrefixFormat GFormats = new PrefixFormat('G');
+        private static readonly PrefixFormat nFormats = new PrefixFormat('n');
+        private static readonly PrefixFormat NFormats = new PrefixFormat('N');
 
         internal static bool TryReadDoubleFormat(string format, ref int pos, out string result)
         {
@@ -173,10 +173,6 @@
                     pos = start;
                     return false;
             }
-
-            result = format;
-            pos = start;
-            return false;
         }
 
         private static bool TryReadRFormat(string format, ref int pos, out string result)

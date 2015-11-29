@@ -415,49 +415,49 @@
 
         public override string ToString()
         {
-            var quantityFormat = FormatParser<VoltageUnit>.GetOrCreate(string.Empty, this.SiUnit);
+            var quantityFormat = FormatCache<VoltageUnit>.GetOrCreate(null, this.SiUnit);
             return this.ToString(quantityFormat, null);
         }
 
         public string ToString(string format)
         {
-            var quantityFormat = FormatParser<VoltageUnit>.GetOrCreate(format);
+            var quantityFormat = FormatCache<VoltageUnit>.GetOrCreate(format);
             return ToString(quantityFormat, null);
         }
 
         public string ToString(IFormatProvider provider)
         {
-            var quantityFormat = FormatParser<VoltageUnit>.GetOrCreate(string.Empty, SiUnit);
+            var quantityFormat = FormatCache<VoltageUnit>.GetOrCreate(string.Empty, SiUnit);
             return ToString(quantityFormat, provider);
         }
 
         public string ToString(string format, IFormatProvider formatProvider)
         {
-            var quantityFormat = FormatParser<VoltageUnit>.GetOrCreate(format);
+            var quantityFormat = FormatCache<VoltageUnit>.GetOrCreate(format);
             return ToString(quantityFormat, formatProvider);
         }
 
         public string ToString(VoltageUnit unit)
         {
-            var quantityFormat = FormatParser<VoltageUnit>.GetOrCreate(string.Empty, unit);
+            var quantityFormat = FormatCache<VoltageUnit>.GetOrCreate(string.Empty, unit);
             return ToString(quantityFormat, null);
         }
 
         public string ToString(VoltageUnit unit, IFormatProvider formatProvider)
         {
-            var quantityFormat = FormatParser<VoltageUnit>.GetOrCreate(string.Empty, unit);
+            var quantityFormat = FormatCache<VoltageUnit>.GetOrCreate(string.Empty, unit);
             return ToString(quantityFormat, formatProvider);
         }
 
         public string ToString(string valueFormat, VoltageUnit unit)
         {
-            var quantityFormat = FormatParser<VoltageUnit>.GetOrCreate(valueFormat, unit);
+            var quantityFormat = FormatCache<VoltageUnit>.GetOrCreate(valueFormat, unit);
             return ToString(quantityFormat, null);
         }
 
         public string ToString(string valueFormat, VoltageUnit unit, IFormatProvider formatProvider)
         {
-            var quantityFormat = FormatParser<VoltageUnit>.GetOrCreate(valueFormat, unit);
+            var quantityFormat = FormatCache<VoltageUnit>.GetOrCreate(valueFormat, unit);
             return ToString(quantityFormat, formatProvider);
         }
 

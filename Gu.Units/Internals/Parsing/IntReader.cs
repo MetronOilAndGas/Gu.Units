@@ -34,6 +34,7 @@
                 pos = start;
                 return false;
             }
+
             int i;
             pos++;
             while (pos < text.Length &&

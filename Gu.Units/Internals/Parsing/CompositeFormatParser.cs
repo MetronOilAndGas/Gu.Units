@@ -2,6 +2,13 @@
 {
     internal static class CompositeFormatParser
     {
+        internal static QuantityFormat<TUnit> Create<TUnit>(FormatKey<TUnit> key) where TUnit : struct, IUnit
+        {
+            QuantityFormat<TUnit> result;
+            TryParse(key.CompositeFormat, out result);
+            return result;
+        }
+
         internal static bool TryParse<TUnit>(string format, out QuantityFormat<TUnit> result)
             where TUnit : struct, IUnit
         {
@@ -38,8 +45,8 @@
                 symbolFormat = null;
                 padEnd = padStart;
             }
-            var symbolEnd = pos;
 
+            var symbolEnd = pos;
             if (!format.IsRestWhiteSpace(ref pos, end))
             {
                 result = QuantityFormat<TUnit>.CreateUnknown(format, Unit<TUnit>.Default);
@@ -52,77 +59,6 @@
             var postPadding = GetPostPadding(format, symbolEnd, pos);
             result = QuantityFormat<TUnit>.CreateFromParsedCompositeFormat(prePadding, valueFormat, padding, symbolFormat, postPadding, unit);
             return valueFormat != null && symbolFormat != null;
-        }
-
-        private static bool TryParse<TUnit>(string format, TUnit unit, out QuantityFormat<TUnit> result)
-            where TUnit : struct, IUnit
-        {
-            int pos = 0;
-            string valueFormat;
-            var prePaddingStart = pos;
-            format.TryReadWhiteSpace(ref pos);
-            var prePaddingEnd = pos;
-            if (!DoubleFormatReader.TryReadDoubleFormat(format, ref pos, out valueFormat))
-            {
-                valueFormat = null;
-                prePaddingEnd = prePaddingStart;
-            }
-
-            var padStart = pos;
-            format.TryReadWhiteSpace(ref pos);
-            var padEnd = pos;
-            string symbolFormat;
-            TUnit readUnit;
-            if (TryReadUnit(format, ref pos, out symbolFormat, out readUnit))
-            {
-                if (!Equals(readUnit, unit))
-                {
-                    symbolFormat = null;
-                    padEnd = padStart;
-                }
-            }
-            else
-            {
-                symbolFormat = unit.Symbol;
-            }
-
-            var symbolEnd = pos;
-
-            if (!format.IsRestWhiteSpace(pos))
-            {
-                result = QuantityFormat<TUnit>.CreateUnknown(format, unit);
-                return false;
-            }
-
-            var prePadding = GetPrePadding(format, prePaddingStart, prePaddingEnd, valueFormat);
-            var padding = GetPadding(format, valueFormat, padStart, padEnd, symbolFormat);
-            var postPadding = GetPostPadding(format, symbolEnd, pos);
-
-
-
-            result = QuantityFormat<TUnit>.CreateFromParsedCompositeFormat(prePadding, valueFormat, padding, symbolFormat, postPadding, unit);
-            return valueFormat != null && symbolFormat != null;
-        }
-
-        internal static QuantityFormat<TUnit> Create<TUnit>(FormatAndUnit<TUnit> fau)
-            where TUnit : struct, IUnit
-        {
-            if (string.IsNullOrEmpty(fau._format))
-            {
-                var unit = fau._unit ?? Unit<TUnit>.Default;
-                return new QuantityFormat<TUnit>(null, null, null, null, null, unit);
-            }
-
-            QuantityFormat<TUnit> result;
-            if (fau._unit.HasValue)
-            {
-                TryParse(fau._format, fau._unit.Value, out result);
-            }
-            else
-            {
-                TryParse(fau._format, out result);
-            }
-            return result;
         }
 
         private static bool TryReadUnit<TUnit>(string format,

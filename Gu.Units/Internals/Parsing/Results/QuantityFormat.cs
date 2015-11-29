@@ -6,38 +6,12 @@
     [DebuggerDisplay("CompositeFormat: {CompositeFormat}")]
     internal class QuantityFormat<TUnit> : IEquatable<QuantityFormat<TUnit>> where TUnit : struct, IUnit
     {
-        public static QuantityFormat<TUnit> Default => FormatParser<TUnit>.DefaultFormat;
+        public static QuantityFormat<TUnit> Default => FormatCache<TUnit>.DefaultFormat;
         internal static readonly char NoBreakingSpace = '\u00A0';
         internal static readonly string NoBreakingSpaceString = "\u00A0";
         private string compositeFormat;
 
-        public QuantityFormat(string prePadding,
-            string valueFormat,
-            string padding,
-            string symbolFormat,
-            string postPadding,
-            TUnit unit)
-        {
-            PrePadding = prePadding;
-            ValueFormat = valueFormat;
-            if ((valueFormat == null || symbolFormat == null) &&
-                padding == null &&
-                ShouldSpace(symbolFormat ?? unit.Symbol))
-            {
-                Padding = NoBreakingSpaceString;
-            }
-            else
-            {
-                Padding = padding;
-            }
-
-            SymbolFormat = symbolFormat;
-            PostPadding = postPadding;
-            ErrorFormat = null;
-            Unit = unit;
-        }
-
-        public QuantityFormat(
+        private QuantityFormat(
             string prePadding,
             string valueFormat,
             string padding,
@@ -95,7 +69,22 @@
             string postPadding,
             TUnit unit)
         {
-            return new QuantityFormat<TUnit>(prePadding, valueFormat, padding, symbolFormat, postPadding, $"{{value: {valueFormat ?? "??"}}}\u00A0{{unit: {symbolFormat ?? "??"}}}", unit);
+            var formattableString = valueFormat == null || symbolFormat == null
+                ? $"{{value: {valueFormat ?? FormatCache.UnknownFormat}}}\u00A0{{unit: {symbolFormat ?? FormatCache.UnknownFormat}}}"
+                : null;
+
+            return new QuantityFormat<TUnit>(prePadding, valueFormat, padding, symbolFormat, postPadding, formattableString, unit);
+        }
+
+        public static QuantityFormat<TUnit> CreateFromValueAndUnit(string prePadding, string valueFormat, string padding, TUnit unit)
+        {
+            var errorFormat = valueFormat == FormatCache.UnknownFormat
+                ? $"{{value: {valueFormat}}}\u00A0{{unit: {unit.Symbol}}}"
+                : null;
+            padding =padding == null && ShouldSpace(unit.Symbol)
+                ? NoBreakingSpaceString
+                : null;
+            return new QuantityFormat<TUnit>(prePadding, valueFormat, padding, unit.Symbol, padding, errorFormat, unit);
         }
 
         public bool Equals(QuantityFormat<TUnit> other)
@@ -174,9 +163,10 @@
             {
                 if (ErrorFormat != null)
                 {
-                    builder.Append("Error: ");
                     builder.Append(ErrorFormat);
+                    return builder.ToString();
                 }
+
                 builder.Append(PrePadding);
 
                 if (string.IsNullOrEmpty(ValueFormat))

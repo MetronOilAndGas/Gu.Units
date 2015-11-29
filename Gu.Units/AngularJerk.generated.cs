@@ -430,49 +430,49 @@
 
         public override string ToString()
         {
-            var quantityFormat = FormatParser<AngularJerkUnit>.GetOrCreate(string.Empty, this.SiUnit);
+            var quantityFormat = FormatCache<AngularJerkUnit>.GetOrCreate(null, this.SiUnit);
             return this.ToString(quantityFormat, null);
         }
 
         public string ToString(string format)
         {
-            var quantityFormat = FormatParser<AngularJerkUnit>.GetOrCreate(format);
+            var quantityFormat = FormatCache<AngularJerkUnit>.GetOrCreate(format);
             return ToString(quantityFormat, null);
         }
 
         public string ToString(IFormatProvider provider)
         {
-            var quantityFormat = FormatParser<AngularJerkUnit>.GetOrCreate(string.Empty, SiUnit);
+            var quantityFormat = FormatCache<AngularJerkUnit>.GetOrCreate(string.Empty, SiUnit);
             return ToString(quantityFormat, provider);
         }
 
         public string ToString(string format, IFormatProvider formatProvider)
         {
-            var quantityFormat = FormatParser<AngularJerkUnit>.GetOrCreate(format);
+            var quantityFormat = FormatCache<AngularJerkUnit>.GetOrCreate(format);
             return ToString(quantityFormat, formatProvider);
         }
 
         public string ToString(AngularJerkUnit unit)
         {
-            var quantityFormat = FormatParser<AngularJerkUnit>.GetOrCreate(string.Empty, unit);
+            var quantityFormat = FormatCache<AngularJerkUnit>.GetOrCreate(string.Empty, unit);
             return ToString(quantityFormat, null);
         }
 
         public string ToString(AngularJerkUnit unit, IFormatProvider formatProvider)
         {
-            var quantityFormat = FormatParser<AngularJerkUnit>.GetOrCreate(string.Empty, unit);
+            var quantityFormat = FormatCache<AngularJerkUnit>.GetOrCreate(string.Empty, unit);
             return ToString(quantityFormat, formatProvider);
         }
 
         public string ToString(string valueFormat, AngularJerkUnit unit)
         {
-            var quantityFormat = FormatParser<AngularJerkUnit>.GetOrCreate(valueFormat, unit);
+            var quantityFormat = FormatCache<AngularJerkUnit>.GetOrCreate(valueFormat, unit);
             return ToString(quantityFormat, null);
         }
 
         public string ToString(string valueFormat, AngularJerkUnit unit, IFormatProvider formatProvider)
         {
-            var quantityFormat = FormatParser<AngularJerkUnit>.GetOrCreate(valueFormat, unit);
+            var quantityFormat = FormatCache<AngularJerkUnit>.GetOrCreate(valueFormat, unit);
             return ToString(quantityFormat, formatProvider);
         }
 
