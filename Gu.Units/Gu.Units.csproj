@@ -213,7 +213,6 @@
     <Compile Include="Internals\FormatCache.cs" />
     <Compile Include="Internals\FormatCache{TUnit}.cs" />
     <Compile Include="Internals\Parsing\IntReader.cs" />
-    <Compile Include="Internals\Parsing\ULongReader.cs" />
     <Compile Include="Internals\QuantityFormat.cs" />
     <Compile Include="Internals\Parsing\UnitFormatReader.cs" />
     <Compile Include="Internals\SubstringCache.cs" />

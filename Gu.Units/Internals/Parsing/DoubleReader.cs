@@ -128,7 +128,7 @@
             Sign sign;
             if (TryReadSign(text, ref pos, format, out sign))
             {
-                if ((style & NumberStyles.AllowDecimalPoint) == 0)
+                if ((style & NumberStyles.AllowLeadingSign) == 0)
                 {
                     result = 0;
                     pos = start;
@@ -136,8 +136,8 @@
                 }
             }
 
-            ulong integral = 0;
-            if (!TryReadIntegerDigits(text, ref pos, style, format, ref integral))
+            result = 0;
+            if (!TryReadIntegerDigits(text, ref pos, style, format, ref result))
             {
                 pos = start;
                 result = 0;
@@ -182,20 +182,20 @@
                     : 2;
                 pos -= backStep;
                 result = sign == Sign.Negative
-                    ? -Combine(integral, fraction, fractionDigits)
-                    : Combine(integral, fraction, fractionDigits);
+                    ? -Combine(result, fraction, fractionDigits)
+                    : Combine(result, fraction, fractionDigits);
 
                 return true;
             }
 
             result = sign == Sign.Negative
-                ? -Combine(integral, fraction, fractionDigits)
-                : Combine(integral, fraction, fractionDigits);
+                ? -Combine(result, fraction, fractionDigits)
+                : Combine(result, fraction, fractionDigits);
 
             return true;
         }
 
-        private static double Combine(ulong integral, ulong fraction, int fractionDigits)
+        private static double Combine(double integral, ulong fraction, int fractionDigits)
         {
             switch (fractionDigits)
             {
@@ -299,7 +299,7 @@
             return false;
         }
 
-        private static bool TryReadIntegerDigits(string text, ref int pos, NumberStyles styles, NumberFormatInfo format, ref ulong result)
+        private static bool TryReadIntegerDigits(string text, ref int pos, NumberStyles styles, NumberFormatInfo format, ref double result)
         {
             var start = pos;
             bool readThousandSeparator = false;
@@ -309,7 +309,7 @@
                 if (i != -1)
                 {
                     result *= 10;
-                    result += (ulong)i;
+                    result += i;
                     pos++;
                     readThousandSeparator = false;
                     continue;

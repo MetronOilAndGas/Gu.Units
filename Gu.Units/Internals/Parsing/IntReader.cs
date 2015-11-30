@@ -122,8 +122,7 @@
             return false;
         }
 
-        internal static bool TrySkipDigits(string text,
-            ref int pos)
+        internal static bool TrySkipDigits(string text, ref int pos)
         {
             var start = pos;
             while (pos < text.Length && IsDigit(text[pos]))
