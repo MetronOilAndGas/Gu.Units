@@ -144,8 +144,6 @@
                 return false;
             }
 
-            int fractionDigits = 0;
-            ulong fraction = 0;
             if (TryRead(text, ref pos, format.NumberDecimalSeparator))
             {
                 if ((style & NumberStyles.AllowDecimalPoint) == 0)
@@ -155,7 +153,7 @@
                     return false;
                 }
 
-                TryReadFractionDigits(text, ref pos, ref fraction, out fractionDigits);
+                TryReadFractionDigits(text, ref pos, ref result);
             }
 
             if (TryReadExponent(text, ref pos))
@@ -182,66 +180,17 @@
                     : 2;
                 pos -= backStep;
                 result = sign == Sign.Negative
-                    ? -Combine(result, fraction, fractionDigits)
-                    : Combine(result, fraction, fractionDigits);
+                    ? -result
+                    : result;
 
                 return true;
             }
 
             result = sign == Sign.Negative
-                ? -Combine(result, fraction, fractionDigits)
-                : Combine(result, fraction, fractionDigits);
+                ? -result
+                : result;
 
             return true;
-        }
-
-        private static double Combine(double integral, ulong fraction, int fractionDigits)
-        {
-            switch (fractionDigits)
-            {
-                case 0:
-                    return integral;
-                case 1:
-                    return integral + fraction / 10.0;
-                case 2:
-                    return integral + fraction / 100.0;
-                case 3:
-                    return integral + fraction / 1000.0;
-                case 4:
-                    return integral + fraction / 10000.0;
-                case 5:
-                    return integral + fraction / 100000.0;
-                case 6:
-                    return integral + fraction / 1000000.0;
-                case 7:
-                    return integral + fraction / 10000000.0;
-                case 8:
-                    return integral + fraction / 100000000.0;
-                case 9:
-                    return integral + fraction / 1000000000.0;
-                case 10:
-                    return integral + fraction / 10000000000.0;
-                case 11:
-                    return integral + fraction / 100000000000.0;
-                case 12:
-                    return integral + fraction / 1000000000000.0;
-                case 13:
-                    return integral + fraction / 10000000000000.0;
-                case 14:
-                    return integral + fraction / 100000000000000.0;
-                case 15:
-                    return integral + fraction / 1000000000000000.0;
-                case 16:
-                    return integral + fraction / 10000000000000000.0;
-                case 17:
-                    return integral + fraction / 100000000000000000.0;
-                case 18:
-                    return integral + fraction / 1000000000000000000.0;
-                case 19:
-                    return integral + fraction / 10000000000000000000.0;
-                default:
-                    throw new ArgumentOutOfRangeException("Fraction must be truncated before calling this");
-            }
         }
 
         private static bool TryParseSubString(
@@ -301,88 +250,81 @@
 
         private static bool TryReadIntegerDigits(string text, ref int pos, NumberStyles styles, NumberFormatInfo format, ref double result)
         {
-            var start = pos;
-            bool readThousandSeparator = false;
-            while (pos < text.Length)
+            if (pos == text.Length)
             {
-                var i = IntReader.GetDigitOrMinusOne(text[pos]);
-                if (i != -1)
-                {
-                    result *= 10;
-                    result += i;
-                    pos++;
-                    readThousandSeparator = false;
-                    continue;
-                }
+                return false;
+            }
 
-                if ((styles & NumberStyles.AllowThousands) != 0 &&
-                    format?.NumberGroupSeparator != null)
-                {
-                    if (TryRead(text, ref pos, format.NumberGroupSeparator))
-                    {
-                        readThousandSeparator = true;
-                        continue;
-                    }
-                }
-
-                if (readThousandSeparator)
+            var start = pos;
+            if (format?.NumberDecimalSeparator != null &&
+                Skipper.TrySkip(text, ref pos, format.NumberDecimalSeparator))
+            {
+                if (!IntReader.IsDigit(text, pos))
                 {
                     pos = start;
                     return false;
                 }
 
-                if (pos == start &&
-                    i == -1)
+                pos = start;
+                return true;
+            }
+
+            if (!IntReader.IsDigit(text[pos]))
+            {
+                return false;
+            }
+
+            while (pos < text.Length)
+            {
+                var i = text[pos] - '0';
+                if (0 <= i && i <= 9)
                 {
-                    if (pos == text.Length)
-                    {
-                        return false;
-                    }
-
-                    if (!TryRead(text, ref pos, format.NumberDecimalSeparator))
-                    {
-                        return false;
-                    }
-
-                    if (pos == text.Length)
-                    {
-                        return false;
-                    }
-
-                    if (IntReader.GetDigitOrMinusOne(text[pos]) == -1)
-                    {
-                        pos = start;
-                        return false;
-                    }
-
-                    pos = start;
+                    result *= 10;
+                    result += i;
+                    pos++;
+                    continue;
                 }
+
+                if ((styles & NumberStyles.AllowThousands) != 0)
+                {
+                    if (format?.NumberDecimalSeparator != null &&
+                        Skipper.TrySkip(text, ref pos, format.NumberGroupSeparator))
+                    {
+                        continue;
+                    }
+                }
+
                 break;
             }
 
-            return !readThousandSeparator;
+            return pos - start < 310;
         }
 
-        private static bool TryReadFractionDigits(string text, ref int pos, ref ulong result, out int digits)
+        private static bool TryReadFractionDigits(string text, ref int pos, ref double result)
         {
-            digits = 0;
+            double digits = 0;
             var start = pos;
             while (pos < text.Length)
             {
-                var i = IntReader.GetDigitOrMinusOne(text[pos]);
-                if (i == -1)
+                int i = text[pos] - '0';
+                if (0 <= i && i <= 9)
                 {
-                    break;
+                    digits *= 10;
+                    digits += i;
+                    pos++;
+                    continue;
                 }
 
-                pos++;
-                if (pos - start < 20)
-                {
-                    result *= 10;
-                    result += (uint)i;
-                    digits++;
-                }
+                break;
             }
+
+            digits = digits / Math.Pow(10, pos - start);
+            result += digits;
+            //var digits = pos - start;
+            //if (digits <= 15)
+            //{
+            //    result = Math.Round(result, Math.Min(15, pos - start));
+            //}
 
             return pos != start;
         }

@@ -112,7 +112,7 @@
             }
         }
 
-        private static bool IsDigit(string text, int index)
+        internal static bool IsDigit(string text, int index)
         {
             if (index < text.Length)
             {

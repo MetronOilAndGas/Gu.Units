@@ -3,11 +3,55 @@
     using System;
     using System.Collections.Generic;
     using System.Globalization;
+    using System.Text;
     using NUnit.Framework;
 
     public class DoubleReaderTests
     {
-        private static readonly string[] PadFormats = { "abc{0}def", "abcd{0}ef","{0}" };
+        private static readonly string[] PadFormats = { "abc{0}def", "abcd{0}ef", "{0}" };
+
+        [Test]
+        public void Fuzzer()
+        {
+            var rnd = new Random(DateTime.Now.Millisecond);
+            long count = 0;
+            var builder = new StringBuilder();
+            string text;
+
+            double parsed;
+            double read;
+
+            bool parseSuccess;
+            bool readSuccess;
+            bool success;
+            do
+            {
+                var pos = 0;
+                var length = rnd.Next(2, 15);
+                var decimalPlace = rnd.Next(length);
+                builder.Clear();
+                for (int i = 0; i < length; i++)
+                {
+                    if (i == decimalPlace)
+                    {
+                        builder.Append('.');
+                        continue;
+                    }
+                    builder.Append((char)rnd.Next('0', '9'));
+                }
+
+                text = builder.ToString();
+                parseSuccess = double.TryParse(text, NumberStyles.Float, CultureInfo.InvariantCulture, out parsed);
+                readSuccess = DoubleReader.TryRead(text, ref pos, NumberStyles.Float, CultureInfo.InvariantCulture, out read);
+                success = parseSuccess && readSuccess && parsed == read;
+                count++;
+            } while (success);
+
+            Console.WriteLine($"Count: {count}");
+            Console.WriteLine(text);
+            Console.WriteLine($"success: {parseSuccess} double.TryParse(text, out {parsed.ToString("R", CultureInfo.InvariantCulture)})");
+            Console.WriteLine($"success: {readSuccess} double.TryParse(text, out {read.ToString("R", CultureInfo.InvariantCulture)})");
+        }
 
         [TestCaseSource(nameof(HappyPaths))]
         public void ReadSuccess(DoubleData data)
@@ -63,6 +107,21 @@
         {
             var culture = data.Culture;
             var style = data.Styles;
+            var pos = 0;
+            double expected;
+            Assert.IsTrue(double.TryParse(data.Text, style, culture, out expected));
+            double actual;
+            Assert.IsTrue(DoubleReader.TryRead(data.Text, ref pos, style, culture, out actual));
+            Assert.AreEqual(expected, actual);
+            var expectedEnd = data.Text.Length;
+            Assert.AreEqual(expectedEnd, pos);
+        }
+
+        [TestCaseSource(nameof(HappyPaths))]
+        public void TryReadPaddedSuccess(DoubleData data)
+        {
+            var culture = data.Culture;
+            var style = data.Styles;
             foreach (var format in PadFormats)
             {
                 var text = string.Format(format, data.Text);
@@ -79,7 +138,7 @@
         }
 
         [TestCaseSource(nameof(Errors))]
-        public void TryReadError(DoubleData data)
+        public void TryReadErrorPadded(DoubleData data)
         {
             var culture = data.Culture;
             var style = data.Styles;
@@ -96,6 +155,20 @@
                 Assert.AreEqual(expected, actual);
                 Assert.AreEqual(start, pos);
             }
+        }
+
+        [TestCaseSource(nameof(Errors))]
+        public void TryReadError(DoubleData data)
+        {
+            var culture = data.Culture;
+            var style = data.Styles;
+            var pos = 0;
+            double expected;
+            Assert.IsFalse(double.TryParse(data.Text, style, culture, out expected));
+            double actual;
+            Assert.IsFalse(DoubleReader.TryRead(data.Text, ref pos, style, culture, out actual));
+            Assert.AreEqual(expected, actual);
+            Assert.AreEqual(0, pos);
         }
 
         #region TestData
@@ -129,7 +202,18 @@
             CreateParseData("-1.2E3", NumberStyles.Float, en),
             CreateParseData("+1.2e-3", NumberStyles.Float, en),
             CreateParseData("+1.2E-3", NumberStyles.Float, en),
-            CreateParseData("-1.2e+3", NumberStyles.Float, en),
+            CreateParseData("-1.2e+3", NumberStyles.Float, en),//1,,2,3,4,5,,,.00
+            CreateParseData("1,,2,3,4,5,,,.00", NumberStyles.Float|NumberStyles.AllowThousands, en),
+            CreateParseData("12345678910123456789", NumberStyles.Float|NumberStyles.AllowThousands, en),
+            CreateParseData("1.2345678910123456789", NumberStyles.Float|NumberStyles.AllowThousands, en),
+            CreateParseData("1234567891012345678.9", NumberStyles.Float|NumberStyles.AllowThousands, en),
+            CreateParseData(new string('1', 307), NumberStyles.Float|NumberStyles.AllowThousands, en),
+            CreateParseData(new string('1', 308), NumberStyles.Float|NumberStyles.AllowThousands, en),
+            CreateParseData(new string('1', 309), NumberStyles.Float|NumberStyles.AllowThousands, en),
+            CreateParseData("0." + new string('0', 15)+"1", NumberStyles.Float|NumberStyles.AllowThousands, en),
+            CreateParseData("0." + new string('0', 16)+"1", NumberStyles.Float|NumberStyles.AllowThousands, en),
+            CreateParseData("0." + new string('0', 299)+"1", NumberStyles.Float|NumberStyles.AllowThousands, en),
+            CreateParseData("0." + new string('0', 300)+"1", NumberStyles.Float|NumberStyles.AllowThousands, en),
             CreateParseData(-12345.678910, NumberStyles.Float, en, "e"),
             CreateParseData(12345.678910, NumberStyles.Float, en, "E"),
             CreateParseData(12345.678910, NumberStyles.Float, en, "E5"),
@@ -172,6 +256,7 @@
             CreateParseData("-1", NumberStyles.None, en),
             CreateParseData(".1", NumberStyles.None, en),
             CreateParseData(",.1", NumberStyles.Float, en),
+            CreateParseData(new string('1', 311), NumberStyles.Float, en),
             //Add("1.", NumberStyles.Float | NumberStyles.AllowHexSpecifier, en),
             CreateParseData(".", NumberStyles.Float, en),
             //Add("+1,2", NumberStyles.Float, en),

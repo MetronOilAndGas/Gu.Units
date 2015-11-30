@@ -550,10 +550,11 @@ namespace <#= Settings.Namespace #>
         /// true if <paramref name="other"/> represents the same <#= quantity.ClassName #> as this instance; otherwise, false.
         /// </returns>
         /// <param name="other">An instance of <see cref="<#= Settings.Namespace #>.<#= quantity.ClassName #>"/> object to compare with this instance.</param>
-        /// <param name="tolerance">The maximum difference for being considered equal</param>
+        /// <param name="tolerance">The maximum difference for being considered equal. Must be greater than zero.</param>
         public bool Equals(<#= quantity.ClassName #> other, double tolerance)
         {
-            return Math.Abs(this.<#= quantity.Unit.ParameterName #> - other.<#= quantity.Unit.ParameterName #>) < tolerance;
+		    Ensure.GreaterThan(tolerance.<#= quantity.Unit.ParameterName #>, 0, nameof(tolerance));
+            return Math.Abs(this.<#= quantity.Unit.ParameterName #> - other.<#= quantity.Unit.ParameterName #>) < tolerance.<#= quantity.Unit.ParameterName #>;
         }
  
         public override bool Equals(object obj)

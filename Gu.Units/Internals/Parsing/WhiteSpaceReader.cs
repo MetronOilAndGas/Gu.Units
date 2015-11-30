@@ -8,6 +8,7 @@ namespace Gu.Units
             {
                 return false;
             }
+
             var start = pos;
             while (text.Length > pos && char.IsWhiteSpace(text[pos]))
             {

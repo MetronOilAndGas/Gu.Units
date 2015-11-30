@@ -703,10 +703,11 @@
         /// true if <paramref name="other"/> represents the same Length as this instance; otherwise, false.
         /// </returns>
         /// <param name="other">An instance of <see cref="Gu.Units.Length"/> object to compare with this instance.</param>
-        /// <param name="tolerance">The maximum difference for being considered equal</param>
-        public bool Equals(Length other, double tolerance)
+        /// <param name="tolerance">The maximum difference for being considered equal. Must be greater than zero.</param>
+        public bool Equals(Length other, Length tolerance)
         {
-            return Math.Abs(this.metres - other.metres) < tolerance;
+            Ensure.GreaterThan(tolerance.metres, 0, nameof(tolerance));
+            return Math.Abs(this.metres - other.metres) < tolerance.metres;
         }
 
         public override bool Equals(object obj)
