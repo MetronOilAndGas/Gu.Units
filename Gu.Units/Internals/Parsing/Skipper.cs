@@ -4,7 +4,7 @@
     {
         internal static bool TrySkip(string text, ref int pos, string skipText)
         {
-            if (string.IsNullOrEmpty(skipText) || 
+            if (string.IsNullOrEmpty(skipText) ||
                 text.Length - pos < skipText.Length)
             {
                 return false;
@@ -34,6 +34,22 @@
             }
 
             return true;
+        }
+
+        internal static bool TrySkip(string text, ref int pos, char skipChar)
+        {
+            if (pos == text.Length)
+            {
+                return false;
+            }
+
+            if (text[pos] == skipChar)
+            {
+                pos++;
+                return true;
+            }
+
+            return false;
         }
     }
 }

@@ -82,9 +82,9 @@
                 return false;
             }
 
-            if (TryReadDigitsOnly(text, ref pos, style, provider, out result))
+            if (TrySkipDoubleDigits(text, ref pos, style, provider))
             {
-                return true;
+                return TryParseSubString(text, start, ref pos, style, provider, out result);
             }
 
             if (provider == null)
@@ -93,19 +93,19 @@
             }
 
             var format = NumberFormatInfo.GetInstance(provider);
-            if (TryRead(text, ref pos, format.NaNSymbol))
+            if (Skipper.TrySkip(text, ref pos, format.NaNSymbol))
             {
                 result = double.NaN;
                 return true;
             }
 
-            if (TryRead(text, ref pos, format.PositiveInfinitySymbol))
+            if (Skipper.TrySkip(text, ref pos, format.PositiveInfinitySymbol))
             {
                 result = double.PositiveInfinity;
                 return true;
             }
 
-            if (TryRead(text, ref pos, format.NegativeInfinitySymbol))
+            if (Skipper.TrySkip(text, ref pos, format.NegativeInfinitySymbol))
             {
                 result = double.NegativeInfinity;
                 return true;
@@ -116,12 +116,11 @@
         }
 
         // Try parse a double from digits ignoring +-Inf and NaN
-        private static bool TryReadDigitsOnly(
+        private static bool TrySkipDoubleDigits(
             string text,
             ref int pos,
             NumberStyles style,
-            IFormatProvider provider,
-            out double result)
+            IFormatProvider provider)
         {
             var start = pos;
             var format = NumberFormatInfo.GetInstance(provider);
@@ -130,45 +129,40 @@
             {
                 if ((style & NumberStyles.AllowLeadingSign) == 0)
                 {
-                    result = 0;
                     pos = start;
                     return false;
                 }
             }
 
-            result = 0;
-            if (!TryReadIntegerDigits(text, ref pos, style, format, ref result))
+            if (!TrySkipIntegerDigits(text, ref pos, style, format))
             {
                 pos = start;
-                result = 0;
                 return false;
             }
 
-            if (TryRead(text, ref pos, format.NumberDecimalSeparator))
+            if (Skipper.TrySkip(text, ref pos, format.NumberDecimalSeparator))
             {
                 if ((style & NumberStyles.AllowDecimalPoint) == 0)
                 {
-                    result = 0;
                     pos = start;
                     return false;
                 }
 
-                TryReadFractionDigits(text, ref pos, ref result);
+                TrySkipFractionDigits(text, ref pos);
             }
 
-            if (TryReadExponent(text, ref pos))
+            if (TrySkipExponent(text, ref pos))
             {
                 if ((style & NumberStyles.AllowExponent) == 0)
                 {
-                    result = 0;
                     pos = start;
                     return false;
                 }
                 Sign exponentSign;
                 TryReadSign(text, ref pos, format, out exponentSign);
-                if (TryReadExponentDigits(text, ref pos))
+                if (TrySkipExponentDigits(text, ref pos))
                 {
-                    return TryParseSubString(text, start, ref pos, style, provider, out result);
+                    return true;
                 }
 
                 // This is a tricky spot we read digits followed by (sign) exponent 
@@ -179,16 +173,8 @@
                     ? 1
                     : 2;
                 pos -= backStep;
-                result = sign == Sign.Negative
-                    ? -result
-                    : result;
-
                 return true;
             }
-
-            result = sign == Sign.Negative
-                ? -result
-                : result;
 
             return true;
         }
@@ -210,18 +196,18 @@
             return success;
         }
 
-        private static bool TryReadSign(string s,
+        private static bool TryReadSign(string text,
             ref int pos,
             NumberFormatInfo format,
             out Sign sign)
         {
-            if (TryRead(s, ref pos, format.PositiveSign))
+            if (Skipper.TrySkip(text, ref pos, format.PositiveSign))
             {
                 sign = Sign.Positive;
                 return true;
             }
 
-            if (TryRead(s, ref pos, format.NegativeSign))
+            if (Skipper.TrySkip(text, ref pos, format.NegativeSign))
             {
                 sign = Sign.Negative;
                 return true;
@@ -231,16 +217,16 @@
             return false;
         }
 
-        private static bool TryReadExponent(
-            string s,
+        private static bool TrySkipExponent(
+            string text,
             ref int pos)
         {
-            if (TryRead(s, ref pos, "E"))
+            if (Skipper.TrySkip(text, ref pos, 'E'))
             {
                 return true;
             }
 
-            if (TryRead(s, ref pos, "e"))
+            if (Skipper.TrySkip(text, ref pos, "e"))
             {
                 return true;
             }
@@ -248,7 +234,7 @@
             return false;
         }
 
-        private static bool TryReadIntegerDigits(string text, ref int pos, NumberStyles styles, NumberFormatInfo format, ref double result)
+        private static bool TrySkipIntegerDigits(string text, ref int pos, NumberStyles styles, NumberFormatInfo format)
         {
             if (pos == text.Length)
             {
@@ -279,8 +265,6 @@
                 var i = text[pos] - '0';
                 if (0 <= i && i <= 9)
                 {
-                    result *= 10;
-                    result += i;
                     pos++;
                     continue;
                 }
@@ -300,60 +284,14 @@
             return pos - start < 310;
         }
 
-        private static bool TryReadFractionDigits(string text, ref int pos, ref double result)
-        {
-            double digits = 0;
-            var start = pos;
-            while (pos < text.Length)
-            {
-                int i = text[pos] - '0';
-                if (0 <= i && i <= 9)
-                {
-                    digits *= 10;
-                    digits += i;
-                    pos++;
-                    continue;
-                }
-
-                break;
-            }
-
-            digits = digits / Math.Pow(10, pos - start);
-            result += digits;
-            //var digits = pos - start;
-            //if (digits <= 15)
-            //{
-            //    result = Math.Round(result, Math.Min(15, pos - start));
-            //}
-
-            return pos != start;
-        }
-
-        private static bool TryReadExponentDigits(string text, ref int pos)
+        private static bool TrySkipFractionDigits(string text, ref int pos)
         {
             return IntReader.TrySkipDigits(text, ref pos);
         }
 
-        private static bool TryRead(string s, ref int pos, string toRead)
+        private static bool TrySkipExponentDigits(string text, ref int pos)
         {
-            if (pos == s.Length)
-            {
-                return false;
-            }
-
-            int start = pos;
-            while (pos < s.Length &&
-                   pos - start < toRead.Length)
-            {
-                if (s[pos] != toRead[pos - start])
-                {
-                    pos = start;
-                    return false;
-                }
-                pos++;
-            }
-
-            return true;
+            return IntReader.TrySkipDigits(text, ref pos);
         }
 
         private static bool IsValidFloatingPointStyle(NumberStyles style)

@@ -10,6 +10,7 @@
     {
         private static readonly string[] PadFormats = { "abc{0}def", "abcd{0}ef", "{0}" };
 
+        [Explicit("Runs forever unless")]
         [Test]
         public void Fuzzer()
         {
@@ -76,15 +77,35 @@
         {
             var culture = data.Culture;
             var style = data.Styles;
-            var s = data.Text;
+            var text = data.Text;
             foreach (var format in PadFormats)
             {
-                var ns = string.Format(format, s);
+                var ns = string.Format(format, text);
                 var pos = format.IndexOf('{');
                 var start = pos;
-                Assert.Throws<FormatException>(() => double.Parse(s, style, culture));
-                Assert.Throws<FormatException>(() => DoubleReader.Read(ns, ref pos, style, culture));
+                Exception parseException = null;
+                try
+                {
+                    double.Parse(text, style, culture);
+                }
+                catch (Exception e)
+                {
+                    parseException = e;
+                }
+
+                Exception readException = null;
+                try
+                {
+                    DoubleReader.Read(ns, ref pos, style, culture);
+                }
+                catch (Exception e)
+                {
+                    readException = e;
+                }
+
                 Assert.AreEqual(start, pos);
+                Assert.NotNull(parseException);
+                Assert.NotNull(readException);
             }
         }
 
