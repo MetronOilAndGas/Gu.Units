@@ -140,38 +140,43 @@
                 unit);
         }
 
-        internal static QuantityFormat<TUnit> CreateFromValueFormatAndUnit(string prePadding, string valueFormat, string padding, TUnit unit)
+        internal static QuantityFormat<TUnit> CreateFromValueFormatAndUnit(PaddedFormat valueFormat, TUnit unit)
         {
-            var errorFormat = CreateErrorFormat(valueFormat, unit.Symbol);
+            var padding = valueFormat.PostPadding;
+            var errorFormat = CreateErrorFormat(valueFormat.Format, unit.Symbol);
             padding = padding == null && ShouldSpace(unit.Symbol)
                 ? NoBreakingSpaceString
                 : null;
-            return new QuantityFormat<TUnit>(prePadding, valueFormat, padding, unit.Symbol, null, errorFormat, unit);
+            return new QuantityFormat<TUnit>(valueFormat.PrePadding, valueFormat.Format, padding, unit.Symbol, null, errorFormat, unit);
         }
 
-        internal static QuantityFormat<TUnit> CreateFromValueAndSymbolFormats(string prePadding,
-            string valueFormat,
-            string valuePadding,
-            string symbolPadding,
-            string symbolFormat,
-            string postPadding,
+        internal static QuantityFormat<TUnit> CreateFromValueAndSymbolFormats(
+            PaddedFormat valueFormat,
+            PaddedFormat symbolFormat,
             TUnit unit)
         {
-            var errorFormat = CreateErrorFormat(valueFormat, symbolFormat);
+            var errorFormat = CreateErrorFormat(valueFormat.Format, symbolFormat.Format);
 
             string padding = null;
-            if (valuePadding == null &&
-                symbolPadding == null &&
-                ShouldSpace(symbolFormat))
+            if (valueFormat.PostPadding == null &&
+                symbolFormat.PrePadding == null &&
+                ShouldSpace(symbolFormat.Format))
             {
                 padding = NoBreakingSpaceString;
             }
             else
             {
-                padding = valuePadding + symbolPadding;
+                padding = valueFormat.PostPadding + symbolFormat.PrePadding;
             }
 
-            return new QuantityFormat<TUnit>(prePadding, valueFormat, padding, symbolFormat, postPadding, errorFormat, unit);
+            return new QuantityFormat<TUnit>(
+                valueFormat.PrePadding, 
+                valueFormat.Format,
+                padding,
+                symbolFormat.Format,
+                symbolFormat.PostPadding, 
+                errorFormat, 
+                unit);
         }
 
         internal static QuantityFormat<TUnit> CreateUnknown(string errorFormat, TUnit unit)

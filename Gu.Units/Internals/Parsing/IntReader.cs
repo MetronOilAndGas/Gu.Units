@@ -26,51 +26,78 @@
 
             var start = pos;
             var sign = OperatorReader.TryReadSign(text, ref pos);
-
-            long temp = GetDigitOrMinusOne(text[pos]);
-            if (temp < 0)
+            uint temp;
+            if (!TryReadUInt32(text, ref pos, out temp))
             {
                 result = 0;
                 pos = start;
                 return false;
             }
 
-            int i;
-            pos++;
-            while (pos < text.Length &&
-                   (i = GetDigitOrMinusOne(text[pos])) != -1)
+            if ((temp & 1 << 31) == 1) // overflow.
             {
-                temp *= 10;
-                temp += i;
-                pos++;
-                if (temp > int.MaxValue)
-                {
-                    break;
-                }
+                result = 0;
+                pos = start;
+                return false;
             }
 
             if (sign == Sign.Negative)
             {
-                temp = -temp;
-                if (temp < int.MinValue)
-                {
-                    result = 0;
-                    pos = start;
-                    return false;
-                }
+                result = (int)-temp;
+                return true;
             }
-            else
+
+            result = (int)temp;
+            return true;
+        }
+
+        internal static bool TryReadUInt32(string text, ref int pos, out uint result)
+        {
+            if (pos == text.Length)
             {
-                if (temp > int.MaxValue)
+                result = 0;
+                return false;
+            }
+
+            var start = pos;
+            result = 0;
+
+            while (pos < text.Length)
+            {
+                var i = text[pos] - '0';
+                if (i < 0 ||
+                    9 < i)
                 {
+                    break;
+                }
+                try
+                {
+                    pos++;
+                    result *= 10;
+                    result += (uint)i;
+                }
+                catch
+                {
+                    // expecting this to never happen so try catching overflow is an optimization
                     result = 0;
                     pos = start;
                     return false;
                 }
             }
 
-            result = (int)temp;
             return true;
+        }
+
+        internal static bool TrySkipDigits(string text, ref int pos)
+        {
+            var start = pos;
+            while (pos < text.Length &&
+                   IsDigit(text[pos]))
+            {
+                pos++;
+            }
+
+            return pos != start;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

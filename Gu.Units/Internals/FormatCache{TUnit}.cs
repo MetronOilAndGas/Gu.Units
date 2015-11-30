@@ -24,70 +24,27 @@
 
         private static QuantityFormat<TUnit> CreateFromValueFormatAndUnit(FormatKey<TUnit> key)
         {
-            int pos = 0;
-            var format = key.ValueFormat;
-
-            string prePadding;
-            string valueFormat;
-            string postPadding;
-            if (!DoubleFormatReader.TryRead(format, ref pos, out prePadding, out valueFormat, out postPadding))
-            {
-                valueFormat = FormatCache.UnknownFormat;
-            }
-
-            if (!format.IsRestWhiteSpace(pos))
-            {
-                valueFormat = FormatCache.UnknownFormat;
-            }
-
-            return QuantityFormat<TUnit>.CreateFromValueFormatAndUnit(prePadding, valueFormat, postPadding, key.Unit.Value);
+            var valueFormat = string.IsNullOrEmpty(key.ValueFormat)
+                ? PaddedFormat.NullFormat
+                : DoubleFormatReader.TryRead(key.ValueFormat);
+            return QuantityFormat<TUnit>.CreateFromValueFormatAndUnit(valueFormat, key.Unit.Value);
         }
 
         private static QuantityFormat<TUnit> CreateFromValueAndSymbolFormats(FormatKey<TUnit> key)
         {
-            int pos = 0;
-            string valuePrePadding;
-            string valueFormat;
-            string valuePostPadding;
-            if (!DoubleFormatReader.TryRead(
-                key.ValueFormat,
-                ref pos,
-                out valuePrePadding,
-                out valueFormat,
-                out valuePostPadding))
-            {
-                valueFormat = FormatCache.UnknownFormat;
-            }
+            var valueFormat = string.IsNullOrEmpty(key.ValueFormat)
+                ? PaddedFormat.NullFormat
+                : DoubleFormatReader.TryRead(key.ValueFormat);
 
-            pos = 0;
-            string symbolPrePadding;
-            string symbolFormat;
-            string symbolPostPadding;
-            TUnit resultUnit;
-            if (!UnitFormatReader.TryRead(
-                key.SymbolFormat,
-                ref pos,
-                out symbolPrePadding,
-                out symbolFormat,
-                out symbolPostPadding,
-                out resultUnit))
-            {
-                symbolFormat = FormatCache.UnknownFormat;
-            }
-
-            if (!symbolFormat.IsRestWhiteSpace(pos))
-            {
-                symbolFormat = FormatCache.UnknownFormat;
-            }
+            TUnit unit = Unit<TUnit>.Default;
+            var symbolFormat = string.IsNullOrEmpty(key.SymbolFormat)
+                ? PaddedFormat.NullFormat
+                : UnitFormatReader<TUnit>.TryRead(key.SymbolFormat, out unit);
 
             return QuantityFormat<TUnit>.CreateFromValueAndSymbolFormats(
-                valuePrePadding,
                 valueFormat,
-                valuePostPadding,
-                symbolPrePadding,
                 symbolFormat,
-                symbolPostPadding,
-                resultUnit);
+                unit);
         }
     }
 }

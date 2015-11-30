@@ -62,8 +62,8 @@
 
         private static readonly IReadOnlyList<SuccessData<int>> Errors = new[]
         {
-            ErrorData.Create<int>("-2147483649",  0), // less than int.min
-            ErrorData.Create<int>("2147483648",  0), // greater than int.max
+            ErrorData.Create<int>(((long)int.MinValue-1).ToString(),  0), // less than int.min
+            ErrorData.Create<int>(((long)int.MaxValue+1).ToString(),  0), // greater than int.max
         };
     }
 }

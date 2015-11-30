@@ -18,18 +18,18 @@
             // finding the end while substring gets the end for free.
             // interesting as a base line.
             var cache = new SubstringCache<string>();
-            cache.Add(new SubstringCache<string>.CachedItem("abc0", "d"));
-            cache.Add(new SubstringCache<string>.CachedItem("abc01", "e"));
-            cache.Add(new SubstringCache<string>.CachedItem("abc1", "e"));
-            cache.Add(new SubstringCache<string>.CachedItem("abc11", "e"));
-            cache.Add(new SubstringCache<string>.CachedItem("abc2", "f"));
-            cache.Add(new SubstringCache<string>.CachedItem("abc21", "f"));
+            cache.Add("abc0", "d");
+            cache.Add("abc01", "e");
+            cache.Add("abc1", "e");
+            cache.Add("abc11", "e");
+            cache.Add("abc2", "f");
+            cache.Add("abc21", "f");
 
             const string text0 = "   abc0   ";
             const string text1 = "   abc1   ";
             const string text2 = "   abc2   ";
             SubstringCache<string>.CachedItem cached;
-            cache.TryFindSubString(text0, 4, out cached);
+            cache.TryGetBySubString(text0, 4, out cached);
 
             var subString = text0.Substring(3, 4);
 
@@ -40,13 +40,13 @@
                 switch (i % 3)
                 {
                     case 0:
-                        cache.TryFindSubString(text0, 4, out cached);
+                        cache.TryGetBySubString(text0, 4, out cached);
                         continue;
                     case 1:
-                        cache.TryFindSubString(text1, 4, out cached);
+                        cache.TryGetBySubString(text1, 4, out cached);
                         continue;
                     case 2:
-                        cache.TryFindSubString(text2, 4, out cached);
+                        cache.TryGetBySubString(text2, 4, out cached);
                         continue;
                     default:
                         throw new Exception();

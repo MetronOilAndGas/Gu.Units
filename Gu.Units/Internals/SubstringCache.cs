@@ -9,7 +9,7 @@ namespace Gu.Units
         private readonly object gate = new object();
         private CachedItem[] cache = Empty;
 
-        internal bool TryFindSubString(string text, int pos, out CachedItem result)
+        internal bool TryGetBySubString(string text, int pos, out CachedItem result)
         {
             if (text == null)
             {
@@ -43,30 +43,55 @@ namespace Gu.Units
             return true;
         }
 
-        internal void Add(CachedItem item)
+        internal bool TryGet(string key, out CachedItem match)
         {
-            Ensure.NotNull(item.Key, $"{nameof(item)}.{item.Key}");
+            if (key == null)
+            {
+                match = default(CachedItem);
+                return false;
+            }
+
+            var tempCache = this.cache;
+            var index = BinaryFind(this.cache, key);
+            if (index < 0)
+            {
+                match = default(CachedItem);
+                return false;
+            }
+
+            match = tempCache[index];
+            return true;
+        }
+
+        internal CachedItem Add(string key, TItem item)
+        {
+            Ensure.NotNull(key, $"{nameof(item)}.{key}");
+
             lock (this.gate) // this was five times faster than ReaderWriterLockSlim in benchmarks.
             {
-                for (int i = 0; i < this.cache.Length; i++)
+                var i = BinaryFind(this.cache, key);
+                if (i >= 0)
                 {
                     var cachedItem = this.cache[i];
-                    if (cachedItem.Key == item.Key)
+                    if (cachedItem.Key == key)
                     {
-                        if (Equals(cachedItem.Value, item.Value))
+                        if (Equals(cachedItem.Value, item))
                         {
-                            return;
+                            return cachedItem;
                         }
 
                         throw new InvalidOperationException("Cannot add same key with different values.\r\n" +
-                                                            $"The key is {item.Key} and the values are {{{item.Value}, {cachedItem.Value}}}");
+                                                            $"The key is {key} and the values are {{{item}, {cachedItem.Value}}}");
                     }
                 }
+
                 var updated = new CachedItem[this.cache.Length + 1];
                 Array.Copy(this.cache, 0, updated, 0, this.cache.Length);
-                updated[this.cache.Length] = item;
+                var newItem = new CachedItem(key, item);
+                updated[this.cache.Length] = newItem;
                 Array.Sort(updated);
                 this.cache = updated;
+                return newItem;
             }
         }
 
@@ -94,15 +119,37 @@ namespace Gu.Units
                 }
             }
 
-            return ~1;
+            return ~lo;
+        }
+
+        private static int BinaryFind(CachedItem[] cache, string key)
+        {
+            int lo = 0;
+            int hi = cache.Length - 1;
+            while (lo <= hi)
+            {
+                var i = (lo + hi) / 2;
+                var cached = cache[i];
+                var c = Compare(cached.Key, key);
+                if (c == 0)
+                {
+                    return i;
+                }
+
+                if (c < 0)
+                {
+                    lo = i + 1;
+                }
+                else
+                {
+                    hi = i - 1;
+                }
+            }
+
+            return ~lo;
         }
 
         private static int Compare(string cached, string key, int pos)
-        {
-            return CompareChars(cached, key, pos);
-        }
-
-        private static int CompareChars(string cached, string key, int pos)
         {
             for (int i = 0; i < cached.Length; i++)
             {
@@ -122,10 +169,23 @@ namespace Gu.Units
             return 0;
         }
 
-        private static int GetMedian(int low, int high)
+        private static int Compare(string cached, string key)
         {
-            Ensure.LessThanOrEqual(low, high, nameof(low));
-            return low + ((high - low) >> 1);
+            for (int i = 0; i < cached.Length; i++)
+            {
+                if (key.Length == i)
+                {
+                    return 1;
+                }
+
+                var compare = cached[i] - key[i];
+                if (compare != 0)
+                {
+                    return compare;
+                }
+            }
+
+            return cached.Length - key.Length;
         }
 
         internal struct CachedItem : IComparable<CachedItem>
@@ -141,7 +201,7 @@ namespace Gu.Units
 
             public int CompareTo(CachedItem other)
             {
-                return CompareChars(this.Key, other.Key, 0);
+                return Compare(this.Key, other.Key);
             }
 
             public override string ToString() => this.Key;

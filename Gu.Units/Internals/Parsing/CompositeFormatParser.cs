@@ -26,7 +26,7 @@
             }
 
             string prePadding = null;
-            format.TryReadPadding(ref pos, out prePadding);
+            format.TryRead(ref pos, out prePadding);
             string valueFormat;
             if (!DoubleFormatReader.TryRead(format, ref pos, out valueFormat))
             {
@@ -34,17 +34,17 @@
             }
 
             string padding = null;
-            format.TryReadPadding(ref pos, out padding);
+            format.TryRead(ref pos, out padding);
             string symbolFormat;
             TUnit unit;
-            if (!UnitFormatReader.TryRead(format, ref pos, out symbolFormat, out unit))
+            if (!UnitFormatReader<TUnit>.TryRead(format, ref pos, out symbolFormat, out unit))
             {
                 symbolFormat = FormatCache.UnknownFormat;
             }
 
             string postPadding = null;
-            format.TryReadPadding(ref pos, out postPadding);
-            if (!format.IsRestWhiteSpace(ref pos, end))
+            format.TryRead(ref pos, out postPadding);
+            if (!WhiteSpaceReader.IsRestWhiteSpace(format, ref pos, end))
             {
                 symbolFormat = FormatCache.UnknownFormat;
             }
@@ -61,5 +61,5 @@
 
             return valueFormat != FormatCache.UnknownFormat && symbolFormat != FormatCache.UnknownFormat;
         }
-   }
+    }
 }

@@ -30,7 +30,7 @@
             var tokens = new SortedSet<SymbolAndPower>(SymbolComparer.Default);
             while (pos < text.Length)
             {
-                text.TryReadWhiteSpace(ref pos);
+                WhiteSpaceReader.TryRead(text, ref pos);
 
                 SymbolAndPower sap;
                 if (!TryRead(text, ref pos, out sap))
@@ -62,7 +62,7 @@
                 var op = OperatorReader.TryReadMultiplyOrDivide(text, ref pos);
                 if (op != MultiplyOrDivide.None)
                 {
-                    text.TryReadWhiteSpace(ref pos);
+                    WhiteSpaceReader.TryRead(text, ref pos);
                     if (OperatorReader.TryReadMultiplyOrDivide(text, ref pos) != MultiplyOrDivide.None)
                     {
                         pos = start;
@@ -109,7 +109,7 @@
             }
 
             var symbol = text.Substring(start, pos - start);
-            text.TryReadWhiteSpace(ref pos);
+            WhiteSpaceReader.TryRead(text, ref pos);
             int power;
             if (!PowerReader.TryRead(text, ref pos, out power))
             {

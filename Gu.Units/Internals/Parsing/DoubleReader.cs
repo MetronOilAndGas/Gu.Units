@@ -74,7 +74,7 @@
 
             if ((style & NumberStyles.AllowLeadingWhite) != 0)
             {
-                text.TryReadWhiteSpace(ref pos);
+                WhiteSpaceReader.TryRead(text, ref pos);
             }
 
             if (char.IsWhiteSpace(text[pos]))
@@ -389,14 +389,7 @@
 
         private static bool TryReadExponentDigits(string text, ref int pos)
         {
-            var start = pos;
-            while (pos < text.Length &&
-                   IntReader.IsDigit(text[pos]))
-            {
-                pos++;
-            }
-
-            return pos != start;
+            return IntReader.TrySkipDigits(text, ref pos);
         }
 
         private static bool TryRead(string s, ref int pos, string toRead)

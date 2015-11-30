@@ -1,26 +1,32 @@
 namespace Gu.Units
 {
-    internal static class UnitFormatReader
+    internal static class UnitFormatReader<TUnit>
+        where TUnit : struct, IUnit
     {
-        internal static bool TryRead<TUnit>(
+        internal static PaddedFormat TryRead(
             string format,
-            ref int pos,
-            out string prePadding,
-            out string symbolFormat,
-            out string postPadding,
-            out TUnit unit) where TUnit : struct, IUnit
+            out TUnit unit)
         {
-            format.TryReadPadding(ref pos, out prePadding);
+            int pos = 0;
+            string prePadding;
+            format.TryRead(ref pos, out prePadding);
+            string symbolFormat;
             var success = TryRead(format, ref pos, out symbolFormat, out unit);
-            format.TryReadPadding(ref pos, out postPadding);
-            return success;
+            if (!(success && WhiteSpaceReader.IsRestWhiteSpace(format, pos)))
+            {
+                return PaddedFormat.CreateUnknown(prePadding, null);
+            }
+
+            string postPadding;
+            format.TryRead(ref pos, out postPadding);
+            return new PaddedFormat(prePadding, symbolFormat, postPadding);
         }
 
-        internal static bool TryRead<TUnit>(
+        internal static bool TryRead(
             string format,
             ref int pos,
             out string unitFormat,
-            out TUnit unit) where TUnit : struct, IUnit
+            out TUnit unit)
         {
             var start = pos;
             if (pos == format.Length)
@@ -40,6 +46,5 @@ namespace Gu.Units
             unitFormat = FormatCache.UnknownFormat;
             return false;
         }
-
     }
 }

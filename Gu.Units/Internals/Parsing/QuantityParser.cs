@@ -13,7 +13,7 @@
             where TUnit : struct, IUnit
         {
             int pos = 0;
-            text.TryReadWhiteSpace(ref pos);
+            WhiteSpaceReader.TryRead(text, ref pos);
 
             double d;
             if (!DoubleReader.TryRead(text, ref pos, style, provider, out d))
@@ -21,14 +21,14 @@
                 throw new FormatException("Could not parse the scalar value from: " + text);
             }
 
-            text.TryReadWhiteSpace(ref pos);
+            WhiteSpaceReader.TryRead(text, ref pos);
             TUnit unit;
             if (!UnitParser<TUnit>.TryParse(text, ref pos, out unit))
             {
                 throw new FormatException("Could not parse the unit value from: " + text);
             }
 
-            text.TryReadWhiteSpace(ref pos);
+            WhiteSpaceReader.TryRead(text, ref pos);
             if (pos != text.Length)
             {
                 throw new FormatException("Could not parse the unit value from: " + text);
@@ -46,7 +46,7 @@
             where TUnit : struct, IUnit
         {
             int pos = 0;
-            text.TryReadWhiteSpace(ref pos);
+            WhiteSpaceReader.TryRead(text, ref pos);
             double d;
             if (!DoubleReader.TryRead(text, ref pos, style, provider, out d))
             {
@@ -54,7 +54,7 @@
                 return false;
             }
 
-            text.TryReadWhiteSpace(ref pos);
+            WhiteSpaceReader.TryRead(text, ref pos);
 
             TUnit unit;
             if (!UnitParser<TUnit>.TryParse(text, ref pos, out unit))
@@ -63,7 +63,7 @@
                 return false;
             }
 
-            text.TryReadWhiteSpace(ref pos);
+            WhiteSpaceReader.TryRead(text, ref pos);
             if (pos != text.Length)
             {
                 value = default(TQuantity);

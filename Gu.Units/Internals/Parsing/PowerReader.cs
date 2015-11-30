@@ -56,7 +56,7 @@
             }
 
             pos++;
-            text.TryReadWhiteSpace(ref pos);
+            WhiteSpaceReader.TryRead(text, ref pos);
 
             var ps = OperatorReader.TryReadSign(text, ref pos);
             if (ps == Sign.None)
@@ -71,7 +71,7 @@
                 return false;
             }
 
-            text.TryReadWhiteSpace(ref pos);
+            WhiteSpaceReader.TryRead(text, ref pos);
             if (IntReader.TryReadInt32(text, ref pos, out power))
             {
                 power *= (int)ps;
@@ -103,7 +103,7 @@
                 return false;
             }
 
-            text.TryReadWhiteSpace(ref pos);
+            WhiteSpaceReader.TryRead(text, ref pos);
             if (TryReadSuperScriptInt(text, ref pos, out power))
             {
                 power *= (int)sign;

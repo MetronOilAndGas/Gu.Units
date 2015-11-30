@@ -2,6 +2,7 @@
 {
     internal static class DoubleFormatReader
     {
+        private static readonly SubstringCache<PaddedFormat> Cache = new SubstringCache<PaddedFormat>();
         private static readonly PrefixFormat eFormats = new PrefixFormat('e');
         private static readonly PrefixFormat EFormats = new PrefixFormat('E');
         private static readonly PrefixFormat fFormats = new PrefixFormat('f');
@@ -11,17 +12,23 @@
         private static readonly PrefixFormat nFormats = new PrefixFormat('n');
         private static readonly PrefixFormat NFormats = new PrefixFormat('N');
 
-        internal static bool TryRead(
-            string format,
-            ref int pos,
-            out  string prePadding,
-            out string valueFormat, 
-            out string postPadding)
+        internal static PaddedFormat TryRead(string format)
         {
-            format.TryReadPadding(ref pos, out prePadding);
-            var success = TryRead(format, ref pos, out valueFormat);
-            format.TryReadPadding(ref pos, out postPadding);
-            return success;
+            SubstringCache<PaddedFormat>.CachedItem match;
+            if (Cache.TryGet(format, out match))
+            {
+                return match.Value;
+            }
+
+            int pos = 0;
+            var paddedFormat = TryRead(format, ref pos);
+            if (!WhiteSpaceReader.IsRestWhiteSpace(format, pos))
+            {
+                paddedFormat = paddedFormat.AsUnknownFormat();
+            }
+
+            Cache.Add(format, paddedFormat);
+            return paddedFormat;
         }
 
         internal static bool TryRead(string format, ref int pos, out string result)
@@ -52,6 +59,25 @@
                 default:
                     result = format;
                     return false;
+            }
+        }
+
+        internal static PaddedFormat TryRead(string format, ref int pos)
+        {
+            string prePadding;
+            format.TryRead(ref pos, out prePadding);
+            string valueFormat;
+            if (TryRead(format, ref pos, out valueFormat))
+            {
+                string postPadding;
+                format.TryRead(ref pos, out postPadding);
+                return new PaddedFormat(prePadding, valueFormat, postPadding);
+            }
+            else
+            {
+                string postPadding;
+                format.TryRead(ref pos, out postPadding);
+                return PaddedFormat.CreateUnknown(prePadding, postPadding);
             }
         }
 
@@ -244,7 +270,7 @@
                     return true;
                 }
 
-                switch (format[pos+1])
+                switch (format[pos + 1])
                 {
                     case '#':
                     case '0':

@@ -56,7 +56,7 @@ namespace Gu.Units
             ReadonlySet<SymbolAndPower> sapResult;
             if (SymbolAndPowerReader.TryRead(text, ref pos, out sapResult))
             {
-                if (!text.IsRestWhiteSpace(pos) ||
+                if (!WhiteSpaceReader.IsRestWhiteSpace(text, pos) ||
                     !sapResult.Any())
                 {
                     result = Unit<TUnit>.Default;
@@ -102,9 +102,9 @@ namespace Gu.Units
 
                     int pos = 0;
                     ReadonlySet<SymbolAndPower> result;
-                    if (SymbolAndPowerReader.TryRead(((IUnit)unit).Symbol, ref pos, out result))
+                    if (SymbolAndPowerReader.TryRead(unit.Symbol, ref pos, out result))
                     {
-                        if (!((IUnit)unit).Symbol.IsRestWhiteSpace(pos))
+                        if (!WhiteSpaceReader.IsRestWhiteSpace(unit.Symbol, pos))
                         {
                             throw new InvalidOperationException($"Failed splitting {((IUnit)unit).Symbol} into {nameof(SymbolAndPower)}");
                         }
@@ -121,12 +121,12 @@ namespace Gu.Units
 
             internal void CacheSymbol(string symbol, TUnit unit)
             {
-                this.subStrings.Add(new SubstringCache<TUnit>.CachedItem(symbol, unit));
+                this.subStrings.Add(symbol, unit);
             }
 
             internal bool TryGetForSymbol(string text, int pos, out SubstringCache<TUnit>.CachedItem item)
             {
-                return this.subStrings.TryFindSubString(text, pos, out item);
+                return this.subStrings.TryGetBySubString(text, pos, out item);
             }
 
             private static IReadOnlyList<TUnit> GetUnits()

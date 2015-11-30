@@ -16,7 +16,7 @@
             }
 
             int pos = 0;
-            format.TryReadWhiteSpace(ref pos);
+            WhiteSpaceReader.TryRead(format, ref pos);
             int end = format.Length;
             if (TryReadPrefix(format, ref pos))
             {
@@ -27,7 +27,7 @@
                     return false;
                 }
 
-                if (!format.IsRestWhiteSpace(end + 2))
+                if (!WhiteSpaceReader.IsRestWhiteSpace(format, end + 2))
                 {
                     result = QuantityFormat<TUnit>.Default;
                     return false;

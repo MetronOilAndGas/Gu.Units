@@ -97,7 +97,7 @@
 
             if (value == null)
             {
-                return targetType == typeof (string)
+                return targetType == typeof(string)
                     ? string.Empty
                     : null;
             }
@@ -177,10 +177,10 @@
                     {
                         double d;
                         int pos = 0;
-                        text.TryReadWhiteSpace(ref pos);
+                        WhiteSpaceReader.TryRead(text, ref pos);
                         if (DoubleReader.TryRead(text, ref pos, NumberStyles.Float, culture, out d))
                         {
-                            text.TryReadWhiteSpace(ref pos);
+                            WhiteSpaceReader.TryRead(text, ref pos);
                             if (pos == text.Length)
                             {
                                 return new Length(d, this.unit.Value);
@@ -235,7 +235,7 @@
                     this.unit = this.format.Unit;
                 }
 
-                else if(this.unit != this.format.Unit)
+                else if (this.unit != this.format.Unit)
                 {
                     if (Is.DesignMode)
                     {
