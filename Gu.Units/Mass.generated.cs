@@ -543,10 +543,11 @@
         /// true if <paramref name="other"/> represents the same Mass as this instance; otherwise, false.
         /// </returns>
         /// <param name="other">An instance of <see cref="Gu.Units.Mass"/> object to compare with this instance.</param>
-        /// <param name="tolerance">The maximum difference for being considered equal</param>
-        public bool Equals(Mass other, double tolerance)
+        /// <param name="tolerance">The maximum difference for being considered equal. Must be greater than zero.</param>
+        public bool Equals(Mass other, Mass tolerance)
         {
-            return Math.Abs(this.kilograms - other.kilograms) < tolerance;
+            Ensure.GreaterThan(tolerance.kilograms, 0, nameof(tolerance));
+            return Math.Abs(this.kilograms - other.kilograms) < tolerance.kilograms;
         }
 
         public override bool Equals(object obj)

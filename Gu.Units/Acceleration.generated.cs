@@ -538,10 +538,11 @@
         /// true if <paramref name="other"/> represents the same Acceleration as this instance; otherwise, false.
         /// </returns>
         /// <param name="other">An instance of <see cref="Gu.Units.Acceleration"/> object to compare with this instance.</param>
-        /// <param name="tolerance">The maximum difference for being considered equal</param>
-        public bool Equals(Acceleration other, double tolerance)
+        /// <param name="tolerance">The maximum difference for being considered equal. Must be greater than zero.</param>
+        public bool Equals(Acceleration other, Acceleration tolerance)
         {
-            return Math.Abs(this.metresPerSecondSquared - other.metresPerSecondSquared) < tolerance;
+            Ensure.GreaterThan(tolerance.metresPerSecondSquared, 0, nameof(tolerance));
+            return Math.Abs(this.metresPerSecondSquared - other.metresPerSecondSquared) < tolerance.metresPerSecondSquared;
         }
 
         public override bool Equals(object obj)

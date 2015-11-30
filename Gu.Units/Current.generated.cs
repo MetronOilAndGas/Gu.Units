@@ -558,10 +558,11 @@
         /// true if <paramref name="other"/> represents the same Current as this instance; otherwise, false.
         /// </returns>
         /// <param name="other">An instance of <see cref="Gu.Units.Current"/> object to compare with this instance.</param>
-        /// <param name="tolerance">The maximum difference for being considered equal</param>
-        public bool Equals(Current other, double tolerance)
+        /// <param name="tolerance">The maximum difference for being considered equal. Must be greater than zero.</param>
+        public bool Equals(Current other, Current tolerance)
         {
-            return Math.Abs(this.amperes - other.amperes) < tolerance;
+            Ensure.GreaterThan(tolerance.amperes, 0, nameof(tolerance));
+            return Math.Abs(this.amperes - other.amperes) < tolerance.amperes;
         }
 
         public override bool Equals(object obj)

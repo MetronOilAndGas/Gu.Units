@@ -478,10 +478,11 @@
         /// true if <paramref name="other"/> represents the same Torque as this instance; otherwise, false.
         /// </returns>
         /// <param name="other">An instance of <see cref="Gu.Units.Torque"/> object to compare with this instance.</param>
-        /// <param name="tolerance">The maximum difference for being considered equal</param>
-        public bool Equals(Torque other, double tolerance)
+        /// <param name="tolerance">The maximum difference for being considered equal. Must be greater than zero.</param>
+        public bool Equals(Torque other, Torque tolerance)
         {
-            return Math.Abs(this.newtonMetres - other.newtonMetres) < tolerance;
+            Ensure.GreaterThan(tolerance.newtonMetres, 0, nameof(tolerance));
+            return Math.Abs(this.newtonMetres - other.newtonMetres) < tolerance.newtonMetres;
         }
 
         public override bool Equals(object obj)

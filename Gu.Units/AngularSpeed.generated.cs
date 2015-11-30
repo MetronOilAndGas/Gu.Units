@@ -608,10 +608,11 @@
         /// true if <paramref name="other"/> represents the same AngularSpeed as this instance; otherwise, false.
         /// </returns>
         /// <param name="other">An instance of <see cref="Gu.Units.AngularSpeed"/> object to compare with this instance.</param>
-        /// <param name="tolerance">The maximum difference for being considered equal</param>
-        public bool Equals(AngularSpeed other, double tolerance)
+        /// <param name="tolerance">The maximum difference for being considered equal. Must be greater than zero.</param>
+        public bool Equals(AngularSpeed other, AngularSpeed tolerance)
         {
-            return Math.Abs(this.radiansPerSecond - other.radiansPerSecond) < tolerance;
+            Ensure.GreaterThan(tolerance.radiansPerSecond, 0, nameof(tolerance));
+            return Math.Abs(this.radiansPerSecond - other.radiansPerSecond) < tolerance.radiansPerSecond;
         }
 
         public override bool Equals(object obj)

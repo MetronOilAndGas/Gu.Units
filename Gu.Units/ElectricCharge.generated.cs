@@ -478,10 +478,11 @@
         /// true if <paramref name="other"/> represents the same ElectricCharge as this instance; otherwise, false.
         /// </returns>
         /// <param name="other">An instance of <see cref="Gu.Units.ElectricCharge"/> object to compare with this instance.</param>
-        /// <param name="tolerance">The maximum difference for being considered equal</param>
-        public bool Equals(ElectricCharge other, double tolerance)
+        /// <param name="tolerance">The maximum difference for being considered equal. Must be greater than zero.</param>
+        public bool Equals(ElectricCharge other, ElectricCharge tolerance)
         {
-            return Math.Abs(this.coulombs - other.coulombs) < tolerance;
+            Ensure.GreaterThan(tolerance.coulombs, 0, nameof(tolerance));
+            return Math.Abs(this.coulombs - other.coulombs) < tolerance.coulombs;
         }
 
         public override bool Equals(object obj)

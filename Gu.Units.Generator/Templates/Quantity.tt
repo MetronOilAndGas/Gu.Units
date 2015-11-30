@@ -551,7 +551,7 @@ namespace <#= Settings.Namespace #>
         /// </returns>
         /// <param name="other">An instance of <see cref="<#= Settings.Namespace #>.<#= quantity.ClassName #>"/> object to compare with this instance.</param>
         /// <param name="tolerance">The maximum difference for being considered equal. Must be greater than zero.</param>
-        public bool Equals(<#= quantity.ClassName #> other, double tolerance)
+        public bool Equals(<#= quantity.ClassName #> other, <#= quantity.ClassName #> tolerance)
         {
 		    Ensure.GreaterThan(tolerance.<#= quantity.Unit.ParameterName #>, 0, nameof(tolerance));
             return Math.Abs(this.<#= quantity.Unit.ParameterName #> - other.<#= quantity.Unit.ParameterName #>) < tolerance.<#= quantity.Unit.ParameterName #>;

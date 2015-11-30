@@ -608,10 +608,11 @@
         /// true if <paramref name="other"/> represents the same Time as this instance; otherwise, false.
         /// </returns>
         /// <param name="other">An instance of <see cref="Gu.Units.Time"/> object to compare with this instance.</param>
-        /// <param name="tolerance">The maximum difference for being considered equal</param>
-        public bool Equals(Time other, double tolerance)
+        /// <param name="tolerance">The maximum difference for being considered equal. Must be greater than zero.</param>
+        public bool Equals(Time other, Time tolerance)
         {
-            return Math.Abs(this.seconds - other.seconds) < tolerance;
+            Ensure.GreaterThan(tolerance.seconds, 0, nameof(tolerance));
+            return Math.Abs(this.seconds - other.seconds) < tolerance.seconds;
         }
 
         public override bool Equals(object obj)

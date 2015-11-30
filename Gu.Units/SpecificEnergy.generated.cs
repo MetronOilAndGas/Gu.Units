@@ -493,10 +493,11 @@
         /// true if <paramref name="other"/> represents the same SpecificEnergy as this instance; otherwise, false.
         /// </returns>
         /// <param name="other">An instance of <see cref="Gu.Units.SpecificEnergy"/> object to compare with this instance.</param>
-        /// <param name="tolerance">The maximum difference for being considered equal</param>
-        public bool Equals(SpecificEnergy other, double tolerance)
+        /// <param name="tolerance">The maximum difference for being considered equal. Must be greater than zero.</param>
+        public bool Equals(SpecificEnergy other, SpecificEnergy tolerance)
         {
-            return Math.Abs(this.joulesPerKilogram - other.joulesPerKilogram) < tolerance;
+            Ensure.GreaterThan(tolerance.joulesPerKilogram, 0, nameof(tolerance));
+            return Math.Abs(this.joulesPerKilogram - other.joulesPerKilogram) < tolerance.joulesPerKilogram;
         }
 
         public override bool Equals(object obj)

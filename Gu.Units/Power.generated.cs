@@ -618,10 +618,11 @@
         /// true if <paramref name="other"/> represents the same Power as this instance; otherwise, false.
         /// </returns>
         /// <param name="other">An instance of <see cref="Gu.Units.Power"/> object to compare with this instance.</param>
-        /// <param name="tolerance">The maximum difference for being considered equal</param>
-        public bool Equals(Power other, double tolerance)
+        /// <param name="tolerance">The maximum difference for being considered equal. Must be greater than zero.</param>
+        public bool Equals(Power other, Power tolerance)
         {
-            return Math.Abs(this.watts - other.watts) < tolerance;
+            Ensure.GreaterThan(tolerance.watts, 0, nameof(tolerance));
+            return Math.Abs(this.watts - other.watts) < tolerance.watts;
         }
 
         public override bool Equals(object obj)

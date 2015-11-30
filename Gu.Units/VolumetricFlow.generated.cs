@@ -488,10 +488,11 @@
         /// true if <paramref name="other"/> represents the same VolumetricFlow as this instance; otherwise, false.
         /// </returns>
         /// <param name="other">An instance of <see cref="Gu.Units.VolumetricFlow"/> object to compare with this instance.</param>
-        /// <param name="tolerance">The maximum difference for being considered equal</param>
-        public bool Equals(VolumetricFlow other, double tolerance)
+        /// <param name="tolerance">The maximum difference for being considered equal. Must be greater than zero.</param>
+        public bool Equals(VolumetricFlow other, VolumetricFlow tolerance)
         {
-            return Math.Abs(this.cubicMetresPerSecond - other.cubicMetresPerSecond) < tolerance;
+            Ensure.GreaterThan(tolerance.cubicMetresPerSecond, 0, nameof(tolerance));
+            return Math.Abs(this.cubicMetresPerSecond - other.cubicMetresPerSecond) < tolerance.cubicMetresPerSecond;
         }
 
         public override bool Equals(object obj)

@@ -498,10 +498,11 @@
         /// true if <paramref name="other"/> represents the same Angle as this instance; otherwise, false.
         /// </returns>
         /// <param name="other">An instance of <see cref="Gu.Units.Angle"/> object to compare with this instance.</param>
-        /// <param name="tolerance">The maximum difference for being considered equal</param>
-        public bool Equals(Angle other, double tolerance)
+        /// <param name="tolerance">The maximum difference for being considered equal. Must be greater than zero.</param>
+        public bool Equals(Angle other, Angle tolerance)
         {
-            return Math.Abs(this.radians - other.radians) < tolerance;
+            Ensure.GreaterThan(tolerance.radians, 0, nameof(tolerance));
+            return Math.Abs(this.radians - other.radians) < tolerance.radians;
         }
 
         public override bool Equals(object obj)

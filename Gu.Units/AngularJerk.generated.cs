@@ -578,10 +578,11 @@
         /// true if <paramref name="other"/> represents the same AngularJerk as this instance; otherwise, false.
         /// </returns>
         /// <param name="other">An instance of <see cref="Gu.Units.AngularJerk"/> object to compare with this instance.</param>
-        /// <param name="tolerance">The maximum difference for being considered equal</param>
-        public bool Equals(AngularJerk other, double tolerance)
+        /// <param name="tolerance">The maximum difference for being considered equal. Must be greater than zero.</param>
+        public bool Equals(AngularJerk other, AngularJerk tolerance)
         {
-            return Math.Abs(this.radiansPerSecondCubed - other.radiansPerSecondCubed) < tolerance;
+            Ensure.GreaterThan(tolerance.radiansPerSecondCubed, 0, nameof(tolerance));
+            return Math.Abs(this.radiansPerSecondCubed - other.radiansPerSecondCubed) < tolerance.radiansPerSecondCubed;
         }
 
         public override bool Equals(object obj)

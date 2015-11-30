@@ -678,10 +678,11 @@
         /// true if <paramref name="other"/> represents the same Jerk as this instance; otherwise, false.
         /// </returns>
         /// <param name="other">An instance of <see cref="Gu.Units.Jerk"/> object to compare with this instance.</param>
-        /// <param name="tolerance">The maximum difference for being considered equal</param>
-        public bool Equals(Jerk other, double tolerance)
+        /// <param name="tolerance">The maximum difference for being considered equal. Must be greater than zero.</param>
+        public bool Equals(Jerk other, Jerk tolerance)
         {
-            return Math.Abs(this.metresPerSecondCubed - other.metresPerSecondCubed) < tolerance;
+            Ensure.GreaterThan(tolerance.metresPerSecondCubed, 0, nameof(tolerance));
+            return Math.Abs(this.metresPerSecondCubed - other.metresPerSecondCubed) < tolerance.metresPerSecondCubed;
         }
 
         public override bool Equals(object obj)

@@ -543,10 +543,11 @@
         /// true if <paramref name="other"/> represents the same Flexibility as this instance; otherwise, false.
         /// </returns>
         /// <param name="other">An instance of <see cref="Gu.Units.Flexibility"/> object to compare with this instance.</param>
-        /// <param name="tolerance">The maximum difference for being considered equal</param>
-        public bool Equals(Flexibility other, double tolerance)
+        /// <param name="tolerance">The maximum difference for being considered equal. Must be greater than zero.</param>
+        public bool Equals(Flexibility other, Flexibility tolerance)
         {
-            return Math.Abs(this.metresPerNewton - other.metresPerNewton) < tolerance;
+            Ensure.GreaterThan(tolerance.metresPerNewton, 0, nameof(tolerance));
+            return Math.Abs(this.metresPerNewton - other.metresPerNewton) < tolerance.metresPerNewton;
         }
 
         public override bool Equals(object obj)

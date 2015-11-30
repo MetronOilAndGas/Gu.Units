@@ -528,10 +528,11 @@
         /// true if <paramref name="other"/> represents the same Unitless as this instance; otherwise, false.
         /// </returns>
         /// <param name="other">An instance of <see cref="Gu.Units.Unitless"/> object to compare with this instance.</param>
-        /// <param name="tolerance">The maximum difference for being considered equal</param>
-        public bool Equals(Unitless other, double tolerance)
+        /// <param name="tolerance">The maximum difference for being considered equal. Must be greater than zero.</param>
+        public bool Equals(Unitless other, Unitless tolerance)
         {
-            return Math.Abs(this.scalar - other.scalar) < tolerance;
+            Ensure.GreaterThan(tolerance.scalar, 0, nameof(tolerance));
+            return Math.Abs(this.scalar - other.scalar) < tolerance.scalar;
         }
 
         public override bool Equals(object obj)

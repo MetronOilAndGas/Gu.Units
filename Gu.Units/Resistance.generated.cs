@@ -558,10 +558,11 @@
         /// true if <paramref name="other"/> represents the same Resistance as this instance; otherwise, false.
         /// </returns>
         /// <param name="other">An instance of <see cref="Gu.Units.Resistance"/> object to compare with this instance.</param>
-        /// <param name="tolerance">The maximum difference for being considered equal</param>
-        public bool Equals(Resistance other, double tolerance)
+        /// <param name="tolerance">The maximum difference for being considered equal. Must be greater than zero.</param>
+        public bool Equals(Resistance other, Resistance tolerance)
         {
-            return Math.Abs(this.ohm - other.ohm) < tolerance;
+            Ensure.GreaterThan(tolerance.ohm, 0, nameof(tolerance));
+            return Math.Abs(this.ohm - other.ohm) < tolerance.ohm;
         }
 
         public override bool Equals(object obj)
