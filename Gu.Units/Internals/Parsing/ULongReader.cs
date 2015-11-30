@@ -1,7 +1,5 @@
 ﻿namespace Gu.Units
 {
-    using System;
-
     internal static class ULongReader
     {
         internal static bool TryRead(string text,

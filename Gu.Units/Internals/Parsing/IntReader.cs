@@ -5,6 +5,7 @@
 
     internal static class IntReader
     {
+        private static readonly int MaxDigits = int.MaxValue.ToString().Length;
         internal static int ReadInt32(string text, ref int pos)
         {
             int result;
@@ -24,75 +25,108 @@
                 return false;
             }
 
-            var start = pos;
             var sign = OperatorReader.TryReadSign(text, ref pos);
-            uint temp;
-            if (!TryReadUInt32(text, ref pos, out temp))
-            {
-                result = 0;
-                pos = start;
-                return false;
-            }
-
-            if ((temp & 1 << 31) == 1) // overflow.
-            {
-                result = 0;
-                pos = start;
-                return false;
-            }
-
-            if (sign == Sign.Negative)
-            {
-                result = (int)-temp;
-                return true;
-            }
-
-            result = (int)temp;
-            return true;
-        }
-
-        internal static bool TryReadUInt32(string text, ref int pos, out uint result)
-        {
-            if (pos == text.Length)
-            {
-                result = 0;
-                return false;
-            }
 
             var start = pos;
+            var end = Math.Min(text.Length, pos + MaxDigits - 1);
             result = 0;
 
-            while (pos < text.Length)
+            while (pos < end)
             {
-                var i = text[pos] - '0';
-                if (i < 0 ||
-                    9 < i)
+                var c = text[pos] - '0';
+                if (c < 0 || 9 < c)
                 {
                     break;
                 }
-                try
+
+                result *= 10;
+                result += c;
+                pos++;
+            }
+
+            if (pos == start)
+            {
+                if (sign != Sign.None)
                 {
-                    pos++;
-                    result *= 10;
-                    result += (uint)i;
+                    pos--;
                 }
-                catch
+
+                return false;
+            }
+
+            if (pos < end ||
+                !IsDigit(text, pos))
+            {
+                switch (sign)
                 {
-                    // expecting this to never happen so try catching overflow is an optimization
-                    result = 0;
-                    pos = start;
-                    return false;
+                    case Sign.Negative:
+                        result = -result;
+                        return true;
+                    case Sign.None:
+                    case Sign.Positive:
+                        return true;
+                    default:
+                        throw new ArgumentOutOfRangeException();
                 }
             }
 
-            return true;
+            // getting here means we must handle the last digit and potential overflows.
+
+            long temp = result;
+            temp *= 10;
+            temp += text[pos] - '0';
+
+            switch (sign)
+            {
+                case Sign.Negative:
+                    {
+                        temp = -temp;
+                        if (temp >= int.MinValue)
+                        {
+                            result = (int)temp;
+                            pos++;
+                            return true;
+                        }
+
+                        pos = start - 1;
+                        result = 0;
+                        return false;
+                    }
+                case Sign.None:
+                case Sign.Positive:
+                    {
+                        if (temp <= int.MaxValue)
+                        {
+                            result = (int)temp;
+                            pos++;
+                            return true;
+                        }
+                        pos = start - sign == Sign.Positive
+                            ? 1
+                            : 0;
+                        result = 0;
+                        return false;
+                    }
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
 
-        internal static bool TrySkipDigits(string text, ref int pos)
+        private static bool IsDigit(string text, int index)
+        {
+            if (index < text.Length)
+            {
+                return IsDigit(text[index]);
+            }
+
+            return false;
+        }
+
+        internal static bool TrySkipDigits(string text,
+            ref int pos)
         {
             var start = pos;
-            while (pos < text.Length &&
-                   IsDigit(text[pos]))
+            while (pos < text.Length && IsDigit(text[pos]))
             {
                 pos++;
             }

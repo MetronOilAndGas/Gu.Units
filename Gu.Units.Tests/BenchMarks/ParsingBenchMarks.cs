@@ -94,9 +94,9 @@
             Console.WriteLine($"// {DateTime.Today.ToShortDateString()}| double.TryParse(\"{substring}\", ...)            {n:N0} times {sw.ElapsedMilliseconds} ms");
         }
 
-        // 2015-11-30| IntReader.TryReadInt32("ab  12345", 4, ...) 1 000 000 times 34 ms
-        // 2015-11-30| int.TryParse(substring: "12345", ...)       1 000 000 times 164 ms
-        // 2015-11-30| int.TryParse("12345", ...)                  1 000 000 times 162 ms
+        // 2015-11-30| IntReader.TryReadInt32("ab  12345", 4, ...) 1 000 000 times 16 ms
+        // 2015-11-30| int.TryParse(substring: "12345", ...)       1 000 000 times 146 ms
+        // 2015-11-30| int.TryParse("12345", ...)                  1 000 000 times 123 ms
         [Test]
         public void TryReadInt()
         {

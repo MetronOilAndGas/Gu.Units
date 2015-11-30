@@ -57,11 +57,20 @@
             SuccessData.Create("12345", 0, 12345, 5),
             SuccessData.Create("67890", 0, 67890, 5),
             SuccessData.Create(int.MaxValue.ToString(), 0, int.MaxValue, int.MaxValue.ToString().Length),
+            SuccessData.Create(" " + int.MaxValue, 1, int.MaxValue, int.MaxValue.ToString().Length + 1),
+            SuccessData.Create(" " + int.MaxValue + " ", 1, int.MaxValue, int.MaxValue.ToString().Length + 1),
+            SuccessData.Create(" " + int.MaxValue + "9", 1, int.MaxValue, int.MaxValue.ToString().Length + 1),
             SuccessData.Create(int.MinValue.ToString(), 0, int.MinValue, int.MinValue.ToString().Length),
+            SuccessData.Create(" " + int.MinValue, 1, int.MinValue, int.MinValue.ToString().Length + 1),
+            SuccessData.Create(" " + int.MinValue + " ", 1, int.MinValue, int.MinValue.ToString().Length + 1),
+            SuccessData.Create(" " + int.MinValue + "9", 1, int.MinValue, int.MinValue.ToString().Length + 1),
         };
 
         private static readonly IReadOnlyList<SuccessData<int>> Errors = new[]
         {
+            ErrorData.Create<int>("abc",  0), 
+            ErrorData.Create<int>("abc",  1), 
+            ErrorData.Create<int>("abc",  2), 
             ErrorData.Create<int>(((long)int.MinValue-1).ToString(),  0), // less than int.min
             ErrorData.Create<int>(((long)int.MaxValue+1).ToString(),  0), // greater than int.max
         };
