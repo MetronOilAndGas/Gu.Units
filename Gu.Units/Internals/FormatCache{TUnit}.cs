@@ -19,6 +19,11 @@
             return Cache.GetOrAdd(new FormatKey(valueFormat, unit), CreateFromValueFormatAndUnit);
         }
 
+        internal static QuantityFormat<TUnit> GetOrCreate(string valueFormat, TUnit unit, SymbolFormat symbolFormat)
+        {
+            return Cache.GetOrAdd(new FormatKey(valueFormat, unit, symbolFormat), CreateFromValueFormatAndUnit);
+        }
+
         public static QuantityFormat<TUnit> GetOrCreate(string valueFormat, string symbolFormat)
         {
             return Cache.GetOrAdd(new FormatKey(valueFormat, symbolFormat), CreateFromValueAndSymbolFormats);
