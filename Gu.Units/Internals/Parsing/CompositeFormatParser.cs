@@ -1,8 +1,10 @@
 ﻿namespace Gu.Units
 {
+    using System;
+
     internal static class CompositeFormatParser
     {
-        internal static QuantityFormat<TUnit> Create<TUnit>(string format) where TUnit : struct, IUnit
+        internal static QuantityFormat<TUnit> Create<TUnit>(string format) where TUnit : struct, IUnit, IEquatable<TUnit>
         {
             QuantityFormat<TUnit> result;
             TryParse(format, out result);
@@ -10,7 +12,7 @@
         }
 
         internal static bool TryParse<TUnit>(string format, out QuantityFormat<TUnit> result)
-            where TUnit : struct, IUnit
+            where TUnit : struct, IUnit, IEquatable<TUnit>
         {
             if (string.IsNullOrWhiteSpace(format))
             {
@@ -23,7 +25,7 @@
         }
 
         internal static bool TryParse<TUnit>(string format, ref int pos, int end, out QuantityFormat<TUnit> result)
-                where TUnit : struct, IUnit
+                where TUnit : struct, IUnit, IEquatable<TUnit>
         {
             if (string.IsNullOrWhiteSpace(format))
             {

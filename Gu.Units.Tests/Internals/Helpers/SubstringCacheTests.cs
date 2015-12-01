@@ -1,4 +1,4 @@
-﻿namespace Gu.Units.Tests.Internals
+﻿namespace Gu.Units.Tests.Internals.Helpers
 {
     using System;
     using System.Reflection;

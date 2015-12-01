@@ -86,7 +86,6 @@
             Assert.AreEqual("1\u00A0200,00 mm⋅s⁻¹", speed.ToString("N mm⋅s⁻¹", sv));
         }
 
-
         [Test]
         public void Reminders()
         {

@@ -4,7 +4,8 @@
     using System.Diagnostics;
 
     [DebuggerDisplay("CompositeFormat: {CompositeFormat}")]
-    internal class QuantityFormat<TUnit> : IEquatable<QuantityFormat<TUnit>> where TUnit : struct, IUnit
+    internal class QuantityFormat<TUnit> : IEquatable<QuantityFormat<TUnit>>
+        where TUnit : struct, IUnit, IEquatable<TUnit>
     {
         public static QuantityFormat<TUnit> Default => FormatCache<TUnit>.DefaultFormat;
         internal static readonly char NoBreakingSpace = '\u00A0';

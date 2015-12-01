@@ -1,13 +1,12 @@
 ﻿namespace Gu.Units.Wpf
 {
     using System;
-    using System.Diagnostics;
 
     internal static class StringFormatParser
     {
         internal static bool TryParse<TUnit>(string format,
             out QuantityFormat<TUnit> result)
-            where TUnit : struct, IUnit
+            where TUnit : struct, IUnit, IEquatable<TUnit>
         {
             if (string.IsNullOrWhiteSpace(format))
             {

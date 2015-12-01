@@ -50,6 +50,7 @@
     <Compile Include="ConversionTests.cs" />
     <Compile Include="FormatTests.cs" />
     <Compile Include="Constants\Benchmarks.cs" />
+    <Compile Include="Internals\Helpers\MapTests.cs" />
     <Compile Include="Internals\Parsing\DoubleFormatReaderTests.cs" />
     <Compile Include="Internals\Parsing\DoubleReaderTests.cs" />
     <Compile Include="EnumerableTests.cs" />
@@ -70,8 +71,9 @@
     <Compile Include="Internals\Parsing\Sources\SuccessData{T}.cs" />
     <Compile Include="Internals\Parsing\SymbolAndPowerParserSetTests.cs" />
     <Compile Include="Internals\Parsing\UnitParserTests.cs" />
-    <Compile Include="Internals\StringBuilderPoolTests.cs" />
-    <Compile Include="Internals\SubstringCacheTests.cs" />
+    <Compile Include="Internals\Helpers\StringBuilderPoolTests.cs" />
+    <Compile Include="Internals\Helpers\SubstringCacheTests.cs" />
+    <Compile Include="Internals\UnitFormatCacheTests.cs" />
     <Compile Include="LengthTests.cs" />
     <Compile Include="Samples\Samples.cs" />
     <Compile Include="Sources\ConversionProvider.cs" />

@@ -5,7 +5,7 @@ namespace Gu.Units
     using System.Linq;
     using System.Reflection;
 
-    internal static class UnitParser<TUnit> where TUnit : struct, IUnit
+    internal static class UnitParser<TUnit> where TUnit : struct, IUnit, IEquatable<TUnit>
     {
         private static readonly Lazy<Caches> Cache = new Lazy<Caches>(() => new Caches());
 
@@ -77,6 +77,11 @@ namespace Gu.Units
             return false;
         }
 
+        internal static ReadonlySet<SymbolAndPower> GetSymbolParts(TUnit unit)
+        {
+            return Cache.Value.GetSymbolParts(unit);
+        } 
+
         private static bool IsEndOfSymbol(string text, int pos)
         {
             if (pos == text.Length)
@@ -90,7 +95,7 @@ namespace Gu.Units
 
         private class Caches
         {
-            internal readonly Dictionary<ReadonlySet<SymbolAndPower>, TUnit> SymbolAndPowers = new Dictionary<ReadonlySet<SymbolAndPower>, TUnit>();
+            internal readonly Map<ReadonlySet<SymbolAndPower>, TUnit> SymbolAndPowers = new Map<ReadonlySet<SymbolAndPower>, TUnit>();
             private readonly SubstringCache<TUnit> subStrings = new SubstringCache<TUnit>();
 
             internal Caches()
@@ -122,6 +127,11 @@ namespace Gu.Units
             internal void CacheSymbol(string symbol, TUnit unit)
             {
                 this.subStrings.Add(symbol, unit);
+            }
+
+            internal ReadonlySet<SymbolAndPower> GetSymbolParts(TUnit unit)
+            {
+                return this.SymbolAndPowers[unit];
             }
 
             internal bool TryGetForSymbol(string text, int pos, out SubstringCache<TUnit>.CachedItem item)

@@ -10,7 +10,7 @@
             NumberStyles style,
             IFormatProvider provider)
             where TQuantity : IQuantity<TUnit>
-            where TUnit : struct, IUnit
+            where TUnit : struct, IUnit, IEquatable<TUnit>
         {
             int pos = 0;
             WhiteSpaceReader.TryRead(text, ref pos);
@@ -43,7 +43,7 @@
             IFormatProvider provider,
             out TQuantity value)
             where TQuantity : IQuantity<TUnit>
-            where TUnit : struct, IUnit
+            where TUnit : struct, IUnit, IEquatable<TUnit>
         {
             int pos = 0;
             WhiteSpaceReader.TryRead(text, ref pos);

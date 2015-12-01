@@ -1,7 +1,10 @@
 namespace Gu.Units
 {
+    using System;
+    using System.Linq;
+
     internal static class UnitFormatCache<TUnit>
-        where TUnit : struct, IUnit
+        where TUnit : struct, IUnit, IEquatable<TUnit>
     {
         internal static PaddedFormat GetOrCreate(string format, out TUnit unit)
         {
@@ -15,12 +18,30 @@ namespace Gu.Units
             return GetOrCreate(format, ref pos, out unit);
         }
 
-        internal static PaddedFormat GetOrCreate(string format, ref int pos, out TUnit unit)
+        internal static PaddedFormat GetOrCreate(TUnit unit, SymbolFormat symbolFormat)
+        {
+            var symbolAndPowers = UnitParser<TUnit>.GetSymbolParts(unit);
+            using (var builder = StringBuilderPool.Borrow())
+            {
+                foreach (var symbolAndPower in symbolAndPowers)
+                {
+                    builder.Append(symbolAndPower, symbolFormat);
+                }
+
+                var format = builder.ToString();
+                return new PaddedFormat(null, format, null);
+            }
+        }
+
+        internal static PaddedFormat GetOrCreate(string format,
+            ref int pos,
+            out TUnit unit)
         {
             string prePadding;
             WhiteSpaceReader.TryRead(format, ref pos, out prePadding);
             var start = pos;
-            if (format == null || pos == format.Length)
+            if (format == null ||
+                pos == format.Length)
             {
                 unit = Unit<TUnit>.Default;
                 return PaddedFormat.CreateUnknown(prePadding, null);
