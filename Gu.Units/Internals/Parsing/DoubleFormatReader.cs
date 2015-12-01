@@ -2,35 +2,6 @@
 {
     internal static class DoubleFormatReader
     {
-        private static readonly SubstringCache<PaddedFormat> Cache = new SubstringCache<PaddedFormat>();
-        private static readonly PrefixFormat eFormats = new PrefixFormat('e');
-        private static readonly PrefixFormat EFormats = new PrefixFormat('E');
-        private static readonly PrefixFormat fFormats = new PrefixFormat('f');
-        private static readonly PrefixFormat FFormats = new PrefixFormat('F');
-        private static readonly PrefixFormat gFormats = new PrefixFormat('g');
-        private static readonly PrefixFormat GFormats = new PrefixFormat('G');
-        private static readonly PrefixFormat nFormats = new PrefixFormat('n');
-        private static readonly PrefixFormat NFormats = new PrefixFormat('N');
-
-        internal static PaddedFormat TryRead(string format)
-        {
-            SubstringCache<PaddedFormat>.CachedItem match;
-            if (Cache.TryGet(format, out match))
-            {
-                return match.Value;
-            }
-
-            int pos = 0;
-            var paddedFormat = TryRead(format, ref pos);
-            if (!WhiteSpaceReader.IsRestWhiteSpace(format, pos))
-            {
-                paddedFormat = paddedFormat.AsUnknownFormat();
-            }
-
-            Cache.Add(format, paddedFormat);
-            return paddedFormat;
-        }
-
         internal static bool TryRead(string format, ref int pos, out string result)
         {
             if (string.IsNullOrEmpty(format) || pos == format.Length)
@@ -38,7 +9,6 @@
                 result = null;
                 return true;
             }
-
             switch (format[pos])
             {
                 case 'e':
@@ -49,53 +19,38 @@
                 case 'G':
                 case 'n':
                 case 'N':
-                    return TryReadPrefixNumberFormat(format, ref pos, out result);
+                    return TryReadPrefixNumberFormat(format, ref pos, out  result); ;
                 case 'r':
+                    pos++;
+                    result = "r";
+                    return true;
                 case 'R':
-                    return TryReadRFormat(format, ref pos, out result);
+                    pos++;
+                    result = "R";
+                    return true;
                 case '0':
                 case '#':
-                    return TryReadPoundAndZeroFormat(format, ref pos, out result);
+                    return TryReadPoundAndZeroFormat(format, ref pos, out  result);
                 default:
-                    result = format;
+                    result = format.Substring(pos);
                     return false;
             }
         }
 
-        internal static PaddedFormat TryRead(string format, ref int pos)
-        {
-            string prePadding;
-            format.TryRead(ref pos, out prePadding);
-            string valueFormat;
-            if (TryRead(format, ref pos, out valueFormat))
-            {
-                string postPadding;
-                format.TryRead(ref pos, out postPadding);
-                return new PaddedFormat(prePadding, valueFormat, postPadding);
-            }
-            else
-            {
-                string postPadding;
-                format.TryRead(ref pos, out postPadding);
-                return PaddedFormat.CreateUnknown(prePadding, postPadding);
-            }
-        }
-
-        private static bool TryReadPoundAndZeroFormat(string format,
-            ref int pos,
-            out string result)
+        private static bool TryReadPoundAndZeroFormat(string format, ref int pos, out  string result)
         {
             var start = pos;
-            while (!IsEndOfPoundAndZeroFormat(format, pos))
+            pos++;
+            while (pos < format.Length)
             {
                 switch (format[pos])
                 {
                     case '#':
                     case '0':
-                    case '.':
-                    case ',':
                         pos++;
                         continue;
+                    case '.':
+                    case ',':
                     case ' ':
                     case '\u00A0':
                         {
@@ -112,15 +67,15 @@
                                         continue;
                                     }
                             }
-                            goto default;
+                            break;
                         }
                     default:
                         {
-                            result = format;
-                            pos = start;
-                            return false;
+                            break;
                         }
                 }
+
+                break;
             }
 
             result = format.Substring(start, pos - start);
@@ -130,174 +85,10 @@
         private static bool TryReadPrefixNumberFormat(string format, ref int pos, out string result)
         {
             var start = pos;
-            var c = format[pos];
             pos++;
-            int intResult;
-            if (IntReader.TryReadInt32(format, ref pos, out intResult))
-            {
-                if (intResult < 0 || intResult >= 100)
-                {
-                    result = $"{c}{intResult}";
-                    pos = start;
-                    return false;
-                }
-
-                if (intResult < 18)
-                {
-                    switch (c)
-                    {
-                        case 'e':
-                            result = eFormats.Formats[intResult];
-                            return true;
-                        case 'E':
-                            result = EFormats.Formats[intResult];
-                            return true;
-                        case 'f':
-                            result = fFormats.Formats[intResult];
-                            return true;
-                        case 'F':
-                            result = FFormats.Formats[intResult];
-                            return true;
-                        case 'g':
-                            result = gFormats.Formats[intResult];
-                            return true;
-                        case 'G':
-                            result = GFormats.Formats[intResult];
-                            return true;
-                        case 'n':
-                            result = nFormats.Formats[intResult];
-                            return true;
-                        case 'N':
-                            result = NFormats.Formats[intResult]; ;
-                            return true;
-                        default:
-                            result = format;
-                            pos = start;
-                            return false;
-                    }
-                }
-
-                result = $"{c}{intResult}";
-                return true;
-            }
-
-            switch (c)
-            {
-                case 'e':
-                    result = "e";
-                    return true;
-                case 'E':
-                    result = "E";
-                    return true;
-                case 'f':
-                    result = "f";
-                    return true;
-                case 'F':
-                    result = "F";
-                    return true;
-                case 'g':
-                    result = "g";
-                    return true;
-                case 'G':
-                    result = "G";
-                    return true;
-                case 'n':
-                    result = "n";
-                    return true;
-                case 'N':
-                    result = "N";
-                    return true;
-                default:
-                    result = format;
-                    pos = start;
-                    return false;
-            }
-        }
-
-        private static bool TryReadRFormat(string format, ref int pos, out string result)
-        {
-            switch (format[pos])
-            {
-                case 'r':
-                    result = "r";
-                    pos++;
-                    return true;
-                case 'R':
-                    result = "R";
-                    pos++;
-                    return true;
-                default:
-                    result = format;
-                    return false;
-            }
-        }
-
-        private static bool IsEndOfPoundAndZeroFormat(string format, int pos)
-        {
-            if (format.Length == pos)
-            {
-                return true;
-            }
-
-            switch (format[pos])
-            {
-                case '}':
-                    return true;
-                case '#':
-                case '0':
-                    return false;
-                case ',':
-                case '.':
-                    if (format.Length == pos + 1)
-                    {
-                        return true;
-                    }
-
-                    switch (format[pos + 1])
-                    {
-                        case '#':
-                        case '0':
-                            return false;
-                        default:
-                            return true;
-                    }
-            }
-
-            if (char.IsWhiteSpace(format[pos]))
-            {
-                if (format.Length == pos + 1)
-                {
-                    return true;
-                }
-
-                switch (format[pos + 1])
-                {
-                    case '#':
-                    case '0':
-                        return false;
-                    default:
-                        return true;
-                }
-            }
-
+            IntReader.TrySkipDigits(format, ref pos);
+            result = format.Substring(start, pos - start);
             return true;
-        }
-
-        private class PrefixFormat
-        {
-            internal readonly char Prefix;
-
-            internal readonly string[] Formats;
-
-            public PrefixFormat(char prefix)
-            {
-                this.Prefix = prefix;
-                this.Formats = new string[18];
-                for (int i = 0; i < this.Formats.Length; i++)
-                {
-                    this.Formats[i] = $"{this.Prefix}{i}";
-                }
-            }
         }
     }
 }

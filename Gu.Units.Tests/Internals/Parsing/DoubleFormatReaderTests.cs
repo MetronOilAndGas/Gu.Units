@@ -1,5 +1,6 @@
 namespace Gu.Units.Tests.Internals.Parsing
 {
+    using System.Collections.Generic;
     using NUnit.Framework;
 
     public class DoubleFormatReaderTests
@@ -33,26 +34,22 @@ namespace Gu.Units.Tests.Internals.Parsing
         [TestCase("#0.00#", 0, "#0.00#", 6)]
         public void TryRead(string text, int pos, string expected, int expectedPos)
         {
-            string actual;
-            var success = DoubleFormatReader.TryRead(text, ref pos, out actual);
-            Assert.AreEqual(true, success);
-            Assert.AreEqual(expected, actual);
+            PaddedFormat actual = DoubleFormatCache.GetOrCreate(text, ref pos);
+            Assert.AreEqual(expected, actual.Format);
             Assert.AreEqual(expectedPos, pos);
         }
 
         [TestCase("J", 0, null)]
-        [TestCase("J5", 0, null)] 
-        [TestCase("E100", 0, "E101")] 
-        [TestCase("E101", 0, "E111")] 
-        [TestCase("E102", 0, "E112")] 
-        [TestCase("E-1", 0, "E-1")] 
+        [TestCase("J5", 0, null)]
+        //[TestCase("E100", 0, "E101")]
+        //[TestCase("E101", 0, "E111")]
+        //[TestCase("E102", 0, "E112")]
+        //[TestCase("E-1", 0, "E-1")]
         [TestCase("abc", 0, "abc")]
         public void TryReadError(string text, int pos, string expectedFormatted)
         {
-            string actual;
-            var success = DoubleFormatReader.TryRead(text, ref pos, out actual);
-            Assert.AreEqual(false, success);
-            Assert.AreEqual(text, actual);
+            PaddedFormat actual = DoubleFormatCache.GetOrCreate(text, ref pos);
+            Assert.AreEqual(text, actual.Format);
             Assert.AreEqual(0, pos);
             string formatted = null;
             try
@@ -65,5 +62,10 @@ namespace Gu.Units.Tests.Internals.Parsing
 
             Assert.AreEqual(expectedFormatted, formatted);
         }
+
+        private static readonly IReadOnlyList<SuccessData<PaddedFormat>> HappyPaths = new[]
+        {
+            SuccessData.Create("e", 0, new PaddedFormat(null, "e", null), 1),
+        };
     }
 }

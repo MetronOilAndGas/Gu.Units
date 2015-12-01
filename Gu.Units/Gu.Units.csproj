@@ -208,14 +208,15 @@
     <Compile Include="Internals\Ensure\Ensure.string.cs" />
     <Compile Include="Internals\Helpers\EnumerableExt.cs" />
     <Compile Include="Internals\PaddedFormat.cs" />
+    <Compile Include="Internals\DoubleFormatCache.cs" />
     <Compile Include="Internals\Parsing\DoubleFormatReader.cs" />
     <Compile Include="Internals\Parsing\CompositeFormatParser.cs" />
     <Compile Include="Internals\FormatCache.cs" />
     <Compile Include="Internals\FormatCache{TUnit}.cs" />
     <Compile Include="Internals\Parsing\IntReader.cs" />
     <Compile Include="Internals\Parsing\Skipper.cs" />
+    <Compile Include="Internals\UnitFormatCache{TUnit}.cs" />
     <Compile Include="Internals\QuantityFormat.cs" />
-    <Compile Include="Internals\Parsing\UnitFormatReader.cs" />
     <Compile Include="Internals\SubstringCache.cs" />
     <Compile Include="Internals\Parsing\SymbolAndPowerReader.cs" />
     <Compile Include="Internals\FormatKey.cs" />

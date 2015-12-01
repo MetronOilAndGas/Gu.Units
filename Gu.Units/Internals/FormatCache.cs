@@ -3,6 +3,5 @@
     internal static class FormatCache
     {
         internal static readonly string UnknownFormat = "??";
-
     }
 }

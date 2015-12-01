@@ -120,49 +120,25 @@
             }
         }
 
-        internal static QuantityFormat<TUnit> CreateFromParsedCompositeFormat(
-            string prePadding,
-            string valueFormat,
-            string padding,
-            string symbolFormat,
-            string postPadding,
-            TUnit unit)
-        {
-            string errorFormat = CreateErrorFormat(valueFormat, symbolFormat);
-
-            return new QuantityFormat<TUnit>(
-                prePadding,
-                valueFormat,
-                padding,
-                symbolFormat,
-                postPadding,
-                errorFormat,
-                unit);
-        }
-
-        internal static QuantityFormat<TUnit> CreateFromValueFormatAndUnit(PaddedFormat valueFormat, TUnit unit)
-        {
-            var padding = valueFormat.PostPadding;
-            var errorFormat = CreateErrorFormat(valueFormat.Format, unit.Symbol);
-            padding = padding == null && ShouldSpace(unit.Symbol)
-                ? NoBreakingSpaceString
-                : null;
-            return new QuantityFormat<TUnit>(valueFormat.PrePadding, valueFormat.Format, padding, unit.Symbol, null, errorFormat, unit);
-        }
-
-        internal static QuantityFormat<TUnit> CreateFromValueAndSymbolFormats(
+        internal static QuantityFormat<TUnit> Create(
             PaddedFormat valueFormat,
             PaddedFormat symbolFormat,
             TUnit unit)
         {
-            var errorFormat = CreateErrorFormat(valueFormat.Format, symbolFormat.Format);
+            var errorFormat = CreateErrorFormat(valueFormat, symbolFormat);
 
             string padding = null;
             if (valueFormat.PostPadding == null &&
-                symbolFormat.PrePadding == null &&
-                ShouldSpace(symbolFormat.Format))
+                symbolFormat.PrePadding == null)
             {
-                padding = NoBreakingSpaceString;
+                if (ShouldSpace(symbolFormat.Format))
+                {
+                    padding = NoBreakingSpaceString;
+                }
+                else
+                {
+                    padding = null;
+                }
             }
             else
             {
@@ -170,12 +146,12 @@
             }
 
             return new QuantityFormat<TUnit>(
-                valueFormat.PrePadding, 
+                valueFormat.PrePadding,
                 valueFormat.Format,
                 padding,
                 symbolFormat.Format,
-                symbolFormat.PostPadding, 
-                errorFormat, 
+                symbolFormat.PostPadding,
+                errorFormat,
                 unit);
         }
 
@@ -193,35 +169,37 @@
             return char.IsLetter(symbol[0]);
         }
 
-        private static string CreateErrorFormat(string valueFormat,
-            string symbolFormat)
+        private static string CreateErrorFormat(PaddedFormat valueFormat, PaddedFormat symbolFormat)
         {
-            if (valueFormat == FormatCache.UnknownFormat ||
-                symbolFormat == FormatCache.UnknownFormat)
+            if (valueFormat.IsUnknown ||
+                symbolFormat.IsUnknown)
             {
                 using (var writer = StringBuilderPool.Borrow())
                 {
-                    if (valueFormat == FormatCache.UnknownFormat)
+                    if (valueFormat.IsUnknown)
                     {
-                        writer.Append($"{{value: {valueFormat}}}");
+                        writer.Append($"{{value: {valueFormat.Format ?? "null"}}}");
                     }
                     else
                     {
-                        writer.Append(valueFormat);
+                        writer.Append(valueFormat.PrePadding);
+                        writer.Append(valueFormat.Format);
                     }
 
                     writer.Append(NoBreakingSpace);
-                    if (symbolFormat == FormatCache.UnknownFormat)
+                    if (symbolFormat.IsUnknown)
                     {
-                        writer.Append($"{{unit: {symbolFormat}}}");
+                        writer.Append($"{{unit: {symbolFormat.Format ?? "null"}}}");
                     }
                     else
                     {
-                        writer.Append(symbolFormat);
+                        writer.Append(symbolFormat.Format);
+                        writer.Append(symbolFormat.PostPadding);
                     }
                     return writer.ToString();
                 }
             }
+
             return null;
         }
 

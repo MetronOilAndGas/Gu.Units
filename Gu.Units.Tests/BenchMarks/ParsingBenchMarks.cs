@@ -21,33 +21,61 @@
         // 2015-11-28| TryRead("e5")     1 000 000 times                 took: 45 ms
         // 2015-11-28| TryRead("#0.00#") 1 000 000 times                 took: 22 ms
         [Test]
-        public void TryReadDoubleFormat()
+        public void TryReadDoubleFormatSubstring()
         {
             int pos = 0;
-            string actual;
-            DoubleFormatReader.TryRead("e5", ref pos, out actual);
+            PaddedFormat actual = DoubleFormatCache.GetOrCreate("e5", ref pos);
             pos = 0;
-            DoubleFormatReader.TryRead("#0.00#", ref pos, out actual);
+            actual = DoubleFormatCache.GetOrCreate("#0.00#", ref pos);
             var sw = Stopwatch.StartNew();
             var n = 1000000;
             for (int i = 0; i < n; i++)
             {
                 pos = 0;
-                DoubleFormatReader.TryRead("e5", ref pos, out actual);
+                DoubleFormatCache.GetOrCreate("#0.00#", ref pos);
             }
 
             sw.Stop();
-            Console.WriteLine($"// {DateTime.Today.ToShortDateString()}| TryReadDoubleFormat(\"e5\")     {n:N0} times                 took: {sw.ElapsedMilliseconds} ms");
+            Console.WriteLine($"// {DateTime.Today.ToShortDateString()}| TryReadDoubleFormat(\"e5\")     {n:N0} times {sw.ElapsedMilliseconds} ms");
 
             sw.Restart();
             for (int i = 0; i < n; i++)
             {
                 pos = 0;
-                DoubleFormatReader.TryRead("#0.00#", ref pos, out actual);
+                actual = DoubleFormatCache.GetOrCreate("#0.00#", ref pos);
             }
 
             sw.Stop();
-            Console.WriteLine($"// {DateTime.Today.ToShortDateString()}| TryReadDoubleFormat(\"#0.00#\") {n:N0} times                 took: {sw.ElapsedMilliseconds} ms");
+            Console.WriteLine($"// {DateTime.Today.ToShortDateString()}| TryReadDoubleFormat(\"#0.00#\") {n:N0} times {sw.ElapsedMilliseconds} ms");
+        }
+
+        // 2015-11-30| TryRead("e5")     1 000 000 times 72 ms
+        // 2015-11-30| TryRead("#0.00#") 1 000 000 times 61 ms
+        [Test]
+        public void TryReadDoubleFormat()
+        {
+            var paddedFormat = DoubleFormatCache.GetOrCreate("e5");
+            paddedFormat = DoubleFormatCache.GetOrCreate("F5");
+            paddedFormat = DoubleFormatCache.GetOrCreate("#0.00#");
+            paddedFormat = DoubleFormatCache.GetOrCreate("#0.0#");
+            var sw = Stopwatch.StartNew();
+            var n = 1000000;
+            for (int i = 0; i < n; i++)
+            {
+                paddedFormat = DoubleFormatCache.GetOrCreate("e5");
+            }
+
+            sw.Stop();
+            Console.WriteLine($"// {DateTime.Today.ToShortDateString()}| TryRead(\"e5\")     {n:N0} times {sw.ElapsedMilliseconds} ms");
+
+            sw.Restart();
+            for (int i = 0; i < n; i++)
+            {
+                paddedFormat = DoubleFormatCache.GetOrCreate("#0.00#");
+            }
+
+            sw.Stop();
+            Console.WriteLine($"// {DateTime.Today.ToShortDateString()}| TryRead(\"#0.00#\") {n:N0} times {sw.ElapsedMilliseconds} ms");
         }
 
         // 2015-11-29| DoubleReader.TryRead("  123.45", 4, ...)  1 000 000 times 78 ms

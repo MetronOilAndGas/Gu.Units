@@ -42,17 +42,17 @@
             const string UnknownFormat = "unknown format";
             using (Thread.CurrentThread.UsingTempCulture(CultureInfo.InvariantCulture))
             {
+                Assert.AreEqual("1.2\u00A0m/s", speed.ToString());
                 Assert.AreEqual("1.20 m/s", speed.ToString("F2 m/s"));
                 Assert.AreEqual(UnknownFormat, 1.2.ToString(UnknownFormat)); // for comparison
                 Assert.AreEqual(UnknownFormat, speed.ToString(UnknownFormat));
-                Assert.AreEqual("F1\u00A0{unit: ??}", speed.ToString("F1 invalid"));
+                Assert.AreEqual("F1\u00A0{unit: invalid}", speed.ToString("F1 invalid"));
                 Assert.AreEqual("1.20 m⋅s⁻¹", speed.ToString("F2 m⋅s⁻¹"));
-                Assert.AreEqual("1.2\u00A0m/s", speed.ToString());
                 Assert.AreEqual("1.2\u00A0m⋅s⁻¹", speed.ToString("f1", "m⋅s⁻¹"));
                 Assert.AreEqual("1.2 m⋅s⁻¹", speed.ToString("f1 ", "m⋅s⁻¹"));
                 Assert.AreEqual("1.2 m⋅s⁻¹", speed.ToString("f1", " m⋅s⁻¹"));
                 Assert.AreEqual("1.2  m⋅s⁻¹", speed.ToString("f1 ", " m⋅s⁻¹"));
-                Assert.AreEqual("1200\u00A0mm⋅s⁻¹", speed.ToString("mm⋅s⁻¹"));
+                Assert.AreEqual("{value: null} mm⋅s⁻¹", speed.ToString("mm⋅s⁻¹"));
                 Assert.AreEqual("1200\u00A0s⁻¹⋅mm", speed.ToString("F0", "s⁻¹⋅mm"));
                 Assert.AreEqual("1200\u00A0s⁻¹⋅mm¹", speed.ToString("F0", "s⁻¹⋅mm¹"));
                 Assert.AreEqual("1.2\u00A0m*s^-1", speed.ToString("F1", "m*s^-1"));
@@ -64,16 +64,23 @@
             }
 
             var sv = CultureInfo.GetCultureInfo("sv-SE");
+
+            Assert.AreEqual("1,2\u00A0m/s", speed.ToString(sv));
             Assert.AreEqual("1,20 m/s", speed.ToString("F2 m/s", sv));
             Assert.AreEqual(UnknownFormat, 1.2.ToString(UnknownFormat, sv)); // for comparison
             Assert.AreEqual(UnknownFormat, speed.ToString(UnknownFormat, sv));
+            Assert.AreEqual("F1\u00A0{unit: invalid}", speed.ToString("F1 invalid", sv));
             Assert.AreEqual("1,20 m⋅s⁻¹", speed.ToString("F2 m⋅s⁻¹", sv));
-            Assert.AreEqual("1,2\u00A0m/s", speed.ToString(sv));
-            Assert.AreEqual("1,2\u00A0m⋅s⁻¹", speed.ToString("m⋅s⁻¹", sv));
-            Assert.AreEqual("1200\u00A0mm⋅s⁻¹", speed.ToString("mm⋅s⁻¹", sv));
-            Assert.AreEqual("1200\u00A0s⁻¹⋅mm", speed.ToString("s⁻¹⋅mm", sv));
-            Assert.AreEqual("1200\u00A0s⁻¹⋅mm¹", speed.ToString("s⁻¹⋅mm¹", sv));
-            Assert.AreEqual("1,2\u00A0m*s^-1", speed.ToString("m*s^-1", sv));
+            Assert.AreEqual("1,2\u00A0m⋅s⁻¹", speed.ToString("f1", "m⋅s⁻¹", sv));
+            Assert.AreEqual("1,2 m⋅s⁻¹", speed.ToString("f1 ", "m⋅s⁻¹", sv));
+            Assert.AreEqual("1,2 m⋅s⁻¹", speed.ToString("f1", " m⋅s⁻¹", sv));
+            Assert.AreEqual("1,2  m⋅s⁻¹", speed.ToString("f1 ", " m⋅s⁻¹", sv));
+            Assert.AreEqual("{value: null} mm⋅s⁻¹", speed.ToString("mm⋅s⁻¹", sv));
+            Assert.AreEqual("1200\u00A0s⁻¹⋅mm", speed.ToString("F0", "s⁻¹⋅mm", sv));
+            Assert.AreEqual("1200\u00A0s⁻¹⋅mm¹", speed.ToString("F0", "s⁻¹⋅mm¹", sv));
+            Assert.AreEqual("1,2\u00A0m*s^-1", speed.ToString("F1", "m*s^-1", sv));
+            Assert.AreEqual("1,2\u00A0s^-1*m", speed.ToString("F1", "s^-1*m", sv));
+            Assert.AreEqual("1,2\u00A0s^-1*m^1", speed.ToString("F1", "s^-1*m^1", sv));
             Assert.AreEqual("4,32\u00A0km/h", speed.ToString(SpeedUnit.KilometresPerHour, sv));
             Assert.AreEqual("4,3\u00A0km/h", speed.ToString("F1", SpeedUnit.KilometresPerHour, sv));
             Assert.AreEqual("1\u00A0200,00 mm⋅s⁻¹", speed.ToString("N mm⋅s⁻¹", sv));

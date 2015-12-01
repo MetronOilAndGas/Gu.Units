@@ -45,9 +45,9 @@ namespace Gu.Units
             SubstringCache<TUnit>.CachedItem cached;
             if (Cache.Value.TryGetForSymbol(text, pos, out cached))
             {
-                pos += cached.Key.Length;
-                if (IsEndOfSymbol(text, pos))
+                if (IsEndOfSymbol(text, pos + cached.Key.Length))
                 {
+                    pos += cached.Key.Length;
                     result = cached.Value;
                     return true;
                 }
