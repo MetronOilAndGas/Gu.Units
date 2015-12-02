@@ -1,18 +1,15 @@
 ﻿using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using System.Windows.Markup;
-
-using Gu.Units;
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Gu.Units.Wpf")]
+[assembly: AssemblyTitle("Gu.Units.Json.Tests")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Gu.Units.Wpf")]
+[assembly: AssemblyProduct("Gu.Units.Json.Tests")]
 [assembly: AssemblyCopyright("Copyright ©  2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -23,7 +20,7 @@ using Gu.Units;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("ea4bce51-a58d-4fa7-bba4-6f0056d753ca")]
+[assembly: Guid("ddd84bca-0ff9-4854-bdb3-c69117b2978a")]
 
 // Version information for an assembly consists of the following four values:
 //
@@ -37,10 +34,3 @@ using Gu.Units;
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
-[assembly:InternalsVisibleTo("Gu.Units.Wpf.Tests", AllInternalsVisible = true)]
-
-[assembly: XmlnsDefinition("http://Gu.com/Units", clrNamespace: "Gu.Units", AssemblyName = "Gu.Units")]
-[assembly: XmlnsDefinition("http://Gu.com/Units", clrNamespace: "Gu.Units.Wpf", AssemblyName = "Gu.Units.Wpf")]
-[assembly: XmlnsPrefix("http://Gu.com/Units", "units")]
-
-namespace Gu.Units {} // testing hacking it like this

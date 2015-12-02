@@ -16,8 +16,8 @@
             <local:UnitsOnlyView />
         </TabItem>
 
-        <!--<TabItem Header="String formats">
-            <local:StringFormatView></local:StringFormatView>
-        </TabItem>-->
+        <TabItem Header="String formats">
+            <local:StringFormatView />
+        </TabItem>
     </TabControl>
 </Window>

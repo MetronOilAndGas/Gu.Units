@@ -38,6 +38,18 @@
                    Content="Binding Length, Converter={units:LengthConverter}, StringFormat='F2 cm'" />
 
             <TextBox Grid.Row="3" Text="{Binding Length, Converter={units:LengthConverter}, StringFormat='F2 cm'}" />
+
+            <Label Grid.Row="4"
+                   Grid.Column="0"
+                   Content="Binding Length, Converter={units:LengthConverter}, StringFormat='{}{F2 cm}'" />
+
+            <TextBox Grid.Row="5" Text="{Binding Length, Converter={units:LengthConverter}, StringFormat='{}{F2 cm}'}" />
+
+            <Label Grid.Row="6"
+                   Grid.Column="0"
+                   Content="Binding Length, Converter={units:LengthConverter}, StringFormat='{}{0:F2 cm}'" />
+
+            <TextBox Grid.Row="7" Text="{Binding Length, Converter={units:LengthConverter}, StringFormat='{}{0:F2 cm}'}" />
         </Grid>
     </Grid>
 </UserControl>

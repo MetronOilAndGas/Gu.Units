@@ -27,7 +27,7 @@
                 var converter = new LengthConverter();
                 var providerMock = new ServiceProviderMock
                 {
-                    BindingStringFormat = "F1 cm"
+                    BindingStringFormat = "{F1 cm}"
                 };
 
                 converter.ProvideValue(providerMock.Object);

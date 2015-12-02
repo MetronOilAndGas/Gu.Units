@@ -52,14 +52,22 @@
             ref int pos)
         {
             var start = pos;
-            if (TryReadChar(format, ref pos, '{') &&
-                TryReadChar(format, ref pos, '0') &&
-                TryReadChar(format, ref pos, ':'))
+
+            if (!TryReadChar(format, ref pos, '{'))
             {
-                return true;
+                return false;
             }
-            pos = start;
-            return false;
+
+            if (TryReadChar(format, ref pos, '0'))
+            {
+                if (!TryReadChar(format, ref pos, ':'))
+                {
+                    pos = start;
+                    return false;
+                }
+            }
+
+            return true;
         }
 
         private static bool TryReadChar(string format,

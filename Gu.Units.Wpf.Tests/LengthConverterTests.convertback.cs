@@ -3,6 +3,7 @@
     using System.Globalization;
     using NUnit.Framework;
 
+    [TestFixture]
     public partial class LengthConverterTests
     {
         public class ConvertBack

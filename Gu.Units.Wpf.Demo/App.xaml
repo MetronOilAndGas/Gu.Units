@@ -11,10 +11,10 @@
         <Style TargetType="{x:Type TextBox}">
             <Setter Property="HorizontalAlignment" Value="Right" />
             <Setter Property="TextAlignment" Value="Right" />
-            <Setter Property="Width" Value="50" />
+            <Setter Property="Width" Value="100" />
         </Style>
 
-        
+
         <Style TargetType="{x:Type Label}">
             <Setter Property="HorizontalAlignment" Value="Right" />
         </Style>
