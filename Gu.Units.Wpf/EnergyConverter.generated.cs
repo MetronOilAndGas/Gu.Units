@@ -1,4 +1,10 @@
-﻿namespace Gu.Units.Wpf
+﻿using System.Runtime.CompilerServices;
+using Gu.Units;
+
+[assembly: TypeForwardedTo(typeof(Energy))]
+[assembly: TypeForwardedTo(typeof(EnergyUnit))]
+
+namespace Gu.Units.Wpf
 {
     using System;
     using System.ComponentModel;
@@ -8,27 +14,27 @@
     using System.Windows.Markup;
 
     [MarkupExtensionReturnType(typeof(IValueConverter))]
-    public class LengthConverter : MarkupExtension, IValueConverter
+    public class EnergyConverter : MarkupExtension, IValueConverter
     {
         private static readonly string StringFormatNotSet = "Not Set";
-        private LengthUnit? unit;
+        private EnergyUnit? unit;
         private IProvideValueTarget provideValueTarget;
         private string stringFormat = StringFormatNotSet;
-        private QuantityFormat<LengthUnit> quantityFormat;
+        private QuantityFormat<EnergyUnit> quantityFormat;
         private string bindingStringFormat = StringFormatNotSet;
         private string errorText;
 
-        public LengthConverter()
+        public EnergyConverter()
         {
         }
 
-        public LengthConverter([TypeConverter(typeof(LengthUnitTypeConverter))]LengthUnit unit)
+        public EnergyConverter([TypeConverter(typeof(EnergyUnitTypeConverter))]EnergyUnit unit)
         {
             Unit = unit;
         }
 
-        [ConstructorArgument("unit"), TypeConverter(typeof(LengthUnitTypeConverter))]
-        public LengthUnit? Unit
+        [ConstructorArgument("unit"), TypeConverter(typeof(EnergyUnitTypeConverter))]
+        public EnergyUnit? Unit
         {
             get { return this.unit; }
             set
@@ -76,9 +82,9 @@
                 throw new ArgumentException(message, nameof(targetType));
             }
 
-            if (value != null && !(value is Length) && Is.DesignMode)
+            if (value != null && !(value is Energy) && Is.DesignMode)
             {
-                var message = $"{GetType().Name} only supports converting from {nameof(Length)}";
+                var message = $"{GetType().Name} only supports converting from {typeof(Energy)}";
                 throw new ArgumentException(message, nameof(value));
             }
 
@@ -111,16 +117,16 @@
                     : null;
             }
 
-            var length = (Length)value;
+            var Energy = (Energy)value;
             if (this.StringFormat != StringFormatNotSet &&
-                (targetType == typeof(string) || targetType== typeof(object)))
+                (targetType == typeof(string) || targetType == typeof(object)))
             {
-                return length.ToString(StringFormat, culture);
+                return Energy.ToString(StringFormat, culture);
             }
 
             if (IsValidConvertTargetType(targetType))
             {
-                return length.GetValue(this.unit.Value);
+                return Energy.GetValue(this.unit.Value);
             }
 
             return value;
@@ -131,7 +137,7 @@
             object parameter,
             CultureInfo culture)
         {
-            if (!(targetType == typeof(Length) || targetType == typeof(Length?)))
+            if (!(targetType == typeof(Energy) || targetType == typeof(Energy?)))
             {
                 var message = $"{GetType().Name} does not support converting to {targetType.Name}";
                 throw new NotSupportedException(message);
@@ -161,7 +167,7 @@
 
             if (value is double)
             {
-                return new Length((double)value, this.unit.Value);
+                return new Energy((double)value, this.unit.Value);
             }
 
             var text = value as string;
@@ -178,7 +184,7 @@
                         double d;
                         if (double.TryParse(text, NumberStyles.Float, culture, out d))
                         {
-                            return new Length(d, this.unit.Value);
+                            return new Energy(d, this.unit.Value);
                         }
 
                         return value; // returning raw to trigger error
@@ -193,7 +199,7 @@
                             WhiteSpaceReader.TryRead(text, ref pos);
                             if (pos == text.Length)
                             {
-                                return new Length(d, this.unit.Value);
+                                return new Energy(d, this.unit.Value);
                             }
                         }
 
@@ -201,8 +207,8 @@
                     }
                 case UnitInput.SymbolRequired:
                     {
-                        Length result;
-                        if (Length.TryParse(text, NumberStyles.Float, culture, out result))
+                        Energy result;
+                        if (Energy.TryParse(text, NumberStyles.Float, culture, out result))
                         {
                             return result;
                         }
@@ -237,7 +243,7 @@
 
         private void OnStringFormatChanged()
         {
-            if (this.bindingStringFormat != StringFormatNotSet && 
+            if (this.bindingStringFormat != StringFormatNotSet &&
                 this.stringFormat != StringFormatNotSet &&
                 this.bindingStringFormat != this.stringFormat)
             {
@@ -252,7 +258,7 @@
             var format = this.stringFormat == StringFormatNotSet
                 ? this.bindingStringFormat
                 : this.stringFormat;
-            if (StringFormatParser<LengthUnit>.TryParse(format, out this.quantityFormat))
+            if (StringFormatParser<EnergyUnit>.TryParse(format, out this.quantityFormat))
             {
                 if (UnitInput == UnitInput.Default && this.quantityFormat.SymbolFormat != null)
                 {

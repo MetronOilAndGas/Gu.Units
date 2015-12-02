@@ -259,6 +259,24 @@
     <Folder Include="Sandbox\" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Templates\QuantityValueConverter.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>QuantityValueConverter.txt</LastGenOutput>
+    </EmbeddedResource>
+    <Resource Include="Templates\QuantityValueConverter.txt">
+      <DependentUpon>QuantityValueConverter.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Resource>
+    <EmbeddedResource Include="Templates\QuantityValueConverters.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>QuantityValueConverters.txt</LastGenOutput>
+    </EmbeddedResource>
+    <Content Include="Templates\QuantityValueConverters.txt">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>QuantityValueConverters.tt</DependentUpon>
+    </Content>
     <Content Include="Templates\QuantityTypeConverters.txt">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
