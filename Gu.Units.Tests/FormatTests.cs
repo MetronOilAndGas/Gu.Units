@@ -59,7 +59,17 @@
                 Assert.AreEqual("1.2\u00A0s^-1*m", speed.ToString("F1", "s^-1*m"));
                 Assert.AreEqual("1.2\u00A0s^-1*m^1", speed.ToString("F1", "s^-1*m^1"));
                 Assert.AreEqual("4.32\u00A0km/h", speed.ToString(SpeedUnit.KilometresPerHour));
+                Assert.AreEqual("1.2\u00A0m/s", speed.ToString(SpeedUnit.MetresPerSecond, SymbolFormat.Default));
+                Assert.AreEqual("1.2\u00A0m/s", speed.ToString( SpeedUnit.MetresPerSecond, SymbolFormat.FractionHatPowers));
+                Assert.AreEqual("1.2\u00A0m*s^-1", speed.ToString( SpeedUnit.MetresPerSecond, SymbolFormat.SignedHatPowers));
+                Assert.AreEqual("1.2\u00A0m/s", speed.ToString(SpeedUnit.MetresPerSecond, SymbolFormat.FractionSuperScript));
+                Assert.AreEqual("1.2\u00A0m⋅s⁻¹", speed.ToString( SpeedUnit.MetresPerSecond, SymbolFormat.SignedSuperScript));
                 Assert.AreEqual("4.3\u00A0km/h", speed.ToString("F1", SpeedUnit.KilometresPerHour));
+                Assert.AreEqual("1.2\u00A0m/s", speed.ToString("F1", SpeedUnit.MetresPerSecond, SymbolFormat.Default));
+                Assert.AreEqual("1.2\u00A0m/s", speed.ToString("F1", SpeedUnit.MetresPerSecond, SymbolFormat.FractionHatPowers));
+                Assert.AreEqual("1.2\u00A0m*s^-1", speed.ToString("F1", SpeedUnit.MetresPerSecond, SymbolFormat.SignedHatPowers));
+                Assert.AreEqual("1.2\u00A0m/s", speed.ToString("F1", SpeedUnit.MetresPerSecond, SymbolFormat.FractionSuperScript));
+                Assert.AreEqual("1.2\u00A0m⋅s⁻¹", speed.ToString("F1", SpeedUnit.MetresPerSecond, SymbolFormat.SignedSuperScript));
                 Assert.AreEqual("1,200.00 mm⋅s⁻¹", speed.ToString("N mm⋅s⁻¹"));
             }
 
@@ -82,7 +92,17 @@
             Assert.AreEqual("1,2\u00A0s^-1*m", speed.ToString("F1", "s^-1*m", sv));
             Assert.AreEqual("1,2\u00A0s^-1*m^1", speed.ToString("F1", "s^-1*m^1", sv));
             Assert.AreEqual("4,32\u00A0km/h", speed.ToString(SpeedUnit.KilometresPerHour, sv));
+            Assert.AreEqual("1,2\u00A0m/s", speed.ToString(SpeedUnit.MetresPerSecond, SymbolFormat.Default, sv));
+            Assert.AreEqual("1,2\u00A0m/s", speed.ToString(SpeedUnit.MetresPerSecond, SymbolFormat.FractionHatPowers, sv));
+            Assert.AreEqual("1,2\u00A0m*s^-1", speed.ToString(SpeedUnit.MetresPerSecond, SymbolFormat.SignedHatPowers, sv));
+            Assert.AreEqual("1,2\u00A0m/s", speed.ToString(SpeedUnit.MetresPerSecond, SymbolFormat.FractionSuperScript, sv));
+            Assert.AreEqual("1,2\u00A0m⋅s⁻¹", speed.ToString(SpeedUnit.MetresPerSecond, SymbolFormat.SignedSuperScript, sv));
             Assert.AreEqual("4,3\u00A0km/h", speed.ToString("F1", SpeedUnit.KilometresPerHour, sv));
+            Assert.AreEqual("1,2\u00A0m/s", speed.ToString("F1", SpeedUnit.MetresPerSecond, SymbolFormat.Default, sv));
+            Assert.AreEqual("1,2\u00A0m/s", speed.ToString("F1", SpeedUnit.MetresPerSecond, SymbolFormat.FractionHatPowers, sv));
+            Assert.AreEqual("1,2\u00A0m*s^-1", speed.ToString("F1", SpeedUnit.MetresPerSecond, SymbolFormat.SignedHatPowers, sv));
+            Assert.AreEqual("1,2\u00A0m/s", speed.ToString("F1", SpeedUnit.MetresPerSecond, SymbolFormat.FractionSuperScript, sv));
+            Assert.AreEqual("1,2\u00A0m⋅s⁻¹", speed.ToString("F1", SpeedUnit.MetresPerSecond, SymbolFormat.SignedSuperScript, sv));
             Assert.AreEqual("1\u00A0200,00 mm⋅s⁻¹", speed.ToString("N mm⋅s⁻¹", sv));
         }
 

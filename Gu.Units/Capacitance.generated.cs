@@ -363,7 +363,7 @@
         /// <summary>
         ///  If an invalid format is provided the string will look like: {value: ??} {unit: ??}
         /// </summary>
-        /// <param name="valueFormat">For formatting the scalar, format stings valid for <see cref="System.double"/> are valid
+        /// <param name="valueFormat">For formatting the scalar, format stings valid for <see cref="System.Double"/> are valid
         ///  ex: F2</param>
         /// <param name="symbolFormat">For formatting of the unit ex F</param>
         /// <returns>The string representation of the <see cref="Capacitance"/></returns>
@@ -376,7 +376,7 @@
         /// <summary>
         ///  If an invalid format is provided the string will look like: {value: ??} {unit: ??}
         /// </summary>
-        /// <param name="valueFormat">For formatting the scalar, format stings valid for <see cref="System.double"/> are valid
+        /// <param name="valueFormat">For formatting the scalar, format stings valid for <see cref="System.Double"/> are valid
         ///  ex: F2</param>
         /// <param name="symbolFormat">For formatting the unit ex F</param>
         /// <param name="formatProvider"></param>
@@ -389,13 +389,25 @@
 
         public string ToString(CapacitanceUnit unit)
         {
-            var quantityFormat = FormatCache<CapacitanceUnit>.GetOrCreate(string.Empty, unit);
+            var quantityFormat = FormatCache<CapacitanceUnit>.GetOrCreate(null, unit);
+            return ToString(quantityFormat, null);
+        }
+
+        public string ToString(CapacitanceUnit unit, SymbolFormat symbolFormat)
+        {
+            var quantityFormat = FormatCache<CapacitanceUnit>.GetOrCreate(null, unit, symbolFormat);
             return ToString(quantityFormat, null);
         }
 
         public string ToString(CapacitanceUnit unit, IFormatProvider formatProvider)
         {
-            var quantityFormat = FormatCache<CapacitanceUnit>.GetOrCreate(string.Empty, unit);
+            var quantityFormat = FormatCache<CapacitanceUnit>.GetOrCreate(null, unit);
+            return ToString(quantityFormat, formatProvider);
+        }
+
+        public string ToString(CapacitanceUnit unit, SymbolFormat symbolFormat, IFormatProvider formatProvider)
+        {
+            var quantityFormat = FormatCache<CapacitanceUnit>.GetOrCreate(null, unit, symbolFormat);
             return ToString(quantityFormat, formatProvider);
         }
 
@@ -405,9 +417,21 @@
             return ToString(quantityFormat, null);
         }
 
+        public string ToString(string valueFormat, CapacitanceUnit unit, SymbolFormat symbolFormat)
+        {
+            var quantityFormat = FormatCache<CapacitanceUnit>.GetOrCreate(valueFormat, unit, symbolFormat);
+            return ToString(quantityFormat, null);
+        }
+
         public string ToString(string valueFormat, CapacitanceUnit unit, IFormatProvider formatProvider)
         {
             var quantityFormat = FormatCache<CapacitanceUnit>.GetOrCreate(valueFormat, unit);
+            return ToString(quantityFormat, formatProvider);
+        }
+
+        public string ToString(string valueFormat, CapacitanceUnit unit, SymbolFormat symbolFormat, IFormatProvider formatProvider)
+        {
+            var quantityFormat = FormatCache<CapacitanceUnit>.GetOrCreate(valueFormat, unit, symbolFormat);
             return ToString(quantityFormat, formatProvider);
         }
 

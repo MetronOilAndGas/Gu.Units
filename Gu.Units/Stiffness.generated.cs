@@ -383,7 +383,7 @@
         /// <summary>
         ///  If an invalid format is provided the string will look like: {value: ??} {unit: ??}
         /// </summary>
-        /// <param name="valueFormat">For formatting the scalar, format stings valid for <see cref="System.double"/> are valid
+        /// <param name="valueFormat">For formatting the scalar, format stings valid for <see cref="System.Double"/> are valid
         ///  ex: F2</param>
         /// <param name="symbolFormat">For formatting of the unit ex N/m</param>
         /// <returns>The string representation of the <see cref="Stiffness"/></returns>
@@ -396,7 +396,7 @@
         /// <summary>
         ///  If an invalid format is provided the string will look like: {value: ??} {unit: ??}
         /// </summary>
-        /// <param name="valueFormat">For formatting the scalar, format stings valid for <see cref="System.double"/> are valid
+        /// <param name="valueFormat">For formatting the scalar, format stings valid for <see cref="System.Double"/> are valid
         ///  ex: F2</param>
         /// <param name="symbolFormat">For formatting the unit ex N/m</param>
         /// <param name="formatProvider"></param>
@@ -409,13 +409,25 @@
 
         public string ToString(StiffnessUnit unit)
         {
-            var quantityFormat = FormatCache<StiffnessUnit>.GetOrCreate(string.Empty, unit);
+            var quantityFormat = FormatCache<StiffnessUnit>.GetOrCreate(null, unit);
+            return ToString(quantityFormat, null);
+        }
+
+        public string ToString(StiffnessUnit unit, SymbolFormat symbolFormat)
+        {
+            var quantityFormat = FormatCache<StiffnessUnit>.GetOrCreate(null, unit, symbolFormat);
             return ToString(quantityFormat, null);
         }
 
         public string ToString(StiffnessUnit unit, IFormatProvider formatProvider)
         {
-            var quantityFormat = FormatCache<StiffnessUnit>.GetOrCreate(string.Empty, unit);
+            var quantityFormat = FormatCache<StiffnessUnit>.GetOrCreate(null, unit);
+            return ToString(quantityFormat, formatProvider);
+        }
+
+        public string ToString(StiffnessUnit unit, SymbolFormat symbolFormat, IFormatProvider formatProvider)
+        {
+            var quantityFormat = FormatCache<StiffnessUnit>.GetOrCreate(null, unit, symbolFormat);
             return ToString(quantityFormat, formatProvider);
         }
 
@@ -425,9 +437,21 @@
             return ToString(quantityFormat, null);
         }
 
+        public string ToString(string valueFormat, StiffnessUnit unit, SymbolFormat symbolFormat)
+        {
+            var quantityFormat = FormatCache<StiffnessUnit>.GetOrCreate(valueFormat, unit, symbolFormat);
+            return ToString(quantityFormat, null);
+        }
+
         public string ToString(string valueFormat, StiffnessUnit unit, IFormatProvider formatProvider)
         {
             var quantityFormat = FormatCache<StiffnessUnit>.GetOrCreate(valueFormat, unit);
+            return ToString(quantityFormat, formatProvider);
+        }
+
+        public string ToString(string valueFormat, StiffnessUnit unit, SymbolFormat symbolFormat, IFormatProvider formatProvider)
+        {
+            var quantityFormat = FormatCache<StiffnessUnit>.GetOrCreate(valueFormat, unit, symbolFormat);
             return ToString(quantityFormat, formatProvider);
         }
 

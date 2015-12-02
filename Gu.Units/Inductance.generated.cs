@@ -368,7 +368,7 @@
         /// <summary>
         ///  If an invalid format is provided the string will look like: {value: ??} {unit: ??}
         /// </summary>
-        /// <param name="valueFormat">For formatting the scalar, format stings valid for <see cref="System.double"/> are valid
+        /// <param name="valueFormat">For formatting the scalar, format stings valid for <see cref="System.Double"/> are valid
         ///  ex: F2</param>
         /// <param name="symbolFormat">For formatting of the unit ex H</param>
         /// <returns>The string representation of the <see cref="Inductance"/></returns>
@@ -381,7 +381,7 @@
         /// <summary>
         ///  If an invalid format is provided the string will look like: {value: ??} {unit: ??}
         /// </summary>
-        /// <param name="valueFormat">For formatting the scalar, format stings valid for <see cref="System.double"/> are valid
+        /// <param name="valueFormat">For formatting the scalar, format stings valid for <see cref="System.Double"/> are valid
         ///  ex: F2</param>
         /// <param name="symbolFormat">For formatting the unit ex H</param>
         /// <param name="formatProvider"></param>
@@ -394,13 +394,25 @@
 
         public string ToString(InductanceUnit unit)
         {
-            var quantityFormat = FormatCache<InductanceUnit>.GetOrCreate(string.Empty, unit);
+            var quantityFormat = FormatCache<InductanceUnit>.GetOrCreate(null, unit);
+            return ToString(quantityFormat, null);
+        }
+
+        public string ToString(InductanceUnit unit, SymbolFormat symbolFormat)
+        {
+            var quantityFormat = FormatCache<InductanceUnit>.GetOrCreate(null, unit, symbolFormat);
             return ToString(quantityFormat, null);
         }
 
         public string ToString(InductanceUnit unit, IFormatProvider formatProvider)
         {
-            var quantityFormat = FormatCache<InductanceUnit>.GetOrCreate(string.Empty, unit);
+            var quantityFormat = FormatCache<InductanceUnit>.GetOrCreate(null, unit);
+            return ToString(quantityFormat, formatProvider);
+        }
+
+        public string ToString(InductanceUnit unit, SymbolFormat symbolFormat, IFormatProvider formatProvider)
+        {
+            var quantityFormat = FormatCache<InductanceUnit>.GetOrCreate(null, unit, symbolFormat);
             return ToString(quantityFormat, formatProvider);
         }
 
@@ -410,9 +422,21 @@
             return ToString(quantityFormat, null);
         }
 
+        public string ToString(string valueFormat, InductanceUnit unit, SymbolFormat symbolFormat)
+        {
+            var quantityFormat = FormatCache<InductanceUnit>.GetOrCreate(valueFormat, unit, symbolFormat);
+            return ToString(quantityFormat, null);
+        }
+
         public string ToString(string valueFormat, InductanceUnit unit, IFormatProvider formatProvider)
         {
             var quantityFormat = FormatCache<InductanceUnit>.GetOrCreate(valueFormat, unit);
+            return ToString(quantityFormat, formatProvider);
+        }
+
+        public string ToString(string valueFormat, InductanceUnit unit, SymbolFormat symbolFormat, IFormatProvider formatProvider)
+        {
+            var quantityFormat = FormatCache<InductanceUnit>.GetOrCreate(valueFormat, unit, symbolFormat);
             return ToString(quantityFormat, formatProvider);
         }
 
