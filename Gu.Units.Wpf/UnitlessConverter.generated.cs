@@ -49,7 +49,7 @@ namespace Gu.Units.Wpf
             }
         }
 
-        public SymbolFormat SymbolFormat { get; set; }
+        public SymbolFormat? SymbolFormat { get; set; }
 
         public UnitInput UnitInput { get; set; } = UnitInput.Default;
 
@@ -117,16 +117,24 @@ namespace Gu.Units.Wpf
                     : null;
             }
 
-            var Unitless = (Unitless)value;
+            var unitless = (Unitless)value;
             if (this.StringFormat != StringFormatNotSet &&
                 (targetType == typeof(string) || targetType == typeof(object)))
             {
-                return Unitless.ToString(StringFormat, culture);
+                return unitless.ToString(StringFormat, culture);
+            }
+
+
+            if (SymbolFormat != null &&
+                UnitInput == UnitInput.SymbolRequired &&
+               (targetType == typeof(string) || targetType == typeof(object)))
+            {
+                return unitless.ToString(Unit.Value, SymbolFormat.Value, culture);
             }
 
             if (IsValidConvertTargetType(targetType))
             {
-                return Unitless.GetValue(this.unit.Value);
+                return unitless.GetValue(this.unit.Value);
             }
 
             return value;

@@ -49,7 +49,7 @@ namespace Gu.Units.Wpf
             }
         }
 
-        public SymbolFormat SymbolFormat { get; set; }
+        public SymbolFormat? SymbolFormat { get; set; }
 
         public UnitInput UnitInput { get; set; } = UnitInput.Default;
 
@@ -117,16 +117,24 @@ namespace Gu.Units.Wpf
                     : null;
             }
 
-            var Temperature = (Temperature)value;
+            var temperature = (Temperature)value;
             if (this.StringFormat != StringFormatNotSet &&
                 (targetType == typeof(string) || targetType == typeof(object)))
             {
-                return Temperature.ToString(StringFormat, culture);
+                return temperature.ToString(StringFormat, culture);
+            }
+
+
+            if (SymbolFormat != null &&
+                UnitInput == UnitInput.SymbolRequired &&
+               (targetType == typeof(string) || targetType == typeof(object)))
+            {
+                return temperature.ToString(Unit.Value, SymbolFormat.Value, culture);
             }
 
             if (IsValidConvertTargetType(targetType))
             {
-                return Temperature.GetValue(this.unit.Value);
+                return temperature.GetValue(this.unit.Value);
             }
 
             return value;

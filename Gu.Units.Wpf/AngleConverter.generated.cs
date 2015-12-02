@@ -49,7 +49,7 @@ namespace Gu.Units.Wpf
             }
         }
 
-        public SymbolFormat SymbolFormat { get; set; }
+        public SymbolFormat? SymbolFormat { get; set; }
 
         public UnitInput UnitInput { get; set; } = UnitInput.Default;
 
@@ -117,16 +117,24 @@ namespace Gu.Units.Wpf
                     : null;
             }
 
-            var Angle = (Angle)value;
+            var angle = (Angle)value;
             if (this.StringFormat != StringFormatNotSet &&
                 (targetType == typeof(string) || targetType == typeof(object)))
             {
-                return Angle.ToString(StringFormat, culture);
+                return angle.ToString(StringFormat, culture);
+            }
+
+
+            if (SymbolFormat != null &&
+                UnitInput == UnitInput.SymbolRequired &&
+               (targetType == typeof(string) || targetType == typeof(object)))
+            {
+                return angle.ToString(Unit.Value, SymbolFormat.Value, culture);
             }
 
             if (IsValidConvertTargetType(targetType))
             {
-                return Angle.GetValue(this.unit.Value);
+                return angle.GetValue(this.unit.Value);
             }
 
             return value;

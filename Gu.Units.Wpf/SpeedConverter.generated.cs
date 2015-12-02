@@ -49,7 +49,7 @@ namespace Gu.Units.Wpf
             }
         }
 
-        public SymbolFormat SymbolFormat { get; set; }
+        public SymbolFormat? SymbolFormat { get; set; }
 
         public UnitInput UnitInput { get; set; } = UnitInput.Default;
 
@@ -117,16 +117,24 @@ namespace Gu.Units.Wpf
                     : null;
             }
 
-            var Speed = (Speed)value;
+            var speed = (Speed)value;
             if (this.StringFormat != StringFormatNotSet &&
                 (targetType == typeof(string) || targetType == typeof(object)))
             {
-                return Speed.ToString(StringFormat, culture);
+                return speed.ToString(StringFormat, culture);
+            }
+
+
+            if (SymbolFormat != null &&
+                UnitInput == UnitInput.SymbolRequired &&
+               (targetType == typeof(string) || targetType == typeof(object)))
+            {
+                return speed.ToString(Unit.Value, SymbolFormat.Value, culture);
             }
 
             if (IsValidConvertTargetType(targetType))
             {
-                return Speed.GetValue(this.unit.Value);
+                return speed.GetValue(this.unit.Value);
             }
 
             return value;

@@ -49,7 +49,7 @@ namespace Gu.Units.Wpf
             }
         }
 
-        public SymbolFormat SymbolFormat { get; set; }
+        public SymbolFormat? SymbolFormat { get; set; }
 
         public UnitInput UnitInput { get; set; } = UnitInput.Default;
 
@@ -117,16 +117,24 @@ namespace Gu.Units.Wpf
                     : null;
             }
 
-            var Frequency = (Frequency)value;
+            var frequency = (Frequency)value;
             if (this.StringFormat != StringFormatNotSet &&
                 (targetType == typeof(string) || targetType == typeof(object)))
             {
-                return Frequency.ToString(StringFormat, culture);
+                return frequency.ToString(StringFormat, culture);
+            }
+
+
+            if (SymbolFormat != null &&
+                UnitInput == UnitInput.SymbolRequired &&
+               (targetType == typeof(string) || targetType == typeof(object)))
+            {
+                return frequency.ToString(Unit.Value, SymbolFormat.Value, culture);
             }
 
             if (IsValidConvertTargetType(targetType))
             {
-                return Frequency.GetValue(this.unit.Value);
+                return frequency.GetValue(this.unit.Value);
             }
 
             return value;

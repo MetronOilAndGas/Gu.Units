@@ -4,7 +4,6 @@
     using System.Globalization;
     using NUnit.Framework;
 
-    [RequiresSTA]
     public partial class LengthConverterTests
     {
         [RequiresSTA]
@@ -25,18 +24,23 @@
                 Assert.AreEqual(expected, actual);
             }
 
-            [TestCase(typeof(string), SymbolFormat.SignedHatPowers, "1.2 m*s^-1")]
-            [TestCase(typeof(object), SymbolFormat.FractionHatPowers, "1.2 m/s")]
+            private const string Superscripts = "⁺⁻⁰¹²³⁴⁵⁶⁷⁸⁹";
+            private const char MultiplyDot = '⋅';
+
+            [TestCase(typeof(string), SymbolFormat.SignedHatPowers, "1.2\u00A0m*s^-1")]
+            [TestCase(typeof(object), SymbolFormat.FractionHatPowers, "1.2\u00A0m/s")]
+            [TestCase(typeof(object), SymbolFormat.SignedSuperScript, "1.2\u00A0m⋅s⁻¹")]
+            [TestCase(typeof(object), SymbolFormat.FractionSuperScript, "1.2\u00A0m/s")]
             public void WithUnitAndSymbolFormat(Type targetType, SymbolFormat format, object expected)
             {
-                Assert.Inconclusive("Wait for speed converter");
-                var converter = new LengthConverter
+                var converter = new SpeedConverter
                 {
-                    Unit = LengthUnit.Centimetres,
+                    Unit = SpeedUnit.MetresPerSecond,
+                    UnitInput = UnitInput.SymbolRequired,
                     SymbolFormat = format
                 };
 
-                var length = Length.FromMillimetres(12);
+                var length = Speed.FromMetresPerSecond(1.2);
                 var actual = converter.Convert(length, targetType, null, CultureInfo.InvariantCulture);
                 Assert.AreEqual(expected, actual);
             }

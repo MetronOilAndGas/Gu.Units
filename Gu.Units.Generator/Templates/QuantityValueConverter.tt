@@ -70,7 +70,7 @@ namespace Gu.Units.Wpf
             }
         }
 
-        public SymbolFormat SymbolFormat { get; set; }
+        public SymbolFormat? SymbolFormat { get; set; }
 
         public UnitInput UnitInput { get; set; } = UnitInput.Default;
 
@@ -138,16 +138,24 @@ namespace Gu.Units.Wpf
                     : null;
             }
 
-            var <#= quantity.ClassName #> = (<#= quantity.ClassName #>)value;
+            var <#= quantity.ParameterName #> = (<#= quantity.ClassName #>)value;
             if (this.StringFormat != StringFormatNotSet &&
                 (targetType == typeof(string) || targetType== typeof(object)))
             {
-                return <#= quantity.ClassName #>.ToString(StringFormat, culture);
+                return <#= quantity.ParameterName #>.ToString(StringFormat, culture);
+            }
+
+			
+            if (SymbolFormat != null &&
+                UnitInput == UnitInput.SymbolRequired &&
+               (targetType == typeof(string) || targetType == typeof(object)))
+            {
+                return <#= quantity.ParameterName #>.ToString(Unit.Value, SymbolFormat.Value, culture);
             }
 
             if (IsValidConvertTargetType(targetType))
             {
-                return <#= quantity.ClassName #>.GetValue(this.unit.Value);
+                return <#= quantity.ParameterName #>.GetValue(this.unit.Value);
             }
 
             return value;
