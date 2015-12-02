@@ -3,8 +3,10 @@
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Linq;
 
+    [DebuggerTypeProxy(typeof(CollectionDebugView<>))]
     internal class ReadonlySet<T> : IReadOnlyCollection<T>, IEquatable<ReadonlySet<T>>
         where T : IEquatable<T>
     {
@@ -15,6 +17,11 @@
         public ReadonlySet(ISet<T> source)
         {
             this.source = source;
+        }
+
+        public ReadonlySet(IEnumerable<T> source)
+        {
+            source = new HashSet<T>(source);
         }
 
         public int Count => this.source?.Count ?? 0;
@@ -83,11 +90,10 @@
             }
             unchecked
             {
-                int hash = 17;
-
+                int hash = 0;
                 foreach (var item in this.source)
                 {
-                    hash = (hash * 397) ^ item.GetHashCode();
+                    hash += item.GetHashCode();
                 }
 
                 return hash;

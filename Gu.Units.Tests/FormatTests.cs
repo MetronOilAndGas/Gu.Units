@@ -9,6 +9,7 @@
     {
         private const string Superscripts = "⁺⁻⁰¹²³⁴⁵⁶⁷⁸⁹";
         private const char MultiplyDot = '⋅';
+        const string UnknownFormat = "unknown format";
 
         [Test]
         public void FormatAngle()
@@ -39,7 +40,6 @@
         public void FormatSpeed()
         {
             var speed = Speed.FromMetresPerSecond(1.2);
-            const string UnknownFormat = "unknown format";
             using (Thread.CurrentThread.UsingTempCulture(CultureInfo.InvariantCulture))
             {
                 Assert.AreEqual("1.2\u00A0m/s", speed.ToString());
@@ -84,14 +84,6 @@
             Assert.AreEqual("4,32\u00A0km/h", speed.ToString(SpeedUnit.KilometresPerHour, sv));
             Assert.AreEqual("4,3\u00A0km/h", speed.ToString("F1", SpeedUnit.KilometresPerHour, sv));
             Assert.AreEqual("1\u00A0200,00 mm⋅s⁻¹", speed.ToString("N mm⋅s⁻¹", sv));
-        }
-
-        [Test]
-        public void Reminders()
-        {
-            Assert.Fail("Add enum SymbolOptions{ HatPowers, SuperScripts, Fractions, Names }");
-            Assert.Fail("Add ToString(\"F2\",\"mm/s\")");
-            Assert.Fail("Composite formats must die force.ToString(\"N\") is ambiguous");
         }
 
         [Explicit(Reminder.ToDo)]

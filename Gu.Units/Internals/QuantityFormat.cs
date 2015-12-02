@@ -7,7 +7,7 @@
     internal class QuantityFormat<TUnit> : IEquatable<QuantityFormat<TUnit>>
         where TUnit : struct, IUnit, IEquatable<TUnit>
     {
-        public static QuantityFormat<TUnit> Default => FormatCache<TUnit>.DefaultFormat;
+        public static QuantityFormat<TUnit> Default => FormatCache<TUnit>.DefaultQuantityFormat;
         internal static readonly char NoBreakingSpace = '\u00A0';
         internal static readonly string NoBreakingSpaceString = "\u00A0";
         private string compositeFormat;

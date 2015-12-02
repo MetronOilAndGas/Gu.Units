@@ -10,7 +10,7 @@
         public void TryReadSuccess(ISuccessData data)
         {
             var pos = data.Start;
-            ReadonlySet<SymbolAndPower> actual;
+            IReadOnlyList<SymbolAndPower> actual;
             var success = SymbolAndPowerReader.TryRead(data.Text, ref pos, out actual);
             //Console.WriteLine("expected: {0}", data.ToString(data.Tokens));
             //Console.WriteLine("actual:   {0}", data.ToString(actual));
@@ -23,11 +23,11 @@
         public void TryTokenizeError(IErrorData data)
         {
             var pos = data.Start;
-            ReadonlySet<SymbolAndPower> actual;
+            IReadOnlyList<SymbolAndPower> actual;
             var success = SymbolAndPowerReader.TryRead(data.Text, ref pos, out actual);
             Assert.AreEqual(false, success);
-            Assert.AreEqual(data.ExpectedEnd, pos);
-            CollectionAssert.AreEqual((IEnumerable)data.Expected, actual);
+            Assert.AreEqual(data.Start, pos);
+            CollectionAssert.AreEqual(null, actual);
         }
 
         private const string Superscripts = "⋅⁺⁻⁰¹²³⁴⁵⁶⁷⁸⁹";
@@ -42,7 +42,7 @@
             SuccessData.Create("m^1/s^2", new SymbolAndPower("m", 1), new SymbolAndPower("s", -2)),
             SuccessData.Create("m¹/s²", new SymbolAndPower("m", 1), new SymbolAndPower("s", -2)),
             SuccessData.Create("m⁺¹/s²", new SymbolAndPower("m", 1), new SymbolAndPower("s", -2)),
-            SuccessData.Create("m⁺¹/s²*g", new SymbolAndPower("g", -1), new SymbolAndPower("m", 1), new SymbolAndPower("s", -2)),
+            SuccessData.Create("m⁺¹/s²*g", new SymbolAndPower("m", 1), new SymbolAndPower("s", -2), new SymbolAndPower("g", -1)),
             SuccessData.Create("m¹⋅s⁻²", new SymbolAndPower("m", 1), new SymbolAndPower("s", -2)),
             SuccessData.Create("m⁻¹⋅s⁻²", new SymbolAndPower("m", -1), new SymbolAndPower("s", -2)),
         };

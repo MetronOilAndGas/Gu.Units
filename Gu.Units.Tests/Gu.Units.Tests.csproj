@@ -73,6 +73,7 @@
     <Compile Include="Internals\Parsing\UnitParserTests.cs" />
     <Compile Include="Internals\Helpers\StringBuilderPoolTests.cs" />
     <Compile Include="Internals\Helpers\SubstringCacheTests.cs" />
+    <Compile Include="Internals\SymbolsAndPowersTests.cs" />
     <Compile Include="Internals\UnitFormatCacheTests.cs" />
     <Compile Include="LengthTests.cs" />
     <Compile Include="Samples\Samples.cs" />

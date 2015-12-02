@@ -2,11 +2,10 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
 
     internal static class SymbolAndPowerReader
     {
-        private static readonly ReadonlySet<SymbolAndPower> Empty = ReadonlySet<SymbolAndPower>.Empty;
-
         internal static SymbolAndPower Read(string text, ref int pos)
         {
             if (pos == text.Length)
@@ -23,11 +22,11 @@
             throw new FormatException($"No symbol found at {pos} in {text}");
         }
 
-        internal static bool TryRead(string text, ref int pos, out ReadonlySet<SymbolAndPower> result)
+        internal static bool TryRead(string text, ref int pos, out IReadOnlyList<SymbolAndPower> result)
         {
             int start = pos;
             var sign = Sign.Positive;
-            var tokens = new SortedSet<SymbolAndPower>(SymbolComparer.Default);
+            List<SymbolAndPower> saps = null;
             while (pos < text.Length)
             {
                 WhiteSpaceReader.TryRead(text, ref pos);
@@ -36,14 +35,15 @@
                 if (!TryRead(text, ref pos, out sap))
                 {
                     pos = start;
-                    result = Empty;
+                    result = null;
                     return false;
                 }
 
-                if (sap.Power < 0 && sign == Sign.Negative)
+                if (sap.Power < 0 &&
+                    sign == Sign.Negative)
                 {
                     pos = start;
-                    result = Empty;
+                    result = null;
                     return false;
                 }
 
@@ -52,12 +52,12 @@
                     sap = new SymbolAndPower(sap.Symbol, -1 * sap.Power);
                 }
 
-                if (!tokens.Add(sap))
+                if (saps == null)
                 {
-                    pos = start;
-                    result = Empty;
-                    return false;
+                    saps = new List<SymbolAndPower>();
                 }
+
+                saps.Add(sap);
 
                 var op = OperatorReader.TryReadMultiplyOrDivide(text, ref pos);
                 if (op != MultiplyOrDivide.None)
@@ -66,7 +66,7 @@
                     if (OperatorReader.TryReadMultiplyOrDivide(text, ref pos) != MultiplyOrDivide.None)
                     {
                         pos = start;
-                        result = Empty;
+                        result = null;
                         return false;
                     }
 
@@ -75,7 +75,7 @@
                         if (sign == Sign.Negative)
                         {
                             pos = start;
-                            result = Empty;
+                            result = null;
                             return false;
                         }
 
@@ -84,7 +84,13 @@
                 }
             }
 
-            result = tokens.AsReadOnly();
+            if (saps == null || !IsUnique(saps))
+            {
+                result = null;
+                return false;
+            }
+
+            result = saps;
             return true;
         }
 
@@ -137,6 +143,12 @@
             }
 
             return char.IsLetter(c);
+        }
+
+        private static bool IsUnique(IEnumerable<SymbolAndPower> saps)
+        {
+            var unique = saps.Select(x => x.Symbol).Distinct().Count();
+            return unique == saps.Count();
         }
     }
 }

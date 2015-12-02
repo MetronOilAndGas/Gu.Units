@@ -9,7 +9,7 @@
         [Test]
         public void AddSameTwice()
         {
-            var cache = new SubstringCache<string>();
+            var cache = new StringMap<string>();
             cache.Add("abc", "d");
             cache.Add("abc", "d");
             var cachedItems = GetInnerCache(cache);
@@ -19,7 +19,7 @@
         [Test]
         public void AddDifferentWithSameKeyTwice()
         {
-            var cache = new SubstringCache<string>();
+            var cache = new StringMap<string>();
             cache.Add("abc", "d");
             Assert.Throws<InvalidOperationException>(() => cache.Add("abc", "e"));
         }
@@ -27,7 +27,7 @@
         [Test]
         public void Sorts()
         {
-            var cache = new SubstringCache<string>();
+            var cache = new StringMap<string>();
             var item1 = cache.Add("abcde", "1");
             var item2 = cache.Add("abc", "2");
             var item3 = cache.Add("abcd", "3");
@@ -43,12 +43,12 @@
         [TestCase(" abcd", 1, "abcd", "3")]
         public void TryFindSubStringSuccess(string key, int pos, string expectedKey, string expectedValue)
         {
-            var cache = new SubstringCache<string>();
+            var cache = new StringMap<string>();
             cache.Add("abcde", "1");
             cache.Add("abc", "2");
             cache.Add("abcd", "3");
             cache.Add("bar", "4");
-            SubstringCache<string>.CachedItem actual;
+            StringMap<string>.CachedItem actual;
             var success = cache.TryGetBySubString(key, pos, out actual);
             Assert.AreEqual(true, success);
             Assert.AreEqual(expectedKey, actual.Key);
@@ -60,12 +60,12 @@
         [TestCase("abcd",  "3")]
         public void TryGetSuccess(string key, string expectedValue)
         {
-            var cache = new SubstringCache<string>();
+            var cache = new StringMap<string>();
             cache.Add("abcde", "1");
             cache.Add("abc", "2");
             cache.Add("abcd", "3");
             cache.Add("bar", "4");
-            SubstringCache<string>.CachedItem actual;
+            StringMap<string>.CachedItem actual;
             var success = cache.TryGet(key, out actual);
             Assert.AreEqual(true, success);
             Assert.AreEqual(key, actual.Key);
@@ -79,21 +79,21 @@
         [TestCase("g", 1)]
         public void AddThenGetFail(string key, int pos)
         {
-            var cache = new SubstringCache<string>();
+            var cache = new StringMap<string>();
             cache.Add("abc", "d");
             cache.Add("foo", "e");
             cache.Add("bar", "f");
-            SubstringCache<string>.CachedItem actual;
+            StringMap<string>.CachedItem actual;
             var success = cache.TryGetBySubString(key, pos, out actual);
             Assert.AreEqual(false, success);
             Assert.AreEqual(null, actual.Key);
             Assert.AreEqual(null, actual.Value);
         }
 
-        private static SubstringCache<string>.CachedItem[] GetInnerCache(SubstringCache<string> cache)
+        private static StringMap<string>.CachedItem[] GetInnerCache(StringMap<string> cache)
         {
-            var fieldInfo = typeof(SubstringCache<string>).GetField("cache", BindingFlags.NonPublic | BindingFlags.Instance);
-            return (SubstringCache<string>.CachedItem[])fieldInfo.GetValue(cache);
+            var fieldInfo = typeof(StringMap<string>).GetField("cache", BindingFlags.NonPublic | BindingFlags.Instance);
+            return (StringMap<string>.CachedItem[])fieldInfo.GetValue(cache);
         }
     }
 }

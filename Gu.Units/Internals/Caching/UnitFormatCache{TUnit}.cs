@@ -1,7 +1,6 @@
 namespace Gu.Units
 {
     using System;
-    using System.Linq;
 
     internal static class UnitFormatCache<TUnit>
         where TUnit : struct, IUnit, IEquatable<TUnit>
@@ -23,11 +22,7 @@ namespace Gu.Units
             var symbolAndPowers = UnitParser<TUnit>.GetSymbolParts(unit);
             using (var builder = StringBuilderPool.Borrow())
             {
-                foreach (var symbolAndPower in symbolAndPowers)
-                {
-                    builder.Append(symbolAndPower, symbolFormat);
-                }
-
+                builder.Append(symbolAndPowers, symbolFormat);
                 var format = builder.ToString();
                 return new PaddedFormat(null, format, null);
             }

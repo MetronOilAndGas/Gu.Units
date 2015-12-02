@@ -42,8 +42,8 @@ namespace Gu.Units
         internal static bool TryParse(string text, ref int pos, out TUnit result)
         {
             var start = pos;
-            SubstringCache<TUnit>.CachedItem cached;
-            if (Cache.Value.TryGetForSymbol(text, pos, out cached))
+            StringMap<TUnit>.CachedItem cached;
+            if (Cache.Value.TryGetUnitForSymbol(text, pos, out cached))
             {
                 if (IsEndOfSymbol(text, pos + cached.Key.Length))
                 {
@@ -53,7 +53,7 @@ namespace Gu.Units
                 }
             }
 
-            ReadonlySet<SymbolAndPower> sapResult;
+            IReadOnlyList<SymbolAndPower> sapResult;
             if (SymbolAndPowerReader.TryRead(text, ref pos, out sapResult))
             {
                 if (!WhiteSpaceReader.IsRestWhiteSpace(text, pos) ||
@@ -63,8 +63,8 @@ namespace Gu.Units
                     pos = start;
                     return false;
                 }
-
-                if (Cache.Value.SymbolAndPowers.TryGetValue(sapResult, out result))
+                var symbolAndPowers = new ReadonlySet<SymbolAndPower>(sapResult);
+                if (Cache.Value.SymbolAndPowersUnitMap.TryGetValue(symbolAndPowers, out result))
                 {
                     var symbol = text.Substring(start, pos - start);
                     Cache.Value.CacheSymbol(symbol, result);
@@ -77,10 +77,10 @@ namespace Gu.Units
             return false;
         }
 
-        internal static ReadonlySet<SymbolAndPower> GetSymbolParts(TUnit unit)
+        internal static IReadOnlyList<SymbolAndPower> GetSymbolParts(TUnit unit)
         {
             return Cache.Value.GetSymbolParts(unit);
-        } 
+        }
 
         private static bool IsEndOfSymbol(string text, int pos)
         {
@@ -95,8 +95,8 @@ namespace Gu.Units
 
         private class Caches
         {
-            internal readonly Map<ReadonlySet<SymbolAndPower>, TUnit> SymbolAndPowers = new Map<ReadonlySet<SymbolAndPower>, TUnit>();
-            private readonly SubstringCache<TUnit> subStrings = new SubstringCache<TUnit>();
+            internal readonly Map<ReadonlySet<SymbolAndPower>, TUnit> SymbolAndPowersUnitMap = new Map<ReadonlySet<SymbolAndPower>, TUnit>();
+            private readonly StringMap<TUnit> StringUnitMap = new StringMap<TUnit>();
 
             internal Caches()
             {
@@ -106,7 +106,7 @@ namespace Gu.Units
                     CacheSymbol(unit.Symbol, unit);
 
                     int pos = 0;
-                    ReadonlySet<SymbolAndPower> result;
+                    IReadOnlyList<SymbolAndPower> result;
                     if (SymbolAndPowerReader.TryRead(unit.Symbol, ref pos, out result))
                     {
                         if (!WhiteSpaceReader.IsRestWhiteSpace(unit.Symbol, pos))
@@ -114,29 +114,42 @@ namespace Gu.Units
                             throw new InvalidOperationException($"Failed splitting {((IUnit)unit).Symbol} into {nameof(SymbolAndPower)}");
                         }
 
-                        if (result.IsEmpty)
+                        if (result.Count == 0)
                         {
                             continue;
                         }
 
-                        this.SymbolAndPowers.Add(result, unit);
+                        this.SymbolAndPowersUnitMap.TryAdd(new ReadonlySet<SymbolAndPower>(result), unit);
                     }
                 }
             }
 
             internal void CacheSymbol(string symbol, TUnit unit)
             {
-                this.subStrings.Add(symbol, unit);
+                this.StringUnitMap.Add(symbol, unit);
             }
 
-            internal ReadonlySet<SymbolAndPower> GetSymbolParts(TUnit unit)
+            internal IReadOnlyList<SymbolAndPower> GetSymbolParts(TUnit unit)
             {
-                return this.SymbolAndPowers[unit];
+                IReadOnlyList<SymbolAndPower> result;
+                if (this.SymbolAndPowersUnitMap.TryGetValue(unit, out result))
+                {
+                    return result;
+                }
+
+                int pos = 0;
+                if (TryParse(unit.Symbol, ref pos, out result))
+                {
+                    this.SymbolAndPowersUnitMap.TryAdd(result, unit);
+                    return result;
+                }
+
+                throw new NotSupportedException($"Could not get symbol parts for {unit.Symbol}");
             }
 
-            internal bool TryGetForSymbol(string text, int pos, out SubstringCache<TUnit>.CachedItem item)
+            internal bool TryGetUnitForSymbol(string text, int pos, out StringMap<TUnit>.CachedItem item)
             {
-                return this.subStrings.TryGetBySubString(text, pos, out item);
+                return this.StringUnitMap.TryGetBySubString(text, pos, out item);
             }
 
             private static IReadOnlyList<TUnit> GetUnits()

@@ -31,14 +31,14 @@
             Assert.AreEqual(null, format.PostPadding);
         }
 
-        [TestCase(SymbolFormat.Default, "mm/s")]
-        [TestCase(SymbolFormat.SignedHatPowers, "mm*s^-1")]
-        [TestCase(SymbolFormat.FractionHatPowers, "mm/s")]
-        [TestCase(SymbolFormat.SignedSuperScript, "mm⋅s⁻¹")]
-        [TestCase(SymbolFormat.FractionSuperScript, "mm/s")]
-        public void GetOrCreateSymbolFormatPressure(SymbolFormat symbolFormat, string expected)
+        [TestCase(SymbolFormat.Default, "Hz")]
+        [TestCase(SymbolFormat.SignedHatPowers, "Hz")]
+        [TestCase(SymbolFormat.FractionHatPowers, "Hz")]
+        [TestCase(SymbolFormat.SignedSuperScript, "Hz")]
+        [TestCase(SymbolFormat.FractionSuperScript, "Hz")]
+        public void GetOrCreateSymbolFormatFrequency(SymbolFormat symbolFormat, string expected)
         {
-            var format = UnitFormatCache<SpeedUnit>.GetOrCreate(SpeedUnit.MillimetresPerSecond, symbolFormat);
+            var format = UnitFormatCache<FrequencyUnit>.GetOrCreate(FrequencyUnit.Hz, symbolFormat);
             Assert.AreEqual(null, format.PrePadding);
             Assert.AreEqual(expected, format.Format);
             Assert.AreEqual(null, format.PostPadding);

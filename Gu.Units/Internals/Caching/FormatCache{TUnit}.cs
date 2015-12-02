@@ -6,8 +6,9 @@
 
     internal class FormatCache<TUnit> where TUnit : struct, IUnit, IEquatable<TUnit>
     {
+        internal static QuantityFormat<TUnit> DefaultQuantityFormat = CreateFromValueFormatAndUnit(new ValueAndUnitFormatKey(null, Unit<TUnit>.Default, DefaultSymbolFormat));
+
         private static SymbolFormat DefaultSymbolFormat => SymbolFormat.FractionSuperScript;
-        internal static readonly QuantityFormat<TUnit> DefaultFormat = CreateFromValueFormatAndUnit(new ValueAndUnitFormatKey(null, Unit<TUnit>.Default, DefaultSymbolFormat));
         private static readonly ConcurrentDictionary<IFormatKey, QuantityFormat<TUnit>> Cache = new ConcurrentDictionary<IFormatKey, QuantityFormat<TUnit>>();
 
         internal static QuantityFormat<TUnit> GetOrCreate(string compositeFormat)
@@ -101,7 +102,7 @@
 
             public override int GetHashCode()
             {
-                return this.CompositeFormat.GetHashCode();
+                return this.CompositeFormat?.GetHashCode() ?? 0;
             }
         }
 

@@ -4,7 +4,7 @@ namespace Gu.Units
 
     internal static class DoubleFormatCache
     {
-        private static readonly SubstringCache<PaddedFormat> Cache = new SubstringCache<PaddedFormat>();
+        private static readonly StringMap<PaddedFormat> Cache = new StringMap<PaddedFormat>();
 
         internal static PaddedFormat GetOrCreate(string format)
         {
@@ -13,7 +13,7 @@ namespace Gu.Units
                 return PaddedFormat.NullFormat;
             }
 
-            SubstringCache<PaddedFormat>.CachedItem match;
+            StringMap<PaddedFormat>.CachedItem match;
             if (Cache.TryGet(format, out match))
             {
                 return match.Value;

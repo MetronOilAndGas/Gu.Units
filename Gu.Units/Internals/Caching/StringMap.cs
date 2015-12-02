@@ -1,9 +1,8 @@
 namespace Gu.Units
 {
     using System;
-    using System.Collections.Generic;
 
-    internal class SubstringCache<TItem>
+    internal class StringMap<TItem>
     {
         private static readonly CachedItem[] Empty = new CachedItem[0];
         private readonly object gate = new object();
