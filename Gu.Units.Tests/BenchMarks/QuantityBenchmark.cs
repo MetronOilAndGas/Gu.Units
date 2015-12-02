@@ -40,8 +40,8 @@
 
         // Summing 1E+007 Int32s took: 5 ms
         // Summing 1E+007 Lengths took: 8 ms
-        // 2015-11-28|  Summing 1 000 000 ints    took: 17 ms
-        // 2015-11-28|  Summing 1 000 000 Lengths took: 6 ms
+        // 2015-12-02|  Summing 1 000 000 ints    took: 0 ms
+        // 2015-12-02|  Summing 1 000 000 Lengths took: 6 ms
         [Test]
         public void CompareLengthAndInt()
         {
@@ -51,7 +51,7 @@
             {
                 sum1 += i;
             }
-
+            sw.Stop();
             Console.WriteLine($"// {DateTime.Today.ToShortDateString()}|  Summing {n:N0} ints    took: {sw.ElapsedMilliseconds} ms");
             sw.Restart();
             var sum2 = Length.FromMetres(1);
@@ -59,7 +59,7 @@
             {
                 sum2 += Length.FromMetres(i);
             }
-
+            sw.Stop();
             Console.WriteLine($"// {DateTime.Today.ToShortDateString()}|  Summing {n:N0} Lengths took: {sw.ElapsedMilliseconds} ms");
 
         }

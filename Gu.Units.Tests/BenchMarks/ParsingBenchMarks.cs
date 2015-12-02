@@ -49,8 +49,8 @@
             Console.WriteLine($"// {DateTime.Today.ToShortDateString()}| TryReadDoubleFormat(\"#0.00#\") {n:N0} times {sw.ElapsedMilliseconds} ms");
         }
 
-        // 2015-11-30| TryRead("e5")     1 000 000 times 72 ms
-        // 2015-11-30| TryRead("#0.00#") 1 000 000 times 61 ms
+        // 2015-12-02| TryRead("e5")     1 000 000 times 49 ms
+        // 2015-12-02| TryRead("#0.00#") 1 000 000 times 46 ms
         [Test]
         public void TryReadDoubleFormat()
         {
@@ -78,9 +78,9 @@
             Console.WriteLine($"// {DateTime.Today.ToShortDateString()}| TryRead(\"#0.00#\") {n:N0} times {sw.ElapsedMilliseconds} ms");
         }
 
-        // 2015-11-29| DoubleReader.TryRead("  123.45", 4, ...)  1 000 000 times 78 ms
-        // 2015-11-29| double.TryParse(substring, ...)           1 000 000 times 168 ms
-        // 2015-11-29| double.TryParse("123.45", ...)            1 000 000 times 121 ms
+        // 2015-12-02| DoubleReader.TryRead("  123.45", 4, ...)  1 000 000 times 217 ms
+        // 2015-12-02| double.TryParse(substring, ...)           1 000 000 times 141 ms
+        // 2015-12-02| double.TryParse("123.45", ...)            1 000 000 times 124 ms
         [Test]
         public void TryReadDouble()
         {
@@ -122,9 +122,9 @@
             Console.WriteLine($"// {DateTime.Today.ToShortDateString()}| double.TryParse(\"{substring}\", ...)            {n:N0} times {sw.ElapsedMilliseconds} ms");
         }
 
-        // 2015-11-30| IntReader.TryReadInt32("ab  12345", 4, ...) 1 000 000 times 16 ms
-        // 2015-11-30| int.TryParse(substring: "12345", ...)       1 000 000 times 146 ms
-        // 2015-11-30| int.TryParse("12345", ...)                  1 000 000 times 123 ms
+        // 2015-12-02| IntReader.TryReadInt32("ab  12345", 4, ...) 1 000 000 times 19 ms
+        // 2015-12-02| int.TryParse(substring: "12345", ...)       1 000 000 times 140 ms
+        // 2015-12-02| int.TryParse("12345", ...)                  1 000 000 times 121 ms
         [Test]
         public void TryReadInt()
         {

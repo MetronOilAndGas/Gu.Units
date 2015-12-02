@@ -8,6 +8,12 @@ namespace Gu.Units.Wpf.Demo
     {
         private Length _length = Length.FromMillimetres(1234.567);
 
+        public static readonly ViewModel Instance = new ViewModel();
+
+        private ViewModel()
+        {
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         public Length Length

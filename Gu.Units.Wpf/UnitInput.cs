@@ -1,6 +1,6 @@
 ﻿namespace Gu.Units.Wpf
 {
-    public enum UnitInputOptions
+    public enum UnitInput
     {
         /// <summary>
         /// Same as <see cref="ScalarOnly"/> without symbol in <see cref="System.Windows.Data.Binding.StringFormat"/>.

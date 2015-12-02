@@ -49,7 +49,13 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="DoubleControl.cs" />
+    <Compile Include="StringFormatView.xaml.cs">
+      <DependentUpon>StringFormatView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModel.cs" />
+    <Compile Include="UnitsOnlyView.xaml.cs">
+      <DependentUpon>UnitsOnlyView.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -62,6 +68,14 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="StringFormatView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UnitsOnlyView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\Annotations.cs" />

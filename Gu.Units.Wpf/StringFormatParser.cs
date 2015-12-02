@@ -1,12 +1,14 @@
 ﻿namespace Gu.Units.Wpf
 {
     using System;
+    using System.Collections.Generic;
 
-    internal static class StringFormatParser
+    internal static class StringFormatParser<TUnit> where TUnit : struct, IUnit, IEquatable<TUnit>
     {
-        internal static bool TryParse<TUnit>(string format,
+        private static readonly Dictionary<string, QuantityFormat<TUnit>> Cache = new Dictionary<string, QuantityFormat<TUnit>>();
+
+        internal static bool TryParse(string format,
             out QuantityFormat<TUnit> result)
-            where TUnit : struct, IUnit, IEquatable<TUnit>
         {
             if (string.IsNullOrWhiteSpace(format))
             {
@@ -14,26 +16,36 @@
                 return false;
             }
 
+            if (Cache.TryGetValue(format, out result))
+            {
+                return true;
+            }
+
             int pos = 0;
             WhiteSpaceReader.TryRead(format, ref pos);
             int end = format.Length;
             if (TryReadPrefix(format, ref pos))
             {
-                end = format.LastIndexOf('}') - 1;
+                end = format.LastIndexOf('}');
                 if (end < 0)
                 {
                     result = QuantityFormat<TUnit>.Default;
                     return false;
                 }
 
-                if (!WhiteSpaceReader.IsRestWhiteSpace(format, end + 2))
+                if (!WhiteSpaceReader.IsRestWhiteSpace(format, end + 1))
                 {
                     result = QuantityFormat<TUnit>.Default;
                     return false;
                 }
             }
 
-            return CompositeFormatParser.TryParse(format, ref pos, out result);
+            var trimmedFormat = pos != end
+                ? format.Substring(pos, end - pos)
+                : format;
+            var tryParse = CompositeFormatParser.TryParse(trimmedFormat, out result);
+            Cache.Add(format, result);
+            return tryParse;
         }
 
         private static bool TryReadPrefix(string format,

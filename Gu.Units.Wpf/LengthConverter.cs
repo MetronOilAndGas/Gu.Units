@@ -13,8 +13,10 @@
         private static readonly string StringFormatNotSet = "Not Set";
         private LengthUnit? unit;
         private IProvideValueTarget provideValueTarget;
-        private string stringFormat;
-        private QuantityFormat<LengthUnit> format;
+        private string stringFormat = StringFormatNotSet;
+        private QuantityFormat<LengthUnit> quantityFormat;
+        private string bindingStringFormat = StringFormatNotSet;
+        private string errorText;
 
         public LengthConverter()
         {
@@ -41,7 +43,9 @@
             }
         }
 
-        public UnitInputOptions UnitInput { get; set; } = UnitInputOptions.Default;
+        public SymbolFormat SymbolFormat { get; set; }
+
+        public UnitInput UnitInput { get; set; } = UnitInput.Default;
 
         public string StringFormat
         {
@@ -78,9 +82,9 @@
                 throw new ArgumentException(message, nameof(value));
             }
 
-            if (this.StringFormat == null)
+            if (this.bindingStringFormat == StringFormatNotSet)
             {
-                TryGetStringFormatFromTarget();
+                TryGetStringFormatFromBinding();
             }
 
             if (this.unit == null)
@@ -103,9 +107,10 @@
             }
 
             var length = (Length)value;
-            if (this.StringFormat != StringFormatNotSet)
+            if (this.StringFormat != StringFormatNotSet &&
+                (targetType == typeof(string) || targetType== typeof(object)))
             {
-                return value;
+                return length.ToString(StringFormat, culture);
             }
 
             if (IsValidConvertTargetType(targetType))
@@ -134,7 +139,7 @@
 
             if (this.StringFormat == null)
             {
-                TryGetStringFormatFromTarget();
+                TryGetStringFormatFromBinding();
             }
 
             if (this.unit == null)
@@ -162,8 +167,8 @@
 
             switch (UnitInput)
             {
-                case UnitInputOptions.Default:
-                case UnitInputOptions.ScalarOnly:
+                case UnitInput.Default:
+                case UnitInput.ScalarOnly:
                     {
                         double d;
                         if (double.TryParse(text, NumberStyles.Float, culture, out d))
@@ -173,7 +178,7 @@
 
                         return value; // returning raw to trigger error
                     }
-                case UnitInputOptions.SymbolAllowed:
+                case UnitInput.SymbolAllowed:
                     {
                         double d;
                         int pos = 0;
@@ -187,9 +192,9 @@
                             }
                         }
 
-                        goto case UnitInputOptions.SymbolRequired;
+                        goto case UnitInput.SymbolRequired;
                     }
-                case UnitInputOptions.SymbolRequired:
+                case UnitInput.SymbolRequired:
                     {
                         Length result;
                         if (Length.TryParse(text, NumberStyles.Float, culture, out result))
@@ -204,7 +209,7 @@
             }
         }
 
-        private void TryGetStringFormatFromTarget()
+        private void TryGetStringFormatFromBinding()
         {
             var target = this.provideValueTarget?.TargetObject as DependencyObject;
             Binding binding = null;
@@ -218,31 +223,53 @@
             }
 
             binding = binding ?? this.provideValueTarget?.TargetObject as Binding;
-            this.StringFormat = binding?.StringFormat;
+            this.bindingStringFormat = binding?.StringFormat;
+            if (this.bindingStringFormat != null)
+            {
+                OnStringFormatChanged();
+            }
         }
 
         private void OnStringFormatChanged()
         {
-            if (StringFormatParser.TryParse(this.stringFormat, out this.format))
+            if (this.bindingStringFormat != null && this.stringFormat != null)
             {
-                if (UnitInput == UnitInputOptions.Default)
+                var message = $"Both {nameof(Binding)}.{nameof(Binding.StringFormat)} string format and {nameof(StringFormat)} are set.";
+
+                if (Is.DesignMode)
                 {
-                    UnitInput = UnitInputOptions.SymbolRequired;
+                    throw new InvalidOperationException(message);
                 }
 
-                if (Unit == null)
+                else
                 {
-                    this.unit = this.format.Unit;
+                    this.errorText = message;
+                }
+            }
+
+            var format = this.stringFormat == StringFormatNotSet
+                ? this.bindingStringFormat
+                : this.stringFormat;
+            if (StringFormatParser<LengthUnit>.TryParse(format, out this.quantityFormat))
+            {
+                if (UnitInput == UnitInput.Default && this.quantityFormat.SymbolFormat != null)
+                {
+                    UnitInput = UnitInput.SymbolRequired;
                 }
 
-                else if (this.unit != this.format.Unit)
+                if (this.unit == null)
+                {
+                    this.unit = this.quantityFormat.Unit;
+                }
+
+                else if (this.unit != this.quantityFormat.Unit)
                 {
                     if (Is.DesignMode)
                     {
-                        throw new InvalidOperationException($"The Unit is set to {Unit} but the stringformat has unit: {this.format.Unit}");
+                        throw new InvalidOperationException($"The Unit is set to {Unit} but the stringformat has unit: {this.quantityFormat.Unit}");
                     }
 
-                    this.unit = this.format.Unit;
+                    this.unit = this.quantityFormat.Unit;
                 }
                 return;
             }
