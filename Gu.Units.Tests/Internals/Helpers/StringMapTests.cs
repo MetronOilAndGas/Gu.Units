@@ -4,7 +4,7 @@
     using System.Reflection;
     using NUnit.Framework;
 
-    public class SubstringCacheTests
+    public class StringMapTests
     {
         [Test]
         public void AddSameTwice()
@@ -48,28 +48,32 @@
             cache.Add("abc", "2");
             cache.Add("abcd", "3");
             cache.Add("bar", "4");
-            StringMap<string>.CachedItem actual;
-            var success = cache.TryGetBySubString(key, pos, out actual);
+            string actual;
+            string actualKey;
+            var success = cache.TryGetBySubString(key, pos, out actualKey, out actual);
             Assert.AreEqual(true, success);
-            Assert.AreEqual(expectedKey, actual.Key);
-            Assert.AreEqual(expectedValue, actual.Value);
+            Assert.AreEqual(expectedKey, actualKey);
+            Assert.AreEqual(expectedValue, actual);
+
+            success = cache.TryGetBySubString(key, pos, out actual);
+            Assert.AreEqual(true, success);
+            Assert.AreEqual(expectedValue, actual);
         }
 
-        [TestCase("abc",  "2")]
+        [TestCase("abc", "2")]
         [TestCase("abcde", "1")]
-        [TestCase("abcd",  "3")]
-        public void TryGetSuccess(string key, string expectedValue)
+        [TestCase("abcd", "3")]
+        public void TryGetSuccess(string key, string expected)
         {
             var cache = new StringMap<string>();
             cache.Add("abcde", "1");
             cache.Add("abc", "2");
             cache.Add("abcd", "3");
             cache.Add("bar", "4");
-            StringMap<string>.CachedItem actual;
+            string actual;
             var success = cache.TryGet(key, out actual);
             Assert.AreEqual(true, success);
-            Assert.AreEqual(key, actual.Key);
-            Assert.AreEqual(expectedValue, actual.Value);
+            Assert.AreEqual(expected, actual);
         }
 
         [TestCase(null, 0)]
@@ -83,11 +87,11 @@
             cache.Add("abc", "d");
             cache.Add("foo", "e");
             cache.Add("bar", "f");
-            StringMap<string>.CachedItem actual;
+            string actual;
             var success = cache.TryGetBySubString(key, pos, out actual);
             Assert.AreEqual(false, success);
-            Assert.AreEqual(null, actual.Key);
-            Assert.AreEqual(null, actual.Value);
+            Assert.AreEqual(null, actual);
+            Assert.AreEqual(null, actual);
         }
 
         private static StringMap<string>.CachedItem[] GetInnerCache(StringMap<string> cache)

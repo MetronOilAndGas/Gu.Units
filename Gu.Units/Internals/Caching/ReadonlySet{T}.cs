@@ -21,7 +21,7 @@
 
         public ReadonlySet(IEnumerable<T> source)
         {
-            source = new HashSet<T>(source);
+            this.source = new HashSet<T>(source);
         }
 
         public int Count => this.source?.Count ?? 0;

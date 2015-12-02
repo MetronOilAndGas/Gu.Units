@@ -21,10 +21,10 @@
             }
 
             int pos = 0;
-            return TryParse(format, ref pos, format.Length, out result);
+            return TryParse(format, ref pos, out result);
         }
 
-        internal static bool TryParse<TUnit>(string format, ref int pos, int end, out QuantityFormat<TUnit> result)
+        internal static bool TryParse<TUnit>(string format, ref int pos,  out QuantityFormat<TUnit> result)
                 where TUnit : struct, IUnit, IEquatable<TUnit>
         {
             if (string.IsNullOrWhiteSpace(format))

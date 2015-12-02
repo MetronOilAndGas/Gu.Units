@@ -72,13 +72,12 @@
     <Compile Include="Internals\Parsing\SymbolAndPowerParserSetTests.cs" />
     <Compile Include="Internals\Parsing\UnitParserTests.cs" />
     <Compile Include="Internals\Helpers\StringBuilderPoolTests.cs" />
-    <Compile Include="Internals\Helpers\SubstringCacheTests.cs" />
-    <Compile Include="Internals\SymbolsAndPowersTests.cs" />
-    <Compile Include="Internals\UnitFormatCacheTests.cs" />
+    <Compile Include="Internals\Helpers\StringMapTests.cs" />
+    <Compile Include="Internals\Caching\UnitFormatCacheTests.cs" />
     <Compile Include="LengthTests.cs" />
     <Compile Include="Samples\Samples.cs" />
     <Compile Include="Sources\ConversionProvider.cs" />
-    <Compile Include="Helpers\DummyUnit.cs" />
+    <Compile Include="TestHelpers\DummyUnit.cs" />
     <Compile Include="Sources\ParseProvider.cs" />
     <Compile Include="Sources\QuantitiesProvider.cs" />
     <Compile Include="Sources\QuantityTypesProvider.cs" />

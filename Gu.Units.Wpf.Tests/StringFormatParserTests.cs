@@ -2,6 +2,7 @@
 {
     using NUnit.Framework;
 
+    [Explicit(Reminder.ToDo)]
     public class StringFormatParserTests
     {
         [TestCase("{0:F1 mm}")]

@@ -13,10 +13,10 @@ namespace Gu.Units
                 return PaddedFormat.NullFormat;
             }
 
-            StringMap<PaddedFormat>.CachedItem match;
+            PaddedFormat match;
             if (Cache.TryGet(format, out match))
             {
-                return match.Value;
+                return match;
             }
 
             int pos = 0;

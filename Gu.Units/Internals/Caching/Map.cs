@@ -33,23 +33,17 @@
         {
             lock (this.gate)
             {
-                if (!this.dictT1T2.ContainsKey(key))
-                {
-                    this.dictT1T2 = new Dictionary<T1, T2>(this.dictT1T2, this.dictT1T2.Comparer) { { key, value } };
-                }
-                if (!this.dictT2T1.ContainsKey(value))
-                {
-                    this.dictT2T1 = new Dictionary<T2, T1>(this.dictT2T1, this.dictT2T1.Comparer) { { value, key } };
-                }
+                this.dictT1T2 = new Dictionary<T1, T2>(this.dictT1T2, this.dictT1T2.Comparer) { { key, value } };
+                this.dictT2T1 = new Dictionary<T2, T1>(this.dictT2T1, this.dictT2T1.Comparer) { { value, key } };
             }
         }
 
-        internal bool TryGetValue(T1 key, out T2 result)
+        internal bool TryGet(T1 key, out T2 result)
         {
             return this.dictT1T2.TryGetValue(key, out result);
         }
 
-        internal bool TryGetValue(T2 key, out T1 result)
+        internal bool TryGet(T2 key, out T1 result)
         {
             return this.dictT2T1.TryGetValue(key, out result);
         }

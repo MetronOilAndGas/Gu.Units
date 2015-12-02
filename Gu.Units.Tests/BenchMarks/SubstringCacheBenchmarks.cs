@@ -17,7 +17,7 @@
             // this is not a really meaningful comparison as Find does much more work
             // finding the end while substring gets the end for free.
             // interesting as a base line.
-            var cache = new SubstringCache<string>();
+            var cache = new StringMap<string>();
             cache.Add("abc0", "d");
             cache.Add("abc01", "e");
             cache.Add("abc1", "e");
@@ -28,7 +28,7 @@
             const string text0 = "   abc0   ";
             const string text1 = "   abc1   ";
             const string text2 = "   abc2   ";
-            SubstringCache<string>.CachedItem cached;
+            string cached;
             cache.TryGetBySubString(text0, 4, out cached);
 
             var subString = text0.Substring(3, 4);

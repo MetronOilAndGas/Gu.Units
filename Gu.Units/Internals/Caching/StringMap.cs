@@ -8,11 +8,18 @@ namespace Gu.Units
         private readonly object gate = new object();
         private CachedItem[] cache = Empty;
 
-        internal bool TryGetBySubString(string text, int pos, out CachedItem result)
+        internal bool TryGetBySubString(string text, int pos, out TItem result)
+        {
+            string temp;
+            return TryGetBySubString(text, pos, out temp, out result);
+        }
+
+        internal bool TryGetBySubString(string text, int pos, out string key, out TItem result)
         {
             if (text == null)
             {
-                result = default(CachedItem);
+                key = null;
+                result = default(TItem);
                 return false;
             }
 
@@ -20,33 +27,38 @@ namespace Gu.Units
             var index = BinaryFindSubstring(this.cache, text, pos);
             if (index < 0)
             {
-                result = default(CachedItem);
+                key = null;
+                result = default(TItem);
                 return false;
             }
 
-            result = tempCache[index];
+            var match = tempCache[index];
             for (int i = index + 1; i < tempCache.Length; i++)
             {
                 // searching linearly for longest match after finding one
                 var temp = tempCache[i];
                 if (Compare(temp.Key, text, pos) == 0)
                 {
-                    result = temp;
+                    match = temp;
                 }
                 else
                 {
+                    key = match.Key;
+                    result = match.Value;
                     return true;
                 }
             }
 
+            key = match.Key;
+            result = match.Value;
             return true;
         }
 
-        internal bool TryGet(string key, out CachedItem match)
+        internal bool TryGet(string key, out TItem match)
         {
             if (key == null)
             {
-                match = default(CachedItem);
+                match = default(TItem);
                 return false;
             }
 
@@ -54,11 +66,11 @@ namespace Gu.Units
             var index = BinaryFind(this.cache, key);
             if (index < 0)
             {
-                match = default(CachedItem);
+                match = default(TItem);
                 return false;
             }
 
-            match = tempCache[index];
+            match = tempCache[index].Value;
             return true;
         }
 
