@@ -99,6 +99,11 @@
                 return "No unit set";
             }
 
+            if (this.errorText != null)
+            {
+                return this.errorText;
+            }
+
             if (value == null)
             {
                 return targetType == typeof(string)
@@ -232,18 +237,15 @@
 
         private void OnStringFormatChanged()
         {
-            if (this.bindingStringFormat != null && this.stringFormat != null)
+            if (this.bindingStringFormat != StringFormatNotSet && 
+                this.stringFormat != StringFormatNotSet &&
+                this.bindingStringFormat != this.stringFormat)
             {
-                var message = $"Both {nameof(Binding)}.{nameof(Binding.StringFormat)} string format and {nameof(StringFormat)} are set.";
+                this.errorText += $"Both {nameof(Binding)}.{nameof(Binding.StringFormat)} and {nameof(StringFormat)} are set.";
 
                 if (Is.DesignMode)
                 {
-                    throw new InvalidOperationException(message);
-                }
-
-                else
-                {
-                    this.errorText = message;
+                    throw new InvalidOperationException(this.errorText);
                 }
             }
 
@@ -264,13 +266,13 @@
 
                 else if (this.unit != this.quantityFormat.Unit)
                 {
+                    this.errorText += $"Unit is set to '{Unit}' but {nameof(StringFormat)} is '{format}'";
                     if (Is.DesignMode)
                     {
-                        throw new InvalidOperationException($"The Unit is set to {Unit} but the stringformat has unit: {this.quantityFormat.Unit}");
+                        throw new InvalidOperationException(this.errorText);
                     }
-
-                    this.unit = this.quantityFormat.Unit;
                 }
+
                 return;
             }
 

@@ -6,6 +6,7 @@
 
     public partial class LengthConverterTests
     {
+        [RequiresSTA]
         public class Setup
         {
             [TestCase("F1 mm")]
@@ -21,57 +22,36 @@
             }
 
             [Test]
-            public void SettingStringFormatWithUnitWhenUnitIsSetThrowsInDesignMode()
+            public void BindingStringFormatHappyPath()
             {
+                var converter = new LengthConverter();
+                var providerMock = new ServiceProviderMock
+                {
+                    BindingStringFormat = "F1 cm"
+                };
+
+                converter.ProvideValue(providerMock.Object);
+                converter.Convert(Length.Zero, typeof (string), null, null);
+                Assert.AreEqual(LengthUnit.Centimetres, converter.Unit);
+                Assert.AreEqual(UnitInput.SymbolRequired, converter.UnitInput);
+            }
+
+            [Test]
+            public void SettingStringFormatWithUnitWhenUnitIsSet()
+            {
+                var converter = new LengthConverter
+                {
+                    Unit = LengthUnit.Centimetres
+                };
+
                 Gu.Units.Wpf.Is.DesignMode = true;
-                var converter = new LengthConverter
-                {
-                    Unit = LengthUnit.Centimetres
-                };
+                var ex = Assert.Throws<InvalidOperationException>(() => converter.StringFormat = "F1 mm");
+                var expected = "Unit is set to 'cm' but StringFormat is 'F1 mm'";
+                Assert.AreEqual(expected, ex.Message);
 
-                Assert.Throws<InvalidOperationException>(() => converter.StringFormat = "F1 mm");
-            }
-
-            [Test]
-            public void SettingBindingStringFormatWithUnitWhenUnitIsSetThrowsInDesignMode()
-            {
-                Gu.Units.Wpf.Is.DesignMode = true;
-                var converter = new LengthConverter
-                {
-                    Unit = LengthUnit.Centimetres
-                };
-
-                Assert.Throws<InvalidOperationException>(() => converter.StringFormat = "F1 mm");
-            }
-
-            [Test]
-            public void SettingStringFormatWithUnitWhenUnitIsSetShowsErrorTextInRuntime()
-            {
                 Gu.Units.Wpf.Is.DesignMode = false;
-                var converter = new LengthConverter
-                {
-                    Unit = LengthUnit.Centimetres
-                };
-
-                converter.StringFormat = "F1 mm";
                 var actual = converter.Convert(Length.FromMetres(1.2), typeof(string), null, CultureInfo.InvariantCulture);
-
-                Assert.AreEqual("Unit is set to cm but StringFormat is 'F1 mm'", actual);
-            }
-
-            [Test]
-            public void SettingBindingStringFormatWithUnitWhenUnitIsSetShowsErrorTextInRuntime()
-            {
-                Gu.Units.Wpf.Is.DesignMode = false;
-                var converter = new LengthConverter
-                {
-                    Unit = LengthUnit.Centimetres
-                };
-
-                converter.StringFormat = "F1 mm";
-                var actual = converter.Convert(Length.FromMetres(1.2), typeof(string), null, CultureInfo.InvariantCulture);
-
-                Assert.AreEqual("Unit is set to cm but Binding.StringFormat is 'F1 mm'", actual);
+                Assert.AreEqual(expected, actual);
             }
 
             [TestCase(true)]

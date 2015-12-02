@@ -29,6 +29,7 @@
             [TestCase(typeof(object), SymbolFormat.FractionHatPowers, "1.2 m/s")]
             public void WithUnitAndSymbolFormat(Type targetType, SymbolFormat format, object expected)
             {
+                Assert.Inconclusive("Wait for speed converter");
                 var converter = new LengthConverter
                 {
                     Unit = LengthUnit.Centimetres,
@@ -88,12 +89,13 @@
                 converter.ProvideValue(providerMock.Object);
                 var length = Length.FromMillimetres(1234);
                 Gu.Units.Wpf.Is.DesignMode = true;
-                var ex = Assert.Throws<InvalidOperationException>(()=> converter.Convert(length, typeof(string), null, CultureInfo.GetCultureInfo("en-US")));
-                Assert.AreEqual("Both Binding.StringFormat and StringFormat are set", ex.Message);
+                var ex = Assert.Throws<InvalidOperationException>(()=> converter.Convert(length, typeof(string), null, null));
+                var expected = "Both Binding.StringFormat and StringFormat are set.";
+                Assert.AreEqual(expected, ex.Message);
 
                 Gu.Units.Wpf.Is.DesignMode = false;
-                var convert = converter.Convert(length, typeof (string), null, CultureInfo.GetCultureInfo("en-US"));
-                Assert.AreEqual("Both Binding.StringFormat and StringFormat are set", convert);
+                var convert = converter.Convert(length, typeof (string), null, null);
+                Assert.AreEqual(expected, convert);
             }
 
             [TestCase(typeof(string), "")]
