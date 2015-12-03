@@ -72,6 +72,30 @@
 		public static readonly PressureUnit kPa = Kilopascals;
 
         /// <summary>
+        /// The Megapascals unit
+        /// Contains conversion logic to from and formatting.
+        /// </summary>
+		public static readonly PressureUnit Megapascals = new PressureUnit(1000000, "MPa");
+
+        /// <summary>
+        /// The Megapascals unit
+        /// Contains conversion logic to from and formatting.
+        /// </summary>
+		public static readonly PressureUnit MPa = Megapascals;
+
+        /// <summary>
+        /// The Gigapascals unit
+        /// Contains conversion logic to from and formatting.
+        /// </summary>
+		public static readonly PressureUnit Gigapascals = new PressureUnit(1000000000, "GPa");
+
+        /// <summary>
+        /// The Gigapascals unit
+        /// Contains conversion logic to from and formatting.
+        /// </summary>
+		public static readonly PressureUnit GPa = Gigapascals;
+
+        /// <summary>
         /// The Bars unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
@@ -106,30 +130,6 @@
         /// Contains conversion logic to from and formatting.
         /// </summary>
 		public static readonly PressureUnit KilonewtonsPerSquareMillimetre = new PressureUnit(1000000000, "kN⋅mm⁻²");
-
-        /// <summary>
-        /// The Megapascals unit
-        /// Contains conversion logic to from and formatting.
-        /// </summary>
-		public static readonly PressureUnit Megapascals = new PressureUnit(1000000, "MPa");
-
-        /// <summary>
-        /// The Megapascals unit
-        /// Contains conversion logic to from and formatting.
-        /// </summary>
-		public static readonly PressureUnit MPa = Megapascals;
-
-        /// <summary>
-        /// The Gigapascals unit
-        /// Contains conversion logic to from and formatting.
-        /// </summary>
-		public static readonly PressureUnit Gigapascals = new PressureUnit(1000000000, "GPa");
-
-        /// <summary>
-        /// The Gigapascals unit
-        /// Contains conversion logic to from and formatting.
-        /// </summary>
-		public static readonly PressureUnit GPa = Gigapascals;
 
         /// <summary>
         /// The NewtonsPerSquareMetre unit

@@ -21,25 +21,25 @@
         /// The NewtonsPerPercent unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
-		public static readonly ForcePerUnitlessUnit NewtonsPerPercent = new ForcePerUnitlessUnit(100, "%⁻¹⋅N");
+		public static readonly ForcePerUnitlessUnit NewtonsPerPercent = new ForcePerUnitlessUnit(100, "N/%");
 
         /// <summary>
         /// The KilonewtonsPerPercent unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
-		public static readonly ForcePerUnitlessUnit KilonewtonsPerPercent = new ForcePerUnitlessUnit(100000, "%⁻¹⋅kN");
+		public static readonly ForcePerUnitlessUnit KilonewtonsPerPercent = new ForcePerUnitlessUnit(100000, "kN/%");
 
         /// <summary>
         /// The MeganewtonsPerPercent unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
-		public static readonly ForcePerUnitlessUnit MeganewtonsPerPercent = new ForcePerUnitlessUnit(100000000, "%⁻¹⋅MN");
+		public static readonly ForcePerUnitlessUnit MeganewtonsPerPercent = new ForcePerUnitlessUnit(100000000, "MN/%");
 
         /// <summary>
         /// The GiganewtonsPerPercent unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
-		public static readonly ForcePerUnitlessUnit GiganewtonsPerPercent = new ForcePerUnitlessUnit(100000000000, "%⁻¹⋅GN");
+		public static readonly ForcePerUnitlessUnit GiganewtonsPerPercent = new ForcePerUnitlessUnit(100000000000, "GN/%");
 
         private readonly double conversionFactor;
         private readonly string symbol;

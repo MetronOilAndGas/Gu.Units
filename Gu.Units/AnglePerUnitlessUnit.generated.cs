@@ -21,13 +21,13 @@
         /// The DegreesPerPercent unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
-		public static readonly AnglePerUnitlessUnit DegreesPerPercent = new AnglePerUnitlessUnit(1.7453292519943295, "%⁻¹⋅°");
+		public static readonly AnglePerUnitlessUnit DegreesPerPercent = new AnglePerUnitlessUnit(1.7453292519943295, "°/%");
 
         /// <summary>
         /// The RadiansPerPercent unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
-		public static readonly AnglePerUnitlessUnit RadiansPerPercent = new AnglePerUnitlessUnit(100, "%⁻¹⋅rad");
+		public static readonly AnglePerUnitlessUnit RadiansPerPercent = new AnglePerUnitlessUnit(100, "rad/%");
 
         private readonly double conversionFactor;
         private readonly string symbol;

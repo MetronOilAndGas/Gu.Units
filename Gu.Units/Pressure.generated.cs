@@ -111,6 +111,28 @@
         }
 
         /// <summary>
+        /// The quantity in megapascals
+        /// </summary>
+        public double Megapascals
+        {
+            get
+            {
+                return PressureUnit.Megapascals.FromSiUnit(this.pascals);
+            }
+        }
+
+        /// <summary>
+        /// The quantity in gigapascals
+        /// </summary>
+        public double Gigapascals
+        {
+            get
+            {
+                return PressureUnit.Gigapascals.FromSiUnit(this.pascals);
+            }
+        }
+
+        /// <summary>
         /// The quantity in bars
         /// </summary>
         public double Bars
@@ -151,28 +173,6 @@
             get
             {
                 return PressureUnit.KilonewtonsPerSquareMillimetre.FromSiUnit(this.pascals);
-            }
-        }
-
-        /// <summary>
-        /// The quantity in megapascals
-        /// </summary>
-        public double Megapascals
-        {
-            get
-            {
-                return PressureUnit.Megapascals.FromSiUnit(this.pascals);
-            }
-        }
-
-        /// <summary>
-        /// The quantity in gigapascals
-        /// </summary>
-        public double Gigapascals
-        {
-            get
-            {
-                return PressureUnit.Gigapascals.FromSiUnit(this.pascals);
             }
         }
 
@@ -302,6 +302,24 @@
         /// <summary>
         /// Creates a new instance of <see cref="Gu.Units.Pressure"/>.
         /// </summary>
+        /// <param name="megapascals">The value in MPa</param>
+        public static Pressure FromMegapascals(double megapascals)
+        {
+            return From(megapascals, PressureUnit.Megapascals);
+        }
+
+        /// <summary>
+        /// Creates a new instance of <see cref="Gu.Units.Pressure"/>.
+        /// </summary>
+        /// <param name="gigapascals">The value in GPa</param>
+        public static Pressure FromGigapascals(double gigapascals)
+        {
+            return From(gigapascals, PressureUnit.Gigapascals);
+        }
+
+        /// <summary>
+        /// Creates a new instance of <see cref="Gu.Units.Pressure"/>.
+        /// </summary>
         /// <param name="bars">The value in bar</param>
         public static Pressure FromBars(double bars)
         {
@@ -333,24 +351,6 @@
         public static Pressure FromKilonewtonsPerSquareMillimetre(double kilonewtonsPerSquareMillimetre)
         {
             return From(kilonewtonsPerSquareMillimetre, PressureUnit.KilonewtonsPerSquareMillimetre);
-        }
-
-        /// <summary>
-        /// Creates a new instance of <see cref="Gu.Units.Pressure"/>.
-        /// </summary>
-        /// <param name="megapascals">The value in MPa</param>
-        public static Pressure FromMegapascals(double megapascals)
-        {
-            return From(megapascals, PressureUnit.Megapascals);
-        }
-
-        /// <summary>
-        /// Creates a new instance of <see cref="Gu.Units.Pressure"/>.
-        /// </summary>
-        /// <param name="gigapascals">The value in GPa</param>
-        public static Pressure FromGigapascals(double gigapascals)
-        {
-            return From(gigapascals, PressureUnit.Gigapascals);
         }
 
         /// <summary>

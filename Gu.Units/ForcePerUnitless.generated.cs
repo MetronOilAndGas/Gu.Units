@@ -189,7 +189,7 @@
         /// <summary>
         /// Creates a new instance of <see cref="Gu.Units.ForcePerUnitless"/>.
         /// </summary>
-        /// <param name="newtonsPerPercent">The value in %⁻¹⋅N</param>
+        /// <param name="newtonsPerPercent">The value in N/%</param>
         public static ForcePerUnitless FromNewtonsPerPercent(double newtonsPerPercent)
         {
             return From(newtonsPerPercent, ForcePerUnitlessUnit.NewtonsPerPercent);
@@ -198,7 +198,7 @@
         /// <summary>
         /// Creates a new instance of <see cref="Gu.Units.ForcePerUnitless"/>.
         /// </summary>
-        /// <param name="kilonewtonsPerPercent">The value in %⁻¹⋅kN</param>
+        /// <param name="kilonewtonsPerPercent">The value in kN/%</param>
         public static ForcePerUnitless FromKilonewtonsPerPercent(double kilonewtonsPerPercent)
         {
             return From(kilonewtonsPerPercent, ForcePerUnitlessUnit.KilonewtonsPerPercent);
@@ -207,7 +207,7 @@
         /// <summary>
         /// Creates a new instance of <see cref="Gu.Units.ForcePerUnitless"/>.
         /// </summary>
-        /// <param name="meganewtonsPerPercent">The value in %⁻¹⋅MN</param>
+        /// <param name="meganewtonsPerPercent">The value in MN/%</param>
         public static ForcePerUnitless FromMeganewtonsPerPercent(double meganewtonsPerPercent)
         {
             return From(meganewtonsPerPercent, ForcePerUnitlessUnit.MeganewtonsPerPercent);
@@ -216,7 +216,7 @@
         /// <summary>
         /// Creates a new instance of <see cref="Gu.Units.ForcePerUnitless"/>.
         /// </summary>
-        /// <param name="giganewtonsPerPercent">The value in %⁻¹⋅GN</param>
+        /// <param name="giganewtonsPerPercent">The value in GN/%</param>
         public static ForcePerUnitless FromGiganewtonsPerPercent(double giganewtonsPerPercent)
         {
             return From(giganewtonsPerPercent, ForcePerUnitlessUnit.GiganewtonsPerPercent);

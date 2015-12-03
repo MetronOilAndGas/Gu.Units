@@ -189,7 +189,7 @@
         /// <summary>
         /// Creates a new instance of <see cref="Gu.Units.LengthPerUnitless"/>.
         /// </summary>
-        /// <param name="millimetresPerPercent">The value in %⁻¹⋅mm</param>
+        /// <param name="millimetresPerPercent">The value in mm/%</param>
         public static LengthPerUnitless FromMillimetresPerPercent(double millimetresPerPercent)
         {
             return From(millimetresPerPercent, LengthPerUnitlessUnit.MillimetresPerPercent);
@@ -198,7 +198,7 @@
         /// <summary>
         /// Creates a new instance of <see cref="Gu.Units.LengthPerUnitless"/>.
         /// </summary>
-        /// <param name="micrometresPerPercent">The value in %⁻¹⋅µm</param>
+        /// <param name="micrometresPerPercent">The value in µm/%</param>
         public static LengthPerUnitless FromMicrometresPerPercent(double micrometresPerPercent)
         {
             return From(micrometresPerPercent, LengthPerUnitlessUnit.MicrometresPerPercent);
@@ -207,7 +207,7 @@
         /// <summary>
         /// Creates a new instance of <see cref="Gu.Units.LengthPerUnitless"/>.
         /// </summary>
-        /// <param name="nanometresPerPercent">The value in %⁻¹⋅nm</param>
+        /// <param name="nanometresPerPercent">The value in nm/%</param>
         public static LengthPerUnitless FromNanometresPerPercent(double nanometresPerPercent)
         {
             return From(nanometresPerPercent, LengthPerUnitlessUnit.NanometresPerPercent);
@@ -216,7 +216,7 @@
         /// <summary>
         /// Creates a new instance of <see cref="Gu.Units.LengthPerUnitless"/>.
         /// </summary>
-        /// <param name="metresPerPercent">The value in %⁻¹⋅m</param>
+        /// <param name="metresPerPercent">The value in m/%</param>
         public static LengthPerUnitless FromMetresPerPercent(double metresPerPercent)
         {
             return From(metresPerPercent, LengthPerUnitlessUnit.MetresPerPercent);

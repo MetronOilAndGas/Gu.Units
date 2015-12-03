@@ -167,7 +167,7 @@
         /// <summary>
         /// Creates a new instance of <see cref="Gu.Units.AnglePerUnitless"/>.
         /// </summary>
-        /// <param name="degreesPerPercent">The value in %⁻¹⋅°</param>
+        /// <param name="degreesPerPercent">The value in °/%</param>
         public static AnglePerUnitless FromDegreesPerPercent(double degreesPerPercent)
         {
             return From(degreesPerPercent, AnglePerUnitlessUnit.DegreesPerPercent);
@@ -176,7 +176,7 @@
         /// <summary>
         /// Creates a new instance of <see cref="Gu.Units.AnglePerUnitless"/>.
         /// </summary>
-        /// <param name="radiansPerPercent">The value in %⁻¹⋅rad</param>
+        /// <param name="radiansPerPercent">The value in rad/%</param>
         public static AnglePerUnitless FromRadiansPerPercent(double radiansPerPercent)
         {
             return From(radiansPerPercent, AnglePerUnitlessUnit.RadiansPerPercent);

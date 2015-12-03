@@ -21,25 +21,25 @@
         /// The MillimetresPerPercent unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
-		public static readonly LengthPerUnitlessUnit MillimetresPerPercent = new LengthPerUnitlessUnit(0.1, "%⁻¹⋅mm");
+		public static readonly LengthPerUnitlessUnit MillimetresPerPercent = new LengthPerUnitlessUnit(0.1, "mm/%");
 
         /// <summary>
         /// The MicrometresPerPercent unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
-		public static readonly LengthPerUnitlessUnit MicrometresPerPercent = new LengthPerUnitlessUnit(9.9999999999999991E-05, "%⁻¹⋅µm");
+		public static readonly LengthPerUnitlessUnit MicrometresPerPercent = new LengthPerUnitlessUnit(9.9999999999999991E-05, "µm/%");
 
         /// <summary>
         /// The NanometresPerPercent unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
-		public static readonly LengthPerUnitlessUnit NanometresPerPercent = new LengthPerUnitlessUnit(1.0000000000000001E-07, "%⁻¹⋅nm");
+		public static readonly LengthPerUnitlessUnit NanometresPerPercent = new LengthPerUnitlessUnit(1.0000000000000001E-07, "nm/%");
 
         /// <summary>
         /// The MetresPerPercent unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
-		public static readonly LengthPerUnitlessUnit MetresPerPercent = new LengthPerUnitlessUnit(100, "%⁻¹⋅m");
+		public static readonly LengthPerUnitlessUnit MetresPerPercent = new LengthPerUnitlessUnit(100, "m/%");
 
         private readonly double conversionFactor;
         private readonly string symbol;
