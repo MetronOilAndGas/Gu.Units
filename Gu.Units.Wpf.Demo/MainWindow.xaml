@@ -16,6 +16,14 @@
             <local:UnitsOnlyView />
         </TabItem>
 
+        <TabItem Header="Input options">
+            <local:InputOptionsView />
+        </TabItem>
+
+        <TabItem Header="Symbol options">
+            <local:SymbolOptions />
+        </TabItem>
+
         <TabItem Header="String formats">
             <local:StringFormatView />
         </TabItem>

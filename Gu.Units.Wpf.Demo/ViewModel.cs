@@ -7,6 +7,7 @@ namespace Gu.Units.Wpf.Demo
     public class ViewModel : INotifyPropertyChanged
     {
         private Length _length = Length.FromMillimetres(1234.567);
+        private Speed speed = Speed.FromMetresPerSecond(1.2);
 
         public static readonly ViewModel Instance = new ViewModel();
 
@@ -24,6 +25,18 @@ namespace Gu.Units.Wpf.Demo
                 if (value.Equals(this._length))
                     return;
                 this._length = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public Speed Speed
+        {
+            get { return this.speed; }
+            set
+            {
+                if (value.Equals(this.speed))
+                    return;
+                this.speed = value;
                 OnPropertyChanged();
             }
         }

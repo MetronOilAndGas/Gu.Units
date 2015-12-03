@@ -118,18 +118,29 @@ namespace Gu.Units.Wpf
             }
 
             var stiffness = (Stiffness)value;
-            if (this.StringFormat != StringFormatNotSet &&
+
+            var format = this.bindingStringFormat != null && this.bindingStringFormat != StringFormatNotSet
+                ? this.bindingStringFormat
+                : null;
+            if (format != null)
+            {
+                return stiffness;
+            }
+
+            format = this.stringFormat != null && this.stringFormat != StringFormatNotSet
+                ? this.stringFormat
+                : null;
+            if (format != null &&
                 (targetType == typeof(string) || targetType == typeof(object)))
             {
-                return stiffness.ToString(StringFormat, culture);
+                return stiffness.ToString(this.quantityFormat, culture);
             }
 
 
-            if (SymbolFormat != null &&
-                UnitInput == Wpf.UnitInput.SymbolRequired &&
+            if ((SymbolFormat != null || UnitInput == Wpf.UnitInput.SymbolRequired) &&
                (targetType == typeof(string) || targetType == typeof(object)))
             {
-                return stiffness.ToString(Unit.Value, SymbolFormat.Value, culture);
+                return stiffness.ToString(Unit.Value, SymbolFormat ?? Units.SymbolFormat.FractionSuperScript, culture);
             }
 
             if (IsValidConvertTargetType(targetType))
@@ -288,6 +299,12 @@ namespace Gu.Units.Wpf
                 }
 
                 return;
+            }
+
+            this.errorText = this.quantityFormat.ErrorText;
+            if (Is.DesignMode)
+            {
+                throw new ArgumentException($"Error parsing: '{this.errorText}'");
             }
 
             this.stringFormat = null;

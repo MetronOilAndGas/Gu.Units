@@ -455,7 +455,7 @@
             return ToString(quantityFormat, formatProvider);
         }
 
-        private string ToString(QuantityFormat<VolumetricFlowUnit> format, IFormatProvider formatProvider)
+        internal string ToString(QuantityFormat<VolumetricFlowUnit> format, IFormatProvider formatProvider)
         {
             using (var builder = StringBuilderPool.Borrow())
             {

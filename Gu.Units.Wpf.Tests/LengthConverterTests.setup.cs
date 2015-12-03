@@ -10,6 +10,8 @@
         public class Setup
         {
             [TestCase("F1 mm")]
+            [TestCase("{F1 mm}")]
+            [TestCase("{0:F1 mm}")]
             public void SettingStringFormatHappyPath(string stringFormat)
             {
                 var converter = new LengthConverter
@@ -17,21 +19,42 @@
                     StringFormat = stringFormat
                 };
 
+                var convert = converter.Convert(Length.FromMillimetres(12.34), typeof(string), null, CultureInfo.InvariantCulture);
+                Assert.AreEqual("12.3 mm", convert);
                 Assert.AreEqual(LengthUnit.Millimetres, converter.Unit);
                 Assert.AreEqual(UnitInput.SymbolRequired, converter.UnitInput);
             }
 
-            [Test]
-            public void BindingStringFormatHappyPath()
+            [TestCase("unknown format")]
+            public void SettingStringFormatFailsIfBadFormat(string stringFormat)
+            {
+                var converter = new LengthConverter { Unit = LengthUnit.Centimetres };
+                Wpf.Is.DesignMode = true;
+                var ex = Assert.Throws<ArgumentException>(() => converter.StringFormat = stringFormat);
+                var expected = $"Error parsing: '{stringFormat}'";
+                Assert.AreEqual(expected, ex.Message);
+
+                Wpf.Is.DesignMode = false;
+
+                var convert = converter.Convert(Length.Zero, typeof(string), null, null);
+                Assert.AreEqual(stringFormat, convert);
+            }
+
+            [TestCase("F1 cm")]
+            [TestCase("{F1 cm}")]
+            [TestCase("{0:F1 cm}")]
+            public void BindingStringFormatHappyPath(string stringFormat)
             {
                 var converter = new LengthConverter();
                 var providerMock = new ServiceProviderMock
                 {
-                    BindingStringFormat = "{F1 cm}"
+                    BindingStringFormat = stringFormat
                 };
 
                 converter.ProvideValue(providerMock.Object);
-                converter.Convert(Length.Zero, typeof (string), null, null);
+                var length = Length.FromMillimetres(12.3);
+                var convert = converter.Convert(length, typeof(string), null, CultureInfo.InvariantCulture);
+                Assert.AreEqual(length, convert);
                 Assert.AreEqual(LengthUnit.Centimetres, converter.Unit);
                 Assert.AreEqual(UnitInput.SymbolRequired, converter.UnitInput);
             }

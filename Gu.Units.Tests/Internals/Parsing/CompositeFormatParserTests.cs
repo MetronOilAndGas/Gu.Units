@@ -68,7 +68,7 @@
             QuantityFormat<LengthUnit> actual;
             var success = CompositeFormatParser.TryParse(text, out actual);
             Assert.AreEqual(false, success);
-            Assert.AreEqual(expectedError, actual.ErrorFormat);
+            Assert.AreEqual(expectedError, actual.ErrorText);
         }
     }
 }

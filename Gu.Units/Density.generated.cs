@@ -480,7 +480,7 @@
             return ToString(quantityFormat, formatProvider);
         }
 
-        private string ToString(QuantityFormat<DensityUnit> format, IFormatProvider formatProvider)
+        internal string ToString(QuantityFormat<DensityUnit> format, IFormatProvider formatProvider)
         {
             using (var builder = StringBuilderPool.Borrow())
             {

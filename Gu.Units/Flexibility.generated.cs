@@ -510,7 +510,7 @@
             return ToString(quantityFormat, formatProvider);
         }
 
-        private string ToString(QuantityFormat<FlexibilityUnit> format, IFormatProvider formatProvider)
+        internal string ToString(QuantityFormat<FlexibilityUnit> format, IFormatProvider formatProvider)
         {
             using (var builder = StringBuilderPool.Borrow())
             {

@@ -7,12 +7,11 @@
     {
         private static readonly Dictionary<string, QuantityFormat<TUnit>> Cache = new Dictionary<string, QuantityFormat<TUnit>>();
 
-        internal static bool TryParse(string format,
-            out QuantityFormat<TUnit> result)
+        internal static bool TryParse(string format, out QuantityFormat<TUnit> result)
         {
             if (string.IsNullOrWhiteSpace(format))
             {
-                result = QuantityFormat<TUnit>.Default;
+                result = QuantityFormat<TUnit>.CreateUnknown($"{nameof(format) == null}", Unit<TUnit>.Default);
                 return false;
             }
 
@@ -29,13 +28,13 @@
                 end = format.LastIndexOf('}');
                 if (end < 0)
                 {
-                    result = QuantityFormat<TUnit>.Default;
+                    result = QuantityFormat<TUnit>.CreateUnknown(format, Unit<TUnit>.Default);
                     return false;
                 }
 
                 if (!WhiteSpaceReader.IsRestWhiteSpace(format, end + 1))
                 {
-                    result = QuantityFormat<TUnit>.Default;
+                    result = QuantityFormat<TUnit>.CreateUnknown(format, Unit<TUnit>.Default);
                     return false;
                 }
             }
@@ -43,9 +42,9 @@
             var trimmedFormat = pos != end
                 ? format.Substring(pos, end - pos)
                 : format;
-            var tryParse = CompositeFormatParser.TryParse(trimmedFormat, out result);
+            var success = CompositeFormatParser.TryParse(trimmedFormat, out result);
             Cache.Add(format, result);
-            return tryParse;
+            return success;
         }
 
         private static bool TryReadPrefix(string format,

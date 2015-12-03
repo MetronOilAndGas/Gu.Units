@@ -45,6 +45,23 @@
                 Assert.AreEqual(expected, actual);
             }
 
+
+            [TestCase(typeof(string), UnitInput.ScalarOnly, 1.2)]
+            [TestCase(typeof(string), UnitInput.SymbolAllowed, 1.2)]
+            [TestCase(typeof(string), UnitInput.SymbolRequired, "1.2\u00A0m/s")]
+            public void WithUnitAndUnitInput(Type targetType, UnitInput inputOptions, object expected)
+            {
+                var converter = new SpeedConverter
+                {
+                    Unit = SpeedUnit.MetresPerSecond,
+                    UnitInput = inputOptions
+                };
+
+                var length = Speed.FromMetresPerSecond(1.2);
+                var actual = converter.Convert(length, targetType, null, CultureInfo.InvariantCulture);
+                Assert.AreEqual(expected, actual);
+            }
+
             [TestCase(typeof(string), "F1 m", "en-us", "1.2 m")]
             [TestCase(typeof(object), "F1 m", "en-us", "1.2 m")]
             [TestCase(typeof(double), "F1 m", "en-us", 1.234)]
@@ -60,10 +77,9 @@
                 Assert.AreEqual(expected, actual);
             }
 
-            [TestCase(typeof(string), "F1 m", "en-us", 1.234)]
-            [TestCase(typeof(object), "F1 m", "en-us", 1.234)]
-            [TestCase(typeof(double), "F1 m", "en-us", 1.234)]
-            public void WithBindingStringFormat(Type targetType, string stringFormat, string culture, object expected)
+            [TestCase(typeof(string), "F1 m")]
+            [TestCase(typeof(object), "F1 m")]
+            public void WithBindingStringFormat(Type targetType, string stringFormat)
             {
                 var converter = new LengthConverter();
                 var providerMock = new ServiceProviderMock
@@ -73,8 +89,8 @@
 
                 converter.ProvideValue(providerMock.Object);
                 var length = Length.FromMillimetres(1234);
-                var actual = converter.Convert(length, targetType, null, CultureInfo.GetCultureInfo(culture));
-                Assert.AreEqual(expected, actual);
+                var actual = converter.Convert(length, targetType, null, null);
+                Assert.AreEqual(length, actual);
             }
 
             [Test]

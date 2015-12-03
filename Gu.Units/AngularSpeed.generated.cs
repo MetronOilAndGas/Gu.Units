@@ -575,7 +575,7 @@
             return ToString(quantityFormat, formatProvider);
         }
 
-        private string ToString(QuantityFormat<AngularSpeedUnit> format, IFormatProvider formatProvider)
+        internal string ToString(QuantityFormat<AngularSpeedUnit> format, IFormatProvider formatProvider)
         {
             using (var builder = StringBuilderPool.Borrow())
             {

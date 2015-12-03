@@ -585,7 +585,7 @@
             return ToString(quantityFormat, formatProvider);
         }
 
-        private string ToString(QuantityFormat<ForceUnit> format, IFormatProvider formatProvider)
+        internal string ToString(QuantityFormat<ForceUnit> format, IFormatProvider formatProvider)
         {
             using (var builder = StringBuilderPool.Borrow())
             {

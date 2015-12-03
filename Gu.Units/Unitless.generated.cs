@@ -495,7 +495,7 @@
             return ToString(quantityFormat, formatProvider);
         }
 
-        private string ToString(QuantityFormat<UnitlessUnit> format, IFormatProvider formatProvider)
+        internal string ToString(QuantityFormat<UnitlessUnit> format, IFormatProvider formatProvider)
         {
             using (var builder = StringBuilderPool.Borrow())
             {

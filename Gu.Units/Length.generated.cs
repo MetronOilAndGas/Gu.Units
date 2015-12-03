@@ -670,7 +670,7 @@
             return ToString(quantityFormat, formatProvider);
         }
 
-        private string ToString(QuantityFormat<LengthUnit> format, IFormatProvider formatProvider)
+        internal string ToString(QuantityFormat<LengthUnit> format, IFormatProvider formatProvider)
         {
             using (var builder = StringBuilderPool.Borrow())
             {

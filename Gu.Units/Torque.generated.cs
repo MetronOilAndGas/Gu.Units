@@ -445,7 +445,7 @@
             return ToString(quantityFormat, formatProvider);
         }
 
-        private string ToString(QuantityFormat<TorqueUnit> format, IFormatProvider formatProvider)
+        internal string ToString(QuantityFormat<TorqueUnit> format, IFormatProvider formatProvider)
         {
             using (var builder = StringBuilderPool.Borrow())
             {

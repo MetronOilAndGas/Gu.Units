@@ -555,7 +555,7 @@
             return ToString(quantityFormat, formatProvider);
         }
 
-        private string ToString(QuantityFormat<AngularAccelerationUnit> format, IFormatProvider formatProvider)
+        internal string ToString(QuantityFormat<AngularAccelerationUnit> format, IFormatProvider formatProvider)
         {
             using (var builder = StringBuilderPool.Borrow())
             {

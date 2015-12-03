@@ -65,9 +65,9 @@
                 where TQuantity : IQuantity<TUnit>
                 where TUnit : struct, IUnit, IEquatable<TUnit>
             {
-                if (format.ErrorFormat != null)
+                if (format.ErrorText != null)
                 {
-                    Append(format.ErrorFormat);
+                    Append(format.ErrorText);
                     return;
                 }
 

@@ -118,18 +118,29 @@ namespace Gu.Units.Wpf
             }
 
             var energy = (Energy)value;
-            if (this.StringFormat != StringFormatNotSet &&
+
+            var format = this.bindingStringFormat != null && this.bindingStringFormat != StringFormatNotSet
+                ? this.bindingStringFormat
+                : null;
+            if (format != null)
+            {
+                return energy;
+            }
+
+            format = this.stringFormat != null && this.stringFormat != StringFormatNotSet
+                ? this.stringFormat
+                : null;
+            if (format != null &&
                 (targetType == typeof(string) || targetType == typeof(object)))
             {
-                return energy.ToString(StringFormat, culture);
+                return energy.ToString(this.quantityFormat, culture);
             }
 
 
-            if (SymbolFormat != null &&
-                UnitInput == Wpf.UnitInput.SymbolRequired &&
+            if ((SymbolFormat != null || UnitInput == Wpf.UnitInput.SymbolRequired) &&
                (targetType == typeof(string) || targetType == typeof(object)))
             {
-                return energy.ToString(Unit.Value, SymbolFormat.Value, culture);
+                return energy.ToString(Unit.Value, SymbolFormat ?? Units.SymbolFormat.FractionSuperScript, culture);
             }
 
             if (IsValidConvertTargetType(targetType))
@@ -288,6 +299,12 @@ namespace Gu.Units.Wpf
                 }
 
                 return;
+            }
+
+            this.errorText = this.quantityFormat.ErrorText;
+            if (Is.DesignMode)
+            {
+                throw new ArgumentException($"Error parsing: '{this.errorText}'");
             }
 
             this.stringFormat = null;

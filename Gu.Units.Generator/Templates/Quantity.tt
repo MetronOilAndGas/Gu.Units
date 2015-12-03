@@ -517,7 +517,7 @@ namespace <#= Settings.Namespace #>
             return ToString(quantityFormat, formatProvider);
         }
 
-        private string ToString(QuantityFormat<<#= quantity.ClassName #>Unit> format, IFormatProvider formatProvider)
+        internal string ToString(QuantityFormat<<#= quantity.ClassName #>Unit> format, IFormatProvider formatProvider)
         {
             using (var builder = StringBuilderPool.Borrow())
             {

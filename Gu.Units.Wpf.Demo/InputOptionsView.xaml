@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="Gu.Units.Wpf.Demo.StringFormatView"
+﻿<UserControl x:Class="Gu.Units.Wpf.Demo.InputOptionsView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -27,27 +27,21 @@
         </Grid.RowDefinitions>
 
         <Label Grid.Row="0"
-               Grid.Column="0"
-               Content="Converter={units:LengthConverter StringFormat='F3 mm'}}" />
+                   Grid.Column="0"
+                   Content="Converter={units:LengthConverter m, UnitInput=ScalarOnly}" />
 
-        <TextBox Grid.Row="1" Text="{Binding Length, Converter={units:LengthConverter StringFormat='F3 mm'}}" />
+        <TextBox Grid.Row="1" Text="{Binding Length, Converter={units:LengthConverter m, UnitInput=ScalarOnly}}" />
 
         <Label Grid.Row="2"
-               Grid.Column="0"
-               Content="Binding Length, Converter={units:LengthConverter}, StringFormat='F2 cm'" />
+                   Grid.Column="0"
+                   Content="Converter={units:LengthConverter Unit=mm, UnitInput=SymbolAllowed}" />
 
-        <TextBox Grid.Row="3" Text="{Binding Length, Converter={units:LengthConverter}, StringFormat='F2 cm'}" />
+        <TextBox Grid.Row="3" Text="{Binding Length, Converter={units:LengthConverter Unit=mm, UnitInput=SymbolAllowed}}" />
 
-        <!--<Label Grid.Row="4"
-               Grid.Column="0"
-               Content="Binding Length, Converter={units:LengthConverter}, StringFormat='{}{F2 cm}'" />
+        <Label Grid.Row="4"
+                   Grid.Column="0"
+                   Content="Converter={units:LengthConverter Unit=cm, UnitInput=SymbolRequired}" />
 
-        <TextBox Grid.Row="5" Text="{Binding Length, Converter={units:LengthConverter}, StringFormat='{}{F2 cm}'}" />-->
-
-        <Label Grid.Row="6"
-               Grid.Column="0"
-               Content="Binding Length, Converter={units:LengthConverter}, StringFormat='{}{0:F2 cm}'" />
-
-        <TextBox Grid.Row="7" Text="{Binding Length, Converter={units:LengthConverter}, StringFormat='{}{0:F2 cm}'}" />
+        <TextBox Grid.Row="6" Text="{Binding Length, Converter={units:LengthConverter Unit=cm, UnitInput=SymbolRequired}}" />
     </Grid>
 </UserControl>

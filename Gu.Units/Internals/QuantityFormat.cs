@@ -18,7 +18,7 @@
             string padding,
             string symbolFormat,
             string postPadding,
-            string errorFormat,
+            string errorText,
             TUnit unit)
         {
             PrePadding = prePadding;
@@ -26,14 +26,14 @@
             Padding = padding;
             SymbolFormat = symbolFormat;
             PostPadding = postPadding;
-            ErrorFormat = errorFormat;
+            ErrorText = errorText;
             Unit = unit;
         }
 
-        public QuantityFormat(string errorFormat,
+        public QuantityFormat(string errorText,
             TUnit unit)
         {
-            ErrorFormat = errorFormat;
+            ErrorText = errorText;
             Unit = unit;
         }
 
@@ -47,7 +47,7 @@
 
         internal string PostPadding { get; }
 
-        internal string ErrorFormat { get; }
+        internal string ErrorText { get; }
 
         internal string CompositeFormat => this.compositeFormat ?? (this.compositeFormat = CreateCompositeFormat());
 
@@ -82,7 +82,7 @@
                    string.Equals(Padding, other.Padding) &&
                    string.Equals(SymbolFormat, other.SymbolFormat) &&
                    string.Equals(PostPadding, other.PostPadding) &&
-                   string.Equals(ErrorFormat, other.ErrorFormat) &&
+                   string.Equals(ErrorText, other.ErrorText) &&
                    Unit.Equals(other.Unit);
         }
 
@@ -115,7 +115,7 @@
                 hashCode = (hashCode * 397) ^ (Padding?.GetHashCode() ?? 0);
                 hashCode = (hashCode * 397) ^ (SymbolFormat?.GetHashCode() ?? 0);
                 hashCode = (hashCode * 397) ^ (PostPadding?.GetHashCode() ?? 0);
-                hashCode = (hashCode * 397) ^ (ErrorFormat?.GetHashCode() ?? 0);
+                hashCode = (hashCode * 397) ^ (ErrorText?.GetHashCode() ?? 0);
                 hashCode = (hashCode * 397) ^ Unit.GetHashCode();
                 return hashCode;
             }
@@ -208,9 +208,9 @@
         {
             using (var builder = StringBuilderPool.Borrow())
             {
-                if (ErrorFormat != null)
+                if (ErrorText != null)
                 {
-                    builder.Append(ErrorFormat);
+                    builder.Append(ErrorText);
                     return builder.ToString();
                 }
 

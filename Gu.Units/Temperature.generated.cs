@@ -475,7 +475,7 @@
             return ToString(quantityFormat, formatProvider);
         }
 
-        private string ToString(QuantityFormat<TemperatureUnit> format, IFormatProvider formatProvider)
+        internal string ToString(QuantityFormat<TemperatureUnit> format, IFormatProvider formatProvider)
         {
             using (var builder = StringBuilderPool.Borrow())
             {
