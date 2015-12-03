@@ -10,7 +10,7 @@ fileManager.IsAutoIndentEnabled = true;
 fileManager.CanOverwriteExistingFile = true;
 
 // init handling for parameter templates
-var paramTmpl = ParamTextTemplate.Create(this.Host);
+var paramTmpl = ParamTextTemplate.Create(this.Host, "Quantity.tt");
 var session = ParamTextTemplate.GetSessionObject();
 var settings = Settings.Instance;
 this.WriteLine(string.Format("Read Settings and found {0} units", settings.Quantities.Count));
@@ -19,7 +19,7 @@ foreach (var quantity in settings.Quantities)
     var fileName = quantity.ClassName + ".generated." + Settings.Extension;
     fileManager.StartNewFile(fileName, Settings.ProjectName, null, null);
 	session["QuantityData"] = quantity;
-	string output = paramTmpl.TransformText("Quantity.tt", session);
+	string output = paramTmpl.TransformText(session);
     if (output == "ErrorGeneratingOutput")
     {
 		this.WriteLine("Error transforming {0}", quantity.ClassName);

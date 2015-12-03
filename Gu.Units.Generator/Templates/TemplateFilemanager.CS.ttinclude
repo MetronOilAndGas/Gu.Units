@@ -766,16 +766,19 @@ public sealed class Block
 
 public class ParamTextTemplate
 {
-	private ITextTemplatingEngineHost Host { get; set; }
+    private string template;
+    private ITextTemplatingEngineHost Host { get; set; }
 
-	private ParamTextTemplate(ITextTemplatingEngineHost host)
-	{
-		this.Host = host;
-	}
+    private ParamTextTemplate(ITextTemplatingEngineHost host, string templateName)
+    {
+        this.Host = host;
+        string fullName = this.Host.ResolvePath(templateName);
+        this.template = File.ReadAllText(fullName);
+    }
 
-	public static ParamTextTemplate Create(ITextTemplatingEngineHost host)
+    public static ParamTextTemplate Create(ITextTemplatingEngineHost host, string templateName)
 	{
-		return new ParamTextTemplate(host);
+		return new ParamTextTemplate(host, templateName);
 	}
 
 	public static TextTemplatingSession GetSessionObject()
@@ -783,22 +786,14 @@ public class ParamTextTemplate
 		return new TextTemplatingSession();
 	}
 
-	public string TransformText(string templateName, TextTemplatingSession session)
+	public string TransformText(TextTemplatingSession session)
 	{
 		// test
-		return this.GetTemplateContent(templateName, session);
-	}
-
-	public string GetTemplateContent(string templateName, TextTemplatingSession session)
-	{
-		string fullName = this.Host.ResolvePath(templateName);
-		string templateContent = File.ReadAllText(fullName);
-
 		var sessionHost = this.Host as ITextTemplatingSessionHost;
 		sessionHost.Session = session;
 
 		var engine = new Microsoft.VisualStudio.TextTemplating.Engine();
-		return engine.ProcessTemplate(templateContent, this.Host);
+		return engine.ProcessTemplate(this.template, this.Host);
 	}
 }
 
