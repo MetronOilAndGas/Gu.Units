@@ -347,6 +347,11 @@
             return Time.FromSeconds(left.metres / right.metresPerSecond);
         }
 
+        public static Unitless operator /(Length left, LengthPerUnitless right)
+        {
+            return Unitless.FromScalar(left.metres / right.metresPerUnitless);
+        }
+
         public static Area operator *(Length left, Length right)
         {
             return Area.FromSquareMetres(left.metres * right.metres);
@@ -375,6 +380,11 @@
         public static Flexibility operator /(Length left, Force right)
         {
             return Flexibility.FromMetresPerNewton(left.metres / right.newtons);
+        }
+
+        public static LengthPerUnitless operator /(Length left, Unitless right)
+        {
+            return LengthPerUnitless.FromMetresPerUnitless(left.metres / right.scalar);
         }
 
         public static double operator /(Length left, Length right)

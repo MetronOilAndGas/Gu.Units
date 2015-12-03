@@ -111,6 +111,50 @@
         }
 
         /// <summary>
+        /// The quantity in bars
+        /// </summary>
+        public double Bars
+        {
+            get
+            {
+                return PressureUnit.Bars.FromSiUnit(this.pascals);
+            }
+        }
+
+        /// <summary>
+        /// The quantity in millibars
+        /// </summary>
+        public double Millibars
+        {
+            get
+            {
+                return PressureUnit.Millibars.FromSiUnit(this.pascals);
+            }
+        }
+
+        /// <summary>
+        /// The quantity in newtonsPerSquareMillimetre
+        /// </summary>
+        public double NewtonsPerSquareMillimetre
+        {
+            get
+            {
+                return PressureUnit.NewtonsPerSquareMillimetre.FromSiUnit(this.pascals);
+            }
+        }
+
+        /// <summary>
+        /// The quantity in kilonewtonsPerSquareMillimetre
+        /// </summary>
+        public double KilonewtonsPerSquareMillimetre
+        {
+            get
+            {
+                return PressureUnit.KilonewtonsPerSquareMillimetre.FromSiUnit(this.pascals);
+            }
+        }
+
+        /// <summary>
         /// The quantity in megapascals
         /// </summary>
         public double Megapascals
@@ -133,24 +177,13 @@
         }
 
         /// <summary>
-        /// The quantity in bars
+        /// The quantity in newtonsPerSquareMetre
         /// </summary>
-        public double Bars
+        public double NewtonsPerSquareMetre
         {
             get
             {
-                return PressureUnit.Bars.FromSiUnit(this.pascals);
-            }
-        }
-
-        /// <summary>
-        /// The quantity in millibars
-        /// </summary>
-        public double Millibars
-        {
-            get
-            {
-                return PressureUnit.Millibars.FromSiUnit(this.pascals);
+                return PressureUnit.NewtonsPerSquareMetre.FromSiUnit(this.pascals);
             }
         }
 
@@ -269,6 +302,42 @@
         /// <summary>
         /// Creates a new instance of <see cref="Gu.Units.Pressure"/>.
         /// </summary>
+        /// <param name="bars">The value in bar</param>
+        public static Pressure FromBars(double bars)
+        {
+            return From(bars, PressureUnit.Bars);
+        }
+
+        /// <summary>
+        /// Creates a new instance of <see cref="Gu.Units.Pressure"/>.
+        /// </summary>
+        /// <param name="millibars">The value in mbar</param>
+        public static Pressure FromMillibars(double millibars)
+        {
+            return From(millibars, PressureUnit.Millibars);
+        }
+
+        /// <summary>
+        /// Creates a new instance of <see cref="Gu.Units.Pressure"/>.
+        /// </summary>
+        /// <param name="newtonsPerSquareMillimetre">The value in N⋅mm⁻²</param>
+        public static Pressure FromNewtonsPerSquareMillimetre(double newtonsPerSquareMillimetre)
+        {
+            return From(newtonsPerSquareMillimetre, PressureUnit.NewtonsPerSquareMillimetre);
+        }
+
+        /// <summary>
+        /// Creates a new instance of <see cref="Gu.Units.Pressure"/>.
+        /// </summary>
+        /// <param name="kilonewtonsPerSquareMillimetre">The value in kN⋅mm⁻²</param>
+        public static Pressure FromKilonewtonsPerSquareMillimetre(double kilonewtonsPerSquareMillimetre)
+        {
+            return From(kilonewtonsPerSquareMillimetre, PressureUnit.KilonewtonsPerSquareMillimetre);
+        }
+
+        /// <summary>
+        /// Creates a new instance of <see cref="Gu.Units.Pressure"/>.
+        /// </summary>
         /// <param name="megapascals">The value in MPa</param>
         public static Pressure FromMegapascals(double megapascals)
         {
@@ -287,19 +356,10 @@
         /// <summary>
         /// Creates a new instance of <see cref="Gu.Units.Pressure"/>.
         /// </summary>
-        /// <param name="bars">The value in bar</param>
-        public static Pressure FromBars(double bars)
+        /// <param name="newtonsPerSquareMetre">The value in N/m²</param>
+        public static Pressure FromNewtonsPerSquareMetre(double newtonsPerSquareMetre)
         {
-            return From(bars, PressureUnit.Bars);
-        }
-
-        /// <summary>
-        /// Creates a new instance of <see cref="Gu.Units.Pressure"/>.
-        /// </summary>
-        /// <param name="millibars">The value in mbar</param>
-        public static Pressure FromMillibars(double millibars)
-        {
-            return From(millibars, PressureUnit.Millibars);
+            return From(newtonsPerSquareMetre, PressureUnit.NewtonsPerSquareMetre);
         }
 
         public static Force operator *(Pressure left, Area right)

@@ -202,6 +202,16 @@
             return From(percents, UnitlessUnit.Percents);
         }
 
+        public static Length operator *(Unitless left, LengthPerUnitless right)
+        {
+            return Length.FromMetres(left.scalar * right.metresPerUnitless);
+        }
+
+        public static Angle operator *(Unitless left, AnglePerUnitless right)
+        {
+            return Angle.FromRadians(left.scalar * right.radiansPerUnitless);
+        }
+
         public static double operator /(Unitless left, Unitless right)
         {
             return left.scalar / right.scalar;

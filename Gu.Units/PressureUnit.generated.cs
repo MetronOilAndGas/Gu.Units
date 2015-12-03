@@ -72,6 +72,42 @@
 		public static readonly PressureUnit kPa = Kilopascals;
 
         /// <summary>
+        /// The Bars unit
+        /// Contains conversion logic to from and formatting.
+        /// </summary>
+		public static readonly PressureUnit Bars = new PressureUnit(100000, "bar");
+
+        /// <summary>
+        /// The Bars unit
+        /// Contains conversion logic to from and formatting.
+        /// </summary>
+		public static readonly PressureUnit bar = Bars;
+
+        /// <summary>
+        /// The Millibars unit
+        /// Contains conversion logic to from and formatting.
+        /// </summary>
+		public static readonly PressureUnit Millibars = new PressureUnit(100, "mbar");
+
+        /// <summary>
+        /// The Millibars unit
+        /// Contains conversion logic to from and formatting.
+        /// </summary>
+		public static readonly PressureUnit mbar = Millibars;
+
+        /// <summary>
+        /// The NewtonsPerSquareMillimetre unit
+        /// Contains conversion logic to from and formatting.
+        /// </summary>
+		public static readonly PressureUnit NewtonsPerSquareMillimetre = new PressureUnit(1000000, "N⋅mm⁻²");
+
+        /// <summary>
+        /// The KilonewtonsPerSquareMillimetre unit
+        /// Contains conversion logic to from and formatting.
+        /// </summary>
+		public static readonly PressureUnit KilonewtonsPerSquareMillimetre = new PressureUnit(1000000000, "kN⋅mm⁻²");
+
+        /// <summary>
         /// The Megapascals unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
@@ -96,28 +132,10 @@
 		public static readonly PressureUnit GPa = Gigapascals;
 
         /// <summary>
-        /// The Bars unit
+        /// The NewtonsPerSquareMetre unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
-		public static readonly PressureUnit Bars = new PressureUnit(100000, "bar");
-
-        /// <summary>
-        /// The Bars unit
-        /// Contains conversion logic to from and formatting.
-        /// </summary>
-		public static readonly PressureUnit bar = Bars;
-
-        /// <summary>
-        /// The Millibars unit
-        /// Contains conversion logic to from and formatting.
-        /// </summary>
-		public static readonly PressureUnit Millibars = new PressureUnit(100, "mbar");
-
-        /// <summary>
-        /// The Millibars unit
-        /// Contains conversion logic to from and formatting.
-        /// </summary>
-		public static readonly PressureUnit mbar = Millibars;
+		public static readonly PressureUnit NewtonsPerSquareMetre = new PressureUnit(1, "N/m²");
 
         private readonly double conversionFactor;
         private readonly string symbol;

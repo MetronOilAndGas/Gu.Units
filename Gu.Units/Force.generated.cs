@@ -292,6 +292,11 @@
             return Stiffness.FromNewtonsPerMetre(left.newtons / right.metres);
         }
 
+        public static ForcePerUnitless operator /(Force left, Unitless right)
+        {
+            return ForcePerUnitless.FromNewtonsPerUnitless(left.newtons / right.scalar);
+        }
+
         public static double operator /(Force left, Force right)
         {
             return left.newtons / right.newtons;

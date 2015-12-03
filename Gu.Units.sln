@@ -32,6 +32,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gu.Units.Json", "Gu.Units.J
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gu.Units.Json.Tests", "Gu.Units.Json.Tests\Gu.Units.Json.Tests.csproj", "{DDD84BCA-0FF9-4854-BDB3-C69117B2978A}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "T4", "T4", "{57FAC692-6AC4-4D35-BFED-F208817451ED}"
+	ProjectSection(SolutionItems) = preProject
+		packages\T4.TemplateFileManager\tools\ttinc\TemplateFilemanager.CS.ttinclude = packages\T4.TemplateFileManager\tools\ttinc\TemplateFilemanager.CS.ttinclude
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

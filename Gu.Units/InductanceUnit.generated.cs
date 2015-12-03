@@ -23,7 +23,7 @@
         /// </summary>
 		public static readonly InductanceUnit H = Henrys;
 
-        private readonly double conversionFactor;
+		private readonly double conversionFactor;
         private readonly string symbol;
 
         public InductanceUnit(double conversionFactor, string symbol)
@@ -32,7 +32,7 @@
             this.symbol = symbol;
         }
 
-        /// <summary>
+		/// <summary>
         /// The symbol for the <see cref="Gu.Units.InductanceUnit"/>.
         /// </summary>
         public string Symbol
@@ -43,12 +43,12 @@
             }
         }
 
-        /// <summary>
+		/// <summary>
         /// The default unit for <see cref="Gu.Units.InductanceUnit"/>
         /// </summary>
         public InductanceUnit SiUnit => InductanceUnit.Henrys;
 
-        /// <summary>
+		/// <summary>
         /// The default <see cref="Gu.Units.IUnit"/> for <see cref="Gu.Units.InductanceUnit"/>
         /// </summary>
         IUnit IUnit.SiUnit => InductanceUnit.Henrys;
@@ -58,7 +58,7 @@
             return Inductance.From(left, right);
         }
 
-        public static bool operator ==(InductanceUnit left, InductanceUnit right)
+	    public static bool operator ==(InductanceUnit left, InductanceUnit right)
         {
             return left.Equals(right);
         }
@@ -108,7 +108,7 @@
             return new Inductance(value, this);
         }
 
-        /// <summary>
+		/// <summary>
         /// Gets the scalar value of <paramref name="quantity"/> in Henrys
         /// </summary>
         /// <param name="quantity"></param>
@@ -123,7 +123,7 @@
             return this.symbol;
         }
 
-        public bool Equals(InductanceUnit other)
+		public bool Equals(InductanceUnit other)
         {
             return this.symbol == other.symbol;
         }
@@ -135,7 +135,7 @@
                 return false;
             }
 
-            return obj is InductanceUnit && Equals((InductanceUnit)obj);
+            return obj is InductanceUnit && Equals((InductanceUnit) obj);
         }
 
         public override int GetHashCode()

@@ -45,6 +45,9 @@
     <Compile Include="AngleConverter.generated.cs">
       <DependentUpon>QuantityValueConverters.txt4</DependentUpon>
     </Compile>
+    <Compile Include="AnglePerUnitlessConverter.generated.cs">
+      <DependentUpon>QuantityValueConverters.txt4</DependentUpon>
+    </Compile>
     <Compile Include="AngularAccelerationConverter.generated.cs">
       <DependentUpon>QuantityValueConverters.txt4</DependentUpon>
     </Compile>
@@ -78,6 +81,9 @@
     <Compile Include="ForceConverter.generated.cs">
       <DependentUpon>QuantityValueConverters.txt4</DependentUpon>
     </Compile>
+    <Compile Include="ForcePerUnitlessConverter.generated.cs">
+      <DependentUpon>QuantityValueConverters.txt4</DependentUpon>
+    </Compile>
     <Compile Include="FrequencyConverter.generated.cs">
       <DependentUpon>QuantityValueConverters.txt4</DependentUpon>
     </Compile>
@@ -88,6 +94,9 @@
       <DependentUpon>QuantityValueConverters.txt4</DependentUpon>
     </Compile>
     <Compile Include="LengthConverter.generated.cs">
+      <DependentUpon>QuantityValueConverters.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="LengthPerUnitlessConverter.generated.cs">
       <DependentUpon>QuantityValueConverters.txt4</DependentUpon>
     </Compile>
     <Compile Include="LuminousIntensityConverter.generated.cs">

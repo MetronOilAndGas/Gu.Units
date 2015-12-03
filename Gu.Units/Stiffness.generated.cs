@@ -157,6 +157,11 @@
             return Energy.FromJoules(left.newtonsPerMetre * right.squareMetres);
         }
 
+        public static ForcePerUnitless operator *(Stiffness left, LengthPerUnitless right)
+        {
+            return ForcePerUnitless.FromNewtonsPerUnitless(left.newtonsPerMetre * right.metresPerUnitless);
+        }
+
         public static Flexibility operator /(double left, Stiffness right)
         {
             return Flexibility.FromMetresPerNewton(left / right.newtonsPerMetre);

@@ -145,6 +145,8 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>UnitTypeConverter.txt</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Templates\TemplateFilemanager.CS.ttinclude" />
+    <None Include="Templates\MultipleOutputHelper.ttinclude" />
     <Resource Include="Templates\UnitTypeConverter.txt">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

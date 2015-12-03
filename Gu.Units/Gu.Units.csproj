@@ -57,6 +57,18 @@
     <Compile Include="Angle.generated.cs">
       <DependentUpon>Quantties.txt4</DependentUpon>
     </Compile>
+    <Compile Include="AnglePerUnitless.generated.cs">
+      <DependentUpon>Quantties.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="AnglePerUnitlessTypeConverter.generated.cs">
+      <DependentUpon>QuantityTypeConverters.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="AnglePerUnitlessUnit.generated.cs">
+      <DependentUpon>Units.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="AnglePerUnitlessUnitTypeConverter.generated.cs">
+      <DependentUpon>UnitTypeConverters.txt4</DependentUpon>
+    </Compile>
     <Compile Include="AngleTypeConverter.generated.cs">
       <DependentUpon>QuantityTypeConverters.txt4</DependentUpon>
     </Compile>
@@ -177,6 +189,18 @@
     <Compile Include="Force.generated.cs">
       <DependentUpon>Quantties.txt4</DependentUpon>
     </Compile>
+    <Compile Include="ForcePerUnitless.generated.cs">
+      <DependentUpon>Quantties.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="ForcePerUnitlessTypeConverter.generated.cs">
+      <DependentUpon>QuantityTypeConverters.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="ForcePerUnitlessUnit.generated.cs">
+      <DependentUpon>Units.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="ForcePerUnitlessUnitTypeConverter.generated.cs">
+      <DependentUpon>UnitTypeConverters.txt4</DependentUpon>
+    </Compile>
     <Compile Include="ForceTypeConverter.generated.cs">
       <DependentUpon>QuantityTypeConverters.txt4</DependentUpon>
     </Compile>
@@ -240,6 +264,18 @@
     </Compile>
     <Compile Include="Length.generated.cs">
       <DependentUpon>Quantties.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="LengthPerUnitless.generated.cs">
+      <DependentUpon>Quantties.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="LengthPerUnitlessTypeConverter.generated.cs">
+      <DependentUpon>QuantityTypeConverters.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="LengthPerUnitlessUnit.generated.cs">
+      <DependentUpon>Units.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="LengthPerUnitlessUnitTypeConverter.generated.cs">
+      <DependentUpon>UnitTypeConverters.txt4</DependentUpon>
     </Compile>
     <Compile Include="LengthTypeConverter.generated.cs">
       <DependentUpon>QuantityTypeConverters.txt4</DependentUpon>
