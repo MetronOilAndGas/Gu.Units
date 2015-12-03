@@ -19,10 +19,9 @@ this.Write(string.Format("Read Settings and found {0} si units and {1} derived u
 
 foreach (var unit in settings.SiUnits.Concat<IUnit>(settings.DerivedUnits))
 {
-	session["UnitData"] = unit;
-
     var fileName = unit.Quantity.ClassName + "Unit.generated." + Settings.Extension;
     fileManager.StartNewFile(fileName, Settings.ProjectName, Settings.FolderName, null);
+	session["UnitData"] = unit;
 	var output = paramTmpl.TransformText(session);
 	if (output == "ErrorGeneratingOutput")
     {
@@ -31,9 +30,8 @@ foreach (var unit in settings.SiUnits.Concat<IUnit>(settings.DerivedUnits))
     }
 
 	this.Write(output);
-    //this.WriteLine();
 }
 
-//session["UnitMetaData"] = null;
 fileManager.Process();
+Dispose();
 #>
