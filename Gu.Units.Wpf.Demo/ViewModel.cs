@@ -8,6 +8,7 @@ namespace Gu.Units.Wpf.Demo
     {
         private Length _length = Length.FromMillimetres(1234.567);
         private Speed speed = Speed.FromMetresPerSecond(1.2);
+        private Pressure pressure = Pressure.FromMegapascals(1.23);
 
         public static readonly ViewModel Instance = new ViewModel();
 
@@ -37,6 +38,18 @@ namespace Gu.Units.Wpf.Demo
                 if (value.Equals(this.speed))
                     return;
                 this.speed = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public Pressure Pressure
+        {
+            get { return this.pressure; }
+            set
+            {
+                if (value.Equals(this.pressure))
+                    return;
+                this.pressure = value;
                 OnPropertyChanged();
             }
         }
