@@ -1,18 +1,21 @@
-﻿using System;
-
-namespace Gu.Units.Json
+﻿namespace Gu.Units.Json
 {
-    using System.Globalization;
+    using System;
     using Newtonsoft.Json;
 
-    public class AngleConverter : JsonConverter
+    /// <summary>
+    /// <see cref="Newtonsoft.Json.JsonConverter" /> for the quantity <see cref="Gu.Units.Angle"/>.
+    /// </summary>
+    [Serializable]
+    public class AngleJsonConverter : JsonConverter
     {
-        public static readonly AngleConverter Default = new AngleConverter(AngleUnit.Radians);
-        public static readonly AngleConverter Radians = new AngleConverter(AngleUnit.Radians);
-        public static readonly AngleConverter Degrees = new AngleConverter(AngleUnit.Degrees);
+        public static readonly AngleJsonConverter Default = new AngleJsonConverter(AngleUnit.Radians);
+        public static readonly AngleJsonConverter Radians = new AngleJsonConverter(AngleUnit.Radians);
+        public static readonly AngleJsonConverter Degrees = new AngleJsonConverter(AngleUnit.Degrees);
+
         private readonly AngleUnit unit;
 
-        private AngleConverter(AngleUnit unit)
+        private AngleJsonConverter(AngleUnit unit)
         {
             this.unit = unit;
         }

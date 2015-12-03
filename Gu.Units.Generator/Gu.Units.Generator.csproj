@@ -274,6 +274,24 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>QuantityValueConverters.txt</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Templates\QuantityJsonConverter.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>QuantityJsonConverter.txt</LastGenOutput>
+    </EmbeddedResource>
+    <Resource Include="Templates\QuantityJsonConverter.txt">
+      <DependentUpon>QuantityJsonConverter.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Resource>
+    <EmbeddedResource Include="Templates\QuantityJsonConverters.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>QuantityJsonConverters.txt</LastGenOutput>
+    </EmbeddedResource>
+    <Resource Include="Templates\QuantityJsonConverters.txt">
+      <DependentUpon>QuantityJsonConverters.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Resource>
     <Content Include="Templates\QuantityValueConverters.txt">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

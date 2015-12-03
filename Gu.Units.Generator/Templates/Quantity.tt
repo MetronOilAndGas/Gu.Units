@@ -17,7 +17,6 @@ else
                         QuantityName = "Length"
                     };
     unit.Conversions.Add(new Conversion("Centimetres", "cm"));
-    unit.Conversions.Add(new Conversion("Centimetres", "cm"));
     unit.Conversions.Add(new Conversion("Millimetres", "mm"));
     quantity = unit.Quantity;
 }
