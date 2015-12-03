@@ -51,7 +51,7 @@ namespace Gu.Units.Wpf
 
         public SymbolFormat? SymbolFormat { get; set; }
 
-        public UnitInput UnitInput { get; set; } = UnitInput.Default;
+        public UnitInput? UnitInput { get; set; }
 
         public string StringFormat
         {
@@ -126,7 +126,7 @@ namespace Gu.Units.Wpf
 
 
             if (SymbolFormat != null &&
-                UnitInput == UnitInput.SymbolRequired &&
+                UnitInput == Wpf.UnitInput.SymbolRequired &&
                (targetType == typeof(string) || targetType == typeof(object)))
             {
                 return volumetricFlow.ToString(Unit.Value, SymbolFormat.Value, culture);
@@ -184,10 +184,10 @@ namespace Gu.Units.Wpf
                 return null;
             }
 
-            switch (UnitInput)
+            var unitInput = UnitInput ?? Wpf.UnitInput.ScalarOnly;
+            switch (unitInput)
             {
-                case UnitInput.Default:
-                case UnitInput.ScalarOnly:
+                case Wpf.UnitInput.ScalarOnly:
                     {
                         double d;
                         if (double.TryParse(text, NumberStyles.Float, culture, out d))
@@ -197,7 +197,7 @@ namespace Gu.Units.Wpf
 
                         return value; // returning raw to trigger error
                     }
-                case UnitInput.SymbolAllowed:
+                case Wpf.UnitInput.SymbolAllowed:
                     {
                         double d;
                         int pos = 0;
@@ -211,9 +211,9 @@ namespace Gu.Units.Wpf
                             }
                         }
 
-                        goto case UnitInput.SymbolRequired;
+                        goto case Wpf.UnitInput.SymbolRequired;
                     }
-                case UnitInput.SymbolRequired:
+                case Wpf.UnitInput.SymbolRequired:
                     {
                         VolumetricFlow result;
                         if (VolumetricFlow.TryParse(text, NumberStyles.Float, culture, out result))
@@ -268,9 +268,9 @@ namespace Gu.Units.Wpf
                 : this.stringFormat;
             if (StringFormatParser<VolumetricFlowUnit>.TryParse(format, out this.quantityFormat))
             {
-                if (UnitInput == UnitInput.Default && this.quantityFormat.SymbolFormat != null)
+                if (UnitInput == null && this.quantityFormat.SymbolFormat != null)
                 {
-                    UnitInput = UnitInput.SymbolRequired;
+                    UnitInput = Wpf.UnitInput.SymbolRequired;
                 }
 
                 if (this.unit == null)
