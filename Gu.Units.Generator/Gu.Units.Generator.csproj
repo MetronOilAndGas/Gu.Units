@@ -105,7 +105,9 @@
     <Compile Include="Views\PartConversionsView.xaml.cs">
       <DependentUpon>PartConversionsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\PartConversionsVm.cs" />
+    <Compile Include="Views\PartConversionsVm.cs">
+      <DependentUpon>PartConversionsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\PartConversionVm.cs">
       <DependentUpon>PartConversionsView.xaml</DependentUpon>
     </Compile>

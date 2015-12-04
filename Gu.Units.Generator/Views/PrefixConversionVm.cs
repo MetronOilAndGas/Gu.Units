@@ -1,5 +1,6 @@
 ﻿namespace Gu.Units.Generator
 {
+    using System;
     using System.ComponentModel;
     using System.Linq;
     using System.Runtime.CompilerServices;
@@ -35,7 +36,7 @@
                 {
                     return false;
                 }
-                return this.Unit.Conversions.Any(x => x.Formula.ConversionFactor == this.Conversion.Formula.ConversionFactor && x.Symbol == this.Conversion.Symbol);
+                return this.Unit.Conversions.Any(x => x.Formula.ConversionFactor == this.Conversion.Formula.ConversionFactor && string.Equals(x.ClassName, Conversion.ClassName, StringComparison.OrdinalIgnoreCase));
             }
             set
             {
@@ -45,7 +46,7 @@
                 }
                 if (value)
                 {
-                    this.Unit.Conversions.Add(new Conversion { Prefix = Prefix });
+                    this.Unit.Conversions.Add(new Conversion {Prefix = Prefix, BaseUnit = Unit});
                 }
                 else
                 {

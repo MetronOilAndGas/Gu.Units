@@ -41,6 +41,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Descriptors\ConversionFormulaTests.cs" />
+    <Compile Include="Helpers\ConversionFormulaComparer.cs" />
+    <Compile Include="Helpers\FieldComparer.cs" />
+    <Compile Include="Helpers\PrefixComparer.cs" />
+    <Compile Include="Helpers\TypeExt.cs" />
+    <Compile Include="Helpers\UnitComparer.cs" />
     <Compile Include="MockSettings.cs" />
     <Compile Include="Descriptors\OperatorOverloadTests.cs" />
     <Compile Include="Descriptors\QuantityTests.cs" />
@@ -48,6 +53,10 @@
     <Compile Include="Descriptors\StringToFormulaConverterTests.cs" />
     <Compile Include="Descriptors\UnitPartsConverterTests.cs" />
     <Compile Include="Descriptors\UnitPartsTests.cs" />
+    <Compile Include="Helpers\ConversionComparer.cs" />
+    <Compile Include="Views\PrefixConversionsVmTests.cs" />
+    <Compile Include="Helpers\PrefixConversionVmComparer.cs" />
+    <Compile Include="Views\PrefixConversionVmTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Gu.Units.Generator\Gu.Units.Generator.csproj">

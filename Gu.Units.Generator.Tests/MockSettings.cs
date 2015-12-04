@@ -1,11 +1,15 @@
 ﻿namespace Gu.Units.Generator.Tests
 {
+    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+
     public class MockSettings : Settings
     {
         public readonly SiUnit Metres;
         public readonly Quantity Length;
 
         public readonly SiUnit Kilograms;
+        public Conversion Grams;
         public readonly Quantity Mass;
 
         public readonly SiUnit Seconds;
@@ -40,9 +44,13 @@
 
         public readonly DerivedUnit Hertz;
         public readonly Quantity Frequency;
+        public Prefix Milli = new Prefix("Milli", "m", -3);
+        public Prefix Kilo = new Prefix("Kilo", "k", 3);
 
         public MockSettings()
         {
+            Prefixes.Add(this.Milli);
+            Prefixes.Add(this.Kilo);
             Metres = new SiUnit("Metres", "m") { QuantityName = "Length" };
             SiUnits.Add(Metres);
             Length = Metres.Quantity;
@@ -52,6 +60,8 @@
             Time = Seconds.Quantity;
 
             Kilograms = new SiUnit("Kilograms", "kg") { QuantityName = "Mass" };
+            this.Grams = new Conversion("Grams", "g") { Formula = new ConversionFormula(this.Kilograms) { ConversionFactor = 0.001 } };
+            this.Kilograms.Conversions.Add(Grams);
             SiUnits.Add(Kilograms);
             Mass = Kilograms.Quantity;
 
@@ -63,7 +73,8 @@
                 "MetresPerSecond",
                 "m/s",
                 new UnitAndPower(Metres, 1),
-                new UnitAndPower(Seconds, -1)) { QuantityName = "Speed" };
+                new UnitAndPower(Seconds, -1))
+            { QuantityName = "Speed" };
             DerivedUnits.Add(MetresPerSecond);
             Speed = MetresPerSecond.Quantity;
 
@@ -72,7 +83,8 @@
                 "N",
                 new UnitAndPower(Kilograms, 1),
                 new UnitAndPower(Metres, 1),
-                new UnitAndPower(Seconds, -2)) { QuantityName = "Force" };
+                new UnitAndPower(Seconds, -2))
+            { QuantityName = "Force" };
             DerivedUnits.Add(Newtons);
             Force = Newtons.Quantity;
 
@@ -80,7 +92,8 @@
                 "Joules",
                 "J",
                 new UnitAndPower(Newtons, 1),
-                new UnitAndPower(Metres, 1)) { QuantityName = "Energy" };
+                new UnitAndPower(Metres, 1))
+            { QuantityName = "Energy" };
             DerivedUnits.Add(Joules);
             Energy = Joules.Quantity;
 
@@ -88,7 +101,8 @@
                 "Watts",
                 "W",
                 new UnitAndPower(Joules, 1),
-                new UnitAndPower(Seconds, -1)) { QuantityName = "Power" };
+                new UnitAndPower(Seconds, -1))
+            { QuantityName = "Power" };
             DerivedUnits.Add(Watts);
             Power = Watts.Quantity;
 
@@ -96,7 +110,8 @@
                 "Volts",
                 "V",
                 new UnitAndPower(Watts, 1),
-                new UnitAndPower(Amperes, -1)) { QuantityName = "Voltage" };
+                new UnitAndPower(Amperes, -1))
+            { QuantityName = "Voltage" };
             DerivedUnits.Add(Volts);
             Voltage = Volts.Quantity;
 
@@ -104,7 +119,8 @@
                 "Coloumbs",
                 "C",
                 new UnitAndPower(Seconds, 1),
-                new UnitAndPower(Amperes, 1)) { QuantityName = "ElectricCharge" };
+                new UnitAndPower(Amperes, 1))
+            { QuantityName = "ElectricCharge" };
             DerivedUnits.Add(Coloumbs);
             ElectricCharge = Coloumbs.Quantity;
 
