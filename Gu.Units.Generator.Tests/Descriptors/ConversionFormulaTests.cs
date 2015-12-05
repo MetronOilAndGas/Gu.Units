@@ -41,7 +41,6 @@
             Assert.AreEqual("Kelvin/1.8 + 459.67", conversionFormula.FromSi);
         }
 
-
         [Test]
         public void NestedFactorConversion()
         {

@@ -45,7 +45,7 @@
 
                 <DataGrid Grid.Row="1"
                           AutoGenerateColumns="False"
-                          ItemsSource="{Binding Conversions.BaseUnit.Conversions}">
+                          ItemsSource="{Binding Conversions.AllConversions}">
                     <DataGrid.Columns>
                         <DataGridTextColumn Binding="{Binding Quantity.ClassName}" Header="Quantity" />
                         <DataGridTextColumn Binding="{Binding ClassName}" Header="Unit" />

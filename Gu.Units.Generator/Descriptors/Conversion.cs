@@ -31,6 +31,14 @@
             this.formula = new ConversionFormula(this);
         }
 
+        public Conversion(IUnit unit, Prefix prefix)
+        {
+            this.baseUnit = unit;
+            this.prefix = prefix;
+            this.formula = new ConversionFormula(unit);
+            Update();
+        }
+
         public string Symbol
         {
             get
@@ -68,6 +76,7 @@
                 {
                     return "Error no quantity";
                 }
+
                 return Quantity.ClassName;
             }
             set
@@ -104,7 +113,7 @@
                 }
                 this.baseUnit = value;
                 this.OnPropertyChanged();
-                SyncWithPrefix();
+                Update();
             }
         }
 
@@ -123,7 +132,7 @@
                 }
                 this.prefix = value;
                 this.OnPropertyChanged();
-                SyncWithPrefix();
+                Update();
             }
         }
 
@@ -135,6 +144,21 @@
 
         public ObservableCollection<Conversion> Conversions => this.conversions;
 
+        public IEnumerable<Conversion> AllConversions
+        {
+            get
+            {
+                foreach (var conversion in this.conversions)
+                {
+                    yield return conversion;
+                    foreach (var nested in conversion.AllConversions)
+                    {
+                        yield return nested;
+                    }
+                }
+            }
+        }
+
         public bool AnyOffsetConversion
         {
             get { return Conversions.Any(x => x.Formula.Offset != 0); }
@@ -145,17 +169,20 @@
         [XmlIgnore]
         public Settings Settings { get; set; }
 
-        private void SyncWithPrefix()
+        public void Update()
         {
             if (BaseUnit == null || Prefix == null)
             {
                 return;
             }
-            Formula.ConversionFactor = Math.Pow(10, this.prefix.Power);
+
+            Formula.ConversionFactor = Math.Pow(10, Prefix.Power);
+            Formula.Update();
             if (string.IsNullOrEmpty(Symbol))
             {
                 Symbol = Prefix.Symbol + BaseUnit.Symbol;
             }
+
             if (string.IsNullOrEmpty(ClassName))
             {
                 ClassName = Prefix.Name + BaseUnit.ParameterName;

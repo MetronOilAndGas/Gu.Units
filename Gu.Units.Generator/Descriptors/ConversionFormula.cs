@@ -25,10 +25,6 @@
         public ConversionFormula(IUnit baseUnit)
         {
             this.baseUnit = baseUnit;
-            //var conversion = this.baseUnit as Conversion;
-            //conversion?.ObservePropertyChanged(x => x.Prefix.Power).Subscribe(_ => Update());
-            //conversion?.ObservePropertyChanged(x => x.Formula.ConversionFactor).Subscribe(_ => Update());
-            //conversion?.ObservePropertyChanged(x => x.Formula.Offset).Subscribe(_ => Update());
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -39,7 +35,10 @@
             set
             {
                 if (value.Equals(this.conversionFactor))
+                {
                     return;
+                }
+
                 this.conversionFactor = value;
                 OnPropertyChanged();
                 OnPropertyChanged(nameof(RootFactor));
@@ -164,9 +163,12 @@
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        private void Update()
+        public void Update()
         {
-            ConversionFactor = RootFactor;
+            //OnPropertyChanged(nameof(ConversionFactor));
+            //OnPropertyChanged(nameof(Offset));
+            OnPropertyChanged(nameof(ToSi));
+            OnPropertyChanged(nameof(FromSi));
         }
     }
 }

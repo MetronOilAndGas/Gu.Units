@@ -46,7 +46,7 @@
             if (this.baseUnit != null)
             {
                 var units = new List<IUnit>(this.baseUnit.Conversions.Count + 1) {this.baseUnit};
-                units.AddRange(this.baseUnit.Conversions);
+                units.AddRange(this.baseUnit.AllConversions);
                 var conversions = units.Where(IsValidPrefixUnit);
                 foreach (var conversion in conversions)
                 {
@@ -63,6 +63,13 @@
             }
 
             if (Illegals.Any(x => unit.ClassName.IndexOf(x, StringComparison.OrdinalIgnoreCase) >= 0))
+            {
+                return false;
+            }
+
+            var conversion = unit as Conversion;
+            if (conversion != null &&
+                conversion.Formula.Offset != 0)
             {
                 return false;
             }

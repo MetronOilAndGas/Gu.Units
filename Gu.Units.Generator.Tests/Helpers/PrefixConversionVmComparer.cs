@@ -13,11 +13,7 @@
 
         public int Compare(PrefixConversionVm x, PrefixConversionVm y)
         {
-            if (x.Unit.ClassName != y.Unit.ClassName)
-            {
-                return -1;
-            }
-            return PrefixComparer.Default.Compare(x.Prefix, y.Prefix);
+            return ConversionComparer.Default.Compare(x.Conversion, y.Conversion);
         }
 
         int IComparer.Compare(object x, object y)

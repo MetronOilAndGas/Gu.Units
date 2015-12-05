@@ -5,8 +5,6 @@
     using System.Linq;
     using System.Xml.Serialization;
 
-    using WpfStuff;
-
     [Serializable]
     public class Quantity : TypeMetaData
     {

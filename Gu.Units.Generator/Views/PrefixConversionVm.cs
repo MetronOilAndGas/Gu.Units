@@ -3,28 +3,28 @@
     using System;
     using System.ComponentModel;
     using System.Linq;
+    using System.Reactive;
     using System.Runtime.CompilerServices;
     using Annotations;
+    using Reactive;
     using WpfStuff;
 
     public class PrefixConversionVm : INotifyPropertyChanged
     {
         public PrefixConversionVm(Prefix prefix, IUnit unit)
+            : this(new Conversion(unit, prefix))
         {
-            this.Unit = unit;
-            Prefix = prefix;
-            this.Conversion = new Conversion
-            {
-                BaseUnit = unit,
-                Prefix = prefix
-            };
+        }
+
+        public PrefixConversionVm(Conversion conversion)
+        {
+            Conversion = conversion;
+            Conversion.ObservePropertyChanged(x => x.Prefix.Power).Subscribe(_ => Conversion.Update());
+            Conversion.ObservePropertyChanged(x => x.Formula.ConversionFactor).Subscribe(_ => Conversion.Update());
+            Conversion.ObservePropertyChanged(x => x.Formula.Offset).Subscribe(_ => Conversion.Update());
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
-
-        public IUnit Unit { get; }
-
-        public Prefix Prefix { get; }
 
         public Conversion Conversion { get; }
 
@@ -32,11 +32,13 @@
         {
             get
             {
-                if (this.Unit == null)
+                var conversion = Conversion;
+                if (conversion == null)
                 {
                     return false;
                 }
-                return this.Unit.Conversions.Any(x => x.Formula.ConversionFactor == this.Conversion.Formula.ConversionFactor && string.Equals(x.ClassName, Conversion.ClassName, StringComparison.OrdinalIgnoreCase));
+                conversion.Update();
+                return Conversion.Formula.RooUnit.AllConversions.Any(IsMatch);
             }
             set
             {
@@ -46,11 +48,11 @@
                 }
                 if (value)
                 {
-                    this.Unit.Conversions.Add(new Conversion {Prefix = Prefix, BaseUnit = Unit});
+                    Conversion.BaseUnit.Conversions.Add(Conversion);
                 }
                 else
                 {
-                    this.Unit.Conversions.InvokeRemove(x => x.Prefix != null && x.Prefix.Name == Prefix.Name);
+                    Conversion.BaseUnit.Conversions.InvokeRemove(IsMatch);
                 }
                 OnPropertyChanged();
             }
@@ -60,6 +62,21 @@
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        private bool IsMatch(Conversion x)
+        {
+            if (Conversion.Formula.Offset != x.Formula.Offset)
+            {
+                return false;
+            }
+
+            if (Conversion.Formula.RootFactor != x.Formula.RootFactor)
+            {
+                return false;
+            }
+
+            return string.Equals(Conversion.ClassName, x.ClassName, StringComparison.OrdinalIgnoreCase);
         }
     }
 }

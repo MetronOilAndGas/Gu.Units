@@ -1,12 +1,14 @@
 ﻿namespace Gu.Units.Generator
 {
     using System.ComponentModel;
+    using System.Diagnostics;
     using System.Runtime.CompilerServices;
     using Annotations;
 
     /// <summary>
     /// http://physics.nist.gov/cuu/Units/prefixes.html
     /// </summary>
+    [DebuggerDisplay("Prefix{Name} ({Symbol}) 1E{Power}")]
     public class Prefix : INotifyPropertyChanged
     {
         private string name;
@@ -63,16 +65,10 @@
                 {
                     return;
                 }
+
                 this.power = value;
                 OnPropertyChanged();
             }
-        }
-
-        public bool IsEmpty => Power == 0 || string.IsNullOrEmpty(Name);
-
-        public override string ToString()
-        {
-            return $"Name: {this.Name}, Symbol: {this.Symbol}, Power: {this.Power}";
         }
 
         [NotifyPropertyChangedInvocator]

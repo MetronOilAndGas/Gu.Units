@@ -22,8 +22,8 @@
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="{Binding Conversion.Symbol}" />
                                     <TextBlock Text="(" />
-                                    <TextBlock Text="{Binding Prefix.Name}" />
-                                    <TextBlock Text="{Binding Unit.ParameterName}" />
+                                    <TextBlock Text="{Binding Conversion.Prefix.Name}" />
+                                    <TextBlock Text="{Binding Conversion.BaseUnit.ParameterName}" />
                                     <TextBlock Text=")" />
                                 </StackPanel>
                             </CheckBox>

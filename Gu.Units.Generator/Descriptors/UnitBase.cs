@@ -1,6 +1,7 @@
 ﻿namespace Gu.Units.Generator
 {
     using System.CodeDom.Compiler;
+    using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.Linq;
     using System.Xml.Serialization;
@@ -66,10 +67,25 @@
 
         public ObservableCollection<Conversion> Conversions => this.conversions;
 
+        public IEnumerable<Conversion> AllConversions
+        {
+            get
+            {
+                foreach (var conversion in Conversions)
+                {
+                    yield return conversion;
+                    foreach (var nested in conversion.AllConversions)
+                    {
+                        yield return nested;
+                    }
+                }
+            }
+        }
+
         [XmlIgnore]
         public bool AnyOffsetConversion
         {
-            get { return Conversions.Any(x => x.Formula.Offset != 0); }
+            get { return AllConversions.Any(x => x.Formula.Offset != 0); }
         }
 
         [XmlIgnore]
