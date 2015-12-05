@@ -2,6 +2,7 @@
 {
     using System;
     using System.ComponentModel;
+    using System.Diagnostics;
     using System.Globalization;
     using System.Runtime.CompilerServices;
     using System.Text;
@@ -9,10 +10,14 @@
     using Annotations;
     using WpfStuff;
 
+    [DebuggerDisplay("{ToSi}")]
     [TypeConverter(typeof(StringToFormulaConverter))]
     public class ConversionFormula : INotifyPropertyChanged
     {
         private readonly IUnit baseUnit;
+        private double conversionFactor;
+        private double offset;
+
         private ConversionFormula()
         {
         }
@@ -20,13 +25,76 @@
         public ConversionFormula(IUnit baseUnit)
         {
             this.baseUnit = baseUnit;
+            //var conversion = this.baseUnit as Conversion;
+            //conversion?.ObservePropertyChanged(x => x.Prefix.Power).Subscribe(_ => Update());
+            //conversion?.ObservePropertyChanged(x => x.Formula.ConversionFactor).Subscribe(_ => Update());
+            //conversion?.ObservePropertyChanged(x => x.Formula.Offset).Subscribe(_ => Update());
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public double ConversionFactor { get; set; }
+        public double ConversionFactor
+        {
+            get { return this.conversionFactor; }
+            set
+            {
+                if (value.Equals(this.conversionFactor))
+                    return;
+                this.conversionFactor = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(RootFactor));
+                OnPropertyChanged(nameof(ToSi));
+                OnPropertyChanged(nameof(FromSi));
+            }
+        }
 
-        public double Offset { get; set; }
+        public double Offset
+        {
+            get { return this.offset; }
+            set
+            {
+                if (value.Equals(this.offset))
+                    return;
+                this.offset = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(ToSi));
+                OnPropertyChanged(nameof(FromSi));
+            }
+        }
+
+        [XmlIgnore]
+        public IUnit RooUnit
+        {
+            get
+            {
+                IUnit root = this.baseUnit;
+                var unit = (root as Conversion)?.BaseUnit;
+                while (unit != null)
+                {
+                    root = unit;
+                    unit = (root as Conversion)?.BaseUnit;
+                }
+
+                return root;
+            }
+        }
+
+        [XmlIgnore]
+        public double RootFactor
+        {
+            get
+            {
+                var factor = ConversionFactor;
+                var conversion = this.baseUnit as Conversion;
+                while (conversion != null)
+                {
+                    factor *= conversion.Formula.ConversionFactor;
+                    conversion = conversion.BaseUnit as Conversion;
+                }
+
+                return factor;
+            }
+        }
 
         [XmlIgnore]
         public string ToSi
@@ -34,20 +102,20 @@
             get
             {
                 var builder = new StringBuilder();
-                if (ConversionFactor != 1)
+                if (RootFactor != 1)
                 {
-                    builder.Append(ConversionFactor.ToString(CultureInfo.InvariantCulture) + "*");
+                    builder.Append(RootFactor.ToString(CultureInfo.InvariantCulture) + "*");
                 }
-                builder.Append(this.baseUnit != null ? this.baseUnit.Quantity.Unit.ClassName : "x");
+                builder.Append(RooUnit != null ? RooUnit.Quantity.Unit.ClassName : "x");
                 if (Offset != 0)
                 {
                     if (Offset > 0)
                     {
-                        builder.AppendFormat("+{0}", Offset.ToString(CultureInfo.InvariantCulture));
+                        builder.AppendFormat(" + {0}", Offset.ToString(CultureInfo.InvariantCulture));
                     }
                     else
                     {
-                        builder.AppendFormat(Offset.ToString(CultureInfo.InvariantCulture));
+                        builder.AppendFormat(" - {0}", (-Offset).ToString(CultureInfo.InvariantCulture));
                     }
                 }
                 return builder.ToString();
@@ -61,20 +129,20 @@
             {
                 var builder = new StringBuilder();
 
-                builder.Append(this.baseUnit != null ? this.baseUnit.Quantity.Unit.ClassName : "x");
-                if (ConversionFactor != 1)
+                builder.Append(RooUnit != null ? this.RooUnit.Quantity.Unit.ClassName : "x");
+                if (RootFactor != 1)
                 {
-                    builder.Append( "/"+ConversionFactor.ToString(CultureInfo.InvariantCulture));
+                    builder.Append("/" + RootFactor.ToString(CultureInfo.InvariantCulture));
                 }
                 if (Offset != 0)
                 {
                     if (Offset < 0)
                     {
-                        builder.AppendFormat("+{0}",(-1* Offset).ToString(CultureInfo.InvariantCulture));
+                        builder.AppendFormat(" + {0}", (-1 * Offset).ToString(CultureInfo.InvariantCulture));
                     }
                     else
                     {
-                        builder.AppendFormat((-1*Offset).ToString(CultureInfo.InvariantCulture));
+                        builder.AppendFormat(" - {0}", Offset.ToString(CultureInfo.InvariantCulture));
                     }
                 }
                 return builder.ToString();
@@ -94,6 +162,11 @@
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        private void Update()
+        {
+            ConversionFactor = RootFactor;
         }
     }
 }

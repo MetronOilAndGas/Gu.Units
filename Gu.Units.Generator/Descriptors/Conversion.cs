@@ -4,9 +4,11 @@
     using System.CodeDom.Compiler;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
+    using System.Diagnostics;
     using System.Linq;
     using System.Xml.Serialization;
 
+    [DebuggerDisplay("1*{ClassName} = {Formula.ToSi}")]
     public class Conversion : TypeMetaData, IUnit
     {
         private readonly ObservableCollection<Conversion> conversions = new ObservableCollection<Conversion>();

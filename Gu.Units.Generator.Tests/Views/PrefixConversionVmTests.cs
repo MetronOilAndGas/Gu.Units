@@ -13,8 +13,8 @@
             Assert.IsEmpty(settings.Amperes.Conversions);
 
             conversionVm.IsUsed = true;
-            var actual = new[] { new Conversion("Milliamperes", "mA") };
-            CollectionAssert.AreEqual(actual, settings.Amperes.Conversions, ConversionComparer.Default);
+            var expected = new[] {new Conversion("Milliamperes", "mA") {Prefix = settings.Milli}};
+            CollectionAssert.AreEqual(expected, settings.Amperes.Conversions, ConversionComparer.Default);
         }
     }
 }

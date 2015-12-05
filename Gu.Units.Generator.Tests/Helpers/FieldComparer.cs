@@ -18,7 +18,7 @@ namespace Gu.Units.Generator.Tests
             return Compare(x, y, new List<ComparedPair>());
         }
 
-        private int Compare(object x, object y, List<ComparedPair> compared )
+        private int Compare(object x, object y, List<ComparedPair> compared)
         {
             if (x == null && y == null)
             {
@@ -49,7 +49,7 @@ namespace Gu.Units.Generator.Tests
                 }
                 else
                 {
-                    if(compared.Any(c => c.HasCompared(oX, oY)))
+                    if (compared.Any(c => c.HasCompared(oX, oY)))
                     {
                         return 0;
                     }

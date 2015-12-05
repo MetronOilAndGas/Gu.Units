@@ -12,6 +12,9 @@
         public Conversion Grams;
         public readonly Quantity Mass;
 
+        public readonly SiUnit Kelvins;
+        public readonly Quantity Temperature;
+
         public readonly SiUnit Seconds;
         public readonly Quantity Time;
 
@@ -54,6 +57,9 @@
             Metres = new SiUnit("Metres", "m") { QuantityName = "Length" };
             SiUnits.Add(Metres);
             Length = Metres.Quantity;
+
+            Kelvins = new SiUnit("Kelvin", "K");
+            Temperature = this.Kelvins.Quantity;
 
             Seconds = new SiUnit("Seconds", "s") { QuantityName = "Time" };
             SiUnits.Add(Seconds);
