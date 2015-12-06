@@ -6,6 +6,7 @@
     using System.Globalization;
     using System.Linq;
     using System.Text.RegularExpressions;
+    using Serialization;
 
     public class UnitPartsConverter : TypeConverter
     {
@@ -28,7 +29,7 @@
             {
                 return null;
             }
-
+            var settings = Persister.GetSettings();
             var matches = Parse(s);
             var parts = new UnitParts(null);
             int sign = 1;
@@ -43,7 +44,7 @@
                         expectsSymbol = false;
                         continue;
                     }
-                    var unit = Settings.Instance.AllUnits.Single(x => x.Symbol == symbol);
+                    var unit = settings.AllUnits.Single(x => x.Symbol == symbol);
                     int p = ParsePower(match.Groups["Power"].Value);
                     parts.Add(new UnitAndPower(unit, sign * p));
                     expectsSymbol = false;
@@ -75,7 +76,8 @@
 
         private static IEnumerable<Match> Parse(string s)
         {
-            var symbols = Settings.Instance.AllUnits.Where(x => !string.IsNullOrEmpty(x.Symbol))
+            var settings = Persister.GetSettings();
+            var symbols = settings.AllUnits.Where(x => !string.IsNullOrEmpty(x.Symbol))
                                                     .Select(x => Regex.Escape(x.Symbol))
                                                     .ToArray();
             var symbolsPattern = string.Join("|", new[] { "1" }.Concat(symbols));

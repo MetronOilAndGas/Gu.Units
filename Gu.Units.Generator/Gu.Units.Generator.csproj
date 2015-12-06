@@ -110,6 +110,7 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Serialization\ExcludeCalculatedResolver.cs" />
+    <Compile Include="Serialization\Persister.cs" />
     <Compile Include="StringExt.cs" />
     <Compile Include="Views\PartConversionsView.xaml.cs">
       <DependentUpon>PartConversionsView.xaml</DependentUpon>

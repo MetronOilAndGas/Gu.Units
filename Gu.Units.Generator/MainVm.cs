@@ -4,6 +4,7 @@
     using System.ComponentModel;
     using System.Runtime.CompilerServices;
     using JetBrains.Annotations;
+    using Serialization;
 
     public class MainVm : INotifyPropertyChanged
     {
@@ -14,10 +15,9 @@
 
         private MainVm()
         {
-            this.settings = Settings.Instance;
+            this.settings = Persister.GetSettings();
             NameSpace = Settings.ProjectName;
             this.conversions = new ConversionsVm(this.settings);
-            
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -50,7 +50,7 @@
 
         public void Save()
         {
-            Settings.Save(this.settings, Settings.FullFileName);
+            Persister.Save();
         }
 
         [NotifyPropertyChangedInvocator]
