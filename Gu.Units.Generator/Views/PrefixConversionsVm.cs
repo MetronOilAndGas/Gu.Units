@@ -6,14 +6,14 @@
     using System.ComponentModel;
     using System.Linq;
     using System.Runtime.CompilerServices;
-    using Annotations;
+    using JetBrains.Annotations;
 
     public class PrefixConversionsVm : INotifyPropertyChanged
     {
         private static readonly IReadOnlyList<string> Illegals = new[] { "cubic", "square", "per" };
         private readonly Settings settings;
         private readonly ObservableCollection<PrefixConversionVm[]> prefixes = new ObservableCollection<PrefixConversionVm[]>();
-        private IUnit baseUnit;
+        private BaseUnit baseUnit;
 
         public PrefixConversionsVm(Settings settings)
         {
@@ -24,7 +24,7 @@
 
         public ObservableCollection<PrefixConversionVm[]> Prefixes => this.prefixes;
 
-        public IUnit BaseUnit
+        public BaseUnit BaseUnit
         {
             get { return this.baseUnit; }
             set
@@ -39,42 +39,49 @@
             }
         }
 
-        public void SetBaseUnit(IUnit value)
+        public void SetBaseUnit(BaseUnit value)
         {
             this.BaseUnit = value;
             this.prefixes.Clear();
             if (this.baseUnit != null)
             {
-                var units = new List<IUnit>(this.baseUnit.Conversions.Count + 1) {this.baseUnit};
-                units.AddRange(this.baseUnit.AllConversions);
-                var conversions = units.Where(IsValidPrefixUnit);
-                foreach (var conversion in conversions)
+                if (IsValidPrefixUnit(this.baseUnit))
                 {
-                    this.prefixes.Add(this.settings.Prefixes.Select(x => new PrefixConversionVm(x, conversion)).ToArray());
+                    this.prefixes.Add(this.settings.Prefixes.Select(x => new PrefixConversionVm(this.baseUnit.PrefixConversions, this.baseUnit, x)).ToArray());
+                }
+
+                foreach (var conversion in this.baseUnit.FactorConversions)
+                {
+                    this.prefixes.Add(this.settings.Prefixes.Select(x => new PrefixConversionVm(conversion.PrefixConversions, conversion, x)).ToArray());
                 }
             }
         }
 
-        private bool IsValidPrefixUnit(IUnit unit)
+        private bool IsValidPrefixUnit(INameAndSymbol item)
         {
-            if (this.settings.Prefixes.Any(p => unit.ClassName.StartsWith(p.Name, StringComparison.OrdinalIgnoreCase)))
+            if (this.settings.Prefixes.Any(p => item.Name.StartsWith(p.Name, StringComparison.OrdinalIgnoreCase)))
             {
                 return false;
             }
 
-            if (Illegals.Any(x => unit.ClassName.IndexOf(x, StringComparison.OrdinalIgnoreCase) >= 0))
+            if (Illegals.Any(x => item.Name.IndexOf(x, StringComparison.OrdinalIgnoreCase) >= 0))
             {
                 return false;
             }
 
-            var conversion = unit as Conversion;
-            if (conversion != null &&
-                conversion.Formula.Offset != 0)
+            var conversion = item as BaseUnit;
+            if (conversion != null)
             {
-                return false;
+                return true;
             }
 
-            return true;
+            var factorConversion = item as FactorConversion;
+            if (factorConversion != null)
+            {
+                return true;
+            }
+
+            return false;
         }
 
         [NotifyPropertyChangedInvocator]

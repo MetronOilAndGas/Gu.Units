@@ -8,6 +8,7 @@ NUGET
       Gu.Wpf.ToolTips (>= 0.2.0 < 1.0.0)
       Rx-WPF (>= 2.0.0 < 3.0.0)
     Gu.Wpf.ToolTips (0.2.0.0)
+    JetBrains.Annotations (10.0.0)
     Moq (4.2.1510.2205)
     Newtonsoft.Json (7.0.1)
     NUnit (2.6.4)

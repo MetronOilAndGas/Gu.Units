@@ -25,7 +25,7 @@
         [Test]
         public void LengthSpeed()
         {
-            var @operator = new OperatorOverload(this.length, this.speed, this.settings);
+            var @operator = new OperatorOverload(this.length, this.speed, this.settings.AllUnits);
             Assert.AreEqual(OperatorOverload.Divide, @operator.Operator);
             Assert.AreEqual(this.length, @operator.Left);
             Assert.AreEqual(this.time, @operator.Right);
@@ -35,7 +35,7 @@
         [Test]
         public void SpeedTime()
         {
-            var @operator = new OperatorOverload(this.speed, this.length, this.settings);
+            var @operator = new OperatorOverload(this.speed, this.length, this.settings.AllUnits);
             Assert.AreEqual(OperatorOverload.Multiply, @operator.Operator);
             Assert.AreEqual(this.speed, @operator.Left);
             Assert.AreEqual(this.time, @operator.Right);
@@ -45,7 +45,7 @@
         [Test]
         public void LengthArea()
         {
-            var @operator = new OperatorOverload(this.length, this.area, this.settings);
+            var @operator = new OperatorOverload(this.length, this.area, this.settings.AllUnits);
             Assert.AreEqual(OperatorOverload.Multiply, @operator.Operator);
             Assert.AreEqual(this.length, @operator.Left);
             Assert.AreEqual(this.length, @operator.Right);
@@ -55,7 +55,7 @@
         [Test]
         public void AreaLength()
         {
-            var @operator = new OperatorOverload(this.area, this.length, this.settings);
+            var @operator = new OperatorOverload(this.area, this.length, this.settings.AllUnits);
             Assert.AreEqual(OperatorOverload.Divide, @operator.Operator);
             Assert.AreEqual(this.area, @operator.Left);
             Assert.AreEqual(this.length, @operator.Right);
@@ -65,7 +65,7 @@
         [Test]
         public void LengthVolume()
         {
-            var @operator = new OperatorOverload(this.length, this.volume, this.settings);
+            var @operator = new OperatorOverload(this.length, this.volume, this.settings.AllUnits);
             Assert.AreEqual(OperatorOverload.Multiply, @operator.Operator);
             Assert.AreEqual(this.length, @operator.Left);
             Assert.AreEqual(this.area, @operator.Right);

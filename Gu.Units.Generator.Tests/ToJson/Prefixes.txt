@@ -1,0 +1,47 @@
+﻿
+{
+  "DerivedUnits": [],
+  "SiUnits": [],
+  "Prefixes": [
+    {
+      "Name": "Nano",
+      "Symbol": "n",
+      "Power": -9
+    },
+    {
+      "Name": "Micro",
+      "Symbol": "µ",
+      "Power": -6
+    },
+    {
+      "Name": "Milli",
+      "Symbol": "m",
+      "Power": -3
+    },
+    {
+      "Name": "Centi",
+      "Symbol": "c",
+      "Power": -2
+    },
+    {
+      "Name": "Deci",
+      "Symbol": "d",
+      "Power": -1
+    },
+    {
+      "Name": "Kilo",
+      "Symbol": "k",
+      "Power": 3
+    },
+    {
+      "Name": "Mega",
+      "Symbol": "M",
+      "Power": 6
+    },
+    {
+      "Name": "Giga",
+      "Symbol": "G",
+      "Power": 9
+    }
+  ],
+}

@@ -14,14 +14,11 @@
     public class Settings
     {
         private static Settings _instance;
-        private readonly ParentCollection<Settings, DerivedUnit> derivedUnits;
-        private readonly ParentCollection<Settings, SiUnit> siUnits;
-        private readonly ObservableCollection<Prefix> prefixes = new ObservableCollection<Prefix>();
 
-        protected Settings()
+        public Settings()
         {
-            this.derivedUnits = new ParentCollection<Settings, DerivedUnit>(this, (unit, settings) => unit.Settings = settings);
-            this.siUnits = new ParentCollection<Settings, SiUnit>(this, (unit, settings) => unit.Settings = settings);
+            //this.derivedUnits = new ParentCollection<Settings, DerivedUnit>(this, (unit, settings) => unit.Settings = settings);
+            //this.siUnits = new ParentCollection<Settings, BaseUnit>(this, (unit, settings) => unit.Settings = settings);
         }
 
         public static Settings Instance
@@ -73,13 +70,13 @@
         /// </summary>
         public static string Extension => "cs";
 
-        public ObservableCollection<DerivedUnit> DerivedUnits => this.derivedUnits;
+        public ObservableCollection<DerivedUnit> DerivedUnits { get; } = new ObservableCollection<DerivedUnit>();
 
-        public ObservableCollection<SiUnit> SiUnits => this.siUnits;
+        public ObservableCollection<BaseUnit> SiUnits { get; } = new ObservableCollection<BaseUnit>();
 
-        public ObservableCollection<Prefix> Prefixes => this.prefixes;
+        public ObservableCollection<Prefix> Prefixes { get; } = new ObservableCollection<Prefix>();
 
-        public IReadOnlyList<IUnit> AllUnits => SiUnits.Concat<IUnit>(DerivedUnits).ToList();
+        public IReadOnlyList<BaseUnit> AllUnits => SiUnits.Concat<BaseUnit>(DerivedUnits).ToList();
 
         public IReadOnlyList<Quantity> Quantities => AllUnits.Select(x => x.Quantity).ToList();
 
@@ -108,18 +105,19 @@
 
         public static void Save(Settings settings, string fullFileName)
         {
-            var serializer = new XmlSerializer(typeof(Settings));
-            var toSave = new Settings();
-            toSave.DerivedUnits.InvokeAddRange(settings.DerivedUnits.Where(x => x != null && !x.IsEmpty));
-            toSave.SiUnits.InvokeAddRange(settings.SiUnits.Where(x => x != null && !x.IsEmpty));
-            toSave.Prefixes.InvokeAddRange(settings.Prefixes.Where(x => x != null).OrderBy(x => x.Power));
-            using (var stream = File.Create(fullFileName))
-            {
-                using (var writer = new StreamWriter(stream, Encoding.UTF8))
-                {
-                    serializer.Serialize(writer, toSave);
-                }
-            }
+            throw new NotImplementedException();
+            //var serializer = new XmlSerializer(typeof(Settings));
+            //var toSave = new Settings();
+            //toSave.DerivedUnits.InvokeAddRange(settings.DerivedUnits.Where(x => x != null && !x.IsEmpty));
+            //toSave.SiUnits.InvokeAddRange(settings.SiUnits.Where(x => x != null && !x.IsEmpty));
+            //toSave.Prefixes.InvokeAddRange(settings.Prefixes.Where(x => x != null).OrderBy(x => x.Power));
+            //using (var stream = File.Create(fullFileName))
+            //{
+            //    using (var writer = new StreamWriter(stream, Encoding.UTF8))
+            //    {
+            //        serializer.Serialize(writer, toSave);
+            //    }
+            //}
         }
     }
 }

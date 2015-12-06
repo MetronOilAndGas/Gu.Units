@@ -12,7 +12,7 @@ if(QuantityData != null)
 }
 else
 {
-    var unit = new SiUnit("Metres", "m")
+    var unit = new BaseUnit("Metres", "m")
                     {
                         QuantityName = "Length"
                     };

@@ -15,8 +15,8 @@
             vm.SetBaseUnit(settings.Metres);
             var expected = new[]
             {
-                new PrefixConversionVm(settings.Milli, settings.Metres),
-                new PrefixConversionVm(settings.Kilo, settings.Metres)
+                new PrefixConversionVm(settings.Metres.PrefixConversions, settings.Metres, settings.Milli),
+                new PrefixConversionVm(settings.Metres.PrefixConversions, settings.Metres, settings.Kilo),
             };
 
             CollectionAssert.AreEqual(expected, vm.Prefixes.Single(), PrefixConversionVmComparer.Default);
@@ -33,14 +33,14 @@
             CollectionAssert.IsEmpty(vm.Prefixes);
 
             vm.SetBaseUnit(settings.Kilograms);
-            var expected = new[]
-            {
-                new PrefixConversionVm(settings.Milli, settings.Grams),
-                new PrefixConversionVm(settings.Kilo, settings.Grams),
-            };
+            //var expected = new[]
+            //{
+            //    new PrefixConversionVm(settings.Grams., new PrefixConversion("Millimetres","mm",settings.Milli)),
+            //    new PrefixConversionVm(settings.Kilo, settings.Grams),
+            //};
 
-            CollectionAssert.AreEqual(expected, vm.Prefixes.Single(), PrefixConversionVmComparer.Default);
-
+            //CollectionAssert.AreEqual(expected, vm.Prefixes.Single(), PrefixConversionVmComparer.Default);
+            Assert.Fail();
             vm.SetBaseUnit(null);
             CollectionAssert.IsEmpty(vm.Prefixes);
         }

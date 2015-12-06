@@ -1,29 +1,21 @@
 ﻿namespace Gu.Units.Generator
 {
+    using System.Collections.ObjectModel;
     using System.ComponentModel;
-    using System.Diagnostics;
     using System.Runtime.CompilerServices;
     using JetBrains.Annotations;
 
-    /// <summary>
-    /// http://physics.nist.gov/cuu/Units/prefixes.html
-    /// </summary>
-    [DebuggerDisplay("Prefix{Name} ({Symbol}) 1E{Power}")]
-    public class Prefix : INotifyPropertyChanged
+    public class FactorConversion : IConversion
     {
         private string name;
         private string symbol;
-        private int power;
+        private double factor;
 
-        private Prefix()
+        public FactorConversion(string name, string symbol, double factor)
         {
-        }
-
-        public Prefix(string name, string symbol, int power)
-        {
-            Name = name;
-            Symbol = symbol;
-            Power = power;
+            this.name = name;
+            this.symbol = symbol;
+            this.factor = factor;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -37,6 +29,7 @@
                 {
                     return;
                 }
+
                 this.name = value;
                 OnPropertyChanged();
             }
@@ -51,25 +44,29 @@
                 {
                     return;
                 }
+
                 this.symbol = value;
                 OnPropertyChanged();
             }
         }
 
-        public int Power
+        public double Factor
         {
-            get { return this.power; }
+            get { return this.factor; }
             set
             {
-                if (value == this.power)
-                {
+                if (value.Equals(this.factor))
                     return;
-                }
-
-                this.power = value;
+                this.factor = value;
                 OnPropertyChanged();
             }
         }
+
+        public double Offset => 0;
+
+        public bool IsOffset => false;
+
+        public ObservableCollection<PrefixConversion> PrefixConversions { get; } = new ObservableCollection<PrefixConversion>();
 
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)

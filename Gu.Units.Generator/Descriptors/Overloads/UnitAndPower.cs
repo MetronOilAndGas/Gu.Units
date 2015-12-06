@@ -3,101 +3,39 @@
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
-    using System.Linq;
     using System.Runtime.CompilerServices;
-    using System.Xml.Serialization;
-    using Annotations;
+    using JetBrains.Annotations;
 
     public class UnitAndPower : INotifyPropertyChanged
     {
         public static readonly IEqualityComparer<UnitAndPower> Comparer = new UnitNamePowerEqualityComparer();
 
-        private IUnit unit;
-        private string unitName;
-        private int power;
-        private IUnit parent;
+
         private UnitAndPower()
         {
         }
 
-        public UnitAndPower(IUnit unit)
+        public UnitAndPower(BaseUnit unit)
         {
-            this.unit = unit;
-            this.power = 1;
+            Unit = unit;
+            Power = 1;
         }
 
-        public UnitAndPower(IUnit unit, int power)
+        public UnitAndPower(BaseUnit unit, int power)
         {
             if (power == 0)
             {
                 throw new ArgumentException("power == 0", nameof(power));
             }
-            this.unit = unit;
-            this.power = power;
+            Unit = unit;
+            Power = power;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        [XmlIgnore]
-        public IUnit Unit
-        {
-            get
-            {
-                return this.unit ?? (this.unit = Parent.Settings.AllUnits.Single(x => x.ClassName == this.unitName));
-            }
-            set
-            {
-                if (Equals(value, this.unit))
-                {
-                    return;
-                }
-                this.unit = value;
-                OnPropertyChanged();
-                OnPropertyChanged(nameof(UnitName));
-            }
-        }
+        public BaseUnit Unit { get; }
 
-        public string UnitName
-        {
-            get
-            {
-                if (Unit != null)
-                {
-                    return this.Unit.ClassName;
-                }
-                return this.unitName;
-            }
-            set
-            {
-                this.unitName = value;
-            }
-        }
-
-        public int Power
-        {
-            get { return this.power; }
-            set
-            {
-                if (value == this.power)
-                {
-                    return;
-                }
-                this.power = value;
-                OnPropertyChanged();
-            }
-        }
-
-        [XmlIgnore]
-        public IUnit Parent
-        {
-            get { return this.parent; }
-            set
-            {
-                this.parent = value;
-                OnPropertyChanged();
-                OnPropertyChanged(nameof(Unit));
-            }
-        }
+        public int Power { get; }
 
         public static UnitAndPower operator ^(UnitAndPower up, int i)
         {
@@ -110,11 +48,11 @@
             {
                 if (Unit == null)
                 {
-                    return $"(({UnitName})null)^1";
+                    return $"(({Unit.Name})null)^1";
                 }
                 return this.Unit.Symbol;
             }
-            return $"({(this.Unit == null ? "null" : "")}){this.UnitName}^{Power}";
+            return $"({(this.Unit == null ? "null" : "")}){Unit.Name}^{Power}";
         }
 
         [NotifyPropertyChangedInvocator]
@@ -125,7 +63,7 @@
 
         protected bool Equals(UnitAndPower other)
         {
-            return Equals(this.unit, other.unit) && this.power == other.power;
+            return Equals(Unit, other.Unit) && Power == other.Power;
         }
 
         public override bool Equals(object obj)
@@ -149,7 +87,7 @@
         {
             unchecked
             {
-                return ((this.unit?.GetHashCode() ?? 0) * 397) ^ this.power;
+                return ((Unit?.GetHashCode() ?? 0) * 397) ^ Power;
             }
         }
 
@@ -173,14 +111,14 @@
                 {
                     return false;
                 }
-                return string.Equals(x.UnitName, y.UnitName) && x.power == y.power;
+                return string.Equals(x.Unit, y.Unit) && x.Power == y.Power;
             }
 
             public int GetHashCode(UnitAndPower obj)
             {
                 unchecked
                 {
-                    return ((obj.unitName?.GetHashCode() ?? 0) * 397) ^ obj.power;
+                    return ((obj.Unit?.GetHashCode() ?? 0) * 397) ^ obj.Power;
                 }
             }
         }

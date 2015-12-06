@@ -3,8 +3,7 @@
     using System.Collections.ObjectModel;
     using System.ComponentModel;
     using System.Runtime.CompilerServices;
-    using Annotations;
-
+    using JetBrains.Annotations;
 
     public class MainVm : INotifyPropertyChanged
     {
@@ -25,7 +24,7 @@
 
         public ObservableCollection<Prefix> Prefixes => this.settings.Prefixes;
 
-        public ObservableCollection<SiUnit> SiUnits => this.settings.SiUnits;
+        public ObservableCollection<BaseUnit> SiUnits => this.settings.SiUnits;
 
         public ObservableCollection<DerivedUnit> DerivedUnits => this.settings.DerivedUnits;
 

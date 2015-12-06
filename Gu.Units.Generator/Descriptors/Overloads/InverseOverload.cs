@@ -16,7 +16,7 @@
 
         public override string ToString()
         {
-            return $"1 / {this.Original.ClassName} = {this.Inverted.ClassName}";
+            return $"1 / {this.Original.Name} = {this.Inverted.Name}";
         }
 
         public static bool IsInverse(Quantity left, Quantity right)

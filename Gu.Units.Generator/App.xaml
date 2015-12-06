@@ -14,7 +14,7 @@
 
         <GroupStyle x:Key="GroupStyle">
             <GroupStyle.HeaderTemplate>
-                <DataTemplate DataType="{x:Type generator:IUnit}">
+                <DataTemplate DataType="{x:Type generator:BaseUnit}">
                     <StackPanel>
                         <TextBlock Text="{Binding QuantityName}" />
                     </StackPanel>

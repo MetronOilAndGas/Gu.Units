@@ -4,8 +4,7 @@
     using System.ComponentModel;
     using System.Runtime.CompilerServices;
     using System.Xml.Serialization;
-
-    using Annotations;
+    using JetBrains.Annotations;
     using WpfStuff;
 
     [TypeConverter(typeof(TypeMetaDataConverter))]

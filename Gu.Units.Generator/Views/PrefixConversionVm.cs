@@ -1,44 +1,32 @@
 ﻿namespace Gu.Units.Generator
 {
-    using System;
+    using System.Collections.Generic;
     using System.ComponentModel;
     using System.Linq;
-    using System.Reactive;
     using System.Runtime.CompilerServices;
-    using Annotations;
-    using Reactive;
-    using WpfStuff;
+    using JetBrains.Annotations;
 
     public class PrefixConversionVm : INotifyPropertyChanged
     {
-        public PrefixConversionVm(Prefix prefix, IUnit unit)
-            : this(new Conversion(unit, prefix))
-        {
-        }
+        private readonly IList<PrefixConversion> conversions;
+        private readonly INameAndSymbol nameAndSymbol;
 
-        public PrefixConversionVm(Conversion conversion)
+        public PrefixConversionVm(IList<PrefixConversion> conversions, INameAndSymbol nameAndSymbol, Prefix prefix)
         {
-            Conversion = conversion;
-            Conversion.ObservePropertyChanged(x => x.Prefix.Power).Subscribe(_ => Conversion.Update());
-            Conversion.ObservePropertyChanged(x => x.Formula.ConversionFactor).Subscribe(_ => Conversion.Update());
-            Conversion.ObservePropertyChanged(x => x.Formula.Offset).Subscribe(_ => Conversion.Update());
+            this.conversions = conversions;
+            this.nameAndSymbol = nameAndSymbol;
+            Conversion = new PrefixConversion(prefix.Name + nameAndSymbol.Name.ToFirstCharLower(), prefix.Symbol + nameAndSymbol.Symbol, prefix);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public Conversion Conversion { get; }
+        public PrefixConversion Conversion { get; }
 
         public bool IsUsed
         {
             get
             {
-                var conversion = Conversion;
-                if (conversion == null)
-                {
-                    return false;
-                }
-                conversion.Update();
-                return Conversion.Formula.RooUnit.AllConversions.Any(IsMatch);
+                return conversions.Any(IsMatch);
             }
             set
             {
@@ -48,11 +36,15 @@
                 }
                 if (value)
                 {
-                    Conversion.BaseUnit.Conversions.Add(Conversion);
+                    conversions.Add(Conversion);
                 }
                 else
                 {
-                    Conversion.BaseUnit.Conversions.InvokeRemove(IsMatch);
+                    var match = this.conversions.FirstOrDefault(IsMatch);
+                    if (match != null)
+                    {
+                        conversions.Remove(match);
+                    }
                 }
                 OnPropertyChanged();
             }
@@ -64,19 +56,14 @@
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        private bool IsMatch(Conversion x)
+        private bool IsMatch(PrefixConversion x)
         {
-            if (Conversion.Formula.Offset != x.Formula.Offset)
+            if (Conversion.Prefix.Power != x.Prefix.Power)
             {
                 return false;
             }
 
-            if (Conversion.Formula.RootFactor != x.Formula.RootFactor)
-            {
-                return false;
-            }
-
-            return string.Equals(Conversion.ClassName, x.ClassName, StringComparison.OrdinalIgnoreCase);
+            return true;
         }
     }
 }

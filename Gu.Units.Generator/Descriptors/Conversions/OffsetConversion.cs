@@ -1,29 +1,22 @@
 ﻿namespace Gu.Units.Generator
 {
     using System.ComponentModel;
-    using System.Diagnostics;
     using System.Runtime.CompilerServices;
     using JetBrains.Annotations;
 
-    /// <summary>
-    /// http://physics.nist.gov/cuu/Units/prefixes.html
-    /// </summary>
-    [DebuggerDisplay("Prefix{Name} ({Symbol}) 1E{Power}")]
-    public class Prefix : INotifyPropertyChanged
+    public class OffsetConversion : IConversion
     {
         private string name;
         private string symbol;
-        private int power;
+        private double factor;
+        private double offset;
 
-        private Prefix()
+        public OffsetConversion(string name, string symbol, double factor, double offset)
         {
-        }
-
-        public Prefix(string name, string symbol, int power)
-        {
-            Name = name;
-            Symbol = symbol;
-            Power = power;
+            this.name = name;
+            this.symbol = symbol;
+            this.factor = factor;
+            this.offset = offset;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -37,6 +30,7 @@
                 {
                     return;
                 }
+
                 this.name = value;
                 OnPropertyChanged();
             }
@@ -51,25 +45,37 @@
                 {
                     return;
                 }
+
                 this.symbol = value;
                 OnPropertyChanged();
             }
         }
 
-        public int Power
+        public double Factor
         {
-            get { return this.power; }
+            get { return this.factor; }
             set
             {
-                if (value == this.power)
-                {
+                if (value.Equals(this.factor))
                     return;
-                }
-
-                this.power = value;
+                this.factor = value;
                 OnPropertyChanged();
             }
         }
+
+        public double Offset
+        {
+            get { return this.offset; }
+            set
+            {
+                if (value.Equals(this.offset))
+                    return;
+                this.offset = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool IsOffset => true;
 
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)

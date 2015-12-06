@@ -3,26 +3,26 @@
     using System.ComponentModel;
     using System.Linq;
     using System.Runtime.CompilerServices;
-    using Annotations;
+    using JetBrains.Annotations;
     using Reactive;
 
     public class ConversionsVm : INotifyPropertyChanged
     {
         private readonly Settings settings;
-        private readonly ReadOnlySerialView<Conversion> allConversions = new ReadOnlySerialView<Conversion>();
-        private IUnit baseUnit;
+        private readonly ReadOnlySerialView<IConversion> allConversions = new ReadOnlySerialView<IConversion>();
+        private BaseUnit baseUnit;
 
         public ConversionsVm(Settings settings)
         {
             this.settings = settings;
             PrefixConversions = new PrefixConversionsVm(settings);
             PartConversions = new PartConversionsVm(settings);
-            BaseUnit = settings.AllUnits.FirstOrDefault(x => x.ClassName == "SquareMetres"); // for designtime
+            BaseUnit = settings.AllUnits.FirstOrDefault(x => x.Name == "SquareMetres"); // for designtime
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public IUnit BaseUnit
+        public BaseUnit BaseUnit
         {
             get { return this.baseUnit; }
             set
@@ -43,7 +43,7 @@
 
         public PartConversionsVm PartConversions { get; }
 
-        public IReadOnlyObservableCollection<Conversion> AllConversions => this.allConversions;
+        public IReadOnlyObservableCollection<IConversion> AllConversions => this.allConversions;
 
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)

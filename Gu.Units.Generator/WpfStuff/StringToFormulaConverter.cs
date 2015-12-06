@@ -22,37 +22,39 @@
 
         public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
         {
-            var s = value as string;
-            if (s == null)
-            {
-                return null;
-            }
-            else
-            {
-                var match = Regex.Match(s, FormulaPattern);
-                var factor = match.Groups["factor"].Value == ""
-                    ? ""
-                    : match.Groups["factor"].Value.Substring(0, match.Groups["factor"].Value.Length - 1);
-                var offset = match.Groups["offset"].Value;
-                return new ConversionFormula(null)
-                {
-                    ConversionFactor = !string.IsNullOrEmpty(factor) ? double.Parse(factor, CultureInfo.InvariantCulture) : 1,
-                    Offset = !string.IsNullOrEmpty(offset) ? double.Parse(offset, CultureInfo.InvariantCulture) : 0
-                };
-            }
+            throw new NotImplementedException();
+            //var s = value as string;
+            //if (s == null)
+            //{
+            //    return null;
+            //}
+            //else
+            //{
+            //    var match = Regex.Match(s, FormulaPattern);
+            //    var factor = match.Groups["factor"].Value == ""
+            //        ? ""
+            //        : match.Groups["factor"].Value.Substring(0, match.Groups["factor"].Value.Length - 1);
+            //    var offset = match.Groups["offset"].Value;
+            //    return new ConversionFormula(null)
+            //    {
+            //        ConversionFactor = !string.IsNullOrEmpty(factor) ? double.Parse(factor, CultureInfo.InvariantCulture) : 1,
+            //        Offset = !string.IsNullOrEmpty(offset) ? double.Parse(offset, CultureInfo.InvariantCulture) : 0
+            //    };
+            //}
         }
 
         public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
         {
-            var formula = value as ConversionFormula;
-            if (formula == null)
-            {
-                return null;
-            }
-            else
-            {
-                return formula.ToSi;
-            }
+            throw new NotImplementedException();
+            //var formula = value as ConversionFormula;
+            //if (formula == null)
+            //{
+            //    return null;
+            //}
+            //else
+            //{
+            //    return formula.ToSi;
+            //}
         }
     }
 }

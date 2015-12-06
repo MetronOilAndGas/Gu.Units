@@ -1,20 +1,21 @@
 ﻿namespace Gu.Units.Generator
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
 
     public class OperatorOverload
     {
         public static string Divide = "/";
         public static string Multiply = "*";
-        public OperatorOverload(Quantity left, Quantity result, Settings settings)
+        public OperatorOverload(Quantity left, Quantity result, IReadOnlyList<BaseUnit> units)
         {
             Left = left;
             Result = result;
-            Right = FindRight(settings, left, Result);
+            Right = FindRight(units, left, Result);
             if (Right == null)
             {
-                throw new ArgumentException($"Cannot create overload for {left.ClassName} * x = {Result.ClassName}");
+                throw new ArgumentException($"Cannot create overload for {left.Name} * x = {Result.Name}");
             }
             var power = this.FindPower(Left, Right, Result);
             Operator = power > 0 ? Multiply : Divide;
@@ -28,47 +29,47 @@
 
         public string Operator { get; private set; }
 
-        public static bool CanCreate(Settings settings, Quantity left, Quantity result)
+        public static bool CanCreate(IReadOnlyList<BaseUnit> units, Quantity left, Quantity right)
         {
-            return FindRight(settings, left, result) != null;
+            return FindRight(units, left, right) != null;
         }
 
-        public static Quantity FindRight(Settings settings, Quantity left, Quantity result)
+        public static Quantity FindRight(IReadOnlyList<BaseUnit> units, Quantity left, Quantity result)
         {
             var derivedUnit = result.Unit as DerivedUnit;
             if (derivedUnit != null)
             {
                 var right = UnitParts.CreateFrom(result) / UnitParts.CreateFrom(left);
-                return Find(settings, right.Flattened.ToArray());
+                return Find(units, right.Flattened.ToArray());
             }
             else
             {
                 var right = UnitParts.CreateFrom(left) / UnitParts.CreateFrom(result);
-                return Find(settings, right.Flattened.ToArray());
+                return Find(units, right.Flattened.ToArray());
             }
         }
 
         public override string ToString()
         {
-            return $"{Left.ClassName} {Operator} {Right.ClassName} = {Result.ClassName}";
+            return $"{Left.Name} {Operator} {Right.Name} = {Result.Name}";
         }
 
-        private static Quantity Find(Settings settings, params UnitAndPower[] parts)
+        private static Quantity Find(IReadOnlyList<BaseUnit> units, params UnitAndPower[] parts)
         {
-            IUnit unit = null;
+            BaseUnit unit = null;
             if (parts.Length == 1 && Math.Abs(parts.Single().Power) == 1)
             {
                 var part = parts.Single();
-                unit = settings.SiUnits.SingleOrDefault(u => u.ClassName == part.Unit.ClassName);
+                unit = units.SingleOrDefault(u => u.Name == part.Unit.Name);
             }
             else
             {
-                var unitAndPowers = parts.OrderBy(x => x.UnitName).ToArray();
-                unit = settings.DerivedUnits.SingleOrDefault(u => u.Parts.OrderBy(x => x.UnitName).SequenceEqual(unitAndPowers, UnitAndPower.Comparer));
+                var unitAndPowers = parts.OrderBy(x => x.Unit.Name).ToArray();
+                unit = units.OfType<DerivedUnit>().SingleOrDefault(u => u.Parts.OrderBy(x => x.Unit.Name).SequenceEqual(unitAndPowers, UnitAndPower.Comparer));
                 if (unit == null)
                 {
                     unitAndPowers = unitAndPowers.Select(x => new UnitAndPower(x.Unit, -1 * x.Power)).ToArray();
-                    unit = settings.DerivedUnits.SingleOrDefault(u => u.Parts.OrderBy(x => x.UnitName).SequenceEqual(unitAndPowers, UnitAndPower.Comparer));
+                    unit = units.OfType<DerivedUnit>().SingleOrDefault(u => u.Parts.OrderBy(x => x.Unit.Name).SequenceEqual(unitAndPowers, UnitAndPower.Comparer));
                 }
             }
             return unit?.Quantity;
@@ -98,7 +99,7 @@
             else
             {
                 throw new ArgumentException(
-                    $"Cound not find power for {left.ClassName}*{right.ClassName}^x == {result.ClassName}");
+                    $"Cound not find power for {left.Name}*{right.Name}^x == {result.Name}");
             }
             //SiUnit siUnit = left.Unit as SiUnit;
             //if (siUnit != null)

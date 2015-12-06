@@ -1,32 +1,32 @@
 ﻿namespace Gu.Units.Generator
 {
+    using System;
+    using System.Collections.Generic;
     using System.ComponentModel;
     using System.Linq;
     using System.Runtime.CompilerServices;
-    using Annotations;
-    using WpfStuff;
+    using JetBrains.Annotations;
 
     public class PartConversionVm : INotifyPropertyChanged
     {
-        private readonly IUnit unit;
-        private readonly Conversion[] subParts;
-        public PartConversionVm(IUnit unit, params Conversion[] subParts)
+        private readonly IList<PartConversion> conversions;
+        private readonly PartConversion conversion;
+
+        public PartConversionVm(IList<PartConversion> conversions, PartConversion conversion)
         {
-            this.unit = unit;
-            this.subParts = subParts;
-            Conversion = new Conversion { BaseUnit = unit };
-            Conversion.SetParts(subParts);
+            this.conversions = conversions;
+            this.conversion = conversion;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public Conversion Conversion { get; }
+        public PartConversion Conversion { get; }
 
         public bool IsUsed
         {
             get
             {
-                return this.unit.Conversions.Any(x => x.Formula.ConversionFactor == Conversion.Formula.ConversionFactor && x.Symbol == Conversion.Symbol);
+                return conversions.Any(IsMatch);
             }
             set
             {
@@ -36,13 +36,15 @@
                 }
                 if (value)
                 {
-                    var subUnit = new Conversion { BaseUnit = this.unit };
-                    subUnit.SetParts(this.subParts);
-                    this.unit.Conversions.Add(subUnit);
+                    conversions.Add(Conversion);
                 }
                 else
                 {
-                    this.unit.Conversions.InvokeRemove(x => x.Formula.ConversionFactor == Conversion.Formula.ConversionFactor);
+                    var match = this.conversions.FirstOrDefault(IsMatch);
+                    if (match != null)
+                    {
+                        conversions.Remove(match);
+                    }
                 }
                 OnPropertyChanged();
             }
@@ -57,6 +59,16 @@
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        private bool IsMatch(PartConversion x)
+        {
+            if (Conversion.Factor != x.Factor)
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }

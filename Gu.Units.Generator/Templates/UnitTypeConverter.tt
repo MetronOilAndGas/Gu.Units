@@ -12,7 +12,7 @@ if(UnitTypeConverterData != null)
 }
 else
 {
-    unit = new SiUnit("Metres", "m")
+    unit = new BaseUnit("Metres", "m")
                     {
                         QuantityName =  "Length"
                     };

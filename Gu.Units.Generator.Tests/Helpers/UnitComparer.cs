@@ -2,8 +2,9 @@ namespace Gu.Units.Generator.Tests
 {
     using System.Collections;
     using System.Collections.Generic;
+    using System.Linq;
 
-    public class UnitComparer : IComparer<IUnit>, IComparer
+    public class UnitComparer : IComparer<BaseUnit>, IComparer
     {
         public static readonly UnitComparer Default = new UnitComparer();
 
@@ -11,7 +12,7 @@ namespace Gu.Units.Generator.Tests
         {
         }
 
-        public int Compare(IUnit x, IUnit y)
+        public int Compare(BaseUnit x, BaseUnit y)
         {
             if (x.GetType() != y.GetType())
             {
@@ -23,12 +24,12 @@ namespace Gu.Units.Generator.Tests
                 return -1;
             }
 
-            if (x.ClassName != y.ClassName)
+            if (x.Name != y.Name)
             {
                 return -1;
             }
 
-            if (x.Conversions.Count != 0 || y.Conversions.Count != 0)
+            if (x.AllConversions.Count() != 0 || y.AllConversions.Count() != 0)
             {
 
             }
@@ -38,7 +39,7 @@ namespace Gu.Units.Generator.Tests
 
         int IComparer.Compare(object x, object y)
         {
-            return Compare((IUnit)x, (IUnit)y);
+            return Compare((BaseUnit)x, (BaseUnit)y);
         }
     }
 }

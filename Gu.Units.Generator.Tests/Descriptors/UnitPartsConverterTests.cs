@@ -23,9 +23,9 @@
 
     public class UnitPartsConverterSource : IEnumerable
     {
-        public readonly SiUnit Metres;
-        public readonly SiUnit Kilograms;
-        public readonly SiUnit Seconds;
+        public readonly BaseUnit Metres;
+        public readonly BaseUnit Kilograms;
+        public readonly BaseUnit Seconds;
 
         private readonly List<Data> _datas;
 

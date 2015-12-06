@@ -1,29 +1,19 @@
 ﻿namespace Gu.Units.Generator
 {
     using System.ComponentModel;
-    using System.Diagnostics;
     using System.Runtime.CompilerServices;
     using JetBrains.Annotations;
 
-    /// <summary>
-    /// http://physics.nist.gov/cuu/Units/prefixes.html
-    /// </summary>
-    [DebuggerDisplay("Prefix{Name} ({Symbol}) 1E{Power}")]
-    public class Prefix : INotifyPropertyChanged
+    public class PartConversion : IConversion
     {
         private string name;
         private string symbol;
-        private int power;
 
-        private Prefix()
-        {
-        }
-
-        public Prefix(string name, string symbol, int power)
+        public PartConversion(string name, string symbol, double factor)
         {
             Name = name;
             Symbol = symbol;
-            Power = power;
+            Factor = factor;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -37,6 +27,7 @@
                 {
                     return;
                 }
+
                 this.name = value;
                 OnPropertyChanged();
             }
@@ -51,25 +42,17 @@
                 {
                     return;
                 }
+
                 this.symbol = value;
                 OnPropertyChanged();
             }
         }
 
-        public int Power
-        {
-            get { return this.power; }
-            set
-            {
-                if (value == this.power)
-                {
-                    return;
-                }
+        public double Factor { get; }
 
-                this.power = value;
-                OnPropertyChanged();
-            }
-        }
+        public double Offset => 0;
+
+        public bool IsOffset => false;
 
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)

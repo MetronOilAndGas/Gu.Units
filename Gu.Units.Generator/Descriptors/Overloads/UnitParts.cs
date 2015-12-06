@@ -11,11 +11,11 @@
     using Gu.Units.Generator.WpfStuff;
 
     [TypeConverter(typeof(UnitPartsConverter))]
-    public class UnitParts : ParentCollection<IUnit, UnitAndPower>, INotifyPropertyChanged
+    public class UnitParts : ParentCollection<BaseUnit, UnitAndPower>, INotifyPropertyChanged
     {
         private static readonly BaseUnitOrderComparer _baseUnitOrderComparer = new BaseUnitOrderComparer();
-        public UnitParts(IUnit baseUnit, IEnumerable<UnitAndPower> parts)
-            : base(baseUnit, (up, u) => up.Parent = u, parts)
+        public UnitParts(BaseUnit baseUnit, IEnumerable<UnitAndPower> parts)
+            : base(baseUnit, (up, u) => {}, parts)
         {
             base.CollectionChanged += (sender, args) =>
             {
@@ -24,14 +24,14 @@
             };
         }
 
-        public UnitParts(IUnit baseUnit, params UnitAndPower[] parts)
+        public UnitParts(BaseUnit baseUnit, params UnitAndPower[] parts)
             : this(baseUnit, (IEnumerable<UnitAndPower>)parts)
         {
         }
 
         public static UnitParts CreateFrom(Quantity quantity)
         {
-            var siUnit = quantity.Unit as SiUnit;
+            var siUnit = quantity.Unit as BaseUnit;
             if (siUnit != null)
             {
                 return new UnitParts(siUnit, new UnitAndPower(siUnit, 1));
@@ -50,9 +50,9 @@
                     GetAll(up, up.Power, all);
                 }
                 var distinct = all.Select(x => x.Unit).Distinct().ToArray();
-                foreach (SiUnit unit in distinct)
+                foreach (BaseUnit unit in distinct)
                 {
-                    var sum = all.Where(x => x.UnitName == unit.ClassName).Sum(x => x.Power);
+                    var sum = all.Where(x => x.Unit.Name == unit.Name).Sum(x => x.Power);
                     if (sum != 0)
                     {
                         yield return new UnitAndPower(unit, sum);
@@ -97,11 +97,11 @@
                     }
                     if (up.Power > 0)
                     {
-                        builder.Append(up.UnitName);
+                        builder.Append(up.Unit.Name);
                     }
                     else
                     {
-                        builder.Append(up.UnitName.TrimEnd('s'));
+                        builder.Append(up.Unit.Name.TrimEnd('s'));
                     }
                 }
                 return builder.ToString();
@@ -110,44 +110,46 @@
 
         public static UnitParts operator *(UnitParts left, UnitParts right)
         {
-            var leftPowers = left.Flattened.ToList();
-            var rightPowers = right.Flattened.ToList();
-            foreach (var rightPower in rightPowers.ToArray())
-            {
-                var leftPower = leftPowers.SingleOrDefault(x => x.UnitName == rightPower.UnitName);
-                if (leftPower != null)
-                {
-                    if (leftPower.Power == (-1 * rightPower.Power))
-                    {
-                        leftPowers.Remove(leftPower);
-                    }
-                    leftPower.Power += rightPower.Power;
-                    rightPowers.Remove(rightPower);
-                }
-            }
-            leftPowers.AddRange(rightPowers.Select(x => new UnitAndPower(x.Unit, x.Power)));
-            return new UnitParts(null, leftPowers);
+            throw new NotImplementedException();
+            //var leftPowers = left.Flattened.ToList();
+            //var rightPowers = right.Flattened.ToList();
+            //foreach (var rightPower in rightPowers.ToArray())
+            //{
+            //    var leftPower = leftPowers.SingleOrDefault(x => x.Unit.Name == rightPower.Unit.Name);
+            //    if (leftPower != null)
+            //    {
+            //        if (leftPower.Power == (-1 * rightPower.Power))
+            //        {
+            //            leftPowers.Remove(leftPower);
+            //        }
+            //        leftPower.Power += rightPower.Power;
+            //        rightPowers.Remove(rightPower);
+            //    }
+            //}
+            //leftPowers.AddRange(rightPowers.Select(x => new UnitAndPower(x.Unit, x.Power)));
+            //return new UnitParts(null, leftPowers);
         }
 
         public static UnitParts operator /(UnitParts left, UnitParts right)
         {
-            var leftPowers = left.Flattened.ToList();
-            var rightPowers = right.Flattened.ToList();
-            foreach (var rightPower in rightPowers.ToArray())
-            {
-                var leftPower = leftPowers.SingleOrDefault(x => x.UnitName == rightPower.UnitName);
-                if (leftPower != null)
-                {
-                    if (leftPower.Power == rightPower.Power)
-                    {
-                        leftPowers.Remove(leftPower);
-                    }
-                    leftPower.Power -= rightPower.Power;
-                    rightPowers.Remove(rightPower);
-                }
-            }
-            leftPowers.AddRange(rightPowers.Select(x => new UnitAndPower(x.Unit, -1 * x.Power)));
-            return new UnitParts(null, leftPowers);
+            throw new NotImplementedException();
+            //var leftPowers = left.Flattened.ToList();
+            //var rightPowers = right.Flattened.ToList();
+            //foreach (var rightPower in rightPowers.ToArray())
+            //{
+            //    var leftPower = leftPowers.SingleOrDefault(x => x.Unit.Name == rightPower.Unit.Name);
+            //    if (leftPower != null)
+            //    {
+            //        if (leftPower.Power == rightPower.Power)
+            //        {
+            //            leftPowers.Remove(leftPower);
+            //        }
+            //        leftPower.Power -= rightPower.Power;
+            //        rightPowers.Remove(rightPower);
+            //    }
+            //}
+            //leftPowers.AddRange(rightPowers.Select(x => new UnitAndPower(x.Unit, -1 * x.Power)));
+            //return new UnitParts(null, leftPowers);
         }
 
         public static bool operator ==(UnitParts left, UnitParts right)
@@ -160,8 +162,8 @@
             {
                 return false;
             }
-            var leftPowers = left.Flattened.OrderBy(x => x.UnitName).ToArray();
-            var rightPowers = right.Flattened.OrderBy(x => x.UnitName).ToArray();
+            var leftPowers = left.Flattened.OrderBy(x => x.Unit.Name).ToArray();
+            var rightPowers = right.Flattened.OrderBy(x => x.Unit.Name).ToArray();
             if (leftPowers.Count() != rightPowers.Count())
             {
                 return false;
@@ -192,7 +194,7 @@
             {
                 Debugger.Break(); // Looks like SO will happen
             }
-            if (up.Unit is SiUnit)
+            if (up.Unit is BaseUnit)
             {
                 list.Add(new UnitAndPower(up.Unit, power));
                 return;
@@ -218,7 +220,7 @@
                 {
                     sb.Append("⋅");
                 }
-                sb.Append(unitAndPower.Unit == null ? unitAndPower.UnitName : unitAndPower.Unit.Symbol);
+                sb.Append(unitAndPower.Unit == null ? unitAndPower.Unit.Name : unitAndPower.Unit.Symbol);
                 if (unitAndPower.Power < 0)
                 {
                     sb.Append("⁻");
