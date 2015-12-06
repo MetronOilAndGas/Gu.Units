@@ -70,13 +70,13 @@
         /// </summary>
         public static string Extension => "cs";
 
-        public ObservableCollection<DerivedUnit> DerivedUnits { get; } = new ObservableCollection<DerivedUnit>();
-
-        public ObservableCollection<BaseUnit> SiUnits { get; } = new ObservableCollection<BaseUnit>();
-
         public ObservableCollection<Prefix> Prefixes { get; } = new ObservableCollection<Prefix>();
 
-        public IReadOnlyList<BaseUnit> AllUnits => SiUnits.Concat<BaseUnit>(DerivedUnits).ToList();
+        public ObservableCollection<BaseUnit> BaseUnits { get; } = new ObservableCollection<BaseUnit>();
+
+        public ObservableCollection<DerivedUnit> DerivedUnits { get; } = new ObservableCollection<DerivedUnit>();
+
+        public IReadOnlyList<BaseUnit> AllUnits => BaseUnits.Concat<BaseUnit>(DerivedUnits).ToList();
 
         public IReadOnlyList<Quantity> Quantities => AllUnits.Select(x => x.Quantity).ToList();
 
@@ -109,7 +109,7 @@
             //var serializer = new XmlSerializer(typeof(Settings));
             //var toSave = new Settings();
             //toSave.DerivedUnits.InvokeAddRange(settings.DerivedUnits.Where(x => x != null && !x.IsEmpty));
-            //toSave.SiUnits.InvokeAddRange(settings.SiUnits.Where(x => x != null && !x.IsEmpty));
+            //toSave.BaseUnits.InvokeAddRange(settings.BaseUnits.Where(x => x != null && !x.IsEmpty));
             //toSave.Prefixes.InvokeAddRange(settings.Prefixes.Where(x => x != null).OrderBy(x => x.Power));
             //using (var stream = File.Create(fullFileName))
             //{

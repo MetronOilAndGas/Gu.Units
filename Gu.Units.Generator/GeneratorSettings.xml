@@ -1421,7 +1421,7 @@
       </Parts>
     </DerivedUnit>
   </DerivedUnits>
-  <SiUnits>
+  <BaseUnits>
     <SiUnit>
       <ClassName>Kilograms</ClassName>
       <Symbol>kg</Symbol>
@@ -1729,7 +1729,7 @@
       <QuantityName>LuminousIntensity</QuantityName>
       <Conversions />
     </SiUnit>
-  </SiUnits>
+  </BaseUnits>
   <Prefixes>
     <Prefix>
       <Name>Nano</Name>

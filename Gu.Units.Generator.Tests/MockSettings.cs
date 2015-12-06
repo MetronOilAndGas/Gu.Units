@@ -53,24 +53,24 @@
             Prefixes.Add(this.Milli);
             Prefixes.Add(this.Kilo);
             Metres = new BaseUnit("Metres", "m", "Length");
-            SiUnits.Add(Metres);
+            BaseUnits.Add(Metres);
             Length = Metres.Quantity;
 
             Kelvins = new BaseUnit("Kelvin", "K", "Temperature");
             Temperature = this.Kelvins.Quantity;
 
             Seconds = new BaseUnit("Seconds", "s", "Time");
-            SiUnits.Add(Seconds);
+            BaseUnits.Add(Seconds);
             Time = Seconds.Quantity;
 
             Kilograms = new BaseUnit("Kilograms", "kg", "Mass");
             this.Grams = new FactorConversion("Grams", "g", 0.001);
             this.Kilograms.FactorConversions.Add(Grams);
-            SiUnits.Add(Kilograms);
+            BaseUnits.Add(Kilograms);
             Mass = Kilograms.Quantity;
 
             Amperes = new BaseUnit("Amperes", "A", "ElectricalCurrent");
-            SiUnits.Add(Amperes);
+            BaseUnits.Add(Amperes);
             Current = Amperes.Quantity;
 
             MetresPerSecond = new DerivedUnit(

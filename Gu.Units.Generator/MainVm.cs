@@ -24,7 +24,7 @@
 
         public ObservableCollection<Prefix> Prefixes => this.settings.Prefixes;
 
-        public ObservableCollection<BaseUnit> SiUnits => this.settings.SiUnits;
+        public ObservableCollection<BaseUnit> SiUnits => this.settings.BaseUnits;
 
         public ObservableCollection<DerivedUnit> DerivedUnits => this.settings.DerivedUnits;
 

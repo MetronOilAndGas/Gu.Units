@@ -302,6 +302,7 @@
     <Folder Include="Sandbox\" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Units.txt" />
     <EmbeddedResource Include="Templates\QuantityValueConverter.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>QuantityValueConverter.txt</LastGenOutput>

@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Globalization;
+    using System.IO;
     using System.Linq;
     using System.Xml.Linq;
     using Newtonsoft.Json;
@@ -13,6 +14,8 @@
     public class ParseAndDump
     {
         private static List<Prefix> prefixes;
+
+        private static IReadOnlyList<string> PartStrings = new[] { "Square", "Per", "Cube" };
 
         public static IReadOnlyList<Prefix> Prefixes
         {
@@ -41,7 +44,7 @@
             get
             {
                 var xDocument = XDocument.Parse(Properties.Resources.GeneratorSettings);
-                var baseUnitsElement = xDocument.Root.Element("SiUnits");
+                var baseUnitsElement = xDocument.Root.Element("BaseUnits");
                 var units = new List<BaseUnit>();
                 foreach (var unitElement in baseUnitsElement.Elements())
                 {
@@ -68,7 +71,9 @@
                     var name = unitElement.Element("ClassName").Value;
                     var symbol = unitElement.Element("Symbol").Value;
                     var quantityName = unitElement.Element("QuantityName").Value;
-                    units.Add(new DerivedUnit { Name = name, Symbol = symbol, QuantityName = quantityName });
+                    var derivedUnit = new DerivedUnit { Name = name, Symbol = symbol, QuantityName = quantityName };
+                    ReadConversions(derivedUnit, unitElement.Element("Conversions"));
+                    units.Add(derivedUnit);
                 }
 
                 return units;
@@ -88,7 +93,7 @@
         public void DumpSiUnits()
         {
             var settings = new Settings();
-            settings.SiUnits.InvokeAddRange(BaseUnits);
+            settings.BaseUnits.InvokeAddRange(BaseUnits);
             var json = JsonConvert.SerializeObject(settings, CreateSettings());
             Console.Write(json);
         }
@@ -101,12 +106,47 @@
             var allUnits = baseUnits.Concat(derivedUnits).ToList();
             var settings = new Settings();
             settings.DerivedUnits.InvokeAddRange(derivedUnits);
-            //foreach (var derivedUnit in derivedUnits)
-            //{
-            //    derivedUnit.Parts = new UnitParts(derivedUnit,);
-            //}
+            var xDocument = XDocument.Parse(Properties.Resources.GeneratorSettings);
+            var derivedUnitsElement = xDocument.Root.Element("DerivedUnits");
+            foreach (var derivedUnit in derivedUnits)
+            {
+                var xElement = derivedUnitsElement.Elements().Single(x => x.Element("ClassName").Value == derivedUnit.Name);
+
+                var unitAndPowers = ReadParts(xElement.Element("Parts"), allUnits);
+                foreach (var unitAndPower in unitAndPowers)
+                {
+                    derivedUnit.Parts.Add(unitAndPower);
+                }
+            }
             var json = JsonConvert.SerializeObject(settings, CreateSettings());
             Console.Write(json);
+        }
+
+        [Test]
+        public void DumpAll()
+        {
+            var baseUnits = BaseUnits;
+            var derivedUnits = DerivedUnits;
+            var allUnits = baseUnits.Concat(derivedUnits).ToList();
+            var settings = new Settings();
+            settings.DerivedUnits.InvokeAddRange(derivedUnits);
+            settings.Prefixes.InvokeAddRange(Prefixes);
+            settings.BaseUnits.InvokeAddRange(baseUnits);
+            var xDocument = XDocument.Parse(Properties.Resources.GeneratorSettings);
+            var derivedUnitsElement = xDocument.Root.Element("DerivedUnits");
+            foreach (var derivedUnit in derivedUnits)
+            {
+                var xElement = derivedUnitsElement.Elements().Single(x => x.Element("ClassName").Value == derivedUnit.Name);
+
+                var unitAndPowers = ReadParts(xElement.Element("Parts"), allUnits);
+                foreach (var unitAndPower in unitAndPowers)
+                {
+                    derivedUnit.Parts.Add(unitAndPower);
+                }
+            }
+            var json = JsonConvert.SerializeObject(settings, CreateSettings());
+            Console.Write(json);
+            File.WriteAllText(@"C:\Temp\Units.txt", json);
         }
 
         private static UnitAndPower[] ReadParts(XElement partsElement, IReadOnlyList<BaseUnit> allUnits)
@@ -137,14 +177,17 @@
                     if (factor != Math.Pow(10, prefix.Power))
                     {
                         var match = unit.FactorConversions.SingleOrDefault(x => name == prefix.Name + x.Name.ToFirstCharLower());
-                        if(match != null)
+                        if (match != null)
                         {
-                            if (factor == match.Factor*Math.Pow(10, prefix.Power))
+                            if (factor == match.Factor * Math.Pow(10, prefix.Power))
                             {
-                                match.PrefixConversions.Add(new PrefixConversion(name, symbol,prefix));
+                                match.PrefixConversions.Add(new PrefixConversion(name, symbol, prefix));
                                 continue;
                             }
                         }
+
+                        unit.PartConversions.Add(new PartConversion(name, symbol, factor));
+                        continue;
                         throw new InvalidOperationException();
                     }
 
@@ -162,6 +205,11 @@
                 if (factor != 0 &&
                     offset == 0)
                 {
+                    if (PartStrings.Any(x => name.IndexOf(x, StringComparison.OrdinalIgnoreCase) != 0))
+                    {
+                        unit.PartConversions.Add(new PartConversion(name, symbol, factor));
+                        continue;
+                    }
                     unit.FactorConversions.Add(new FactorConversion(name, symbol, factor));
                     continue;
                 }
@@ -180,6 +228,8 @@
             return new JsonSerializerSettings
             {
                 Formatting = Formatting.Indented,
+                PreserveReferencesHandling = PreserveReferencesHandling.Objects,
+                ReferenceLoopHandling = ReferenceLoopHandling.Serialize,
                 ContractResolver = ExcludeCalculatedResolver.Default
             };
         }
