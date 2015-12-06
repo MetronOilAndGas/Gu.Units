@@ -26,7 +26,7 @@
 
         public ObservableCollection<DerivedUnit> DerivedUnits { get; } = new ObservableCollection<DerivedUnit>();
 
-        public IReadOnlyList<BaseUnit> AllUnits => BaseUnits.Concat<BaseUnit>(DerivedUnits).ToList();
+        public IReadOnlyList<BaseUnit> AllUnits => BaseUnits.Concat(DerivedUnits).ToList();
 
         public IReadOnlyList<Quantity> Quantities => AllUnits.Select(x => x.Quantity).ToList();
     }

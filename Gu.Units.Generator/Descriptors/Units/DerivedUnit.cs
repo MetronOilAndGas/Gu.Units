@@ -2,8 +2,6 @@
 {
     using System;
     using System.Linq;
-    using System.Xml.Serialization;
-
     using Gu.Units.Generator.WpfStuff;
     /// <summary>
     /// http://en.wikipedia.org/wiki/SI_derived_unit

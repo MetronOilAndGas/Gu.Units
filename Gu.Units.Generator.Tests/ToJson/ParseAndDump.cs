@@ -8,7 +8,6 @@
     using System.Xml.Linq;
     using Newtonsoft.Json;
     using NUnit.Framework;
-    using Serialization;
     using WpfStuff;
 
     public class ParseAndDump

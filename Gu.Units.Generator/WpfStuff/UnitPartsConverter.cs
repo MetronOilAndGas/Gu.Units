@@ -6,7 +6,6 @@
     using System.Globalization;
     using System.Linq;
     using System.Text.RegularExpressions;
-    using Serialization;
 
     public class UnitPartsConverter : TypeConverter
     {

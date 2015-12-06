@@ -5,6 +5,7 @@ namespace Gu.Units.Generator
     public interface INameAndSymbol : INotifyPropertyChanged
     {
         string Name { get; set; }
+
         string Symbol { get; set; }
     }
 }

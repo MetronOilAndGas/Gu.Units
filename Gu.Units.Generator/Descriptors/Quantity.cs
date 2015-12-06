@@ -21,6 +21,8 @@
 
         public string Name => Unit.QuantityName;
 
+        public string ParameterName => Name.ToFirstCharLower();
+
         public ObservableCollection<OperatorOverload> OperatorOverloads { get; } = new ObservableCollection<OperatorOverload>();
 
         public InverseOverload Inverse

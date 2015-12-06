@@ -1,4 +1,4 @@
-﻿namespace Gu.Units.Generator.Serialization
+﻿namespace Gu.Units.Generator
 {
     using System.IO;
     using System.Reflection;
