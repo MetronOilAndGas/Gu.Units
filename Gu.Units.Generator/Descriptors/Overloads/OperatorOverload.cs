@@ -54,7 +54,7 @@
             var product = allUnits.SingleOrDefault(u => u.Parts == prod)?.Quantity;
             if (product != null)
             {
-                result = new OperatorOverload(left, right, Generator.Operator.Multiply, product);
+                result = new OperatorOverload(left, Generator.Operator.Multiply, right, product);
                 return true;
             }
 
@@ -74,7 +74,7 @@
             var division = allUnits.SingleOrDefault(u => u.Parts == div)?.Quantity;
             if (division != null)
             {
-                result = new OperatorOverload(left, right, Generator.Operator.Divide, division);
+                result = new OperatorOverload(left, Generator.Operator.Divide, right, division);
                 return true;
             }
 
@@ -85,8 +85,8 @@
         protected bool Equals(OperatorOverload other)
         {
             return Left.Name.Equals(other.Left.Name) &&
-                   Right.Name.Equals(other.Right.Name) && 
-                   Result.Name.Equals(other.Result.Name) && 
+                   Right.Name.Equals(other.Right.Name) &&
+                   Result.Name.Equals(other.Result.Name) &&
                    string.Equals(Operator, other.Operator);
         }
 
@@ -98,7 +98,7 @@
                 return true;
             if (obj.GetType() != this.GetType())
                 return false;
-            return Equals((OperatorOverload) obj);
+            return Equals((OperatorOverload)obj);
         }
 
         public override int GetHashCode()
@@ -106,9 +106,9 @@
             unchecked
             {
                 var hashCode = Left.Name.GetHashCode();
-                hashCode = (hashCode*397) ^ Right.Name.GetHashCode();
-                hashCode = (hashCode*397) ^ Result.Name.GetHashCode();
-                hashCode = (hashCode*397) ^ Operator.GetHashCode();
+                hashCode = (hashCode * 397) ^ Right.Name.GetHashCode();
+                hashCode = (hashCode * 397) ^ Result.Name.GetHashCode();
+                hashCode = (hashCode * 397) ^ Operator.GetHashCode();
                 return hashCode;
             }
         }

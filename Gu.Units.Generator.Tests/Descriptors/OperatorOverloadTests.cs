@@ -24,18 +24,18 @@
         }
 
         [Test]
-        public void LengthSpeed()
+        public void LengthDividedBySpeedEqualsTime()
         {
             OperatorOverload overload;
             Assert.AreEqual(true, OperatorOverload.TryCreateDivision(this.length, this.speed, this.settings.AllUnits, out overload));
             Assert.AreEqual(OperatorOverload.Divide, overload.Operator);
             Assert.AreEqual(this.length, overload.Left);
             Assert.AreEqual(this.speed, overload.Right);
-            Assert.AreEqual(this.speed, overload.Result);
+            Assert.AreEqual(this.time, overload.Result);
         }
 
         [Test]
-        public void LengthDividedByTime()
+        public void LengthDividedByTimeEqualsSpeed()
         {
             OperatorOverload overload;
             Assert.AreEqual(true, OperatorOverload.TryCreateDivision(this.length, this.time, this.settings.AllUnits, out overload));
@@ -46,58 +46,80 @@
         }
 
         [Test]
-        public void SpeedLength()
+        public void SpeedTimesTimeEqualsLength()
         {
-            Assert.Fail();
-            //var overload = new OperatorOverload(this.speed, this.length, this.settings.AllUnits);
-            //Assert.AreEqual(OperatorOverload.Multiply, overload.Operator);
-            //Assert.AreEqual(this.speed, overload.Left);
-            //Assert.AreEqual(this.time, overload.Right);
-            //Assert.AreEqual(this.length, overload.Result);
+            OperatorOverload overload;
+            Assert.AreEqual(true, OperatorOverload.TryCreateMultiplication(this.speed, this.time, this.settings.AllUnits, out overload));
+            Assert.AreEqual(OperatorOverload.Multiply, overload.Operator);
+            Assert.AreEqual(this.speed, overload.Left);
+            Assert.AreEqual(this.time, overload.Right);
+            Assert.AreEqual(this.length, overload.Result);
         }
 
         [Test]
-        public void SpeedTime()
+        public void TimeTimesSpeedEqualsLength()
         {
-            Assert.Fail();
-            //var overload = new OperatorOverload(this.speed, this.time, this.settings.AllUnits);
-            //Assert.AreEqual(OperatorOverload.Multiply, overload.Operator);
-            //Assert.AreEqual(this.speed, overload.Left);
-            //Assert.AreEqual(this.length, overload.Right);
-            //Assert.AreEqual(this.time, overload.Result);
+            OperatorOverload overload;
+            Assert.AreEqual(true, OperatorOverload.TryCreateMultiplication(this.time, this.speed, this.settings.AllUnits, out overload));
+            Assert.AreEqual(OperatorOverload.Multiply, overload.Operator);
+            Assert.AreEqual(this.time, overload.Left);
+            Assert.AreEqual(this.speed, overload.Right);
+            Assert.AreEqual(this.length, overload.Result);
         }
 
         [Test]
-        public void LengthArea()
+        public void LengthTimesLengthEqualsArea()
         {
-            Assert.Fail();
-            //var overload = new OperatorOverload(this.length, this.area, this.settings.AllUnits);
-            //Assert.AreEqual(OperatorOverload.Multiply, overload.Operator);
-            //Assert.AreEqual(this.length, overload.Left);
-            //Assert.AreEqual(this.length, overload.Right);
-            //Assert.AreEqual(this.area, overload.Result);
+            OperatorOverload overload;
+            Assert.AreEqual(true, OperatorOverload.TryCreateMultiplication(this.length, this.length, this.settings.AllUnits, out  overload));
+            Assert.AreEqual(OperatorOverload.Multiply, overload.Operator);
+            Assert.AreEqual(this.length, overload.Left);
+            Assert.AreEqual(this.length, overload.Right);
+            Assert.AreEqual(this.area, overload.Result);
         }
 
         [Test]
-        public void AreaLength()
+        public void AreaDividedByLengthEqualsLength()
         {
-            Assert.Fail();
-            //var overload = new OperatorOverload(this.area, this.length, this.settings.AllUnits);
-            //Assert.AreEqual(OperatorOverload.Divide, overload.Operator);
-            //Assert.AreEqual(this.area, overload.Left);
-            //Assert.AreEqual(this.length, overload.Right);
-            //Assert.AreEqual(this.length, overload.Result);
+            OperatorOverload overload;
+            Assert.AreEqual(true, OperatorOverload.TryCreateDivision(this.area, this.length, this.settings.AllUnits, out overload));
+            Assert.AreEqual(OperatorOverload.Divide, overload.Operator);
+            Assert.AreEqual(this.area, overload.Left);
+            Assert.AreEqual(this.length, overload.Right);
+            Assert.AreEqual(this.length, overload.Result);
         }
 
         [Test]
-        public void LengthVolume()
+        public void LengthTimesAreaEqualsVolume()
         {
-            Assert.Fail();
-            //var overload = new OperatorOverload(this.length, this.volume, this.settings.AllUnits);
-            //Assert.AreEqual(OperatorOverload.Multiply, overload.Operator);
-            //Assert.AreEqual(this.length, overload.Left);
-            //Assert.AreEqual(this.area, overload.Right);
-            //Assert.AreEqual(this.volume, overload.Result);
+            OperatorOverload overload;
+            Assert.AreEqual(true, OperatorOverload.TryCreateMultiplication(this.length, this.area, this.settings.AllUnits, out overload));
+            Assert.AreEqual(OperatorOverload.Multiply, overload.Operator);
+            Assert.AreEqual(this.length, overload.Left);
+            Assert.AreEqual(this.area, overload.Right);
+            Assert.AreEqual(this.volume, overload.Result);
+        }
+
+        [Test]
+        public void VolumeDividedByAreaAreaEqualsLength()
+        {
+            OperatorOverload overload;
+            Assert.AreEqual(true, OperatorOverload.TryCreateDivision(this.volume, this.area, this.settings.AllUnits, out overload));
+            Assert.AreEqual(OperatorOverload.Divide, overload.Operator);
+            Assert.AreEqual(this.volume, overload.Left);
+            Assert.AreEqual(this.area, overload.Right);
+            Assert.AreEqual(this.length, overload.Result);
+        }
+
+        [Test]
+        public void VolumeDividedByLengthAreaEqualsArea()
+        {
+            OperatorOverload overload;
+            Assert.AreEqual(true, OperatorOverload.TryCreateDivision(this.volume, this.length, this.settings.AllUnits, out overload));
+            Assert.AreEqual(OperatorOverload.Divide, overload.Operator);
+            Assert.AreEqual(this.volume, overload.Left);
+            Assert.AreEqual(this.length, overload.Right);
+            Assert.AreEqual(this.area, overload.Result);
         }
     }
 }

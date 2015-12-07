@@ -19,13 +19,14 @@
             var actual = this.settings.Length.OperatorOverloads.ToArray();
             var expected = new[]
                                {
+                                   new OperatorOverload(this.settings.Length, Operator.Multiply, this.settings.Length, this.settings.Area),
                                    new OperatorOverload(this.settings.Length,Operator.Divide, this.settings.Time,this.settings.Speed),
                                    new OperatorOverload(this.settings.Length,Operator.Divide, this.settings.Speed, this.settings.Time),
                                    new OperatorOverload(this.settings.Length,Operator.Multiply, this.settings.Force, this.settings.Energy),
-                                   new OperatorOverload(this.settings.Length,Operator.Multiply, this.settings.Length, this.settings.Area),
-                                   new OperatorOverload(this.settings.Length, Operator.Multiply, this.settings.Area, this.settings.Volume)
+                                   new OperatorOverload(this.settings.Length, Operator.Multiply, this.settings.Area, this.settings.Volume),
+                                   new OperatorOverload(this.settings.Length,Operator.Multiply, this.settings.Frequency, this.settings.Speed),
                                };
-            CollectionAssert.AreEqual(expected.Select(x => x.ToString()), actual.Select(x => x.ToString()));
+            CollectionAssert.AreEqual(expected, actual);
         }
 
         [Test]
@@ -33,11 +34,12 @@
         {
             var actual = this.settings.Time.OperatorOverloads.ToArray();
             var expected = new[]
-                               {
-                                   new OperatorOverload(this.settings.Time, Operator.Multiply, this.settings.Speed, this.settings.Length),
-                                   new OperatorOverload(this.settings.Time,Operator.Multiply,this.settings.Current, this.settings.ElectricCharge),
-                               };
-            CollectionAssert.AreEqual(expected.Select(x => x.ToString()), actual.Select(x => x.ToString()));
+            {
+                new OperatorOverload(this.settings.Time, Operator.Multiply, this.settings.Current, this.settings.ElectricCharge),
+                new OperatorOverload(this.settings.Time, Operator.Multiply, this.settings.Speed, this.settings.Length),
+                new OperatorOverload(this.settings.Time, Operator.Multiply, this.settings.Power, this.settings.Energy),
+            };
+            CollectionAssert.AreEqual(expected, actual);
         }
 
         [Test]
@@ -45,6 +47,8 @@
         {
             var actual = this.settings.Time.Inverse;
             Assert.AreEqual("1 / Time = Frequency", actual.ToString());
+            actual = this.settings.Frequency.Inverse;
+            Assert.AreEqual("1 / Frequency = Time", actual.ToString());
             Assert.IsNull(this.settings.Length.Inverse);
         }
     }
