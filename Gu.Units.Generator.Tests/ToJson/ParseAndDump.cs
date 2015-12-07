@@ -70,7 +70,7 @@
                     var name = unitElement.Element("ClassName").Value;
                     var symbol = unitElement.Element("Symbol").Value;
                     var quantityName = unitElement.Element("QuantityName").Value;
-                    var derivedUnit = new DerivedUnit { Name = name, Symbol = symbol, QuantityName = quantityName };
+                    var derivedUnit = new DerivedUnit(name, symbol, quantityName, new List<UnitAndPower>());
                     ReadConversions(derivedUnit, unitElement.Element("Conversions"));
                     units.Add(derivedUnit);
                 }
@@ -82,7 +82,7 @@
         [Test]
         public void DumpPrefixes()
         {
-            var settings = new Settings();
+            var settings = Settings.CreateEmpty();
             settings.Prefixes.InvokeAddRange(Prefixes);
             var json = JsonConvert.SerializeObject(settings, CreateSettings());
             Console.Write(json);
@@ -91,7 +91,7 @@
         [Test]
         public void DumpSiUnits()
         {
-            var settings = new Settings();
+            var settings = Settings.CreateEmpty();
             settings.BaseUnits.InvokeAddRange(BaseUnits);
             var jsonSerializerSettings = CreateSettings();
             var json = JsonConvert.SerializeObject(settings, jsonSerializerSettings);
@@ -104,7 +104,7 @@
         {
             var xDocument = XDocument.Parse(Properties.Resources.GeneratorSettings);
             var massElement = xDocument.Root.Element("BaseUnits").Elements().Single(x => x.Element("QuantityName").Value == "Mass");
-            var settings = new Settings();
+            var settings = Settings.CreateEmpty();
 
             var name = massElement.Element("ClassName").Value;
             var symbol = massElement.Element("Symbol").Value;
@@ -121,7 +121,7 @@
         {
             var xDocument = XDocument.Parse(Properties.Resources.GeneratorSettings);
             var massElement = xDocument.Root.Element("DerivedUnits").Elements().Single(x => x.Element("QuantityName").Value == "Area");
-            var settings = new Settings();
+            var settings = Settings.CreateEmpty();
 
             var name = massElement.Element("ClassName").Value;
             var symbol = massElement.Element("Symbol").Value;
@@ -139,7 +139,7 @@
             var baseUnits = BaseUnits;
             var derivedUnits = DerivedUnits;
             var allUnits = baseUnits.Concat(derivedUnits).ToList();
-            var settings = new Settings();
+            var settings = Settings.CreateEmpty();
             settings.DerivedUnits.InvokeAddRange(derivedUnits);
             var xDocument = XDocument.Parse(Properties.Resources.GeneratorSettings);
             var derivedUnitsElement = xDocument.Root.Element("DerivedUnits");
@@ -150,7 +150,7 @@
                 var unitAndPowers = ReadParts(xElement.Element("Parts"), allUnits);
                 foreach (var unitAndPower in unitAndPowers)
                 {
-                    derivedUnit.Parts.Add(unitAndPower);
+                    ((List<UnitAndPower>)derivedUnit.Parts.Parts).Add(unitAndPower);
                 }
             }
             var json = JsonConvert.SerializeObject(settings, CreateSettings());
@@ -163,7 +163,7 @@
             var baseUnits = BaseUnits;
             var derivedUnits = DerivedUnits;
             var allUnits = baseUnits.Concat(derivedUnits).ToList();
-            var settings = new Settings();
+            var settings = Settings.CreateEmpty();
             settings.DerivedUnits.InvokeAddRange(derivedUnits);
             settings.Prefixes.InvokeAddRange(Prefixes);
             settings.BaseUnits.InvokeAddRange(baseUnits);
@@ -176,7 +176,7 @@
                 var unitAndPowers = ReadParts(xElement.Element("Parts"), allUnits);
                 foreach (var unitAndPower in unitAndPowers)
                 {
-                    derivedUnit.Parts.Add(unitAndPower);
+                    ((List<UnitAndPower>)derivedUnit.Parts.Parts).Add(unitAndPower);
                 }
             }
 

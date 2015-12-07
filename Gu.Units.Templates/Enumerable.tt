@@ -4,7 +4,7 @@
 <#@ output extension=".txt" #>
 <#
 // Template used by EnumerableGenerator.tt
-var quantities = Persister.GetSettings().Quantities;
+var quantities = Settings.FromResource.Quantities;
 #>
 namespace <#= Settings.Namespace #>
 {

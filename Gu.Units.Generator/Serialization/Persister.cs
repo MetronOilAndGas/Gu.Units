@@ -1,5 +1,6 @@
 ﻿namespace Gu.Units.Generator
 {
+    using System;
     using System.IO;
     using System.Reflection;
     using Newtonsoft.Json;
@@ -33,7 +34,7 @@
             }
         }
 
-        public static Settings GetSettings()
+        public static Settings GetSettingsFromFile()
         {
             if (settings == null)
             {

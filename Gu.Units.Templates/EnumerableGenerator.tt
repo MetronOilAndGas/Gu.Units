@@ -13,7 +13,7 @@ fileManager.CanOverwriteExistingFile = true;
 
 // init handling for parameter templates
 var paramTmpl = ParamTextTemplate.Create(this.Host, "Enumerable.tt");
-var settings = Persister.GetSettings();
+var settings = Settings.FromResource;
 this.Write(string.Format("Read Settings found {0} quantities", settings.Quantities.Count));
 
 fileManager.StartNewFile("Enumerable.generated." + Settings.Extension, Settings.ProjectName, null, null);

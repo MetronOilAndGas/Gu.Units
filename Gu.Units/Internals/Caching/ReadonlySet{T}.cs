@@ -1,16 +1,14 @@
 ﻿namespace Gu.Units
 {
-    using System;
     using System.Collections;
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Linq;
 
     [DebuggerTypeProxy(typeof(CollectionDebugView<>))]
-    internal class ReadonlySet<T> : IReadOnlyCollection<T>, IEquatable<ReadonlySet<T>>
-        where T : IEquatable<T>
+    internal class ReadonlySet<T> : IReadOnlyCollection<T>
     {
-        public static readonly ReadonlySet<SymbolAndPower> Empty = new ReadonlySet<SymbolAndPower>(null);
+        public static readonly ReadonlySet<T> Empty = new ReadonlySet<T>(Enumerable.Empty<T>());
 
         private readonly ISet<T> source;
 
@@ -22,6 +20,11 @@
         public ReadonlySet(IEnumerable<T> source)
         {
             this.source = new HashSet<T>(source);
+        }
+
+        public ReadonlySet(IEnumerable<T> source, IEqualityComparer<T> comparer)
+        {
+            this.source = new HashSet<T>(source, comparer);
         }
 
         public int Count => this.source?.Count ?? 0;

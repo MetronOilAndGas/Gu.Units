@@ -54,7 +54,7 @@
 
         public string PrefixName { get; }
 
-        public Prefix Prefix => Persister.GetSettings().Prefixes.Single(x => x.Name == PrefixName);
+        public Prefix Prefix => Settings.Instance.Prefixes.Single(x => x.Name == PrefixName);
 
         public double Factor => Math.Pow(10, Prefix.Power);
 

@@ -15,10 +15,23 @@
             Right = FindRight(units, left, Result);
             if (Right == null)
             {
-                throw new ArgumentException($"Cannot create overload for {left.Name} * x = {Result.Name}");
+                throw new ArgumentException($"Cannot create overload for {left.Name} * x^y = {Result.Name}");
             }
+
             var power = this.FindPower(Left, Right, Result);
-            Operator = power > 0 ? Multiply : Divide;
+            switch (power)
+            {
+                case Power.None:
+                    throw new InvalidOperationException($"Could not create overload for {left} * x^y = {result}");
+                case Power.NegOne:
+                    Operator = Divide;
+                    break;
+                case Power.PlusOne:
+                    Operator = Multiply;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
 
         public Quantity Left { get; private set; }
@@ -29,24 +42,20 @@
 
         public string Operator { get; private set; }
 
-        public static bool CanCreate(IReadOnlyList<BaseUnit> units, Quantity left, Quantity right)
+        public static bool CanCreate(IReadOnlyList<Unit> units,
+            Quantity left,
+            Quantity right)
         {
             return FindRight(units, left, right) != null;
         }
 
-        public static Quantity FindRight(IReadOnlyList<BaseUnit> units, Quantity left, Quantity result)
+        [Obsolete("This is strange")]
+        private static Quantity FindRight(IReadOnlyList<Unit> units,
+            Quantity left,
+            Quantity result)
         {
-            var derivedUnit = result.Unit as DerivedUnit;
-            if (derivedUnit != null)
-            {
-                var right = UnitParts.CreateFrom(result) / UnitParts.CreateFrom(left);
-                return Find(units, right.Flattened.ToArray());
-            }
-            else
-            {
-                var right = UnitParts.CreateFrom(left) / UnitParts.CreateFrom(result);
-                return Find(units, right.Flattened.ToArray());
-            }
+            var right = left.Unit.Parts / result.Unit.Parts;
+            return Find(units, right);
         }
 
         public override string ToString()
@@ -54,25 +63,10 @@
             return $"{Left.Name} {Operator} {Right.Name} = {Result.Name}";
         }
 
-        private static Quantity Find(IReadOnlyList<BaseUnit> units, params UnitAndPower[] parts)
+        private static Quantity Find(IReadOnlyList<Unit> units,
+            UnitParts parts)
         {
-            BaseUnit unit = null;
-            if (parts.Length == 1 && Math.Abs(parts.Single().Power) == 1)
-            {
-                var part = parts.Single();
-                unit = units.SingleOrDefault(u => u.Name == part.Unit.Name);
-            }
-            else
-            {
-                var unitAndPowers = parts.OrderBy(x => x.Unit.Name).ToArray();
-                unit = units.OfType<DerivedUnit>().SingleOrDefault(u => u.Parts.OrderBy(x => x.Unit.Name).SequenceEqual(unitAndPowers, UnitAndPower.Comparer));
-                if (unit == null)
-                {
-                    unitAndPowers = unitAndPowers.Select(x => UnitAndPower.Create(x.Unit, -1 * x.Power)).ToArray();
-                    unit = units.OfType<DerivedUnit>().SingleOrDefault(u => u.Parts.OrderBy(x => x.Unit.Name).SequenceEqual(unitAndPowers, UnitAndPower.Comparer));
-                }
-            }
-            return unit?.Quantity;
+            return units.SingleOrDefault(u => u.Parts == parts)?.Quantity;
         }
 
         /// <summary>
@@ -83,49 +77,25 @@
         /// <param name="right"></param>
         /// <param name="result"></param>
         /// <returns></returns>
-        private int FindPower(Quantity left, Quantity right, Quantity result)
+        private Power FindPower(Quantity left,
+            Quantity right,
+            Quantity result)
         {
-            var leftParts = UnitParts.CreateFrom(left);
-            var rightParts = UnitParts.CreateFrom(right);
-            var resultParts = UnitParts.CreateFrom(result);
+            var leftParts = left.Unit.Parts;
+            var rightParts = right.Unit.Parts;
+            var resultParts = result.Unit.Parts;
+
             if (leftParts * rightParts == resultParts)
             {
-                return 1;
+                return Power.PlusOne;
             }
+
             if (leftParts / rightParts == resultParts)
             {
-                return -1;
+                return Power.NegOne;
             }
-            else
-            {
-                throw new ArgumentException(
-                    $"Cound not find power for {left.Name}*{right.Name}^x == {result.Name}");
-            }
-            //SiUnit siUnit = left.Unit as SiUnit;
-            //if (siUnit != null)
-            //{
-            //    var unitAndPower = right.Single();
-            //    if (Math.Abs(unitAndPower.Power) != 1)
-            //    {
-            //        throw new ArgumentException();
-            //    }
-            //    return unitAndPower.Power;
-            //}
-            //else
-            //{
-            //    DerivedUnit derivedUnit = (DerivedUnit)left.Unit;
-            //    var unitAndPowers = derivedUnit.Parts.OrderBy(x => x.UnitName).ToArray();
-            //    var andPowers = right.OrderBy(x => x.UnitName).ToArray();
-            //    if (unitAndPowers.Select(x => x.Power).SequenceEqual(andPowers.Select(x => x.Power)))
-            //    {
-            //        return 1;
-            //    }
-            //    if (unitAndPowers.Select(x => x.Power).SequenceEqual(andPowers.Select(x => -1 * x.Power)))
-            //    {
-            //        return -1;
-            //    }
-            //    throw new ArgumentException("message");
-            //}
+
+            return Power.None;
         }
     }
 }

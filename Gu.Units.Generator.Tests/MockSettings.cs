@@ -1,5 +1,6 @@
 ﻿namespace Gu.Units.Generator.Tests
 {
+    using System.Collections.ObjectModel;
 
     public class MockSettings : Settings
     {
@@ -49,6 +50,7 @@
         public Prefix Kilo = new Prefix("Kilo", "k", 3);
 
         public MockSettings()
+            : base(new ObservableCollection<Prefix>(), new ObservableCollection<BaseUnit>(), new ObservableCollection<DerivedUnit>())
         {
             Prefixes.Add(this.Milli);
             Prefixes.Add(this.Kilo);
@@ -77,8 +79,8 @@
                 "MetresPerSecond",
                 "m/s",
                 "Speed",
-               UnitAndPower.Create(Metres, 1),
-               UnitAndPower.Create(Seconds, -1));
+              new[]{ UnitAndPower.Create(Metres, 1),
+               UnitAndPower.Create(Seconds, -1)});
             DerivedUnits.Add(MetresPerSecond);
             Speed = MetresPerSecond.Quantity;
 
@@ -86,9 +88,9 @@
                 "Newtons",
                 "N",
                 "Force",
-               UnitAndPower.Create(Kilograms, 1),
+              new[]{   UnitAndPower.Create(Kilograms, 1),
                UnitAndPower.Create(Metres, 1),
-               UnitAndPower.Create(Seconds, -2));
+               UnitAndPower.Create(Seconds, -2)});
             DerivedUnits.Add(Newtons);
             Force = Newtons.Quantity;
 
@@ -96,8 +98,8 @@
                 "Joules",
                 "J",
                 "Energy",
-               UnitAndPower.Create(Newtons, 1),
-               UnitAndPower.Create(Metres, 1));
+              new[]{   UnitAndPower.Create(Newtons, 1),
+               UnitAndPower.Create(Metres, 1)});
             DerivedUnits.Add(Joules);
             Energy = Joules.Quantity;
 
@@ -105,8 +107,8 @@
                 "Watts",
                 "W",
                 "Power",
-               UnitAndPower.Create(Joules, 1),
-               UnitAndPower.Create(Seconds, -1));
+             new[]{    UnitAndPower.Create(Joules, 1),
+               UnitAndPower.Create(Seconds, -1)});
             DerivedUnits.Add(Watts);
             Power = Watts.Quantity;
 
@@ -114,8 +116,8 @@
                 "Volts",
                 "V",
                 "Voltage",
-               UnitAndPower.Create(Watts, 1),
-               UnitAndPower.Create(Amperes, -1));
+             new[]{    UnitAndPower.Create(Watts, 1),
+               UnitAndPower.Create(Amperes, -1)});
             DerivedUnits.Add(Volts);
             Voltage = Volts.Quantity;
 
@@ -123,20 +125,20 @@
                 "Coloumbs",
                 "C",
                 "ElectricCharge",
-               UnitAndPower.Create(Seconds, 1),
-               UnitAndPower.Create(Amperes, 1));
+              new[]{   UnitAndPower.Create(Seconds, 1),
+               UnitAndPower.Create(Amperes, 1)});
             DerivedUnits.Add(Coloumbs);
             ElectricCharge = Coloumbs.Quantity;
 
-            SquareMetres = new DerivedUnit("SquareMetres", "m^2", "Area",UnitAndPower.Create(Metres, 2));
+            SquareMetres = new DerivedUnit("SquareMetres", "m^2", "Area", new[] { UnitAndPower.Create(Metres, 2) });
             DerivedUnits.Add(SquareMetres);
             Area = SquareMetres.Quantity;
 
-            CubicMetres = new DerivedUnit("CubicMetres", "m^3", "Volume",UnitAndPower.Create(Metres, 3));
+            CubicMetres = new DerivedUnit("CubicMetres", "m^3", "Volume", new[] { UnitAndPower.Create(Metres, 3) });
             DerivedUnits.Add(CubicMetres);
             Volume = CubicMetres.Quantity;
 
-            Hertz = new DerivedUnit("Hertz", "1/s", "Frequency",UnitAndPower.Create(Seconds, -1));
+            Hertz = new DerivedUnit("Hertz", "1/s", "Frequency", new[] { UnitAndPower.Create(Seconds, -1) });
 
             DerivedUnits.Add(Hertz);
             Frequency = Hertz.Quantity;

@@ -1,7 +1,5 @@
 ﻿namespace Gu.Units.Generator
 {
-    using System.Linq;
-
     public class InverseOverload
     {
         public InverseOverload(Quantity original, Quantity inverted)
@@ -11,7 +9,7 @@
         }
 
         public Quantity Original { get; }
-        
+
         public Quantity Inverted { get; }
 
         public override string ToString()
@@ -21,9 +19,9 @@
 
         public static bool IsInverse(Quantity left, Quantity right)
         {
-            var leftParts = UnitParts.CreateFrom(left);
-            var rightParts = UnitParts.CreateFrom(right);
-            return leftParts.Flattened.SequenceEqual(rightParts.Flattened.Select(x => x ^ -1));
+            var leftParts = left.Unit.Parts;
+            var rightParts = right.Unit.Parts.Inverse();
+            return leftParts == rightParts;
         }
     }
 }

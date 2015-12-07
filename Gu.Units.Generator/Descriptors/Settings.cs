@@ -13,25 +13,21 @@
 
     public class Settings : INotifyPropertyChanged
     {
-        public Settings()
-        {
-            Prefixes = new ObservableCollection<Prefix>();
-            BaseUnits = new ObservableCollection<BaseUnit>();
-            DerivedUnits = new ObservableCollection<DerivedUnit>();
+        public static Settings Instance;
 
-            //Observable.Merge(BaseUnits.ObserveCollectionChangedSlim(true),
-            //                 DerivedUnits.ObserveCollectionChangedSlim(true))
-            //          .Subscribe(_ =>
-            //          {
-            //              OverloadFinder.Find(AllUnits);
-            //              OnPropertyChanged(nameof(AllUnits));
-            //              OnPropertyChanged(nameof(Quantities));
-            //          });
+        public static Settings FromResource => JsonConvert.DeserializeObject<Settings>(Properties.Resources.Units);
+
+        private Settings()
+        {
         }
 
-        [JsonConstructor]
         public Settings(ObservableCollection<Prefix> prefixes, ObservableCollection<BaseUnit> baseUnits, ObservableCollection<DerivedUnit> derivedUnits)
         {
+            if (Instance != null)
+            {
+                throw new InvalidOperationException("This is nasty design but there can only be one read from file. Reason is resolving units and prefixes by key.");
+            }
+
             Prefixes = prefixes;
             BaseUnits = baseUnits;
             DerivedUnits = derivedUnits;
@@ -44,6 +40,7 @@
                     OnPropertyChanged(nameof(AllUnits));
                     OnPropertyChanged(nameof(Quantities));
                 });
+            Instance = this;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -67,6 +64,11 @@
         public IReadOnlyList<BaseUnit> AllUnits => BaseUnits.Concat(DerivedUnits).ToList();
 
         public IReadOnlyList<Quantity> Quantities => AllUnits.Select(x => x.Quantity).ToList();
+
+        public static Settings CreateEmpty()
+        {
+            return new Settings(new ObservableCollection<Prefix>(), new ObservableCollection<BaseUnit>(), new ObservableCollection<DerivedUnit>());
+        }
 
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)

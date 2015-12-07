@@ -14,7 +14,7 @@
             var converter = new UnitPartsConverter();
             Assert.IsTrue(converter.CanConvertFrom(null, typeof(string)));
             var parts = (UnitParts)converter.ConvertFrom(null, null, data.Value);
-            Assert.IsTrue(data.Units.SequenceEqual(parts, UnitAndPower.Comparer));
+            CollectionAssert.AreEqual(data.Parts, parts);
             var convertTo = converter.ConvertTo(null, null, parts, typeof(string));
             Assert.AreEqual(data.Formatted, convertTo);
             Assert.AreEqual(data.Formatted, parts.BaseUnitExpression);
@@ -61,22 +61,22 @@
 
         public class Data
         {
-            public Data(string value, string formatted, params UnitAndPower[] units)
+            public Data(string value, string formatted, params UnitAndPower[] parts)
             {
                 this.Value = value;
                 this.Formatted = formatted;
-                this.Units = units;
+                this.Parts = parts;
             }
 
             public string Value { get; private set; }
 
             public string Formatted { get; private set; }
 
-            public IEnumerable<UnitAndPower> Units { get; private set; }
+            public IEnumerable<UnitAndPower> Parts { get; private set; }
 
             public override string ToString()
             {
-                var units = string.Join(", ", this.Units.Select(x => $"{x.Unit.Symbol}^{x.Power}"));
+                var units = string.Join(", ", this.Parts.Select(x => $"{x.Unit.Symbol}^{x.Power}"));
                 return $"{Value} Formatted: {Formatted} Units: {{{units}}}";
             }
         }

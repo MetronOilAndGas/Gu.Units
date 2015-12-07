@@ -32,10 +32,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gu.Units.Json", "Gu.Units.J
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gu.Units.Json.Tests", "Gu.Units.Json.Tests\Gu.Units.Json.Tests.csproj", "{DDD84BCA-0FF9-4854-BDB3-C69117B2978A}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "T4", "T4", "{57FAC692-6AC4-4D35-BFED-F208817451ED}"
-	ProjectSection(SolutionItems) = preProject
-		packages\T4.TemplateFileManager\tools\ttinc\TemplateFilemanager.CS.ttinclude = packages\T4.TemplateFileManager\tools\ttinc\TemplateFilemanager.CS.ttinclude
-	EndProjectSection
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CodeGen", "CodeGen", "{57FAC692-6AC4-4D35-BFED-F208817451ED}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gu.Units.Templates", "Gu.Units.Templates\Gu.Units.Templates.csproj", "{B67B989A-2AC8-4D2B-AC94-1A37A7A7FD5B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -97,8 +96,19 @@ Global
 		{DDD84BCA-0FF9-4854-BDB3-C69117B2978A}.GeneratorOnly|Any CPU.Build.0 = Release|Any CPU
 		{DDD84BCA-0FF9-4854-BDB3-C69117B2978A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DDD84BCA-0FF9-4854-BDB3-C69117B2978A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B67B989A-2AC8-4D2B-AC94-1A37A7A7FD5B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B67B989A-2AC8-4D2B-AC94-1A37A7A7FD5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B67B989A-2AC8-4D2B-AC94-1A37A7A7FD5B}.GeneratorOnly|Any CPU.ActiveCfg = Release|Any CPU
+		{B67B989A-2AC8-4D2B-AC94-1A37A7A7FD5B}.GeneratorOnly|Any CPU.Build.0 = Release|Any CPU
+		{B67B989A-2AC8-4D2B-AC94-1A37A7A7FD5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B67B989A-2AC8-4D2B-AC94-1A37A7A7FD5B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E2703762-7D3C-49AE-B8A8-B3A792F018E3} = {57FAC692-6AC4-4D35-BFED-F208817451ED}
+		{9785A89E-8B39-48BA-8C0A-BEB7D761D402} = {57FAC692-6AC4-4D35-BFED-F208817451ED}
+		{B67B989A-2AC8-4D2B-AC94-1A37A7A7FD5B} = {57FAC692-6AC4-4D35-BFED-F208817451ED}
 	EndGlobalSection
 EndGlobal

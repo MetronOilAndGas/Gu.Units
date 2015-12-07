@@ -12,14 +12,14 @@
     {
         private InverseOverload inverse;
 
-        public Quantity(BaseUnit unit)
+        public Quantity(Unit unit)
         {
             Unit = unit;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public BaseUnit Unit { get; }
+        public Unit Unit { get; }
 
         public string Name => Unit.QuantityName;
 

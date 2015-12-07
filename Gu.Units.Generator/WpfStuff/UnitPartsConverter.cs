@@ -23,14 +23,14 @@
 
         public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
         {
-            var s =  value as string;
+            var s = value as string;
             if (string.IsNullOrWhiteSpace(s))
             {
                 return null;
             }
-            var settings = Persister.GetSettings();
+            var settings = Persister.GetSettingsFromFile();
             var matches = Parse(s);
-            var parts = new UnitParts(null);
+            var parts = new List<UnitAndPower>();
             int sign = 1;
             bool expectsSymbol = true;
             foreach (Match match in matches)
@@ -65,17 +65,17 @@
                     expectsSymbol = true;
                 }
             }
-            return parts;
+            return new UnitParts(parts);
         }
 
         public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
         {
-            return ((UnitParts) value)?.Expression;
+            return ((UnitParts)value)?.Expression;
         }
 
         private static IEnumerable<Match> Parse(string s)
         {
-            var settings = Persister.GetSettings();
+            var settings = Persister.GetSettingsFromFile();
             var symbols = settings.AllUnits.Where(x => !string.IsNullOrEmpty(x.Symbol))
                                                     .Select(x => Regex.Escape(x.Symbol))
                                                     .ToArray();
