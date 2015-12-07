@@ -6,67 +6,116 @@
 
     public class OperatorOverload
     {
-        public static string Divide = "/";
-        public static string Multiply = "*";
-        public OperatorOverload(Quantity left, Quantity result, IReadOnlyList<BaseUnit> units)
+        public static readonly string Divide = "/";
+        public static readonly string Multiply = "*";
+
+        public OperatorOverload(Quantity left, Operator @operator, Quantity right, Quantity result)
         {
             Left = left;
+            Right = right;
             Result = result;
-            Right = FindRight(units, left, Result);
-            if (Right == null)
-            {
-                throw new ArgumentException($"Cannot create overload for {left.Name} * x^y = {Result.Name}");
-            }
 
-            var power = this.FindPower(Left, Right, Result);
-            switch (power)
+            switch (@operator)
             {
-                case Power.None:
+                case Generator.Operator.None:
                     throw new InvalidOperationException($"Could not create overload for {left} * x^y = {result}");
-                case Power.NegOne:
-                    Operator = Divide;
-                    break;
-                case Power.PlusOne:
+                case Generator.Operator.Multiply:
                     Operator = Multiply;
+                    break;
+                case Generator.Operator.Divide:
+                    Operator = Divide;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
         }
 
-        public Quantity Left { get; private set; }
+        public Quantity Left { get; }
 
-        public Quantity Right { get; private set; }
+        public Quantity Right { get; }
 
-        public Quantity Result { get; private set; }
+        public Quantity Result { get; }
 
-        public string Operator { get; private set; }
+        public string Operator { get; }
 
-        public static bool CanCreate(IReadOnlyList<Unit> units,
-            Quantity left,
-            Quantity right)
+        public static bool operator ==(OperatorOverload left, OperatorOverload right)
         {
-            return FindRight(units, left, right) != null;
+            return Equals(left, right);
         }
 
-        [Obsolete("This is strange")]
-        private static Quantity FindRight(IReadOnlyList<Unit> units,
-            Quantity left,
-            Quantity result)
+        public static bool operator !=(OperatorOverload left, OperatorOverload right)
         {
-            var right = left.Unit.Parts / result.Unit.Parts;
-            return Find(units, right);
+            return !Equals(left, right);
+        }
+
+        public static bool TryCreateMultiplication(Quantity left, Quantity right, IReadOnlyList<Unit> allUnits, out OperatorOverload result)
+        {
+            var prod = left.Unit.Parts * right.Unit.Parts;
+            var product = allUnits.SingleOrDefault(u => u.Parts == prod)?.Quantity;
+            if (product != null)
+            {
+                result = new OperatorOverload(left, right, Generator.Operator.Multiply, product);
+                return true;
+            }
+
+            result = null;
+            return false;
+        }
+
+        public static bool TryCreateDivision(Quantity left, Quantity right, IReadOnlyList<Unit> allUnits, out OperatorOverload result)
+        {
+            if (left == right)
+            {
+                result = null;
+                return false;
+            }
+
+            var div = left.Unit.Parts / right.Unit.Parts;
+            var division = allUnits.SingleOrDefault(u => u.Parts == div)?.Quantity;
+            if (division != null)
+            {
+                result = new OperatorOverload(left, right, Generator.Operator.Divide, division);
+                return true;
+            }
+
+            result = null;
+            return false;
+        }
+
+        protected bool Equals(OperatorOverload other)
+        {
+            return Left.Name.Equals(other.Left.Name) &&
+                   Right.Name.Equals(other.Right.Name) && 
+                   Result.Name.Equals(other.Result.Name) && 
+                   string.Equals(Operator, other.Operator);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj))
+                return false;
+            if (ReferenceEquals(this, obj))
+                return true;
+            if (obj.GetType() != this.GetType())
+                return false;
+            return Equals((OperatorOverload) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                var hashCode = Left.Name.GetHashCode();
+                hashCode = (hashCode*397) ^ Right.Name.GetHashCode();
+                hashCode = (hashCode*397) ^ Result.Name.GetHashCode();
+                hashCode = (hashCode*397) ^ Operator.GetHashCode();
+                return hashCode;
+            }
         }
 
         public override string ToString()
         {
             return $"{Left.Name} {Operator} {Right.Name} = {Result.Name}";
-        }
-
-        private static Quantity Find(IReadOnlyList<Unit> units,
-            UnitParts parts)
-        {
-            return units.SingleOrDefault(u => u.Parts == parts)?.Quantity;
         }
 
         /// <summary>
@@ -77,9 +126,7 @@
         /// <param name="right"></param>
         /// <param name="result"></param>
         /// <returns></returns>
-        private Power FindPower(Quantity left,
-            Quantity right,
-            Quantity result)
+        private Power FindPower(Quantity left, Quantity right, Quantity result)
         {
             var leftParts = left.Unit.Parts;
             var rightParts = right.Unit.Parts;

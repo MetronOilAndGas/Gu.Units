@@ -14,16 +14,22 @@
 
         private static void FindOperatorOverloads(IReadOnlyList<BaseUnit> units, IReadOnlyList<Quantity> quantities)
         {
-            foreach (var quantity in quantities)
+            foreach (var left in quantities)
             {
-                quantity.OperatorOverloads.Clear();
-                var overloads = quantities.Where(x => x.Name != quantity.Name)
-                    .Where(result => OperatorOverload.CanCreate(units, quantity, result))
-                    .Select(result => new OperatorOverload(quantity, result, units));
+                left.OperatorOverloads.Clear();
 
-                foreach (var overload in overloads)
+                foreach (var right in quantities)
                 {
-                    quantity.OperatorOverloads.Add(overload);
+                    OperatorOverload overload;
+                    if (OperatorOverload.TryCreateMultiplication(left, right, units, out overload))
+                    {
+                        left.OperatorOverloads.Add(overload);
+                    }
+
+                    if (OperatorOverload.TryCreateDivision(left, right, units, out overload))
+                    {
+                        left.OperatorOverloads.Add(overload);
+                    }
                 }
             }
         }
