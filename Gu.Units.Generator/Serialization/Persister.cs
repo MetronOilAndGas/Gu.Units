@@ -17,18 +17,16 @@
             }
         }
 
-        private static Settings settings;
-
         public static bool IsDirty
         {
             get
             {
-                if (settings == null)
+                if (Settings.Instance == null)
                 {
                     return true;
                 }
 
-                var json = JsonConvert.SerializeObject(settings);
+                var json = JsonConvert.SerializeObject(Settings.Instance);
                 var file = File.ReadAllText(SettingsFileName);
                 return json != file;
             }
@@ -36,17 +34,17 @@
 
         public static Settings GetSettingsFromFile()
         {
-            if (settings == null)
+            if (Settings.Instance == null)
             {
                 var json = File.ReadAllText(SettingsFileName);
-                settings = JsonConvert.DeserializeObject<Settings>(json, CreateSettings());
+                Settings.Instance = JsonConvert.DeserializeObject<Settings>(json, CreateSettings());
             }
-            return settings;
+            return Settings.Instance;
         }
 
         public static void Save(string fileName)
         {
-            var json = JsonConvert.SerializeObject(settings);
+            var json = JsonConvert.SerializeObject(Settings.Instance);
             File.WriteAllText(fileName, json);
         }
 

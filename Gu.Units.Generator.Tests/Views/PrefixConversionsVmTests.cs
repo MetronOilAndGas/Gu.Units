@@ -8,7 +8,7 @@
         [Test]
         public void SetBaseUnitToMetres()
         {
-            var settings = new MockSettings();
+            var settings = MockSettings.Create();
             var vm = new PrefixConversionsVm(settings);
             CollectionAssert.IsEmpty(vm.Prefixes);
 
@@ -28,7 +28,7 @@
         [Test]
         public void SetBaseUnitToKilograms()
         {
-            var settings = new MockSettings();
+            var settings = MockSettings.Create();
             var vm = new PrefixConversionsVm(settings);
             CollectionAssert.IsEmpty(vm.Prefixes);
 

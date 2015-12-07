@@ -14,8 +14,7 @@
         [SetUp]
         public void SetUp()
         {
-            Settings.Instance = null;
-            this.settings = new MockSettings();
+            this.settings = MockSettings.Create();
             this.length = this.settings.Length;
             this.speed = this.settings.Speed;
             this.time = this.settings.Time;

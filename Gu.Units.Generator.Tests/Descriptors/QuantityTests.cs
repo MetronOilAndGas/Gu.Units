@@ -9,8 +9,7 @@
         [SetUp]
         public void SetUp()
         {
-            Settings.Instance = null;
-            this.settings = new MockSettings();
+            this.settings = MockSettings.Create();
         }
 
         [Test]

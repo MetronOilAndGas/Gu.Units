@@ -49,7 +49,7 @@
         public Prefix Milli = new Prefix("Milli", "m", -3);
         public Prefix Kilo = new Prefix("Kilo", "k", 3);
 
-        public MockSettings()
+        private MockSettings()
             : base(new ObservableCollection<Prefix>(), new ObservableCollection<BaseUnit>(), new ObservableCollection<DerivedUnit>())
         {
             Prefixes.Add(this.Milli);
@@ -142,6 +142,12 @@
 
             DerivedUnits.Add(Hertz);
             Frequency = Hertz.Quantity;
+        }
+
+        public static MockSettings Create()
+        {
+            Instance = null;
+            return new MockSettings();
         }
     }
 }

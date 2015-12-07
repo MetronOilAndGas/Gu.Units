@@ -17,7 +17,7 @@
                 throw new ArgumentException("No units", "units");
             }
 
-            if (parts.Count != parts.Select(x => x.Unit.Name).Distinct().Count())
+            if (parts.Count != parts.Select(x => x.UnitName).Distinct().Count())
             {
                 throw new ArgumentException("Units must be distinct", nameof(parts));
             }

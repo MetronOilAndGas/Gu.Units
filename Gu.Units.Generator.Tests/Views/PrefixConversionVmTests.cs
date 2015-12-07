@@ -7,7 +7,7 @@
         [Test]
         public void SetIsUsedToTrueAddsConversion()
         {
-            var settings = new MockSettings();
+            var settings = MockSettings.Create();
             var prefixConversion = PrefixConversion.Create("Milliamperes", "mA", settings.Milli);
             var conversionVm = new PrefixConversionVm(settings.Amperes.PrefixConversions, settings.Amperes, settings.Milli);
             Assert.IsFalse(conversionVm.IsUsed);

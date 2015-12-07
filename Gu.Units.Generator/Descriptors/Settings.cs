@@ -31,6 +31,7 @@
             Prefixes = prefixes;
             BaseUnits = baseUnits;
             DerivedUnits = derivedUnits;
+            Instance = this;
 
             Observable.Merge(BaseUnits.ObserveCollectionChangedSlim(true),
                              DerivedUnits.ObserveCollectionChangedSlim(true))
@@ -40,7 +41,6 @@
                     OnPropertyChanged(nameof(AllUnits));
                     OnPropertyChanged(nameof(Quantities));
                 });
-            Instance = this;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

@@ -31,7 +31,7 @@
 
         public UnitPartsConverterSource()
         {
-            var settings = new MockSettings();
+            var settings = MockSettings.Create();
             this.Metres = settings.Metres;
             this.Kilograms = settings.Kilograms;
             this.Seconds = settings.Seconds;

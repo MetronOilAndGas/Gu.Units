@@ -8,12 +8,11 @@
         [TestCase("10*x")]
         public void SimpleFactorTest(string s)
         {
-            Assert.Fail();
-            //var converter = new StringToFormulaConverter();
-            //Assert.True(converter.CanConvertFrom(null, typeof(string)));
-            //var formula = (ConversionFormula)converter.ConvertFrom(null, null, s);
-            //Assert.AreEqual(s, formula.ToSi);
-            //Assert.AreEqual("x/10", formula.FromSi);
+            var converter = new StringToFormulaConverter();
+            Assert.True(converter.CanConvertFrom(null, typeof(string)));
+            var formula = (ConversionFormula)converter.ConvertFrom(null, null, s);
+            Assert.AreEqual(s, formula.ToSi);
+            Assert.AreEqual("x/10", formula.FromSi);
         }
     }
 }
