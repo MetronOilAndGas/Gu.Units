@@ -23,13 +23,38 @@
 
         public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
         {
-            var s = value as string;
-            if (string.IsNullOrWhiteSpace(s))
+            var text = value as string;
+            if (string.IsNullOrWhiteSpace(text))
             {
                 return null;
             }
-            var settings = Persister.GetSettingsFromFile();
-            var matches = Parse(s);
+
+            var settings = Settings.Instance;
+            IReadOnlyList<SymbolAndPower> result;
+            int pos = 0;
+            var indexOf = text.IndexOf("1/");
+            if (indexOf >= 0)
+            {
+                pos = indexOf + 2;
+            }
+            if (SymbolAndPowerReader.TryRead(text, ref pos, out result))
+            {
+                if (WhiteSpaceReader.IsRestWhiteSpace(text, pos))
+                {
+                    var unitAndPowers = result.Select(sap => UnitAndPower.Create(settings.AllUnits.Single(x => x.Symbol == sap.Symbol), sap.Power))
+                                          .ToList();
+                    var unitParts = new UnitParts(unitAndPowers);
+                    if (indexOf < 0)
+                    {
+                        return unitParts;
+                    }
+
+                    return unitParts.Inverse();
+                }
+            }
+
+            return text;
+            var matches = Parse(text);
             var parts = new List<UnitAndPower>();
             int sign = 1;
             bool expectsSymbol = true;

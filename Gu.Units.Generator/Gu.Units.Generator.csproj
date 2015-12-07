@@ -92,8 +92,44 @@
     <Compile Include="..\Gu.Units\Internals\Caching\ReadonlySet{T}.cs">
       <Link>Imports\ReadonlySet{T}.cs</Link>
     </Compile>
+    <Compile Include="..\Gu.Units\Internals\Ensure\Ensure.compare.cs">
+      <Link>Imports\Ensure.compare.cs</Link>
+    </Compile>
+    <Compile Include="..\Gu.Units\Internals\Ensure\Ensure.cs">
+      <Link>Imports\Ensure.cs</Link>
+    </Compile>
+    <Compile Include="..\Gu.Units\Internals\Ensure\Ensure.string.cs">
+      <Link>Imports\Ensure.string.cs</Link>
+    </Compile>
     <Compile Include="..\Gu.Units\Internals\Helpers\CollectionDebugView.cs">
       <Link>Imports\CollectionDebugView.cs</Link>
+    </Compile>
+    <Compile Include="..\Gu.Units\Internals\Parsing\IntReader.cs">
+      <Link>Imports\IntReader.cs</Link>
+    </Compile>
+    <Compile Include="..\Gu.Units\Internals\Parsing\OperatorReader.cs">
+      <Link>Imports\OperatorReader.cs</Link>
+    </Compile>
+    <Compile Include="..\Gu.Units\Internals\Parsing\PowerReader.cs">
+      <Link>Imports\PowerReader.cs</Link>
+    </Compile>
+    <Compile Include="..\Gu.Units\Internals\Parsing\Results\MultiplyOrDivide.cs">
+      <Link>Imports\MultiplyOrDivide.cs</Link>
+    </Compile>
+    <Compile Include="..\Gu.Units\Internals\Parsing\Results\Sign.cs">
+      <Link>Imports\Sign.cs</Link>
+    </Compile>
+    <Compile Include="..\Gu.Units\Internals\Parsing\SymbolAndPowerReader.cs">
+      <Link>Imports\SymbolAndPowerReader.cs</Link>
+    </Compile>
+    <Compile Include="..\Gu.Units\Internals\Parsing\WhiteSpaceReader.cs">
+      <Link>Imports\WhiteSpaceReader.cs</Link>
+    </Compile>
+    <Compile Include="..\Gu.Units\Internals\SymbolAndPower.cs">
+      <Link>Imports\SymbolAndPower.cs</Link>
+    </Compile>
+    <Compile Include="..\Gu.Units\SuperScript.cs">
+      <Link>Imports\SuperScript.cs</Link>
     </Compile>
     <Compile Include="Descriptors\Conversions\ConversionFormula.cs" />
     <Compile Include="Descriptors\Conversions\FactorConversion.cs" />
