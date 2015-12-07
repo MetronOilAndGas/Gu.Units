@@ -28,7 +28,7 @@
                     </Grid.RowDefinitions>
                     <TextBlock Grid.Row="0"
                                Grid.Column="0"
-                               Text="{Binding Conversions.BaseUnit.ClassName,
+                               Text="{Binding Conversions.BaseUnit.Name,
                                               StringFormat='BaseUnit: {0}'}" />
                     <GroupBox Grid.Row="1"
                               MinHeight="100"
@@ -47,10 +47,10 @@
                           AutoGenerateColumns="False"
                           ItemsSource="{Binding Conversions.AllConversions}">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Binding="{Binding Quantity.ClassName}" Header="Quantity" />
-                        <DataGridTextColumn Binding="{Binding ClassName}" Header="Unit" />
+                        <!--<DataGridTextColumn Binding="{Binding Quantity.N}" Header="Quantity" />-->
+                        <DataGridTextColumn Binding="{Binding Name}" Header="Unit" />
                         <DataGridTextColumn Binding="{Binding Symbol}" Header="Symbol" />
-                        <DataGridTextColumn Binding="{Binding Formula}" Header="Formula" />
+                        <!--<DataGridTextColumn Binding="{Binding Formula}" Header="Formula" />-->
                     </DataGrid.Columns>
                 </DataGrid>
             </Grid>

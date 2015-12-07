@@ -6,7 +6,7 @@
 
     public static class Persister
     {
-        public static string FullFileName
+        public static string SettingsFileName
         {
             get
             {
@@ -28,20 +28,25 @@
                 }
 
                 var json = JsonConvert.SerializeObject(settings);
-                var file = File.ReadAllText(FullFileName);
+                var file = File.ReadAllText(SettingsFileName);
                 return json != file;
             }
         }
 
         public static Settings GetSettings()
         {
-            return settings ?? (settings = JsonConvert.DeserializeObject<Settings>(Properties.Resources.Units));
+            if (settings == null)
+            {
+                var json = File.ReadAllText(SettingsFileName);
+                settings = JsonConvert.DeserializeObject<Settings>(json, CreateSettings());
+            }
+            return settings;
         }
 
-        public static void Save()
+        public static void Save(string fileName)
         {
             var json = JsonConvert.SerializeObject(settings);
-            File.WriteAllText(FullFileName, json);
+            File.WriteAllText(fileName, json);
         }
 
         private static JsonSerializerSettings CreateSettings()
@@ -51,7 +56,8 @@
                 Formatting = Formatting.Indented,
                 PreserveReferencesHandling = PreserveReferencesHandling.Objects,
                 ReferenceLoopHandling = ReferenceLoopHandling.Serialize,
-                ContractResolver = ExcludeCalculatedResolver.Default
+                ContractResolver = ExcludeCalculatedResolver.Default,
+                MissingMemberHandling = MissingMemberHandling.Error
             };
         }
     }

@@ -93,6 +93,42 @@
         {
             var settings = new Settings();
             settings.BaseUnits.InvokeAddRange(BaseUnits);
+            var jsonSerializerSettings = CreateSettings();
+            var json = JsonConvert.SerializeObject(settings, jsonSerializerSettings);
+            Console.Write(json);
+            var deserializeObject = JsonConvert.DeserializeObject<Settings>(json);
+        }
+
+        [Test]
+        public void DumpMass()
+        {
+            var xDocument = XDocument.Parse(Properties.Resources.GeneratorSettings);
+            var massElement = xDocument.Root.Element("BaseUnits").Elements().Single(x => x.Element("QuantityName").Value == "Mass");
+            var settings = new Settings();
+
+            var name = massElement.Element("ClassName").Value;
+            var symbol = massElement.Element("Symbol").Value;
+            var quantityName = massElement.Element("QuantityName").Value;
+            var baseUnit = new BaseUnit(name, symbol, quantityName);
+            ReadConversions(baseUnit, massElement.Element("Conversions"));
+            settings.BaseUnits.Add(baseUnit);
+            var json = JsonConvert.SerializeObject(settings, CreateSettings());
+            Console.Write(json);
+        }
+
+        [Test]
+        public void DumpArea()
+        {
+            var xDocument = XDocument.Parse(Properties.Resources.GeneratorSettings);
+            var massElement = xDocument.Root.Element("DerivedUnits").Elements().Single(x => x.Element("QuantityName").Value == "Area");
+            var settings = new Settings();
+
+            var name = massElement.Element("ClassName").Value;
+            var symbol = massElement.Element("Symbol").Value;
+            var quantityName = massElement.Element("QuantityName").Value;
+            var baseUnit = new BaseUnit(name, symbol, quantityName);
+            ReadConversions(baseUnit, massElement.Element("Conversions"));
+            settings.BaseUnits.Add(baseUnit);
             var json = JsonConvert.SerializeObject(settings, CreateSettings());
             Console.Write(json);
         }
@@ -143,6 +179,7 @@
                     derivedUnit.Parts.Add(unitAndPower);
                 }
             }
+
             var json = JsonConvert.SerializeObject(settings, CreateSettings());
             Console.Write(json);
             File.WriteAllText(@"C:\Temp\Units.txt", json);
@@ -155,7 +192,7 @@
             {
                 var name = e.Element("UnitName").Value;
                 var power = int.Parse(e.Element("Power").Value);
-                unitAndPowers.Add(new UnitAndPower(allUnits.Single(x => x.Name == name), power));
+                unitAndPowers.Add(UnitAndPower.Create(allUnits.Single(x => x.Name == name), power));
             }
             return unitAndPowers.ToArray();
         }
@@ -180,7 +217,7 @@
                         {
                             if (factor == match.Factor * Math.Pow(10, prefix.Power))
                             {
-                                match.PrefixConversions.Add(new PrefixConversion(name, symbol, prefix));
+                                match.PrefixConversions.Add(PrefixConversion.Create(name, symbol, prefix));
                                 continue;
                             }
                         }
@@ -196,7 +233,7 @@
                     }
                     if (name == prefix.Name + unit.Name.ToFirstCharLower())
                     {
-                        unit.PrefixConversions.Add(new PrefixConversion(name, symbol, prefix));
+                        unit.PrefixConversions.Add(PrefixConversion.Create(name, symbol, prefix));
                         continue;
                     }
                     throw new InvalidOperationException();
@@ -204,7 +241,7 @@
                 if (factor != 0 &&
                     offset == 0)
                 {
-                    if (PartStrings.Any(x => name.IndexOf(x, StringComparison.OrdinalIgnoreCase) != 0))
+                    if (PartStrings.Any(x => name.IndexOf(x, StringComparison.OrdinalIgnoreCase) >= 0))
                     {
                         unit.PartConversions.Add(new PartConversion(name, symbol, factor));
                         continue;
@@ -227,9 +264,10 @@
             return new JsonSerializerSettings
             {
                 Formatting = Formatting.Indented,
-                PreserveReferencesHandling = PreserveReferencesHandling.Objects,
-                ReferenceLoopHandling = ReferenceLoopHandling.Serialize,
-                ContractResolver = ExcludeCalculatedResolver.Default
+                //PreserveReferencesHandling = PreserveReferencesHandling.Objects,
+                ReferenceLoopHandling = ReferenceLoopHandling.Error,
+                ContractResolver = ExcludeCalculatedResolver.Default,
+                //ReferenceResolverProvider = () => new ReferenceResolver()
             };
         }
     }

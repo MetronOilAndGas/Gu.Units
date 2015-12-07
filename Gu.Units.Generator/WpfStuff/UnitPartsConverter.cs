@@ -45,7 +45,7 @@
                     }
                     var unit = settings.AllUnits.Single(x => x.Symbol == symbol);
                     int p = ParsePower(match.Groups["Power"].Value);
-                    parts.Add(new UnitAndPower(unit, sign * p));
+                    parts.Add(UnitAndPower.Create(unit, sign * p));
                     expectsSymbol = false;
                 }
                 else

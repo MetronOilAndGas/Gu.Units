@@ -77,8 +77,8 @@
                 "MetresPerSecond",
                 "m/s",
                 "Speed",
-                new UnitAndPower(Metres, 1),
-                new UnitAndPower(Seconds, -1));
+               UnitAndPower.Create(Metres, 1),
+               UnitAndPower.Create(Seconds, -1));
             DerivedUnits.Add(MetresPerSecond);
             Speed = MetresPerSecond.Quantity;
 
@@ -86,9 +86,9 @@
                 "Newtons",
                 "N",
                 "Force",
-                new UnitAndPower(Kilograms, 1),
-                new UnitAndPower(Metres, 1),
-                new UnitAndPower(Seconds, -2));
+               UnitAndPower.Create(Kilograms, 1),
+               UnitAndPower.Create(Metres, 1),
+               UnitAndPower.Create(Seconds, -2));
             DerivedUnits.Add(Newtons);
             Force = Newtons.Quantity;
 
@@ -96,8 +96,8 @@
                 "Joules",
                 "J",
                 "Energy",
-                new UnitAndPower(Newtons, 1),
-                new UnitAndPower(Metres, 1));
+               UnitAndPower.Create(Newtons, 1),
+               UnitAndPower.Create(Metres, 1));
             DerivedUnits.Add(Joules);
             Energy = Joules.Quantity;
 
@@ -105,8 +105,8 @@
                 "Watts",
                 "W",
                 "Power",
-                new UnitAndPower(Joules, 1),
-                new UnitAndPower(Seconds, -1));
+               UnitAndPower.Create(Joules, 1),
+               UnitAndPower.Create(Seconds, -1));
             DerivedUnits.Add(Watts);
             Power = Watts.Quantity;
 
@@ -114,8 +114,8 @@
                 "Volts",
                 "V",
                 "Voltage",
-                new UnitAndPower(Watts, 1),
-                new UnitAndPower(Amperes, -1));
+               UnitAndPower.Create(Watts, 1),
+               UnitAndPower.Create(Amperes, -1));
             DerivedUnits.Add(Volts);
             Voltage = Volts.Quantity;
 
@@ -123,20 +123,20 @@
                 "Coloumbs",
                 "C",
                 "ElectricCharge",
-                new UnitAndPower(Seconds, 1),
-                new UnitAndPower(Amperes, 1));
+               UnitAndPower.Create(Seconds, 1),
+               UnitAndPower.Create(Amperes, 1));
             DerivedUnits.Add(Coloumbs);
             ElectricCharge = Coloumbs.Quantity;
 
-            SquareMetres = new DerivedUnit("SquareMetres", "m^2", "Area", new UnitAndPower(Metres, 2));
+            SquareMetres = new DerivedUnit("SquareMetres", "m^2", "Area",UnitAndPower.Create(Metres, 2));
             DerivedUnits.Add(SquareMetres);
             Area = SquareMetres.Quantity;
 
-            CubicMetres = new DerivedUnit("CubicMetres", "m^3", "Volume", new UnitAndPower(Metres, 3));
+            CubicMetres = new DerivedUnit("CubicMetres", "m^3", "Volume",UnitAndPower.Create(Metres, 3));
             DerivedUnits.Add(CubicMetres);
             Volume = CubicMetres.Quantity;
 
-            Hertz = new DerivedUnit("Hertz", "1/s", "Frequency", new UnitAndPower(Seconds, -1));
+            Hertz = new DerivedUnit("Hertz", "1/s", "Frequency",UnitAndPower.Create(Seconds, -1));
 
             DerivedUnits.Add(Hertz);
             Frequency = Hertz.Quantity;

@@ -5,7 +5,7 @@
 
     public static class OverloadFinder
     {
-        public static void Find(IEnumerable<BaseUnit> units)
+        public static void Find(IReadOnlyList<BaseUnit> units)
         {
             var quantities = units.Select(u => u.Quantity).ToList();
             FindOperatorOverloads(units.ToList(), quantities);

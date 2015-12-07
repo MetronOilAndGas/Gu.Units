@@ -15,7 +15,7 @@
         {
             this.conversions = conversions;
             this.nameAndSymbol = nameAndSymbol;
-            Conversion = new PrefixConversion(prefix.Name + nameAndSymbol.Name.ToFirstCharLower(), prefix.Symbol + nameAndSymbol.Symbol, prefix);
+            Conversion = PrefixConversion.Create(prefix.Name + nameAndSymbol.Name.ToFirstCharLower(), prefix.Symbol + nameAndSymbol.Symbol, prefix);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

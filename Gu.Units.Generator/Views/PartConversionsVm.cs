@@ -23,12 +23,6 @@
 
         public ObservableCollection<PartConversionVm[]> SubParts => this.subParts;
 
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
         public void SetBaseUnit(BaseUnit value)
         {
             this.baseUnit = value;
@@ -59,6 +53,13 @@
                 //    this.subParts.Add(partConversionVms.ToArray());
                 //}
             }
+        }
+
+
+        [NotifyPropertyChangedInvocator]
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

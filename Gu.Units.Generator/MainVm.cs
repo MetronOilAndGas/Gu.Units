@@ -49,7 +49,7 @@
 
         public void Save()
         {
-            Persister.Save();
+            Persister.Save(Persister.SettingsFileName);
         }
 
         [NotifyPropertyChangedInvocator]

@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
+    using System.Linq;
     using System.Runtime.CompilerServices;
     using JetBrains.Annotations;
 
@@ -10,36 +11,37 @@
     {
         public static readonly IEqualityComparer<UnitAndPower> Comparer = new UnitNamePowerEqualityComparer();
 
-
-        private UnitAndPower()
+        public UnitAndPower(string unitName, int power)
         {
-        }
-
-        public UnitAndPower(BaseUnit unit)
-        {
-            Unit = unit;
-            Power = 1;
-        }
-
-        public UnitAndPower(BaseUnit unit, int power)
-        {
-            if (power == 0)
-            {
-                throw new ArgumentException("power == 0", nameof(power));
-            }
-            Unit = unit;
+            UnitName = unitName;
             Power = power;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public BaseUnit Unit { get; }
+        public string UnitName { get; }
+
+        public BaseUnit Unit => Persister.GetSettings().AllUnits.Single(x => x.Name == UnitName);
 
         public int Power { get; }
 
         public static UnitAndPower operator ^(UnitAndPower up, int i)
         {
-            return new UnitAndPower(up.Unit, up.Power * i);
+            return UnitAndPower.Create(up.Unit, up.Power * i);
+        }
+
+        public static UnitAndPower Create(BaseUnit unit)
+        {
+            return new UnitAndPower(unit.Name, 1);
+        }
+
+        public static UnitAndPower Create(BaseUnit unit, int power)
+        {
+            if (power == 0)
+            {
+                throw new ArgumentException("power == 0", nameof(power));
+            }
+            return new UnitAndPower(unit.Name, power);
         }
 
         public override string ToString()

@@ -3,9 +3,11 @@
     using System;
     using System.Collections.ObjectModel;
     using System.ComponentModel;
+    using System.Diagnostics;
     using System.Runtime.CompilerServices;
     using JetBrains.Annotations;
 
+    [DebuggerDisplay("{Name}")]
     public class Quantity : MarshalByRefObject, INotifyPropertyChanged
     {
         private InverseOverload inverse;
@@ -20,6 +22,8 @@
         public BaseUnit Unit { get; }
 
         public string Name => Unit.QuantityName;
+
+        public string UnitName => Unit.Name + "Unit";
 
         public string ParameterName => Name.ToFirstCharLower();
 

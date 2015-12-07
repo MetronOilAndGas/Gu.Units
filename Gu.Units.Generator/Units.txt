@@ -1,50 +1,41 @@
 {
-  "$id": "1",
   "Prefixes": [
     {
-      "$id": "2",
       "Name": "Nano",
       "Symbol": "n",
       "Power": -9
     },
     {
-      "$id": "3",
       "Name": "Micro",
       "Symbol": "µ",
       "Power": -6
     },
     {
-      "$id": "4",
       "Name": "Milli",
       "Symbol": "m",
       "Power": -3
     },
     {
-      "$id": "5",
       "Name": "Centi",
       "Symbol": "c",
       "Power": -2
     },
     {
-      "$id": "6",
       "Name": "Deci",
       "Symbol": "d",
       "Power": -1
     },
     {
-      "$id": "7",
       "Name": "Kilo",
       "Symbol": "k",
       "Power": 3
     },
     {
-      "$id": "8",
       "Name": "Mega",
       "Symbol": "M",
       "Power": 6
     },
     {
-      "$id": "9",
       "Name": "Giga",
       "Symbol": "G",
       "Power": 9
@@ -52,182 +43,148 @@
   ],
   "BaseUnits": [
     {
-      "$id": "10",
       "Name": "Kilograms",
       "Symbol": "kg",
       "QuantityName": "Mass",
-      "FactorConversions": [],
-      "OffsetConversions": [],
-      "PrefixConversions": [],
-      "PartConversions": [
+      "FactorConversions": [
         {
-          "$id": "11",
           "Name": "Grams",
           "Symbol": "g",
-          "Factor": 0.001
-        },
-        {
-          "$id": "12",
-          "Name": "Milligrams",
-          "Symbol": "mg",
-          "Factor": 1E-06
-        },
-        {
-          "$id": "13",
-          "Name": "Micrograms",
-          "Symbol": "µg",
-          "Factor": 1E-09
+          "Factor": 0.001,
+          "PrefixConversions": [
+            {
+              "Name": "Milligrams",
+              "Symbol": "mg",
+              "PrefixName": "Milli"
+            },
+            {
+              "Name": "Micrograms",
+              "Symbol": "µg",
+              "PrefixName": "Micro"
+            }
+          ]
         }
-      ]
+      ],
+      "OffsetConversions": [],
+      "PrefixConversions": [],
+      "PartConversions": []
     },
     {
-      "$id": "14",
       "Name": "Metres",
       "Symbol": "m",
       "QuantityName": "Length",
-      "FactorConversions": [],
+      "FactorConversions": [
+        {
+          "Name": "Inches",
+          "Symbol": "in",
+          "Factor": 0.0254,
+          "PrefixConversions": []
+        },
+        {
+          "Name": "Mile",
+          "Symbol": "mi",
+          "Factor": 1609.344,
+          "PrefixConversions": []
+        },
+        {
+          "Name": "Yard",
+          "Symbol": "yd",
+          "Factor": 0.9144,
+          "PrefixConversions": []
+        },
+        {
+          "Name": "NauticalMile",
+          "Symbol": "nmi",
+          "Factor": 1852.0,
+          "PrefixConversions": []
+        }
+      ],
       "OffsetConversions": [],
       "PrefixConversions": [
         {
-          "$id": "15",
           "Name": "Nanometres",
           "Symbol": "nm",
-          "Prefix": {
-            "$ref": "2"
-          }
+          "PrefixName": "Nano"
         },
         {
-          "$id": "16",
           "Name": "Micrometres",
           "Symbol": "µm",
-          "Prefix": {
-            "$ref": "3"
-          }
+          "PrefixName": "Micro"
         },
         {
-          "$id": "17",
           "Name": "Millimetres",
           "Symbol": "mm",
-          "Prefix": {
-            "$ref": "4"
-          }
+          "PrefixName": "Milli"
         },
         {
-          "$id": "18",
           "Name": "Centimetres",
           "Symbol": "cm",
-          "Prefix": {
-            "$ref": "5"
-          }
+          "PrefixName": "Centi"
         },
         {
-          "$id": "19",
           "Name": "Decimetres",
           "Symbol": "dm",
-          "Prefix": {
-            "$ref": "6"
-          }
+          "PrefixName": "Deci"
         },
         {
-          "$id": "20",
           "Name": "Kilometres",
           "Symbol": "km",
-          "Prefix": {
-            "$ref": "7"
-          }
+          "PrefixName": "Kilo"
         }
       ],
-      "PartConversions": [
-        {
-          "$id": "21",
-          "Name": "Inches",
-          "Symbol": "in",
-          "Factor": 0.0254
-        },
-        {
-          "$id": "22",
-          "Name": "Mile",
-          "Symbol": "mi",
-          "Factor": 1609.344
-        },
-        {
-          "$id": "23",
-          "Name": "Yard",
-          "Symbol": "yd",
-          "Factor": 0.9144
-        },
-        {
-          "$id": "24",
-          "Name": "NauticalMile",
-          "Symbol": "nmi",
-          "Factor": 1852.0
-        }
-      ]
+      "PartConversions": []
     },
     {
-      "$id": "25",
       "Name": "Seconds",
       "Symbol": "s",
       "QuantityName": "Time",
-      "FactorConversions": [],
+      "FactorConversions": [
+        {
+          "Name": "Hours",
+          "Symbol": "h",
+          "Factor": 3600.0,
+          "PrefixConversions": []
+        },
+        {
+          "Name": "Minutes",
+          "Symbol": "min",
+          "Factor": 60.0,
+          "PrefixConversions": []
+        }
+      ],
       "OffsetConversions": [],
       "PrefixConversions": [
         {
-          "$id": "26",
           "Name": "Nanoseconds",
           "Symbol": "ns",
-          "Prefix": {
-            "$ref": "2"
-          }
+          "PrefixName": "Nano"
         },
         {
-          "$id": "27",
           "Name": "Microseconds",
           "Symbol": "µs",
-          "Prefix": {
-            "$ref": "3"
-          }
+          "PrefixName": "Micro"
         },
         {
-          "$id": "28",
           "Name": "Milliseconds",
           "Symbol": "ms",
-          "Prefix": {
-            "$ref": "4"
-          }
+          "PrefixName": "Milli"
         }
       ],
-      "PartConversions": [
-        {
-          "$id": "29",
-          "Name": "Hours",
-          "Symbol": "h",
-          "Factor": 3600.0
-        },
-        {
-          "$id": "30",
-          "Name": "Minutes",
-          "Symbol": "min",
-          "Factor": 60.0
-        }
-      ]
+      "PartConversions": []
     },
     {
-      "$id": "31",
       "Name": "Kelvin",
       "Symbol": "K",
       "QuantityName": "Temperature",
       "FactorConversions": [],
       "OffsetConversions": [
         {
-          "$id": "32",
           "Name": "Celsius",
           "Symbol": "°C",
           "Factor": 1.0,
           "Offset": -273.15
         },
         {
-          "$id": "33",
           "Name": "Fahrenheit",
           "Symbol": "°F",
           "Factor": 1.8,
@@ -238,45 +195,42 @@
       "PartConversions": []
     },
     {
-      "$id": "34",
       "Name": "Radians",
       "Symbol": "rad",
       "QuantityName": "Angle",
-      "FactorConversions": [],
-      "OffsetConversions": [],
-      "PrefixConversions": [],
-      "PartConversions": [
+      "FactorConversions": [
         {
-          "$id": "35",
           "Name": "Degrees",
           "Symbol": "°",
-          "Factor": 0.017453292519943295
+          "Factor": 0.017453292519943295,
+          "PrefixConversions": []
         }
-      ]
+      ],
+      "OffsetConversions": [],
+      "PrefixConversions": [],
+      "PartConversions": []
     },
     {
-      "$id": "36",
       "Name": "Scalar",
       "Symbol": "ul",
       "QuantityName": "Unitless",
-      "FactorConversions": [],
+      "FactorConversions": [
+        {
+          "Name": "Promilles",
+          "Symbol": "‰",
+          "Factor": 0.001,
+          "PrefixConversions": []
+        }
+      ],
       "OffsetConversions": [],
       "PrefixConversions": [],
       "PartConversions": [
         {
-          "$id": "37",
           "Name": "PartsPerMillion",
           "Symbol": "ppm",
           "Factor": 1E-06
         },
         {
-          "$id": "38",
-          "Name": "Promilles",
-          "Symbol": "‰",
-          "Factor": 0.001
-        },
-        {
-          "$id": "39",
           "Name": "Percents",
           "Symbol": "%",
           "Factor": 0.01
@@ -284,7 +238,6 @@
       ]
     },
     {
-      "$id": "40",
       "Name": "Amperes",
       "Symbol": "A",
       "QuantityName": "Current",
@@ -292,42 +245,29 @@
       "OffsetConversions": [],
       "PrefixConversions": [
         {
-          "$id": "41",
           "Name": "Milliamperes",
           "Symbol": "mA",
-          "Prefix": {
-            "$ref": "4"
-          }
+          "PrefixName": "Milli"
         },
         {
-          "$id": "42",
           "Name": "Kiloamperes",
           "Symbol": "kA",
-          "Prefix": {
-            "$ref": "7"
-          }
+          "PrefixName": "Kilo"
         },
         {
-          "$id": "43",
           "Name": "Megaamperes",
           "Symbol": "MA",
-          "Prefix": {
-            "$ref": "8"
-          }
+          "PrefixName": "Mega"
         },
         {
-          "$id": "44",
           "Name": "Microamperes",
           "Symbol": "µA",
-          "Prefix": {
-            "$ref": "3"
-          }
+          "PrefixName": "Micro"
         }
       ],
       "PartConversions": []
     },
     {
-      "$id": "45",
       "Name": "Candelas",
       "Symbol": "cd",
       "QuantityName": "LuminousIntensity",
@@ -339,67 +279,57 @@
   ],
   "DerivedUnits": [
     {
-      "$id": "46",
       "Parts": [
         {
-          "$id": "47",
-          "Unit": {
-            "$ref": "14"
-          },
+          "UnitName": "Metres",
           "Power": 2
         }
       ],
       "Name": "SquareMetres",
       "Symbol": "m²",
       "QuantityName": "Area",
-      "FactorConversions": [],
+      "FactorConversions": [
+        {
+          "Name": "Hectare",
+          "Symbol": "ha",
+          "Factor": 10000.0,
+          "PrefixConversions": []
+        }
+      ],
       "OffsetConversions": [],
       "PrefixConversions": [],
       "PartConversions": [
         {
-          "$id": "48",
           "Name": "SquareMillimetres",
           "Symbol": "mm²",
           "Factor": 1E-06
         },
         {
-          "$id": "49",
           "Name": "SquareCentimetres",
           "Symbol": "cm²",
           "Factor": 0.0001
         },
         {
-          "$id": "50",
           "Name": "SquareDecimetres",
           "Symbol": "dm²",
           "Factor": 0.010000000000000002
         },
         {
-          "$id": "51",
           "Name": "SquareKilometres",
           "Symbol": "km²",
           "Factor": 1000000.0
         },
         {
-          "$id": "52",
           "Name": "SquareInches",
           "Symbol": "in²",
           "Factor": 0.00064516
         },
         {
-          "$id": "53",
-          "Name": "Hectare",
-          "Symbol": "ha",
-          "Factor": 10000.0
-        },
-        {
-          "$id": "54",
           "Name": "SquareMile",
           "Symbol": "mi²",
           "Factor": 2589988.110336
         },
         {
-          "$id": "55",
           "Name": "SquareYard",
           "Symbol": "yd²",
           "Factor": 0.83612736
@@ -407,77 +337,63 @@
       ]
     },
     {
-      "$id": "56",
       "Parts": [
         {
-          "$id": "57",
-          "Unit": {
-            "$ref": "14"
-          },
+          "UnitName": "Metres",
           "Power": 3
         }
       ],
       "Name": "CubicMetres",
       "Symbol": "m³",
       "QuantityName": "Volume",
-      "FactorConversions": [],
-      "OffsetConversions": [],
-      "PrefixConversions": [],
-      "PartConversions": [
+      "FactorConversions": [
         {
-          "$id": "58",
           "Name": "Litres",
           "Symbol": "L",
-          "Factor": 0.0010000000000000002
+          "Factor": 0.0010000000000000002,
+          "PrefixConversions": []
         },
         {
-          "$id": "59",
           "Name": "CubicCentimetres",
           "Symbol": "cm³",
-          "Factor": 1.0000000000000002E-06
+          "Factor": 1.0000000000000002E-06,
+          "PrefixConversions": []
         },
         {
-          "$id": "60",
           "Name": "CubicMillimetres",
           "Symbol": "mm³",
-          "Factor": 1E-09
+          "Factor": 1E-09,
+          "PrefixConversions": []
         },
         {
-          "$id": "61",
           "Name": "CubicInches",
           "Symbol": "in³",
-          "Factor": 1.6387064E-05
+          "Factor": 1.6387064E-05,
+          "PrefixConversions": []
         },
         {
-          "$id": "62",
           "Name": "CubicDecimetres",
           "Symbol": "dm³",
-          "Factor": 0.0010000000000000002
+          "Factor": 0.0010000000000000002,
+          "PrefixConversions": []
         }
-      ]
+      ],
+      "OffsetConversions": [],
+      "PrefixConversions": [],
+      "PartConversions": []
     },
     {
-      "$id": "63",
       "Parts": [
         {
-          "$id": "64",
-          "Unit": {
-            "$ref": "10"
-          },
+          "UnitName": "Kilograms",
           "Power": 1
         },
         {
-          "$id": "65",
-          "Unit": {
-            "$ref": "14"
-          },
+          "UnitName": "Metres",
           "Power": 1
         },
         {
-          "$id": "66",
-          "Unit": {
-            "$ref": "25"
-          },
+          "UnitName": "Seconds",
           "Power": -2
         }
       ],
@@ -488,156 +404,111 @@
       "OffsetConversions": [],
       "PrefixConversions": [
         {
-          "$id": "67",
           "Name": "Nanonewtons",
           "Symbol": "nN",
-          "Prefix": {
-            "$ref": "2"
-          }
+          "PrefixName": "Nano"
         },
         {
-          "$id": "68",
           "Name": "Micronewtons",
           "Symbol": "µN",
-          "Prefix": {
-            "$ref": "3"
-          }
+          "PrefixName": "Micro"
         },
         {
-          "$id": "69",
           "Name": "Millinewtons",
           "Symbol": "mN",
-          "Prefix": {
-            "$ref": "4"
-          }
+          "PrefixName": "Milli"
         },
         {
-          "$id": "70",
           "Name": "Kilonewtons",
           "Symbol": "kN",
-          "Prefix": {
-            "$ref": "7"
-          }
+          "PrefixName": "Kilo"
         },
         {
-          "$id": "71",
           "Name": "Meganewtons",
           "Symbol": "MN",
-          "Prefix": {
-            "$ref": "8"
-          }
+          "PrefixName": "Mega"
         },
         {
-          "$id": "72",
           "Name": "Giganewtons",
           "Symbol": "GN",
-          "Prefix": {
-            "$ref": "9"
-          }
+          "PrefixName": "Giga"
         }
       ],
       "PartConversions": []
     },
     {
-      "$id": "73",
       "Parts": [
         {
-          "$id": "74",
-          "Unit": {
-            "$ref": "63"
-          },
+          "UnitName": "Newtons",
           "Power": 1
         },
         {
-          "$id": "75",
-          "Unit": {
-            "$ref": "14"
-          },
+          "UnitName": "Metres",
           "Power": -2
         }
       ],
       "Name": "Pascals",
       "Symbol": "Pa",
       "QuantityName": "Pressure",
-      "FactorConversions": [],
+      "FactorConversions": [
+        {
+          "Name": "Bars",
+          "Symbol": "bar",
+          "Factor": 100000.0,
+          "PrefixConversions": [
+            {
+              "Name": "Millibars",
+              "Symbol": "mbar",
+              "PrefixName": "Milli"
+            }
+          ]
+        }
+      ],
       "OffsetConversions": [],
       "PrefixConversions": [
         {
-          "$id": "76",
           "Name": "Nanopascals",
           "Symbol": "nPa",
-          "Prefix": {
-            "$ref": "2"
-          }
+          "PrefixName": "Nano"
         },
         {
-          "$id": "77",
           "Name": "Micropascals",
           "Symbol": "µPa",
-          "Prefix": {
-            "$ref": "3"
-          }
+          "PrefixName": "Micro"
         },
         {
-          "$id": "78",
           "Name": "Millipascals",
           "Symbol": "mPa",
-          "Prefix": {
-            "$ref": "4"
-          }
+          "PrefixName": "Milli"
         },
         {
-          "$id": "79",
           "Name": "Kilopascals",
           "Symbol": "kPa",
-          "Prefix": {
-            "$ref": "7"
-          }
+          "PrefixName": "Kilo"
         },
         {
-          "$id": "80",
           "Name": "Megapascals",
           "Symbol": "MPa",
-          "Prefix": {
-            "$ref": "8"
-          }
+          "PrefixName": "Mega"
         },
         {
-          "$id": "81",
           "Name": "Gigapascals",
           "Symbol": "GPa",
-          "Prefix": {
-            "$ref": "9"
-          }
+          "PrefixName": "Giga"
         }
       ],
       "PartConversions": [
         {
-          "$id": "82",
-          "Name": "Bars",
-          "Symbol": "bar",
-          "Factor": 100000.0
-        },
-        {
-          "$id": "83",
-          "Name": "Millibars",
-          "Symbol": "mbar",
-          "Factor": 100.0
-        },
-        {
-          "$id": "84",
           "Name": "NewtonsPerSquareMillimetre",
           "Symbol": "N⋅mm⁻²",
           "Factor": 1000000.0
         },
         {
-          "$id": "85",
           "Name": "KilonewtonsPerSquareMillimetre",
           "Symbol": "kN⋅mm⁻²",
           "Factor": 1000000000.0
         },
         {
-          "$id": "86",
           "Name": "NewtonsPerSquareMetre",
           "Symbol": "N/m²",
           "Factor": 1.0
@@ -645,20 +516,13 @@
       ]
     },
     {
-      "$id": "87",
       "Parts": [
         {
-          "$id": "88",
-          "Unit": {
-            "$ref": "10"
-          },
+          "UnitName": "Kilograms",
           "Power": 1
         },
         {
-          "$id": "89",
-          "Unit": {
-            "$ref": "14"
-          },
+          "UnitName": "Metres",
           "Power": -3
         }
       ],
@@ -670,13 +534,11 @@
       "PrefixConversions": [],
       "PartConversions": [
         {
-          "$id": "90",
           "Name": "GramsPerCubicMillimetre",
           "Symbol": "g/mm³",
           "Factor": 999999.99999999988
         },
         {
-          "$id": "91",
           "Name": "GramsPerCubicCentimetre",
           "Symbol": "g/cm³",
           "Factor": 999.99999999999989
@@ -684,27 +546,17 @@
       ]
     },
     {
-      "$id": "92",
       "Parts": [
         {
-          "$id": "93",
-          "Unit": {
-            "$ref": "10"
-          },
+          "UnitName": "Kilograms",
           "Power": 1
         },
         {
-          "$id": "94",
-          "Unit": {
-            "$ref": "14"
-          },
+          "UnitName": "Metres",
           "Power": 2
         },
         {
-          "$id": "95",
-          "Unit": {
-            "$ref": "25"
-          },
+          "UnitName": "Seconds",
           "Power": -2
         }
       ],
@@ -715,57 +567,38 @@
       "OffsetConversions": [],
       "PrefixConversions": [
         {
-          "$id": "96",
           "Name": "Nanojoules",
           "Symbol": "nJ",
-          "Prefix": {
-            "$ref": "2"
-          }
+          "PrefixName": "Nano"
         },
         {
-          "$id": "97",
           "Name": "Microjoules",
           "Symbol": "µJ",
-          "Prefix": {
-            "$ref": "3"
-          }
+          "PrefixName": "Micro"
         },
         {
-          "$id": "98",
           "Name": "Millijoules",
           "Symbol": "mJ",
-          "Prefix": {
-            "$ref": "4"
-          }
+          "PrefixName": "Milli"
         },
         {
-          "$id": "99",
           "Name": "Kilojoules",
           "Symbol": "kJ",
-          "Prefix": {
-            "$ref": "7"
-          }
+          "PrefixName": "Kilo"
         },
         {
-          "$id": "100",
           "Name": "Megajoules",
           "Symbol": "MJ",
-          "Prefix": {
-            "$ref": "8"
-          }
+          "PrefixName": "Mega"
         },
         {
-          "$id": "101",
           "Name": "Gigajoules",
           "Symbol": "GJ",
-          "Prefix": {
-            "$ref": "9"
-          }
+          "PrefixName": "Giga"
         }
       ],
       "PartConversions": [
         {
-          "$id": "102",
           "Name": "KilowattHours",
           "Symbol": "kWh",
           "Factor": 3600000.0
@@ -773,20 +606,13 @@
       ]
     },
     {
-      "$id": "103",
       "Parts": [
         {
-          "$id": "104",
-          "Unit": {
-            "$ref": "92"
-          },
+          "UnitName": "Joules",
           "Power": 1
         },
         {
-          "$id": "105",
-          "Unit": {
-            "$ref": "25"
-          },
+          "UnitName": "Seconds",
           "Power": -1
         }
       ],
@@ -797,71 +623,46 @@
       "OffsetConversions": [],
       "PrefixConversions": [
         {
-          "$id": "106",
           "Name": "Nanowatts",
           "Symbol": "nW",
-          "Prefix": {
-            "$ref": "2"
-          }
+          "PrefixName": "Nano"
         },
         {
-          "$id": "107",
           "Name": "Microwatts",
           "Symbol": "µW",
-          "Prefix": {
-            "$ref": "3"
-          }
+          "PrefixName": "Micro"
         },
         {
-          "$id": "108",
           "Name": "Milliwatts",
           "Symbol": "mW",
-          "Prefix": {
-            "$ref": "4"
-          }
+          "PrefixName": "Milli"
         },
         {
-          "$id": "109",
           "Name": "Kilowatts",
           "Symbol": "kW",
-          "Prefix": {
-            "$ref": "7"
-          }
+          "PrefixName": "Kilo"
         },
         {
-          "$id": "110",
           "Name": "Megawatts",
           "Symbol": "MW",
-          "Prefix": {
-            "$ref": "8"
-          }
+          "PrefixName": "Mega"
         },
         {
-          "$id": "111",
           "Name": "Gigawatts",
           "Symbol": "GW",
-          "Prefix": {
-            "$ref": "9"
-          }
+          "PrefixName": "Giga"
         }
       ],
       "PartConversions": []
     },
     {
-      "$id": "112",
       "Parts": [
         {
-          "$id": "113",
-          "Unit": {
-            "$ref": "14"
-          },
+          "UnitName": "Metres",
           "Power": 1
         },
         {
-          "$id": "114",
-          "Unit": {
-            "$ref": "25"
-          },
+          "UnitName": "Seconds",
           "Power": -1
         }
       ],
@@ -872,61 +673,48 @@
       "OffsetConversions": [],
       "PrefixConversions": [
         {
-          "$id": "115",
           "Name": "MillimetresPerSecond",
           "Symbol": "mm/s",
-          "Prefix": {
-            "$ref": "4"
-          }
+          "PrefixName": "Milli"
         },
         {
-          "$id": "116",
           "Name": "CentimetresPerSecond",
           "Symbol": "cm/s",
-          "Prefix": {
-            "$ref": "5"
-          }
+          "PrefixName": "Centi"
         }
       ],
       "PartConversions": [
         {
-          "$id": "117",
           "Name": "KilometresPerHour",
           "Symbol": "km/h",
           "Factor": 0.27777777777777779
         },
         {
-          "$id": "118",
           "Name": "CentimetresPerMinute",
           "Symbol": "cm/min",
           "Factor": 0.00016666666666666666
         },
         {
-          "$id": "119",
           "Name": "MetresPerMinute",
           "Symbol": "m/min",
           "Factor": 0.016666666666666666
         },
         {
-          "$id": "120",
           "Name": "MetresPerHour",
           "Symbol": "m/h",
           "Factor": 0.00027777777777777778
         },
         {
-          "$id": "121",
           "Name": "MillimetresPerHour",
           "Symbol": "mm/h",
           "Factor": 2.7777777777777776E-07
         },
         {
-          "$id": "122",
           "Name": "CentimetresPerHour",
           "Symbol": "cm/h",
           "Factor": 2.7777777777777779E-06
         },
         {
-          "$id": "123",
           "Name": "MillimetresPerMinute",
           "Symbol": "mm/min",
           "Factor": 1.6666666666666667E-05
@@ -934,20 +722,13 @@
       ]
     },
     {
-      "$id": "124",
       "Parts": [
         {
-          "$id": "125",
-          "Unit": {
-            "$ref": "34"
-          },
+          "UnitName": "Radians",
           "Power": 1
         },
         {
-          "$id": "126",
-          "Unit": {
-            "$ref": "25"
-          },
+          "UnitName": "Seconds",
           "Power": -1
         }
       ],
@@ -959,37 +740,31 @@
       "PrefixConversions": [],
       "PartConversions": [
         {
-          "$id": "127",
           "Name": "RevolutionsPerMinute",
           "Symbol": "rpm",
           "Factor": 0.10471975511966
         },
         {
-          "$id": "128",
           "Name": "DegreesPerSecond",
           "Symbol": "°⋅s⁻¹",
           "Factor": 0.017453292519943295
         },
         {
-          "$id": "129",
           "Name": "DegreesPerMinute",
           "Symbol": "min⁻¹⋅°",
           "Factor": 0.00029088820866572158
         },
         {
-          "$id": "130",
           "Name": "RadiansPerMinute",
           "Symbol": "min⁻¹⋅rad",
           "Factor": 0.016666666666666666
         },
         {
-          "$id": "131",
           "Name": "DegreesPerHour",
           "Symbol": "h⁻¹⋅°",
           "Factor": 4.84813681109536E-06
         },
         {
-          "$id": "132",
           "Name": "RadiansPerHour",
           "Symbol": "h⁻¹⋅rad",
           "Factor": 0.00027777777777777778
@@ -997,13 +772,9 @@
       ]
     },
     {
-      "$id": "133",
       "Parts": [
         {
-          "$id": "134",
-          "Unit": {
-            "$ref": "25"
-          },
+          "UnitName": "Seconds",
           "Power": -1
         }
       ],
@@ -1014,55 +785,36 @@
       "OffsetConversions": [],
       "PrefixConversions": [
         {
-          "$id": "135",
           "Name": "Millihertz",
           "Symbol": "mHz",
-          "Prefix": {
-            "$ref": "4"
-          }
+          "PrefixName": "Milli"
         },
         {
-          "$id": "136",
           "Name": "Kilohertz",
           "Symbol": "kHz",
-          "Prefix": {
-            "$ref": "7"
-          }
+          "PrefixName": "Kilo"
         },
         {
-          "$id": "137",
           "Name": "Megahertz",
           "Symbol": "MHz",
-          "Prefix": {
-            "$ref": "8"
-          }
+          "PrefixName": "Mega"
         },
         {
-          "$id": "138",
           "Name": "Gigahertz",
           "Symbol": "GHz",
-          "Prefix": {
-            "$ref": "9"
-          }
+          "PrefixName": "Giga"
         }
       ],
       "PartConversions": []
     },
     {
-      "$id": "139",
       "Parts": [
         {
-          "$id": "140",
-          "Unit": {
-            "$ref": "14"
-          },
+          "UnitName": "Metres",
           "Power": 1
         },
         {
-          "$id": "141",
-          "Unit": {
-            "$ref": "25"
-          },
+          "UnitName": "Seconds",
           "Power": -2
         }
       ],
@@ -1073,46 +825,30 @@
       "OffsetConversions": [],
       "PrefixConversions": [
         {
-          "$id": "142",
           "Name": "MillimetresPerSecondSquared",
           "Symbol": "mm/s²",
-          "Prefix": {
-            "$ref": "4"
-          }
+          "PrefixName": "Milli"
         },
         {
-          "$id": "143",
           "Name": "CentimetresPerSecondSquared",
           "Symbol": "cm/s²",
-          "Prefix": {
-            "$ref": "5"
-          }
+          "PrefixName": "Centi"
         }
       ],
       "PartConversions": []
     },
     {
-      "$id": "144",
       "Parts": [
         {
-          "$id": "145",
-          "Unit": {
-            "$ref": "63"
-          },
+          "UnitName": "Newtons",
           "Power": 1
         },
         {
-          "$id": "146",
-          "Unit": {
-            "$ref": "14"
-          },
+          "UnitName": "Metres",
           "Power": 1
         },
         {
-          "$id": "147",
-          "Unit": {
-            "$ref": "34"
-          },
+          "UnitName": "Radians",
           "Power": -1
         }
       ],
@@ -1125,20 +861,13 @@
       "PartConversions": []
     },
     {
-      "$id": "148",
       "Parts": [
         {
-          "$id": "149",
-          "Unit": {
-            "$ref": "63"
-          },
+          "UnitName": "Newtons",
           "Power": 1
         },
         {
-          "$id": "150",
-          "Unit": {
-            "$ref": "14"
-          },
+          "UnitName": "Metres",
           "Power": -1
         }
       ],
@@ -1151,20 +880,13 @@
       "PartConversions": []
     },
     {
-      "$id": "151",
       "Parts": [
         {
-          "$id": "152",
-          "Unit": {
-            "$ref": "56"
-          },
+          "UnitName": "CubicMetres",
           "Power": 1
         },
         {
-          "$id": "153",
-          "Unit": {
-            "$ref": "25"
-          },
+          "UnitName": "Seconds",
           "Power": -1
         }
       ],
@@ -1177,20 +899,13 @@
       "PartConversions": []
     },
     {
-      "$id": "154",
       "Parts": [
         {
-          "$id": "155",
-          "Unit": {
-            "$ref": "103"
-          },
+          "UnitName": "Watts",
           "Power": 1
         },
         {
-          "$id": "156",
-          "Unit": {
-            "$ref": "40"
-          },
+          "UnitName": "Amperes",
           "Power": -1
         }
       ],
@@ -1201,55 +916,36 @@
       "OffsetConversions": [],
       "PrefixConversions": [
         {
-          "$id": "157",
           "Name": "Millivolts",
           "Symbol": "mV",
-          "Prefix": {
-            "$ref": "4"
-          }
+          "PrefixName": "Milli"
         },
         {
-          "$id": "158",
           "Name": "Kilovolts",
           "Symbol": "kV",
-          "Prefix": {
-            "$ref": "7"
-          }
+          "PrefixName": "Kilo"
         },
         {
-          "$id": "159",
           "Name": "Megavolts",
           "Symbol": "MV",
-          "Prefix": {
-            "$ref": "8"
-          }
+          "PrefixName": "Mega"
         },
         {
-          "$id": "160",
           "Name": "Microvolts",
           "Symbol": "µV",
-          "Prefix": {
-            "$ref": "3"
-          }
+          "PrefixName": "Micro"
         }
       ],
       "PartConversions": []
     },
     {
-      "$id": "161",
       "Parts": [
         {
-          "$id": "162",
-          "Unit": {
-            "$ref": "154"
-          },
+          "UnitName": "Volts",
           "Power": 1
         },
         {
-          "$id": "163",
-          "Unit": {
-            "$ref": "40"
-          },
+          "UnitName": "Amperes",
           "Power": -1
         }
       ],
@@ -1260,55 +956,36 @@
       "OffsetConversions": [],
       "PrefixConversions": [
         {
-          "$id": "164",
           "Name": "Microohm",
           "Symbol": "µΩ",
-          "Prefix": {
-            "$ref": "3"
-          }
+          "PrefixName": "Micro"
         },
         {
-          "$id": "165",
           "Name": "Milliohm",
           "Symbol": "mΩ",
-          "Prefix": {
-            "$ref": "4"
-          }
+          "PrefixName": "Milli"
         },
         {
-          "$id": "166",
           "Name": "Kiloohm",
           "Symbol": "kΩ",
-          "Prefix": {
-            "$ref": "7"
-          }
+          "PrefixName": "Kilo"
         },
         {
-          "$id": "167",
           "Name": "Megaohm",
           "Symbol": "MΩ",
-          "Prefix": {
-            "$ref": "8"
-          }
+          "PrefixName": "Mega"
         }
       ],
       "PartConversions": []
     },
     {
-      "$id": "168",
       "Parts": [
         {
-          "$id": "169",
-          "Unit": {
-            "$ref": "92"
-          },
+          "UnitName": "Joules",
           "Power": 1
         },
         {
-          "$id": "170",
-          "Unit": {
-            "$ref": "10"
-          },
+          "UnitName": "Kilograms",
           "Power": -1
         }
       ],
@@ -1321,20 +998,13 @@
       "PartConversions": []
     },
     {
-      "$id": "171",
       "Parts": [
         {
-          "$id": "172",
-          "Unit": {
-            "$ref": "25"
-          },
+          "UnitName": "Seconds",
           "Power": 1
         },
         {
-          "$id": "173",
-          "Unit": {
-            "$ref": "40"
-          },
+          "UnitName": "Amperes",
           "Power": 1
         }
       ],
@@ -1347,27 +1017,17 @@
       "PartConversions": []
     },
     {
-      "$id": "174",
       "Parts": [
         {
-          "$id": "175",
-          "Unit": {
-            "$ref": "154"
-          },
+          "UnitName": "Volts",
           "Power": 1
         },
         {
-          "$id": "176",
-          "Unit": {
-            "$ref": "25"
-          },
+          "UnitName": "Seconds",
           "Power": 1
         },
         {
-          "$id": "177",
-          "Unit": {
-            "$ref": "40"
-          },
+          "UnitName": "Amperes",
           "Power": -1
         }
       ],
@@ -1380,20 +1040,13 @@
       "PartConversions": []
     },
     {
-      "$id": "178",
       "Parts": [
         {
-          "$id": "179",
-          "Unit": {
-            "$ref": "171"
-          },
+          "UnitName": "Coulombs",
           "Power": 1
         },
         {
-          "$id": "180",
-          "Unit": {
-            "$ref": "154"
-          },
+          "UnitName": "Volts",
           "Power": -1
         }
       ],
@@ -1406,20 +1059,13 @@
       "PartConversions": []
     },
     {
-      "$id": "181",
       "Parts": [
         {
-          "$id": "182",
-          "Unit": {
-            "$ref": "14"
-          },
+          "UnitName": "Metres",
           "Power": 1
         },
         {
-          "$id": "183",
-          "Unit": {
-            "$ref": "63"
-          },
+          "UnitName": "Newtons",
           "Power": -1
         }
       ],
@@ -1430,23 +1076,18 @@
       "OffsetConversions": [],
       "PrefixConversions": [
         {
-          "$id": "184",
           "Name": "MillimetresPerNewton",
           "Symbol": "mm/N",
-          "Prefix": {
-            "$ref": "4"
-          }
+          "PrefixName": "Milli"
         }
       ],
       "PartConversions": [
         {
-          "$id": "185",
           "Name": "MillimetresPerKilonewton",
           "Symbol": "mm/kN",
           "Factor": 1E-06
         },
         {
-          "$id": "186",
           "Name": "MicrometresPerKilonewton",
           "Symbol": "µm/kN",
           "Factor": 1E-09
@@ -1454,20 +1095,13 @@
       ]
     },
     {
-      "$id": "187",
       "Parts": [
         {
-          "$id": "188",
-          "Unit": {
-            "$ref": "34"
-          },
+          "UnitName": "Radians",
           "Power": 1
         },
         {
-          "$id": "189",
-          "Unit": {
-            "$ref": "25"
-          },
+          "UnitName": "Seconds",
           "Power": -2
         }
       ],
@@ -1479,31 +1113,26 @@
       "PrefixConversions": [],
       "PartConversions": [
         {
-          "$id": "190",
           "Name": "DegreesPerSquareSecond",
           "Symbol": "°⋅s⁻²",
           "Factor": 0.017453292519943295
         },
         {
-          "$id": "191",
           "Name": "RadiansPerSquareHour",
           "Symbol": "h⁻²⋅rad",
           "Factor": 7.71604938271605E-08
         },
         {
-          "$id": "192",
           "Name": "DegreesPerSquareHour",
           "Symbol": "h⁻²⋅°",
           "Factor": 1.346704669748711E-09
         },
         {
-          "$id": "193",
           "Name": "DegreesPerSquareMinute",
           "Symbol": "min⁻²⋅°",
           "Factor": 4.84813681109536E-06
         },
         {
-          "$id": "194",
           "Name": "RadiansPerSquareMinute",
           "Symbol": "min⁻²⋅rad",
           "Factor": 0.00027777777777777778
@@ -1511,20 +1140,13 @@
       ]
     },
     {
-      "$id": "195",
       "Parts": [
         {
-          "$id": "196",
-          "Unit": {
-            "$ref": "34"
-          },
+          "UnitName": "Radians",
           "Power": 1
         },
         {
-          "$id": "197",
-          "Unit": {
-            "$ref": "25"
-          },
+          "UnitName": "Seconds",
           "Power": -3
         }
       ],
@@ -1536,31 +1158,26 @@
       "PrefixConversions": [],
       "PartConversions": [
         {
-          "$id": "198",
           "Name": "DegreesPerSecondCubed",
           "Symbol": "°⋅s⁻³",
           "Factor": 0.017453292519943295
         },
         {
-          "$id": "199",
           "Name": "RadiansPerHourCubed",
           "Symbol": "rad⋅h⁻³",
           "Factor": 2.1433470507544583E-11
         },
         {
-          "$id": "200",
           "Name": "DegreesPerHourCubed",
           "Symbol": "°⋅h⁻³",
           "Factor": 3.7408463048575307E-13
         },
         {
-          "$id": "201",
           "Name": "RadiansPerMinuteCubed",
           "Symbol": "rad⋅min⁻³",
           "Factor": 4.6296296296296296E-06
         },
         {
-          "$id": "202",
           "Name": "DegreesPerMinuteCubed",
           "Symbol": "°⋅min⁻³",
           "Factor": 8.0802280184922666E-08
@@ -1568,20 +1185,13 @@
       ]
     },
     {
-      "$id": "203",
       "Parts": [
         {
-          "$id": "204",
-          "Unit": {
-            "$ref": "14"
-          },
+          "UnitName": "Metres",
           "Power": 1
         },
         {
-          "$id": "205",
-          "Unit": {
-            "$ref": "25"
-          },
+          "UnitName": "Seconds",
           "Power": -3
         }
       ],
@@ -1592,67 +1202,53 @@
       "OffsetConversions": [],
       "PrefixConversions": [
         {
-          "$id": "206",
           "Name": "MillimetresPerSecondCubed",
           "Symbol": "mm⋅s⁻³",
-          "Prefix": {
-            "$ref": "4"
-          }
+          "PrefixName": "Milli"
         },
         {
-          "$id": "207",
           "Name": "CentimetresPerSecondCubed",
           "Symbol": "cm⋅s⁻³",
-          "Prefix": {
-            "$ref": "5"
-          }
+          "PrefixName": "Centi"
         }
       ],
       "PartConversions": [
         {
-          "$id": "208",
           "Name": "MillimetresPerHourCubed",
           "Symbol": "mm⋅h⁻³",
           "Factor": 2.1433470507544584E-14
         },
         {
-          "$id": "209",
           "Name": "MillimetresPerMinuteCubed",
           "Symbol": "mm⋅min⁻³",
           "Factor": 4.6296296296296295E-09
         },
         {
-          "$id": "210",
           "Name": "MetresPerHourCubed",
           "Symbol": "m⋅h⁻³",
           "Factor": 2.1433470507544583E-11
         },
         {
-          "$id": "211",
           "Name": "MetresPerMinuteCubed",
           "Symbol": "m⋅min⁻³",
           "Factor": 4.6296296296296296E-06
         },
         {
-          "$id": "212",
           "Name": "NanometresPerHourCubed",
           "Symbol": "nm⋅h⁻³",
           "Factor": 2.1433470507544585E-20
         },
         {
-          "$id": "213",
           "Name": "NanometresPerMinuteCubed",
           "Symbol": "nm⋅min⁻³",
           "Factor": 4.62962962962963E-15
         },
         {
-          "$id": "214",
           "Name": "CentimetresPerHourCubed",
           "Symbol": "cm⋅h⁻³",
           "Factor": 2.1433470507544584E-13
         },
         {
-          "$id": "215",
           "Name": "CentimetresPerMinuteCubed",
           "Symbol": "cm⋅min⁻³",
           "Factor": 4.6296296296296295E-08
@@ -1660,20 +1256,13 @@
       ]
     },
     {
-      "$id": "216",
       "Parts": [
         {
-          "$id": "217",
-          "Unit": {
-            "$ref": "14"
-          },
+          "UnitName": "Metres",
           "Power": 1
         },
         {
-          "$id": "218",
-          "Unit": {
-            "$ref": "36"
-          },
+          "UnitName": "Scalar",
           "Power": -1
         }
       ],
@@ -1685,25 +1274,21 @@
       "PrefixConversions": [],
       "PartConversions": [
         {
-          "$id": "219",
           "Name": "MillimetresPerPercent",
           "Symbol": "mm/%",
           "Factor": 0.1
         },
         {
-          "$id": "220",
           "Name": "MicrometresPerPercent",
           "Symbol": "µm/%",
           "Factor": 9.9999999999999991E-05
         },
         {
-          "$id": "221",
           "Name": "NanometresPerPercent",
           "Symbol": "nm/%",
           "Factor": 1.0000000000000001E-07
         },
         {
-          "$id": "222",
           "Name": "MetresPerPercent",
           "Symbol": "m/%",
           "Factor": 100.0
@@ -1711,20 +1296,13 @@
       ]
     },
     {
-      "$id": "223",
       "Parts": [
         {
-          "$id": "224",
-          "Unit": {
-            "$ref": "34"
-          },
+          "UnitName": "Radians",
           "Power": 1
         },
         {
-          "$id": "225",
-          "Unit": {
-            "$ref": "36"
-          },
+          "UnitName": "Scalar",
           "Power": -1
         }
       ],
@@ -1736,13 +1314,11 @@
       "PrefixConversions": [],
       "PartConversions": [
         {
-          "$id": "226",
           "Name": "DegreesPerPercent",
           "Symbol": "°/%",
           "Factor": 1.7453292519943295
         },
         {
-          "$id": "227",
           "Name": "RadiansPerPercent",
           "Symbol": "rad/%",
           "Factor": 100.0
@@ -1750,20 +1326,13 @@
       ]
     },
     {
-      "$id": "228",
       "Parts": [
         {
-          "$id": "229",
-          "Unit": {
-            "$ref": "63"
-          },
+          "UnitName": "Newtons",
           "Power": 1
         },
         {
-          "$id": "230",
-          "Unit": {
-            "$ref": "36"
-          },
+          "UnitName": "Scalar",
           "Power": -1
         }
       ],
@@ -1775,25 +1344,21 @@
       "PrefixConversions": [],
       "PartConversions": [
         {
-          "$id": "231",
           "Name": "NewtonsPerPercent",
           "Symbol": "N/%",
           "Factor": 100.0
         },
         {
-          "$id": "232",
           "Name": "KilonewtonsPerPercent",
           "Symbol": "kN/%",
           "Factor": 100000.0
         },
         {
-          "$id": "233",
           "Name": "MeganewtonsPerPercent",
           "Symbol": "MN/%",
           "Factor": 100000000.0
         },
         {
-          "$id": "234",
           "Name": "GiganewtonsPerPercent",
           "Symbol": "GN/%",
           "Factor": 100000000000.0

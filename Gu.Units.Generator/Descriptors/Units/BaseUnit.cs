@@ -20,6 +20,7 @@
 
         public BaseUnit()
         {
+            this.quantity = new Quantity(this);
         }
 
         public BaseUnit(string name,

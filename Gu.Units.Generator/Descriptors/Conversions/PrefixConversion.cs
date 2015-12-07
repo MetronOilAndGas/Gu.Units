@@ -2,6 +2,7 @@
 {
     using System;
     using System.ComponentModel;
+    using System.Linq;
     using System.Runtime.CompilerServices;
     using JetBrains.Annotations;
 
@@ -10,11 +11,13 @@
         private string name;
         private string symbol;
 
-        public PrefixConversion(string name, string symbol, Prefix prefix)
+
+
+        public PrefixConversion(string name, string symbol, string prefixName)
         {
-            Name = name;
-            Symbol = symbol;
-            Prefix = prefix;
+            this.name = name;
+            this.symbol = symbol;
+            PrefixName = prefixName;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -49,13 +52,20 @@
             }
         }
 
-        public Prefix Prefix { get; }
+        public string PrefixName { get; }
+
+        public Prefix Prefix => Persister.GetSettings().Prefixes.Single(x => x.Name == PrefixName);
 
         public double Factor => Math.Pow(10, Prefix.Power);
 
         public double Offset => 0;
 
         public bool IsOffset => false;
+
+        public static PrefixConversion Create(string name, string symbol, Prefix prefix)
+        {
+            return new PrefixConversion(name, symbol, prefix.Name);
+        }
 
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)

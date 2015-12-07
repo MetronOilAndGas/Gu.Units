@@ -34,7 +34,7 @@
             var siUnit = quantity.Unit as BaseUnit;
             if (siUnit != null)
             {
-                return new UnitParts(siUnit, new UnitAndPower(siUnit, 1));
+                return new UnitParts(siUnit, UnitAndPower.Create(siUnit, 1));
             }
             var derivedUnit = quantity.Unit as DerivedUnit;
             return new UnitParts(derivedUnit, derivedUnit.Parts);
@@ -55,7 +55,7 @@
                     var sum = all.Where(x => x.Unit.Name == unit.Name).Sum(x => x.Power);
                     if (sum != 0)
                     {
-                        yield return new UnitAndPower(unit, sum);
+                        yield return UnitAndPower.Create(unit, sum);
                     }
                 }
             }
@@ -135,7 +135,7 @@
             throw new NotImplementedException();
             //var leftPowers = left.Flattened.ToList();
             //var rightPowers = right.Flattened.ToList();
-            //foreach (var rightPower in rightPowers.ToArray())
+            //foreach (var rightPower in rightPowers)
             //{
             //    var leftPower = leftPowers.SingleOrDefault(x => x.Unit.Name == rightPower.Unit.Name);
             //    if (leftPower != null)
@@ -148,6 +148,7 @@
             //        rightPowers.Remove(rightPower);
             //    }
             //}
+
             //leftPowers.AddRange(rightPowers.Select(x => new UnitAndPower(x.Unit, -1 * x.Power)));
             //return new UnitParts(null, leftPowers);
         }
@@ -196,7 +197,7 @@
             }
             if (up.Unit is BaseUnit)
             {
-                list.Add(new UnitAndPower(up.Unit, power));
+                list.Add(UnitAndPower.Create(up.Unit, power));
                 return;
             }
             var derivedUnit = (DerivedUnit)up.Unit;

@@ -68,7 +68,7 @@
                 unit = units.OfType<DerivedUnit>().SingleOrDefault(u => u.Parts.OrderBy(x => x.Unit.Name).SequenceEqual(unitAndPowers, UnitAndPower.Comparer));
                 if (unit == null)
                 {
-                    unitAndPowers = unitAndPowers.Select(x => new UnitAndPower(x.Unit, -1 * x.Power)).ToArray();
+                    unitAndPowers = unitAndPowers.Select(x => UnitAndPower.Create(x.Unit, -1 * x.Power)).ToArray();
                     unit = units.OfType<DerivedUnit>().SingleOrDefault(u => u.Parts.OrderBy(x => x.Unit.Name).SequenceEqual(unitAndPowers, UnitAndPower.Comparer));
                 }
             }
