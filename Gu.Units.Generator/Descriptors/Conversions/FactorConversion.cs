@@ -5,7 +5,7 @@
     using System.Runtime.CompilerServices;
     using JetBrains.Annotations;
 
-    public class FactorConversion : IConversion
+    public class FactorConversion : IConversion, INotifyPropertyChanged
     {
         private string name;
         private string symbol;
@@ -61,12 +61,21 @@
                     return;
                 this.factor = value;
                 OnPropertyChanged();
+                OnPropertyChanged(nameof(ToSi));
+                OnPropertyChanged(nameof(FromSi));
+                OnPropertyChanged(nameof(CanRoundtrip));
             }
         }
 
         public double Offset => 0;
 
         public bool IsOffset => false;
+
+        public string ToSi => this.GetToSi();
+
+        public string FromSi => this.GetFromSi();
+
+        public bool CanRoundtrip => this.CanRoundtrip();
 
         public ObservableCollection<PrefixConversion> PrefixConversions { get; } = new ObservableCollection<PrefixConversion>();
 

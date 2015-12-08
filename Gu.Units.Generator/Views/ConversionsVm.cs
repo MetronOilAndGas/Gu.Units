@@ -17,7 +17,7 @@
             this.settings = settings;
             PrefixConversions = new PrefixConversionsVm(settings);
             PartConversions = new PartConversionsVm(settings);
-            BaseUnit = settings.AllUnits.FirstOrDefault(x => x.Name == "SquareMetres"); // for designtime
+            BaseUnit = settings.AllUnits.FirstOrDefault(x => x.QuantityName == "Speed"); // for designtime
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

@@ -42,7 +42,8 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Descriptors\ConversionFormulaTests.cs" />
+    <Compile Include="Descriptors\Conversions\ConversionTests.cs" />
+    <Compile Include="Descriptors\Conversions\PrefixConversionTests.cs" />
     <Compile Include="Helpers\FactorConversionComparer.cs" />
     <Compile Include="Helpers\FieldComparer.cs" />
     <Compile Include="Helpers\PrefixComparer.cs" />
@@ -133,6 +134,35 @@
       <ItemGroup>
         <Reference Include="Gu.Wpf.ToolTips">
           <HintPath>..\packages\Gu.Wpf.ToolTips\lib\net45\Gu.Wpf.ToolTips.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v3.5'">
+      <ItemGroup>
+        <Reference Include="Moq">
+          <HintPath>..\packages\Moq\lib\net35\Moq.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.0' Or $(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6')">
+      <ItemGroup>
+        <Reference Include="Moq">
+          <HintPath>..\packages\Moq\lib\net40\Moq.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="$(TargetFrameworkIdentifier) == 'Silverlight' And $(TargetFrameworkVersion) == 'v5.0'">
+      <ItemGroup>
+        <Reference Include="Moq.Silverlight">
+          <HintPath>..\packages\Moq\lib\sl5\Moq.Silverlight.dll</HintPath>
           <Private>True</Private>
           <Paket>True</Paket>
         </Reference>

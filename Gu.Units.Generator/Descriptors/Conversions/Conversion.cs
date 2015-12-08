@@ -1,212 +1,87 @@
-﻿//namespace Gu.Units.Generator
-//{
-//    using System;
-//    using System.CodeDom.Compiler;
-//    using System.Collections.Generic;
-//    using System.Collections.ObjectModel;
-//    using System.Diagnostics;
-//    using System.Linq;
-//    using System.Xml.Serialization;
+﻿namespace Gu.Units.Generator
+{
+    using System;
+    using System.CodeDom.Compiler;
+    using System.Diagnostics;
+    using System.Globalization;
+    using System.Linq;
+    using System.Text;
+    using System.Xml.Serialization;
 
-//    [DebuggerDisplay("1*{ClassName} = {Formula.ToSi}")]
-//    public class Conversion : TypeMetaData, IUnit
-//    {
-//        private readonly ObservableCollection<Conversion> conversions = new ObservableCollection<Conversion>();
-//        private readonly CodeDomProvider codeDomProvider = CodeDomProvider.CreateProvider("C#");
-//        private readonly ConversionFormula formula;
+    [DebuggerDisplay("1*{ClassName} = {Formula.ToSi}")]
+    public static class Conversion
+    {
+        private static readonly CodeDomProvider CodeDomProvider = CodeDomProvider.CreateProvider("C#");
 
-//        private string symbol;
-//        private Prefix prefix;
-//        private IUnit baseUnit;
+        public static Unit GetUnit(this IConversion conversion)
+        {
+            var identityConversion = conversion as PartConversion.IdentityConversion;
+            if (identityConversion != null)
+            {
+                return Settings.Instance.AllUnits.Single(x => x.Symbol == identityConversion.Symbol);
+            }
 
-//        public Conversion()
-//        {
-//            this.formula = new ConversionFormula(this);
-//        }
+            foreach (var unit in Settings.Instance.AllUnits)
+            {
+                if (unit.AllConversions.Any(pc => pc == conversion))
+                {
+                    return unit;
+                }
+            }
 
-//        public Conversion(string className, string symbol)
-//            : base(className)
-//        {
-//            this.symbol = symbol;
-//            this.formula = new ConversionFormula(this);
-//        }
+            throw new ArgumentOutOfRangeException();
+        }
 
-//        public Conversion(IUnit unit, Prefix prefix)
-//        {
-//            this.baseUnit = unit;
-//            this.prefix = prefix;
-//            this.formula = new ConversionFormula(unit);
-//            Update();
-//        }
+        public static string GetToSi(this IConversion conversion)
+        {
+            var builder = new StringBuilder();
+            if (conversion.Factor != 1)
+            {
+                builder.Append(conversion.Factor.ToString(CultureInfo.InvariantCulture) + "*");
+            }
+            builder.Append(conversion.GetUnit().Name);
+            if (conversion.Offset != 0)
+            {
+                if (conversion.Offset > 0)
+                {
+                    builder.AppendFormat(" + {0}", conversion.Offset.ToString(CultureInfo.InvariantCulture));
+                }
+                else
+                {
+                    builder.AppendFormat(" - {0}", (-conversion.Offset).ToString(CultureInfo.InvariantCulture));
+                }
+            }
+            return builder.ToString();
+        }
 
-//        public string Symbol
-//        {
-//            get
-//            {
-//                return this.symbol;
-//            }
-//            set
-//            {
-//                if (value == this.symbol)
-//                {
-//                    return;
-//                }
-//                this.symbol = value;
-//                this.OnPropertyChanged();
-//            }
-//        }
+        public static string GetFromSi(this IConversion conversion)
+        {
+            var builder = new StringBuilder();
 
-//        public ConversionFormula Formula
-//        {
-//            get { return this.formula; }
-//            set
-//            {
-//                this.formula.ConversionFactor = value.ConversionFactor;
-//                this.formula.Offset = value.Offset;
-//                OnPropertyChanged();
-//            }
-//        }
+            builder.Append(conversion.GetUnit().Name);
+            if (conversion.Factor != 1)
+            {
+                builder.Append("/" + conversion.Factor.ToString(CultureInfo.InvariantCulture));
+            }
+            if (conversion.Offset != 0)
+            {
+                if (conversion.Offset < 0)
+                {
+                    builder.AppendFormat(" + {0}", (-1 * conversion.Offset).ToString(CultureInfo.InvariantCulture));
+                }
+                else
+                {
+                    builder.AppendFormat(" - {0}", conversion.Offset.ToString(CultureInfo.InvariantCulture));
+                }
+            }
+            return builder.ToString();
+        }
 
-//        [XmlIgnore]
-//        public string QuantityName
-//        {
-//            get
-//            {
-//                if (Quantity == null)
-//                {
-//                    return "Error no quantity";
-//                }
+        public static bool CanRoundtrip(this IConversion conversion)
+        {
+            throw new NotImplementedException();
+        }
 
-//                return Quantity.ClassName;
-//            }
-//            set
-//            {
-//                throw new InvalidOperationException("Implementing this just cos IUnit, too lazy to refactor now");
-//            }
-//        }
-
-//        [XmlIgnore]
-//        public string UnitName => QuantityName + "Unit";
-
-//        [XmlIgnore]
-//        public Quantity Quantity
-//        {
-//            get
-//            {
-//                return BaseUnit.Quantity;
-//            }
-//            set { throw new NotImplementedException(); }
-//        }
-
-//        [XmlIgnore]
-//        public IUnit BaseUnit
-//        {
-//            get
-//            {
-//                return this.baseUnit;
-//            }
-//            set
-//            {
-//                if (Equals(value, this.baseUnit))
-//                {
-//                    return;
-//                }
-//                this.baseUnit = value;
-//                this.OnPropertyChanged();
-//                Update();
-//            }
-//        }
-
-//        [XmlIgnore]
-//        public Prefix Prefix
-//        {
-//            get
-//            {
-//                return this.prefix;
-//            }
-//            set
-//            {
-//                if (Equals(value, this.prefix))
-//                {
-//                    return;
-//                }
-//                this.prefix = value;
-//                this.OnPropertyChanged();
-//                Update();
-//            }
-//        }
-
-//        [XmlIgnore]
-//        public bool IsEmpty { get; private set; }
-
-//        [XmlIgnore]
-//        public string UiName { get; private set; }
-
-//        public ObservableCollection<Conversion> Conversions => this.conversions;
-
-//        public IEnumerable<Conversion> AllConversions
-//        {
-//            get
-//            {
-//                foreach (var conversion in this.conversions)
-//                {
-//                    yield return conversion;
-//                    foreach (var nested in conversion.AllConversions)
-//                    {
-//                        yield return nested;
-//                    }
-//                }
-//            }
-//        }
-
-//        public bool AnyOffsetConversion
-//        {
-//            get { return Conversions.Any(x => x.Formula.Offset != 0); }
-//        }
-
-//        public bool IsSymbolNameValid => this.codeDomProvider.IsValidIdentifier(Symbol);
-
-//        [XmlIgnore]
-//        public Settings Settings { get; set; }
-
-//        public void Update()
-//        {
-//            if (BaseUnit == null || Prefix == null)
-//            {
-//                return;
-//            }
-
-//            Formula.ConversionFactor = Math.Pow(10, Prefix.Power);
-//            Formula.Update();
-//            if (string.IsNullOrEmpty(Symbol))
-//            {
-//                Symbol = Prefix.Symbol + BaseUnit.Symbol;
-//            }
-
-//            if (string.IsNullOrEmpty(ClassName))
-//            {
-//                ClassName = Prefix.Name + BaseUnit.ParameterName;
-//            }
-//        }
-
-//        public void SetParts(IEnumerable<Conversion> subunits)
-//        {
-//            var derivedUnit = BaseUnit as DerivedUnit;
-//            if (derivedUnit == null)
-//            {
-//                throw new InvalidOperationException("trying to set partunits when baseunit != DerivedUnit");
-//            }
-//            double cf = 1;
-//            var unitParts = new UnitParts(derivedUnit, derivedUnit.Parts.ToArray());
-//            foreach (var part in subunits)
-//            {
-//                var up = unitParts.Single(x => x.UnitName == part.BaseUnit.ClassName);
-//                cf = cf * Math.Pow(part.Formula.ConversionFactor, up.Power);
-//                unitParts.Replace(up, new UnitAndPower(part, up.Power));
-//            }
-//            Formula.ConversionFactor = cf;
-//            ClassName = unitParts.UnitName;
-//            Symbol = unitParts.Expression;
-//        }
-//    }
-//}
+        public static bool IsSymbolNameValid(this IConversion conversion) => CodeDomProvider.IsValidIdentifier(conversion.Symbol);
+    }
+}

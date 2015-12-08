@@ -1,33 +1,27 @@
-﻿namespace Gu.Units.Generator.Tests.Descriptors
+﻿namespace Gu.Units.Generator.Tests.Descriptors.Conversions
 {
     using NUnit.Framework;
 
-    public class ConversionFormulaTests
+    public class ConversionTests
     {
         [Test]
-        public void TrivialConversion()
+        public void IdentityConversion()
         {
-            Assert.Fail();
-            //var settings = new MockSettings();
-            //var conversionFormula = new ConversionFormula(settings.Metres)
-            //{
-            //    ConversionFactor = 1
-            //};
-            //Assert.AreEqual("Metres", conversionFormula.ToSi);
-            //Assert.AreEqual("Metres", conversionFormula.FromSi);
+            var settings = MockSettings.Create();
+            var conversion = new PartConversion.IdentityConversion(settings.Metres);
+            Assert.AreEqual("Metres", conversion.ToSi);
+            Assert.AreEqual("Metres", conversion.FromSi);
+            Assert.IsTrue(conversion.CanRoundtrip);
         }
 
         [Test]
         public void FactorConversion()
         {
-            Assert.Fail();
-            //var settings = new MockSettings();
-            //var conversionFormula = new ConversionFormula(settings.Metres)
-            //{
-            //    ConversionFactor = 1000
-            //};
-            //Assert.AreEqual("1000*Metres", conversionFormula.ToSi);
-            //Assert.AreEqual("Metres/1000", conversionFormula.FromSi);
+            var settings = MockSettings.Create();
+            var conversion = new FactorConversion("Inches", "in", 0.254);
+            settings.Metres.FactorConversions.Add(conversion);
+            Assert.AreEqual("0.0254*Metres", conversion.ToSi);
+            Assert.AreEqual("Metres/1000", conversion.FromSi);
         }
 
         [Test]

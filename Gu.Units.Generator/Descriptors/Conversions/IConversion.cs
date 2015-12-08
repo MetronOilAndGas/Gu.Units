@@ -7,5 +7,11 @@
         double Offset { get; }
 
         bool IsOffset { get; }
+
+        string ToSi { get; }
+
+        string FromSi { get; }
+
+        bool CanRoundtrip { get; }
     }
 }

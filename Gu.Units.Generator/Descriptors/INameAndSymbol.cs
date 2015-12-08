@@ -1,13 +1,11 @@
 namespace Gu.Units.Generator
 {
-    using System.ComponentModel;
-
-    public interface INameAndSymbol : INotifyPropertyChanged
+    public interface INameAndSymbol 
     {
-        string Name { get; set; }
+        string Name { get; }
 
         string ParameterName { get; }
 
-        string Symbol { get; set; }
+        string Symbol { get; }
     }
 }

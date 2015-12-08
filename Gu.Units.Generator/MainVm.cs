@@ -14,7 +14,7 @@
 
         private MainVm()
         {
-            this.settings = Persister.GetSettingsFromFile();
+            this.settings = Settings.FromResource;
             NameSpace = Settings.ProjectName;
             this.conversions = new ConversionsVm(this.settings);
         }

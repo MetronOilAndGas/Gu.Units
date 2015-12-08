@@ -10,9 +10,9 @@
 
     public class PartConversionsVm : INotifyPropertyChanged
     {
-        private readonly ObservableCollection<PartConversionVm[]> subParts = new ObservableCollection<PartConversionVm[]>();
+        private readonly ObservableCollection<PartConversionVm[]> conversions = new ObservableCollection<PartConversionVm[]>();
         private readonly Settings settings;
-        private BaseUnit baseUnit;
+        private Unit unit;
 
         public PartConversionsVm(Settings settings)
         {
@@ -21,45 +21,48 @@
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public ObservableCollection<PartConversionVm[]> SubParts => this.subParts;
+        public ObservableCollection<PartConversionVm[]> Conversions => this.conversions;
 
-        public void SetBaseUnit(BaseUnit value)
+        public void SetBaseUnit(Unit value)
         {
-            this.baseUnit = value;
-            this.subParts.Clear();
+            this.unit = value;
+            this.conversions.Clear();
 
-            var derivedUnit = this.baseUnit as DerivedUnit;
-            if (derivedUnit == null)
+            if (this.unit == null ||
+                this.unit.Parts.BaseParts.Count != 2)
             {
                 return;
             }
 
-            if (derivedUnit.Parts.Count == 1)
+            var unitParts = this.unit.Parts.BaseParts.ToArray();
+            var p0s = CreatePowerParts(unitParts, 0);
+            var p1s = CreatePowerParts(unitParts, 1);
+            foreach (var c1 in p0s)
             {
-                return;
-                //this.subParts.Add(derivedUnit.Parts.Single().Unit.Conversions.Select(x => new PartConversionVm(this.baseUnit, x)).ToArray());
-            }
+                var cs = new List<PartConversionVm>();
 
-            else if (derivedUnit.Parts.Count == 2)
-            {
-                //var partConversionVms = new List<PartConversionVm> { null };
-                //partConversionVms.AddRange(derivedUnit.Parts[0].Unit.Conversions.Select(x => new PartConversionVm(this.baseUnit, x)));
-                //this.subParts.Add(partConversionVms.ToArray());
-                //foreach (var u in derivedUnit.Parts[1].Unit.Conversions)
-                //{
-                //    partConversionVms.Clear();
-                //    partConversionVms.Add(new PartConversionVm(this.baseUnit, u));
-                //    partConversionVms.AddRange(derivedUnit.Parts[0].Unit.Conversions.Select(x => new PartConversionVm(this.baseUnit, u, x)));
-                //    this.subParts.Add(partConversionVms.ToArray());
-                //}
+                foreach (var c2 in p1s)
+                {
+                    cs.Add(new PartConversionVm(this.unit.PartConversions, PartConversion.Create(c1, c2)));
+                }
+
+                this.conversions.Add(cs.ToArray());
             }
         }
-
 
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        private static IReadOnlyList<PartConversion.PowerPart> CreatePowerParts(IReadOnlyList<UnitAndPower> parts, int index)
+        {
+            var powerParts = new List<PartConversion.PowerPart>();
+            var unitAndPower = parts[index];
+            powerParts.Add(new PartConversion.PowerPart(unitAndPower.Power, new PartConversion.IdentityConversion(unitAndPower.Unit)));
+            powerParts.AddRange(unitAndPower.Unit.AllConversions.Select(x => new PartConversion.PowerPart(unitAndPower.Power, x)));
+            return powerParts;
         }
     }
 }

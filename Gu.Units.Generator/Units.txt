@@ -220,11 +220,7 @@
           "Symbol": "‰",
           "Factor": 0.001,
           "PrefixConversions": []
-        }
-      ],
-      "OffsetConversions": [],
-      "PrefixConversions": [],
-      "PartConversions": [
+        },
         {
           "Name": "PartsPerMillion",
           "Symbol": "ppm",
@@ -234,8 +230,11 @@
           "Name": "Percents",
           "Symbol": "%",
           "Factor": 0.01
-        }
-      ]
+        }		
+      ],
+      "OffsetConversions": [],
+      "PrefixConversions": [],
+      "PartConversions": []
     },
     {
       "Name": "Amperes",
@@ -671,18 +670,7 @@
       "QuantityName": "Speed",
       "FactorConversions": [],
       "OffsetConversions": [],
-      "PrefixConversions": [
-        {
-          "Name": "MillimetresPerSecond",
-          "Symbol": "mm/s",
-          "PrefixName": "Milli"
-        },
-        {
-          "Name": "CentimetresPerSecond",
-          "Symbol": "cm/s",
-          "PrefixName": "Centi"
-        }
-      ],
+      "PrefixConversions": [],
       "PartConversions": [
         {
           "Name": "KilometresPerHour",
@@ -718,6 +706,16 @@
           "Name": "MillimetresPerMinute",
           "Symbol": "mm/min",
           "Factor": 1.6666666666666667E-05
+        },
+		        {
+          "Name": "MillimetresPerSecond",
+          "Symbol": "mm/s",
+          "PrefixName": "Milli"
+        },
+        {
+          "Name": "CentimetresPerSecond",
+          "Symbol": "cm/s",
+          "PrefixName": "Centi"
         }
       ]
     },

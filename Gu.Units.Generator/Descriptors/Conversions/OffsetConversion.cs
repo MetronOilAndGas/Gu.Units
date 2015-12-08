@@ -4,7 +4,7 @@
     using System.Runtime.CompilerServices;
     using JetBrains.Annotations;
 
-    public class OffsetConversion : IConversion
+    public class OffsetConversion : IConversion, INotifyPropertyChanged
     {
         private string name;
         private string symbol;
@@ -62,6 +62,9 @@
                     return;
                 this.factor = value;
                 OnPropertyChanged();
+                OnPropertyChanged(nameof(ToSi));
+                OnPropertyChanged(nameof(FromSi));
+                OnPropertyChanged(nameof(CanRoundtrip));
             }
         }
 
@@ -74,10 +77,19 @@
                     return;
                 this.offset = value;
                 OnPropertyChanged();
+                OnPropertyChanged(nameof(ToSi));
+                OnPropertyChanged(nameof(FromSi));
+                OnPropertyChanged(nameof(CanRoundtrip));
             }
         }
 
         public bool IsOffset => true;
+
+        public string ToSi => this.GetToSi();
+
+        public string FromSi => this.GetFromSi();
+
+        public bool CanRoundtrip => this.CanRoundtrip();
 
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)

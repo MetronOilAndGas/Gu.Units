@@ -6,7 +6,7 @@ namespace Gu.Units.Generator
     using System.Runtime.CompilerServices;
     using JetBrains.Annotations;
 
-    public abstract class Unit : INameAndSymbol
+    public abstract class Unit : INameAndSymbol, INotifyPropertyChanged
     {
         private readonly Quantity quantity;
         private string name;

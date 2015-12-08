@@ -47,7 +47,6 @@
                           AutoGenerateColumns="False"
                           ItemsSource="{Binding Conversions.AllConversions}">
                     <DataGrid.Columns>
-                        <!--<DataGridTextColumn Binding="{Binding Quantity.N}" Header="Quantity" />-->
                         <DataGridTextColumn Binding="{Binding Name}" Header="Unit" />
                         <DataGridTextColumn Binding="{Binding Symbol}" Header="Symbol" />
                         <!--<DataGridTextColumn Binding="{Binding Formula}" Header="Formula" />-->

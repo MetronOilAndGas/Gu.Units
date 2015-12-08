@@ -1,7 +1,7 @@
 ﻿namespace Gu.Units.Generator
 {
-    using System;
     using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     using System.ComponentModel;
     using System.Linq;
     using System.Runtime.CompilerServices;
@@ -10,12 +10,11 @@
     public class PartConversionVm : INotifyPropertyChanged
     {
         private readonly IList<PartConversion> conversions;
-        private readonly PartConversion conversion;
 
         public PartConversionVm(IList<PartConversion> conversions, PartConversion conversion)
         {
             this.conversions = conversions;
-            this.conversion = conversion;
+            Conversion = conversion;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -64,6 +63,11 @@
         private bool IsMatch(PartConversion x)
         {
             if (Conversion.Factor != x.Factor)
+            {
+                return false;
+            }
+
+            if (Conversion.Name != x.Name)
             {
                 return false;
             }

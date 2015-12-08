@@ -6,6 +6,7 @@
     using System.IO;
     using System.Linq;
     using System.Xml.Linq;
+    using Moq;
     using Newtonsoft.Json;
     using NUnit.Framework;
     using WpfStuff;
@@ -217,7 +218,7 @@
                         {
                             if (factor == match.Factor * Math.Pow(10, prefix.Power))
                             {
-                                match.PrefixConversions.Add(PrefixConversion.Create(name, symbol, prefix));
+                                match.PrefixConversions.Add(PrefixConversion.Create(match, prefix));
                                 continue;
                             }
                         }
@@ -233,7 +234,7 @@
                     }
                     if (name == prefix.Name + unit.Name.ToFirstCharLower())
                     {
-                        unit.PrefixConversions.Add(PrefixConversion.Create(name, symbol, prefix));
+                        unit.PrefixConversions.Add(PrefixConversion.Create(unit, prefix));
                         continue;
                     }
                     throw new InvalidOperationException();

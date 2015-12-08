@@ -13,7 +13,7 @@
         private static readonly IReadOnlyList<string> Illegals = new[] { "cubic", "square", "per" };
         private readonly Settings settings;
         private readonly ObservableCollection<PrefixConversionVm[]> prefixes = new ObservableCollection<PrefixConversionVm[]>();
-        private BaseUnit baseUnit;
+        private Unit unit;
 
         public PrefixConversionsVm(Settings settings)
         {
@@ -24,35 +24,35 @@
 
         public ObservableCollection<PrefixConversionVm[]> Prefixes => this.prefixes;
 
-        public BaseUnit BaseUnit
+        public Unit Unit
         {
-            get { return this.baseUnit; }
+            get { return this.unit; }
             set
             {
-                if (Equals(value, this.baseUnit))
+                if (Equals(value, this.unit))
                 {
                     return;
                 }
 
-                this.baseUnit = value;
+                this.unit = value;
                 OnPropertyChanged();
             }
         }
 
-        public void SetBaseUnit(BaseUnit value)
+        public void SetBaseUnit(Unit value)
         {
-            this.BaseUnit = value;
+            this.Unit = value;
             this.prefixes.Clear();
-            if (this.baseUnit != null)
+            if (this.unit != null)
             {
-                if (IsValidPrefixUnit(this.baseUnit))
+                if (IsValidPrefixUnit(this.unit))
                 {
-                    this.prefixes.Add(this.settings.Prefixes.Select(x => new PrefixConversionVm(this.baseUnit.PrefixConversions, this.baseUnit, x)).ToArray());
+                    this.prefixes.Add(this.settings.Prefixes.Select(x => PrefixConversionVm.Create(this.unit, x)).ToArray());
                 }
 
-                foreach (var conversion in this.baseUnit.FactorConversions)
+                foreach (var conversion in this.unit.FactorConversions)
                 {
-                    this.prefixes.Add(this.settings.Prefixes.Select(x => new PrefixConversionVm(conversion.PrefixConversions, conversion, x)).ToArray());
+                    this.prefixes.Add(this.settings.Prefixes.Select(x => PrefixConversionVm.Create(conversion, x)).ToArray());
                 }
             }
         }
