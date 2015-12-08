@@ -27,6 +27,8 @@
 
         public string FromSi => this.GetFromSi();
 
+        public string SymbolConversion => this.GetSymbolConversion();
+
         public bool CanRoundtrip => this.CanRoundtrip();
 
         public static PartConversion Create(PowerPart c1, PowerPart c2)
@@ -86,6 +88,8 @@
             public string ToSi => this.GetToSi();
 
             public string FromSi => this.GetFromSi();
+
+            public string SymbolConversion => this.GetSymbolConversion();
 
             public bool CanRoundtrip => true;
         }

@@ -89,6 +89,8 @@
 
         public string FromSi => this.GetFromSi();
 
+        public string SymbolConversion => this.GetSymbolConversion();
+
         public bool CanRoundtrip => this.CanRoundtrip();
 
         [NotifyPropertyChangedInvocator]

@@ -32,6 +32,13 @@
             throw new ArgumentOutOfRangeException();
         }
 
+        public static string GetSymbolConversion(this IConversion conversion)
+        {
+            var unit = conversion.GetUnit();
+            var convert = ConvertToSi(1, conversion);
+            return $"1 {conversion.Symbol} = {convert.ToString(CultureInfo.InvariantCulture)} {unit.Symbol}";
+        }
+
         public static string GetToSi(this IConversion conversion)
         {
             var builder = new StringBuilder();
@@ -39,7 +46,7 @@
             {
                 builder.Append(conversion.Factor.ToString(CultureInfo.InvariantCulture) + "*");
             }
-            builder.Append(conversion.GetUnit().Name);
+            builder.Append(conversion.GetUnit().ParameterName);
             if (conversion.Offset != 0)
             {
                 if (conversion.Offset > 0)
@@ -58,7 +65,7 @@
         {
             var builder = new StringBuilder();
 
-            builder.Append(conversion.GetUnit().Name);
+            builder.Append(conversion.GetUnit().ParameterName);
             if (conversion.Factor != 1)
             {
                 builder.Append("/" + conversion.Factor.ToString(CultureInfo.InvariantCulture));
@@ -79,7 +86,27 @@
 
         public static bool CanRoundtrip(this IConversion conversion)
         {
-            throw new NotImplementedException();
+            foreach (var value in new[] {0,100})
+            {
+                var si = ConvertToSi(value, conversion);
+                var roundtrip = ConvertFromSi(si, conversion);
+                if (roundtrip != value)
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        internal static double ConvertToSi(double value, IConversion conversion)
+        {
+            return value * conversion.Factor + conversion.Offset;
+        }
+
+        internal static double ConvertFromSi(double value, IConversion conversion)
+        {
+            return (value - conversion.Offset) / conversion.Factor;
         }
 
         public static bool IsSymbolNameValid(this IConversion conversion) => CodeDomProvider.IsValidIdentifier(conversion.Symbol);

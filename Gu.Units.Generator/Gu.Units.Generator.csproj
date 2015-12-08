@@ -145,12 +145,13 @@
     <Compile Include="Descriptors\Overloads\OperatorOverload.cs" />
     <Compile Include="Descriptors\Prefix.cs" />
     <Compile Include="Descriptors\Conversions\PrefixConversion.cs" />
+    <Compile Include="Descriptors\UnitPartsExt.cs" />
     <Compile Include="Descriptors\Units\BaseUnit.cs" />
     <Compile Include="Descriptors\Conversions\Conversion.cs" />
     <Compile Include="Descriptors\Units\DerivedUnit.cs" />
-    <Compile Include="Descriptors\Overloads\UnitAndPower.cs" />
+    <Compile Include="Descriptors\UnitAndPower.cs" />
     <Compile Include="Descriptors\Units\Unit.cs" />
-    <Compile Include="Descriptors\Overloads\UnitParts.cs" />
+    <Compile Include="Descriptors\UnitParts.cs" />
     <Compile Include="MainVm.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>

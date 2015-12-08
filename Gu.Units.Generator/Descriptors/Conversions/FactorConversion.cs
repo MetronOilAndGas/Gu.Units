@@ -75,6 +75,8 @@
 
         public string FromSi => this.GetFromSi();
 
+        public string SymbolConversion => this.GetSymbolConversion();
+
         public bool CanRoundtrip => this.CanRoundtrip();
 
         public ObservableCollection<PrefixConversion> PrefixConversions { get; } = new ObservableCollection<PrefixConversion>();

@@ -86,6 +86,8 @@
 
         public string FromSi => this.GetFromSi();
 
+        public string SymbolConversion => this.GetSymbolConversion();
+
         public bool CanRoundtrip => this.CanRoundtrip();
 
         public static PrefixConversion Create(Unit unit, Prefix prefix)

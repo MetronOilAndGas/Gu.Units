@@ -43,7 +43,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Descriptors\Conversions\ConversionTests.cs" />
+    <Compile Include="Descriptors\Conversions\PartConversionTests.cs" />
     <Compile Include="Descriptors\Conversions\PrefixConversionTests.cs" />
+    <Compile Include="Descriptors\UnitPartsExtTests.cs" />
     <Compile Include="Helpers\FactorConversionComparer.cs" />
     <Compile Include="Helpers\FieldComparer.cs" />
     <Compile Include="Helpers\PrefixComparer.cs" />

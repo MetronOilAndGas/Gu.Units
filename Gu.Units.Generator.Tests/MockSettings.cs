@@ -59,6 +59,7 @@
             Length = Metres.Quantity;
 
             Kelvins = new BaseUnit("Kelvin", "K", "Temperature");
+            BaseUnits.Add(this.Kelvins);
             Temperature = this.Kelvins.Quantity;
 
             Seconds = new BaseUnit("Seconds", "s", "Time");

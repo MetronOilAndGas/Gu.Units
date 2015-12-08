@@ -12,6 +12,8 @@
 
         string FromSi { get; }
 
+        string SymbolConversion { get; }
+
         bool CanRoundtrip { get; }
     }
 }
