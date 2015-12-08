@@ -6,6 +6,8 @@ namespace Gu.Units.Generator
     {
         string Name { get; set; }
 
+        string ParameterName { get; }
+
         string Symbol { get; set; }
     }
 }

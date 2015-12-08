@@ -23,7 +23,7 @@
 
         public string Name => Unit.QuantityName;
 
-        public string UnitName => Unit.Name + "Unit";
+        public string UnitName => Unit.QuantityName + "Unit";
 
         public string ParameterName => Name.ToFirstCharLower();
 

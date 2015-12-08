@@ -2,23 +2,20 @@
 <#@ import namespace="System.Globalization" #>
 <#@ assembly name="$(TargetPath)" #>
 <#@ import namespace="Gu.Units.Generator" #>
-<#@ parameter name="UnitData" type="Gu.Units.Generator.IUnit" #>
+<#@ parameter name="UnitData" type="Gu.Units.Generator.Unit" #>
 <#@ output extension=".txt" #>
 <#
 // Template used by UnitGenerator.tt
-IUnit unit;
+Unit unit;
 if(UnitData != null)
 {
     unit = UnitData;
 }
 else
 {
-    unit = new BaseUnit("Metres", "m")
-                    {
-                        QuantityName =  "Length"
-                    };
-    unit.Conversions.Add(new Conversion("Centimetres", "cm"));
-    unit.Conversions.Add(new Conversion("Millimetres", "mm"));
+    unit = new BaseUnit("Metres", "m", "Length");
+    unit.PartConversions.Add(new PartConversion("Centimetres", "cm", 1E-2));
+    unit.PartConversions.Add(new PartConversion("Millimetres", "mm", 1E-3));
 }
 #>
 namespace <#= Settings.Namespace #>
@@ -28,7 +25,7 @@ namespace <#= Settings.Namespace #>
     using System.Diagnostics;
 
     /// <summary>
-    /// A type for the unit <see cref="<#= Settings.Namespace #>.<#= unit.UnitName #>"/>.
+    /// A type for the unit <see cref="<#= Settings.Namespace #>.<#= unit.Name #>"/>.
 	/// Contains conversion logic.
     /// </summary>
     [Serializable, TypeConverter(typeof(<#= unit.UnitName #>TypeConverter)), DebuggerDisplay("1{symbol} == {ToSiUnit(1)}{<#= unit.ClassName #>.symbol}")]

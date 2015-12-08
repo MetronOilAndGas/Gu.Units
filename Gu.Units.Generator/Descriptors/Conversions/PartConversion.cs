@@ -33,6 +33,8 @@
             }
         }
 
+        public string ParameterName => Name.ToFirstCharLower();
+
         public string Symbol
         {
             get { return this.symbol; }

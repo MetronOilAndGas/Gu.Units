@@ -11,8 +11,6 @@
         private string name;
         private string symbol;
 
-
-
         public PrefixConversion(string name, string symbol, string prefixName)
         {
             this.name = name;
@@ -36,6 +34,8 @@
                 OnPropertyChanged();
             }
         }
+
+        public string ParameterName => Name.ToFirstCharLower();
 
         public string Symbol
         {
