@@ -67,7 +67,7 @@
         }
 
         /// <summary>
-        /// The quantity in revolutionsPerMinute
+        /// The quantity in RevolutionsPerMinute
         /// </summary>
         public double RevolutionsPerMinute
         {
@@ -78,7 +78,7 @@
         }
 
         /// <summary>
-        /// The quantity in degreesPerSecond
+        /// The quantity in DegreesPerSecond
         /// </summary>
         public double DegreesPerSecond
         {
@@ -89,7 +89,7 @@
         }
 
         /// <summary>
-        /// The quantity in degreesPerMinute
+        /// The quantity in DegreesPerMinute
         /// </summary>
         public double DegreesPerMinute
         {
@@ -100,7 +100,7 @@
         }
 
         /// <summary>
-        /// The quantity in radiansPerMinute
+        /// The quantity in RadiansPerMinute
         /// </summary>
         public double RadiansPerMinute
         {
@@ -111,7 +111,7 @@
         }
 
         /// <summary>
-        /// The quantity in degreesPerHour
+        /// The quantity in DegreesPerHour
         /// </summary>
         public double DegreesPerHour
         {
@@ -122,7 +122,7 @@
         }
 
         /// <summary>
-        /// The quantity in radiansPerHour
+        /// The quantity in RadiansPerHour
         /// </summary>
         public double RadiansPerHour
         {
@@ -262,14 +262,14 @@
             return From(radiansPerHour, AngularSpeedUnit.RadiansPerHour);
         }
 
-        public static Time operator /(AngularSpeed left, AngularAcceleration right)
-        {
-            return Time.FromSeconds(left.radiansPerSecond / right.radiansPerSecondSquared);
-        }
-
         public static Angle operator *(AngularSpeed left, Time right)
         {
             return Angle.FromRadians(left.radiansPerSecond * right.seconds);
+        }
+
+        public static AngularAcceleration operator /(AngularSpeed left, Time right)
+        {
+            return AngularAcceleration.FromRadiansPerSecondSquared(left.radiansPerSecond / right.seconds);
         }
 
         public static Frequency operator /(AngularSpeed left, Angle right)
@@ -277,9 +277,24 @@
             return Frequency.FromHertz(left.radiansPerSecond / right.radians);
         }
 
-        public static AngularAcceleration operator /(AngularSpeed left, Time right)
+        public static AngularAcceleration operator *(AngularSpeed left, Frequency right)
         {
-            return AngularAcceleration.FromRadiansPerSecondSquared(left.radiansPerSecond / right.seconds);
+            return AngularAcceleration.FromRadiansPerSecondSquared(left.radiansPerSecond * right.hertz);
+        }
+
+        public static Angle operator /(AngularSpeed left, Frequency right)
+        {
+            return Angle.FromRadians(left.radiansPerSecond / right.hertz);
+        }
+
+        public static Power operator *(AngularSpeed left, Torque right)
+        {
+            return Power.FromWatts(left.radiansPerSecond * right.newtonMetres);
+        }
+
+        public static Time operator /(AngularSpeed left, AngularAcceleration right)
+        {
+            return Time.FromSeconds(left.radiansPerSecond / right.radiansPerSecondSquared);
         }
 
         public static double operator /(AngularSpeed left, AngularSpeed right)

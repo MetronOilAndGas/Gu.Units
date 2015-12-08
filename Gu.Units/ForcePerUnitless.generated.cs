@@ -67,7 +67,7 @@
         }
 
         /// <summary>
-        /// The quantity in newtonsPerPercent
+        /// The quantity in NewtonsPerPercent
         /// </summary>
         public double NewtonsPerPercent
         {
@@ -78,7 +78,7 @@
         }
 
         /// <summary>
-        /// The quantity in kilonewtonsPerPercent
+        /// The quantity in KilonewtonsPerPercent
         /// </summary>
         public double KilonewtonsPerPercent
         {
@@ -89,7 +89,7 @@
         }
 
         /// <summary>
-        /// The quantity in meganewtonsPerPercent
+        /// The quantity in MeganewtonsPerPercent
         /// </summary>
         public double MeganewtonsPerPercent
         {
@@ -100,7 +100,7 @@
         }
 
         /// <summary>
-        /// The quantity in giganewtonsPerPercent
+        /// The quantity in GiganewtonsPerPercent
         /// </summary>
         public double GiganewtonsPerPercent
         {
@@ -225,6 +225,16 @@
         public static Force operator *(ForcePerUnitless left, Unitless right)
         {
             return Force.FromNewtons(left.newtonsPerUnitless * right.scalar);
+        }
+
+        public static LengthPerUnitless operator /(ForcePerUnitless left, Stiffness right)
+        {
+            return LengthPerUnitless.FromMetresPerUnitless(left.newtonsPerUnitless / right.newtonsPerMetre);
+        }
+
+        public static LengthPerUnitless operator *(ForcePerUnitless left, Flexibility right)
+        {
+            return LengthPerUnitless.FromMetresPerUnitless(left.newtonsPerUnitless * right.metresPerNewton);
         }
 
         public static Stiffness operator /(ForcePerUnitless left, LengthPerUnitless right)

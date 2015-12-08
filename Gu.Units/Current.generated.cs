@@ -67,7 +67,7 @@
         }
 
         /// <summary>
-        /// The quantity in milliamperes
+        /// The quantity in Milliamperes
         /// </summary>
         public double Milliamperes
         {
@@ -78,7 +78,7 @@
         }
 
         /// <summary>
-        /// The quantity in kiloamperes
+        /// The quantity in Kiloamperes
         /// </summary>
         public double Kiloamperes
         {
@@ -89,7 +89,7 @@
         }
 
         /// <summary>
-        /// The quantity in megaamperes
+        /// The quantity in Megaamperes
         /// </summary>
         public double Megaamperes
         {
@@ -100,7 +100,7 @@
         }
 
         /// <summary>
-        /// The quantity in microamperes
+        /// The quantity in Microamperes
         /// </summary>
         public double Microamperes
         {
@@ -222,14 +222,29 @@
             return From(microamperes, CurrentUnit.Microamperes);
         }
 
-        public static Frequency operator /(Current left, ElectricCharge right)
-        {
-            return Frequency.FromHertz(left.amperes / right.coulombs);
-        }
-
         public static ElectricCharge operator *(Current left, Time right)
         {
             return ElectricCharge.FromCoulombs(left.amperes * right.seconds);
+        }
+
+        public static ElectricCharge operator /(Current left, Frequency right)
+        {
+            return ElectricCharge.FromCoulombs(left.amperes / right.hertz);
+        }
+
+        public static Power operator *(Current left, Voltage right)
+        {
+            return Power.FromWatts(left.amperes * right.volts);
+        }
+
+        public static Voltage operator *(Current left, Resistance right)
+        {
+            return Voltage.FromVolts(left.amperes * right.ohm);
+        }
+
+        public static Frequency operator /(Current left, ElectricCharge right)
+        {
+            return Frequency.FromHertz(left.amperes / right.coulombs);
         }
 
         public static double operator /(Current left, Current right)

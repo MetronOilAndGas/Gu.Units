@@ -67,7 +67,7 @@
         }
 
         /// <summary>
-        /// The quantity in millimetresPerPercent
+        /// The quantity in MillimetresPerPercent
         /// </summary>
         public double MillimetresPerPercent
         {
@@ -78,7 +78,7 @@
         }
 
         /// <summary>
-        /// The quantity in micrometresPerPercent
+        /// The quantity in MicrometresPerPercent
         /// </summary>
         public double MicrometresPerPercent
         {
@@ -89,7 +89,7 @@
         }
 
         /// <summary>
-        /// The quantity in nanometresPerPercent
+        /// The quantity in NanometresPerPercent
         /// </summary>
         public double NanometresPerPercent
         {
@@ -100,7 +100,7 @@
         }
 
         /// <summary>
-        /// The quantity in metresPerPercent
+        /// The quantity in MetresPerPercent
         /// </summary>
         public double MetresPerPercent
         {
@@ -225,6 +225,21 @@
         public static Length operator *(LengthPerUnitless left, Unitless right)
         {
             return Length.FromMetres(left.metresPerUnitless * right.scalar);
+        }
+
+        public static ForcePerUnitless operator *(LengthPerUnitless left, Stiffness right)
+        {
+            return ForcePerUnitless.FromNewtonsPerUnitless(left.metresPerUnitless * right.newtonsPerMetre);
+        }
+
+        public static ForcePerUnitless operator /(LengthPerUnitless left, Flexibility right)
+        {
+            return ForcePerUnitless.FromNewtonsPerUnitless(left.metresPerUnitless / right.metresPerNewton);
+        }
+
+        public static Flexibility operator /(LengthPerUnitless left, ForcePerUnitless right)
+        {
+            return Flexibility.FromMetresPerNewton(left.metresPerUnitless / right.newtonsPerUnitless);
         }
 
         public static double operator /(LengthPerUnitless left, LengthPerUnitless right)

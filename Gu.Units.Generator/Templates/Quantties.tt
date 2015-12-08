@@ -16,13 +16,13 @@ var settings = Settings.FromResource;
 this.WriteLine(string.Format("Read Settings and found {0} units", settings.Quantities.Count));
 foreach (var quantity in settings.Quantities)
 {
-    var fileName = quantity.ClassName + ".generated." + Settings.Extension;
+    var fileName = quantity.Name + ".generated." + Settings.Extension;
     fileManager.StartNewFile(fileName, Settings.ProjectName, null, null);
 	session["QuantityData"] = quantity;
 	string output = paramTmpl.TransformText(session);
     if (output == "ErrorGeneratingOutput")
     {
-		this.WriteLine("Error transforming {0}", quantity.ClassName);
+		this.WriteLine("Error transforming {0}", quantity.Name);
         throw new InvalidOperationException("output");
     }
 

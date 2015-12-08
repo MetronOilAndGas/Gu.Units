@@ -67,7 +67,7 @@
         }
 
         /// <summary>
-        /// The quantity in degreesPerSquareSecond
+        /// The quantity in DegreesPerSquareSecond
         /// </summary>
         public double DegreesPerSquareSecond
         {
@@ -78,7 +78,7 @@
         }
 
         /// <summary>
-        /// The quantity in radiansPerSquareHour
+        /// The quantity in RadiansPerSquareHour
         /// </summary>
         public double RadiansPerSquareHour
         {
@@ -89,7 +89,7 @@
         }
 
         /// <summary>
-        /// The quantity in degreesPerSquareHour
+        /// The quantity in DegreesPerSquareHour
         /// </summary>
         public double DegreesPerSquareHour
         {
@@ -100,7 +100,7 @@
         }
 
         /// <summary>
-        /// The quantity in degreesPerSquareMinute
+        /// The quantity in DegreesPerSquareMinute
         /// </summary>
         public double DegreesPerSquareMinute
         {
@@ -111,7 +111,7 @@
         }
 
         /// <summary>
-        /// The quantity in radiansPerSquareMinute
+        /// The quantity in RadiansPerSquareMinute
         /// </summary>
         public double RadiansPerSquareMinute
         {
@@ -242,14 +242,14 @@
             return From(radiansPerSquareMinute, AngularAccelerationUnit.RadiansPerSquareMinute);
         }
 
-        public static Time operator /(AngularAcceleration left, AngularJerk right)
-        {
-            return Time.FromSeconds(left.radiansPerSecondSquared / right.radiansPerSecondCubed);
-        }
-
         public static AngularSpeed operator *(AngularAcceleration left, Time right)
         {
             return AngularSpeed.FromRadiansPerSecond(left.radiansPerSecondSquared * right.seconds);
+        }
+
+        public static AngularJerk operator /(AngularAcceleration left, Time right)
+        {
+            return AngularJerk.FromRadiansPerSecondCubed(left.radiansPerSecondSquared / right.seconds);
         }
 
         public static Frequency operator /(AngularAcceleration left, AngularSpeed right)
@@ -257,9 +257,19 @@
             return Frequency.FromHertz(left.radiansPerSecondSquared / right.radiansPerSecond);
         }
 
-        public static AngularJerk operator /(AngularAcceleration left, Time right)
+        public static AngularJerk operator *(AngularAcceleration left, Frequency right)
         {
-            return AngularJerk.FromRadiansPerSecondCubed(left.radiansPerSecondSquared / right.seconds);
+            return AngularJerk.FromRadiansPerSecondCubed(left.radiansPerSecondSquared * right.hertz);
+        }
+
+        public static AngularSpeed operator /(AngularAcceleration left, Frequency right)
+        {
+            return AngularSpeed.FromRadiansPerSecond(left.radiansPerSecondSquared / right.hertz);
+        }
+
+        public static Time operator /(AngularAcceleration left, AngularJerk right)
+        {
+            return Time.FromSeconds(left.radiansPerSecondSquared / right.radiansPerSecondCubed);
         }
 
         public static double operator /(AngularAcceleration left, AngularAcceleration right)

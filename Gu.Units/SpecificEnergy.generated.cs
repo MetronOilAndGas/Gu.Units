@@ -142,9 +142,14 @@
             return new SpecificEnergy(joulesPerKilogram);
         }
 
-        public static Length operator /(SpecificEnergy left, Acceleration right)
+        public static Energy operator *(SpecificEnergy left, Mass right)
         {
-            return Length.FromMetres(left.joulesPerKilogram / right.metresPerSecondSquared);
+            return Energy.FromJoules(left.joulesPerKilogram * right.kilograms);
+        }
+
+        public static Acceleration operator /(SpecificEnergy left, Length right)
+        {
+            return Acceleration.FromMetresPerSecondSquared(left.joulesPerKilogram / right.metres);
         }
 
         public static Pressure operator *(SpecificEnergy left, Density right)
@@ -152,19 +157,14 @@
             return Pressure.FromPascals(left.joulesPerKilogram * right.kilogramsPerCubicMetre);
         }
 
-        public static Energy operator *(SpecificEnergy left, Mass right)
-        {
-            return Energy.FromJoules(left.joulesPerKilogram * right.kilograms);
-        }
-
         public static Speed operator /(SpecificEnergy left, Speed right)
         {
             return Speed.FromMetresPerSecond(left.joulesPerKilogram / right.metresPerSecond);
         }
 
-        public static Acceleration operator /(SpecificEnergy left, Length right)
+        public static Length operator /(SpecificEnergy left, Acceleration right)
         {
-            return Acceleration.FromMetresPerSecondSquared(left.joulesPerKilogram / right.metres);
+            return Length.FromMetres(left.joulesPerKilogram / right.metresPerSecondSquared);
         }
 
         public static double operator /(SpecificEnergy left, SpecificEnergy right)

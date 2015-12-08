@@ -67,18 +67,7 @@
         }
 
         /// <summary>
-        /// The quantity in partsPerMillion
-        /// </summary>
-        public double PartsPerMillion
-        {
-            get
-            {
-                return UnitlessUnit.PartsPerMillion.FromSiUnit(this.scalar);
-            }
-        }
-
-        /// <summary>
-        /// The quantity in promilles
+        /// The quantity in Promilles
         /// </summary>
         public double Promilles
         {
@@ -89,7 +78,18 @@
         }
 
         /// <summary>
-        /// The quantity in percents
+        /// The quantity in PartsPerMillion
+        /// </summary>
+        public double PartsPerMillion
+        {
+            get
+            {
+                return UnitlessUnit.PartsPerMillion.FromSiUnit(this.scalar);
+            }
+        }
+
+        /// <summary>
+        /// The quantity in Percents
         /// </summary>
         public double Percents
         {
@@ -178,19 +178,19 @@
         /// <summary>
         /// Creates a new instance of <see cref="Gu.Units.Unitless"/>.
         /// </summary>
-        /// <param name="partsPerMillion">The value in ppm</param>
-        public static Unitless FromPartsPerMillion(double partsPerMillion)
+        /// <param name="promilles">The value in ‰</param>
+        public static Unitless FromPromilles(double promilles)
         {
-            return From(partsPerMillion, UnitlessUnit.PartsPerMillion);
+            return From(promilles, UnitlessUnit.Promilles);
         }
 
         /// <summary>
         /// Creates a new instance of <see cref="Gu.Units.Unitless"/>.
         /// </summary>
-        /// <param name="promilles">The value in ‰</param>
-        public static Unitless FromPromilles(double promilles)
+        /// <param name="partsPerMillion">The value in ppm</param>
+        public static Unitless FromPartsPerMillion(double partsPerMillion)
         {
-            return From(promilles, UnitlessUnit.Promilles);
+            return From(partsPerMillion, UnitlessUnit.PartsPerMillion);
         }
 
         /// <summary>
@@ -210,6 +210,11 @@
         public static Angle operator *(Unitless left, AnglePerUnitless right)
         {
             return Angle.FromRadians(left.scalar * right.radiansPerUnitless);
+        }
+
+        public static Force operator *(Unitless left, ForcePerUnitless right)
+        {
+            return Force.FromNewtons(left.scalar * right.newtonsPerUnitless);
         }
 
         public static double operator /(Unitless left, Unitless right)

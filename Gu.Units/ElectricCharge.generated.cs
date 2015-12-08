@@ -142,14 +142,34 @@
             return new ElectricCharge(coulombs);
         }
 
+        public static Current operator /(ElectricCharge left, Time right)
+        {
+            return Current.FromAmperes(left.coulombs / right.seconds);
+        }
+
         public static Time operator /(ElectricCharge left, Current right)
         {
             return Time.FromSeconds(left.coulombs / right.amperes);
         }
 
-        public static Current operator /(ElectricCharge left, Time right)
+        public static Current operator *(ElectricCharge left, Frequency right)
         {
-            return Current.FromAmperes(left.coulombs / right.seconds);
+            return Current.FromAmperes(left.coulombs * right.hertz);
+        }
+
+        public static Energy operator *(ElectricCharge left, Voltage right)
+        {
+            return Energy.FromJoules(left.coulombs * right.volts);
+        }
+
+        public static Capacitance operator /(ElectricCharge left, Voltage right)
+        {
+            return Capacitance.FromFarads(left.coulombs / right.volts);
+        }
+
+        public static Voltage operator /(ElectricCharge left, Capacitance right)
+        {
+            return Voltage.FromVolts(left.coulombs / right.farads);
         }
 
         public static double operator /(ElectricCharge left, ElectricCharge right)

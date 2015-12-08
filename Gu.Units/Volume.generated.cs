@@ -67,7 +67,7 @@
         }
 
         /// <summary>
-        /// The quantity in litres
+        /// The quantity in Litres
         /// </summary>
         public double Litres
         {
@@ -78,7 +78,7 @@
         }
 
         /// <summary>
-        /// The quantity in cubicCentimetres
+        /// The quantity in CubicCentimetres
         /// </summary>
         public double CubicCentimetres
         {
@@ -89,7 +89,7 @@
         }
 
         /// <summary>
-        /// The quantity in cubicMillimetres
+        /// The quantity in CubicMillimetres
         /// </summary>
         public double CubicMillimetres
         {
@@ -100,13 +100,24 @@
         }
 
         /// <summary>
-        /// The quantity in cubicInches
+        /// The quantity in CubicInches
         /// </summary>
         public double CubicInches
         {
             get
             {
                 return VolumeUnit.CubicInches.FromSiUnit(this.cubicMetres);
+            }
+        }
+
+        /// <summary>
+        /// The quantity in CubicDecimetres
+        /// </summary>
+        public double CubicDecimetres
+        {
+            get
+            {
+                return VolumeUnit.CubicDecimetres.FromSiUnit(this.cubicMetres);
             }
         }
 
@@ -222,14 +233,13 @@
             return From(cubicInches, VolumeUnit.CubicInches);
         }
 
-        public static Mass operator *(Volume left, Density right)
+        /// <summary>
+        /// Creates a new instance of <see cref="Gu.Units.Volume"/>.
+        /// </summary>
+        /// <param name="cubicDecimetres">The value in dm³</param>
+        public static Volume FromCubicDecimetres(double cubicDecimetres)
         {
-            return Mass.FromKilograms(left.cubicMetres * right.kilogramsPerCubicMetre);
-        }
-
-        public static Length operator /(Volume left, Area right)
-        {
-            return Length.FromMetres(left.cubicMetres / right.squareMetres);
+            return From(cubicDecimetres, VolumeUnit.CubicDecimetres);
         }
 
         public static Area operator /(Volume left, Length right)
@@ -240,6 +250,31 @@
         public static VolumetricFlow operator /(Volume left, Time right)
         {
             return VolumetricFlow.FromCubicMetresPerSecond(left.cubicMetres / right.seconds);
+        }
+
+        public static Length operator /(Volume left, Area right)
+        {
+            return Length.FromMetres(left.cubicMetres / right.squareMetres);
+        }
+
+        public static Energy operator *(Volume left, Pressure right)
+        {
+            return Energy.FromJoules(left.cubicMetres * right.pascals);
+        }
+
+        public static Mass operator *(Volume left, Density right)
+        {
+            return Mass.FromKilograms(left.cubicMetres * right.kilogramsPerCubicMetre);
+        }
+
+        public static VolumetricFlow operator *(Volume left, Frequency right)
+        {
+            return VolumetricFlow.FromCubicMetresPerSecond(left.cubicMetres * right.hertz);
+        }
+
+        public static Time operator /(Volume left, VolumetricFlow right)
+        {
+            return Time.FromSeconds(left.cubicMetres / right.cubicMetresPerSecond);
         }
 
         public static double operator /(Volume left, Volume right)

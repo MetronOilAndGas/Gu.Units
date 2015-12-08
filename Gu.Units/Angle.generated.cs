@@ -67,7 +67,7 @@
         }
 
         /// <summary>
-        /// The quantity in degrees
+        /// The quantity in Degrees
         /// </summary>
         public double Degrees
         {
@@ -162,16 +162,6 @@
             return From(degrees, AngleUnit.Degrees);
         }
 
-        public static Time operator /(Angle left, AngularSpeed right)
-        {
-            return Time.FromSeconds(left.radians / right.radiansPerSecond);
-        }
-
-        public static Unitless operator /(Angle left, AnglePerUnitless right)
-        {
-            return Unitless.FromScalar(left.radians / right.radiansPerUnitless);
-        }
-
         public static AngularSpeed operator /(Angle left, Time right)
         {
             return AngularSpeed.FromRadiansPerSecond(left.radians / right.seconds);
@@ -180,6 +170,26 @@
         public static AnglePerUnitless operator /(Angle left, Unitless right)
         {
             return AnglePerUnitless.FromRadiansPerUnitless(left.radians / right.scalar);
+        }
+
+        public static Time operator /(Angle left, AngularSpeed right)
+        {
+            return Time.FromSeconds(left.radians / right.radiansPerSecond);
+        }
+
+        public static AngularSpeed operator *(Angle left, Frequency right)
+        {
+            return AngularSpeed.FromRadiansPerSecond(left.radians * right.hertz);
+        }
+
+        public static Energy operator *(Angle left, Torque right)
+        {
+            return Energy.FromJoules(left.radians * right.newtonMetres);
+        }
+
+        public static Unitless operator /(Angle left, AnglePerUnitless right)
+        {
+            return Unitless.FromScalar(left.radians / right.radiansPerUnitless);
         }
 
         public static double operator /(Angle left, Angle right)

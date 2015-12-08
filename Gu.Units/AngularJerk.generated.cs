@@ -67,7 +67,7 @@
         }
 
         /// <summary>
-        /// The quantity in degreesPerSecondCubed
+        /// The quantity in DegreesPerSecondCubed
         /// </summary>
         public double DegreesPerSecondCubed
         {
@@ -78,7 +78,7 @@
         }
 
         /// <summary>
-        /// The quantity in radiansPerHourCubed
+        /// The quantity in RadiansPerHourCubed
         /// </summary>
         public double RadiansPerHourCubed
         {
@@ -89,7 +89,7 @@
         }
 
         /// <summary>
-        /// The quantity in degreesPerHourCubed
+        /// The quantity in DegreesPerHourCubed
         /// </summary>
         public double DegreesPerHourCubed
         {
@@ -100,7 +100,7 @@
         }
 
         /// <summary>
-        /// The quantity in radiansPerMinuteCubed
+        /// The quantity in RadiansPerMinuteCubed
         /// </summary>
         public double RadiansPerMinuteCubed
         {
@@ -111,7 +111,7 @@
         }
 
         /// <summary>
-        /// The quantity in degreesPerMinuteCubed
+        /// The quantity in DegreesPerMinuteCubed
         /// </summary>
         public double DegreesPerMinuteCubed
         {
@@ -242,14 +242,19 @@
             return From(degreesPerMinuteCubed, AngularJerkUnit.DegreesPerMinuteCubed);
         }
 
-        public static Frequency operator /(AngularJerk left, AngularAcceleration right)
-        {
-            return Frequency.FromHertz(left.radiansPerSecondCubed / right.radiansPerSecondSquared);
-        }
-
         public static AngularAcceleration operator *(AngularJerk left, Time right)
         {
             return AngularAcceleration.FromRadiansPerSecondSquared(left.radiansPerSecondCubed * right.seconds);
+        }
+
+        public static AngularAcceleration operator /(AngularJerk left, Frequency right)
+        {
+            return AngularAcceleration.FromRadiansPerSecondSquared(left.radiansPerSecondCubed / right.hertz);
+        }
+
+        public static Frequency operator /(AngularJerk left, AngularAcceleration right)
+        {
+            return Frequency.FromHertz(left.radiansPerSecondCubed / right.radiansPerSecondSquared);
         }
 
         public static double operator /(AngularJerk left, AngularJerk right)

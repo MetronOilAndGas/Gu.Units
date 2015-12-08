@@ -67,7 +67,7 @@
         }
 
         /// <summary>
-        /// The quantity in degreesPerPercent
+        /// The quantity in DegreesPerPercent
         /// </summary>
         public double DegreesPerPercent
         {
@@ -78,7 +78,7 @@
         }
 
         /// <summary>
-        /// The quantity in radiansPerPercent
+        /// The quantity in RadiansPerPercent
         /// </summary>
         public double RadiansPerPercent
         {

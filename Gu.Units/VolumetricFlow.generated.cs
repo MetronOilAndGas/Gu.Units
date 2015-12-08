@@ -142,11 +142,6 @@
             return new VolumetricFlow(cubicMetresPerSecond);
         }
 
-        public static Area operator /(VolumetricFlow left, Speed right)
-        {
-            return Area.FromSquareMetres(left.cubicMetresPerSecond / right.metresPerSecond);
-        }
-
         public static Volume operator *(VolumetricFlow left, Time right)
         {
             return Volume.FromCubicMetres(left.cubicMetresPerSecond * right.seconds);
@@ -160,6 +155,21 @@
         public static Frequency operator /(VolumetricFlow left, Volume right)
         {
             return Frequency.FromHertz(left.cubicMetresPerSecond / right.cubicMetres);
+        }
+
+        public static Power operator *(VolumetricFlow left, Pressure right)
+        {
+            return Power.FromWatts(left.cubicMetresPerSecond * right.pascals);
+        }
+
+        public static Area operator /(VolumetricFlow left, Speed right)
+        {
+            return Area.FromSquareMetres(left.cubicMetresPerSecond / right.metresPerSecond);
+        }
+
+        public static Volume operator /(VolumetricFlow left, Frequency right)
+        {
+            return Volume.FromCubicMetres(left.cubicMetresPerSecond / right.hertz);
         }
 
         public static double operator /(VolumetricFlow left, VolumetricFlow right)

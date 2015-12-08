@@ -33,7 +33,7 @@ namespace <#= Settings.Namespace #>
     {
         /// <summary>
         /// The <#= unit.ClassName #> unit
-        /// Contains conversion logic to from and formatting.
+        /// Contains logic for conversion and formatting.
         /// </summary>
 <#
 	if (unit.AnyOffsetConversion)

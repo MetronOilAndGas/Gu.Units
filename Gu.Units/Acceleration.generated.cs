@@ -67,7 +67,7 @@
         }
 
         /// <summary>
-        /// The quantity in millimetresPerSecondSquared
+        /// The quantity in MillimetresPerSecondSquared
         /// </summary>
         public double MillimetresPerSecondSquared
         {
@@ -78,7 +78,7 @@
         }
 
         /// <summary>
-        /// The quantity in centimetresPerSecondSquared
+        /// The quantity in CentimetresPerSecondSquared
         /// </summary>
         public double CentimetresPerSecondSquared
         {
@@ -182,24 +182,9 @@
             return From(centimetresPerSecondSquared, AccelerationUnit.CentimetresPerSecondSquared);
         }
 
-        public static Time operator /(Acceleration left, Jerk right)
-        {
-            return Time.FromSeconds(left.metresPerSecondSquared / right.metresPerSecondCubed);
-        }
-
         public static Force operator *(Acceleration left, Mass right)
         {
             return Force.FromNewtons(left.metresPerSecondSquared * right.kilograms);
-        }
-
-        public static Speed operator *(Acceleration left, Time right)
-        {
-            return Speed.FromMetresPerSecond(left.metresPerSecondSquared * right.seconds);
-        }
-
-        public static Frequency operator /(Acceleration left, Speed right)
-        {
-            return Frequency.FromHertz(left.metresPerSecondSquared / right.metresPerSecond);
         }
 
         public static SpecificEnergy operator *(Acceleration left, Length right)
@@ -207,9 +192,34 @@
             return SpecificEnergy.FromJoulesPerKilogram(left.metresPerSecondSquared * right.metres);
         }
 
+        public static Speed operator *(Acceleration left, Time right)
+        {
+            return Speed.FromMetresPerSecond(left.metresPerSecondSquared * right.seconds);
+        }
+
         public static Jerk operator /(Acceleration left, Time right)
         {
             return Jerk.FromMetresPerSecondCubed(left.metresPerSecondSquared / right.seconds);
+        }
+
+        public static Frequency operator /(Acceleration left, Speed right)
+        {
+            return Frequency.FromHertz(left.metresPerSecondSquared / right.metresPerSecond);
+        }
+
+        public static Jerk operator *(Acceleration left, Frequency right)
+        {
+            return Jerk.FromMetresPerSecondCubed(left.metresPerSecondSquared * right.hertz);
+        }
+
+        public static Speed operator /(Acceleration left, Frequency right)
+        {
+            return Speed.FromMetresPerSecond(left.metresPerSecondSquared / right.hertz);
+        }
+
+        public static Time operator /(Acceleration left, Jerk right)
+        {
+            return Time.FromSeconds(left.metresPerSecondSquared / right.metresPerSecondCubed);
         }
 
         public static double operator /(Acceleration left, Acceleration right)

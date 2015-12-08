@@ -67,7 +67,7 @@
         }
 
         /// <summary>
-        /// The quantity in nanojoules
+        /// The quantity in Nanojoules
         /// </summary>
         public double Nanojoules
         {
@@ -78,7 +78,7 @@
         }
 
         /// <summary>
-        /// The quantity in microjoules
+        /// The quantity in Microjoules
         /// </summary>
         public double Microjoules
         {
@@ -89,7 +89,7 @@
         }
 
         /// <summary>
-        /// The quantity in millijoules
+        /// The quantity in Millijoules
         /// </summary>
         public double Millijoules
         {
@@ -100,7 +100,7 @@
         }
 
         /// <summary>
-        /// The quantity in kilojoules
+        /// The quantity in Kilojoules
         /// </summary>
         public double Kilojoules
         {
@@ -111,7 +111,7 @@
         }
 
         /// <summary>
-        /// The quantity in megajoules
+        /// The quantity in Megajoules
         /// </summary>
         public double Megajoules
         {
@@ -122,7 +122,7 @@
         }
 
         /// <summary>
-        /// The quantity in gigajoules
+        /// The quantity in Gigajoules
         /// </summary>
         public double Gigajoules
         {
@@ -133,7 +133,7 @@
         }
 
         /// <summary>
-        /// The quantity in kilowattHours
+        /// The quantity in KilowattHours
         /// </summary>
         public double KilowattHours
         {
@@ -282,19 +282,14 @@
             return From(kilowattHours, EnergyUnit.KilowattHours);
         }
 
-        public static Length operator /(Energy left, Force right)
+        public static SpecificEnergy operator /(Energy left, Mass right)
         {
-            return Length.FromMetres(left.joules / right.newtons);
+            return SpecificEnergy.FromJoulesPerKilogram(left.joules / right.kilograms);
         }
 
         public static Force operator /(Energy left, Length right)
         {
             return Force.FromNewtons(left.joules / right.metres);
-        }
-
-        public static Pressure operator /(Energy left, Volume right)
-        {
-            return Pressure.FromPascals(left.joules / right.cubicMetres);
         }
 
         public static Power operator /(Energy left, Time right)
@@ -312,14 +307,59 @@
             return Stiffness.FromNewtonsPerMetre(left.joules / right.squareMetres);
         }
 
+        public static Pressure operator /(Energy left, Volume right)
+        {
+            return Pressure.FromPascals(left.joules / right.cubicMetres);
+        }
+
+        public static Length operator /(Energy left, Force right)
+        {
+            return Length.FromMetres(left.joules / right.newtons);
+        }
+
+        public static Volume operator /(Energy left, Pressure right)
+        {
+            return Volume.FromCubicMetres(left.joules / right.pascals);
+        }
+
+        public static Time operator /(Energy left, Power right)
+        {
+            return Time.FromSeconds(left.joules / right.watts);
+        }
+
+        public static Power operator *(Energy left, Frequency right)
+        {
+            return Power.FromWatts(left.joules * right.hertz);
+        }
+
+        public static Angle operator /(Energy left, Torque right)
+        {
+            return Angle.FromRadians(left.joules / right.newtonMetres);
+        }
+
+        public static Area operator /(Energy left, Stiffness right)
+        {
+            return Area.FromSquareMetres(left.joules / right.newtonsPerMetre);
+        }
+
+        public static ElectricCharge operator /(Energy left, Voltage right)
+        {
+            return ElectricCharge.FromCoulombs(left.joules / right.volts);
+        }
+
+        public static Mass operator /(Energy left, SpecificEnergy right)
+        {
+            return Mass.FromKilograms(left.joules / right.joulesPerKilogram);
+        }
+
         public static Voltage operator /(Energy left, ElectricCharge right)
         {
             return Voltage.FromVolts(left.joules / right.coulombs);
         }
 
-        public static SpecificEnergy operator /(Energy left, Mass right)
+        public static Area operator *(Energy left, Flexibility right)
         {
-            return SpecificEnergy.FromJoulesPerKilogram(left.joules / right.kilograms);
+            return Area.FromSquareMetres(left.joules * right.metresPerNewton);
         }
 
         public static double operator /(Energy left, Energy right)

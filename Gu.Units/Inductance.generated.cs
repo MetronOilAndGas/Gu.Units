@@ -147,6 +147,16 @@
             return Resistance.FromOhm(left.henrys / right.seconds);
         }
 
+        public static Resistance operator *(Inductance left, Frequency right)
+        {
+            return Resistance.FromOhm(left.henrys * right.hertz);
+        }
+
+        public static Time operator /(Inductance left, Resistance right)
+        {
+            return Time.FromSeconds(left.henrys / right.ohm);
+        }
+
         public static double operator /(Inductance left, Inductance right)
         {
             return left.henrys / right.henrys;

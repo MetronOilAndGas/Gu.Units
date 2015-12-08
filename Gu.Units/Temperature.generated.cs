@@ -67,7 +67,7 @@
         }
 
         /// <summary>
-        /// The quantity in celsius
+        /// The quantity in Celsius
         /// </summary>
         public double Celsius
         {
@@ -78,7 +78,7 @@
         }
 
         /// <summary>
-        /// The quantity in fahrenheit
+        /// The quantity in Fahrenheit
         /// </summary>
         public double Fahrenheit
         {

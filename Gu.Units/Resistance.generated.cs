@@ -67,7 +67,7 @@
         }
 
         /// <summary>
-        /// The quantity in microohm
+        /// The quantity in Microohm
         /// </summary>
         public double Microohm
         {
@@ -78,7 +78,7 @@
         }
 
         /// <summary>
-        /// The quantity in milliohm
+        /// The quantity in Milliohm
         /// </summary>
         public double Milliohm
         {
@@ -89,7 +89,7 @@
         }
 
         /// <summary>
-        /// The quantity in kiloohm
+        /// The quantity in Kiloohm
         /// </summary>
         public double Kiloohm
         {
@@ -100,7 +100,7 @@
         }
 
         /// <summary>
-        /// The quantity in megaohm
+        /// The quantity in Megaohm
         /// </summary>
         public double Megaohm
         {
@@ -222,14 +222,29 @@
             return From(megaohm, ResistanceUnit.Megaohm);
         }
 
+        public static Inductance operator *(Resistance left, Time right)
+        {
+            return Inductance.FromHenrys(left.ohm * right.seconds);
+        }
+
         public static Voltage operator *(Resistance left, Current right)
         {
             return Voltage.FromVolts(left.ohm * right.amperes);
         }
 
-        public static Inductance operator *(Resistance left, Time right)
+        public static Inductance operator /(Resistance left, Frequency right)
         {
-            return Inductance.FromHenrys(left.ohm * right.seconds);
+            return Inductance.FromHenrys(left.ohm / right.hertz);
+        }
+
+        public static Frequency operator /(Resistance left, Inductance right)
+        {
+            return Frequency.FromHertz(left.ohm / right.henrys);
+        }
+
+        public static Time operator *(Resistance left, Capacitance right)
+        {
+            return Time.FromSeconds(left.ohm * right.farads);
         }
 
         public static double operator /(Resistance left, Resistance right)

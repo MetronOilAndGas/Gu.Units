@@ -67,7 +67,7 @@
         }
 
         /// <summary>
-        /// The quantity in millimetresPerNewton
+        /// The quantity in MillimetresPerNewton
         /// </summary>
         public double MillimetresPerNewton
         {
@@ -78,7 +78,7 @@
         }
 
         /// <summary>
-        /// The quantity in millimetresPerKilonewton
+        /// The quantity in MillimetresPerKilonewton
         /// </summary>
         public double MillimetresPerKilonewton
         {
@@ -89,7 +89,7 @@
         }
 
         /// <summary>
-        /// The quantity in micrometresPerKilonewton
+        /// The quantity in MicrometresPerKilonewton
         /// </summary>
         public double MicrometresPerKilonewton
         {
@@ -210,6 +210,11 @@
         public static Area operator *(Flexibility left, Energy right)
         {
             return Area.FromSquareMetres(left.metresPerNewton * right.joules);
+        }
+
+        public static LengthPerUnitless operator *(Flexibility left, ForcePerUnitless right)
+        {
+            return LengthPerUnitless.FromMetresPerUnitless(left.metresPerNewton * right.newtonsPerUnitless);
         }
 
         public static Stiffness operator /(double left, Flexibility right)

@@ -142,6 +142,16 @@
             return new Capacitance(farads);
         }
 
+        public static ElectricCharge operator *(Capacitance left, Voltage right)
+        {
+            return ElectricCharge.FromCoulombs(left.farads * right.volts);
+        }
+
+        public static Time operator *(Capacitance left, Resistance right)
+        {
+            return Time.FromSeconds(left.farads * right.ohm);
+        }
+
         public static double operator /(Capacitance left, Capacitance right)
         {
             return left.farads / right.farads;

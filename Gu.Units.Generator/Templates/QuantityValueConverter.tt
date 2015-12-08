@@ -12,18 +12,15 @@ if(QuantityValueConverterData != null)
 }
 else
 {
-    var unit = new BaseUnit("Metres", "m")
-                    {
-                        QuantityName = "Length"
-                    };
+    var unit = new BaseUnit("Metres", "m", "Length");
     quantity = unit.Quantity;
 }
 #>
 using System.Runtime.CompilerServices;
 using Gu.Units;
 
-[assembly: TypeForwardedTo(typeof(<#= quantity.ClassName #>))]
-[assembly: TypeForwardedTo(typeof(<#= quantity.ClassName #>Unit))]
+[assembly: TypeForwardedTo(typeof(<#= quantity.Name #>))]
+[assembly: TypeForwardedTo(typeof(<#= quantity.UnitName #>))]
 
 namespace Gu.Units.Wpf
 {
@@ -35,7 +32,7 @@ namespace Gu.Units.Wpf
     using System.Windows.Markup;
 
     [MarkupExtensionReturnType(typeof(IValueConverter))]
-    public class <#= quantity.ClassName #>Converter : MarkupExtension, IValueConverter
+    public class <#= quantity.Name #>Converter : MarkupExtension, IValueConverter
     {
         private static readonly string StringFormatNotSet = "Not Set";
         private <#= quantity.ClassName #>Unit? unit;

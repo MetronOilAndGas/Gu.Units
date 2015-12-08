@@ -67,7 +67,7 @@
         }
 
         /// <summary>
-        /// The quantity in millihertz
+        /// The quantity in Millihertz
         /// </summary>
         public double Millihertz
         {
@@ -78,7 +78,7 @@
         }
 
         /// <summary>
-        /// The quantity in kilohertz
+        /// The quantity in Kilohertz
         /// </summary>
         public double Kilohertz
         {
@@ -89,7 +89,7 @@
         }
 
         /// <summary>
-        /// The quantity in megahertz
+        /// The quantity in Megahertz
         /// </summary>
         public double Megahertz
         {
@@ -100,7 +100,7 @@
         }
 
         /// <summary>
-        /// The quantity in gigahertz
+        /// The quantity in Gigahertz
         /// </summary>
         public double Gigahertz
         {
@@ -222,16 +222,6 @@
             return From(gigahertz, FrequencyUnit.Gigahertz);
         }
 
-        public static Current operator *(Frequency left, ElectricCharge right)
-        {
-            return Current.FromAmperes(left.hertz * right.coulombs);
-        }
-
-        public static Power operator *(Frequency left, Energy right)
-        {
-            return Power.FromWatts(left.hertz * right.joules);
-        }
-
         public static Speed operator *(Frequency left, Length right)
         {
             return Speed.FromMetresPerSecond(left.hertz * right.metres);
@@ -242,14 +232,19 @@
             return AngularSpeed.FromRadiansPerSecond(left.hertz * right.radians);
         }
 
-        public static Acceleration operator *(Frequency left, Speed right)
-        {
-            return Acceleration.FromMetresPerSecondSquared(left.hertz * right.metresPerSecond);
-        }
-
         public static VolumetricFlow operator *(Frequency left, Volume right)
         {
             return VolumetricFlow.FromCubicMetresPerSecond(left.hertz * right.cubicMetres);
+        }
+
+        public static Power operator *(Frequency left, Energy right)
+        {
+            return Power.FromWatts(left.hertz * right.joules);
+        }
+
+        public static Acceleration operator *(Frequency left, Speed right)
+        {
+            return Acceleration.FromMetresPerSecondSquared(left.hertz * right.metresPerSecond);
         }
 
         public static AngularAcceleration operator *(Frequency left, AngularSpeed right)
@@ -257,14 +252,24 @@
             return AngularAcceleration.FromRadiansPerSecondSquared(left.hertz * right.radiansPerSecond);
         }
 
-        public static AngularJerk operator *(Frequency left, AngularAcceleration right)
-        {
-            return AngularJerk.FromRadiansPerSecondCubed(left.hertz * right.radiansPerSecondSquared);
-        }
-
         public static Jerk operator *(Frequency left, Acceleration right)
         {
             return Jerk.FromMetresPerSecondCubed(left.hertz * right.metresPerSecondSquared);
+        }
+
+        public static Current operator *(Frequency left, ElectricCharge right)
+        {
+            return Current.FromAmperes(left.hertz * right.coulombs);
+        }
+
+        public static Resistance operator *(Frequency left, Inductance right)
+        {
+            return Resistance.FromOhm(left.hertz * right.henrys);
+        }
+
+        public static AngularJerk operator *(Frequency left, AngularAcceleration right)
+        {
+            return AngularJerk.FromRadiansPerSecondCubed(left.hertz * right.radiansPerSecondSquared);
         }
 
         public static Time operator /(double left, Frequency right)

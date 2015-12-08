@@ -67,7 +67,7 @@
         }
 
         /// <summary>
-        /// The quantity in millimetresPerSecond
+        /// The quantity in MillimetresPerSecond
         /// </summary>
         public double MillimetresPerSecond
         {
@@ -78,7 +78,7 @@
         }
 
         /// <summary>
-        /// The quantity in centimetresPerSecond
+        /// The quantity in CentimetresPerSecond
         /// </summary>
         public double CentimetresPerSecond
         {
@@ -89,7 +89,7 @@
         }
 
         /// <summary>
-        /// The quantity in kilometresPerHour
+        /// The quantity in KilometresPerHour
         /// </summary>
         public double KilometresPerHour
         {
@@ -100,7 +100,7 @@
         }
 
         /// <summary>
-        /// The quantity in centimetresPerMinute
+        /// The quantity in CentimetresPerMinute
         /// </summary>
         public double CentimetresPerMinute
         {
@@ -111,7 +111,7 @@
         }
 
         /// <summary>
-        /// The quantity in metresPerMinute
+        /// The quantity in MetresPerMinute
         /// </summary>
         public double MetresPerMinute
         {
@@ -122,7 +122,7 @@
         }
 
         /// <summary>
-        /// The quantity in metresPerHour
+        /// The quantity in MetresPerHour
         /// </summary>
         public double MetresPerHour
         {
@@ -133,7 +133,7 @@
         }
 
         /// <summary>
-        /// The quantity in millimetresPerHour
+        /// The quantity in MillimetresPerHour
         /// </summary>
         public double MillimetresPerHour
         {
@@ -144,7 +144,7 @@
         }
 
         /// <summary>
-        /// The quantity in centimetresPerHour
+        /// The quantity in CentimetresPerHour
         /// </summary>
         public double CentimetresPerHour
         {
@@ -155,7 +155,7 @@
         }
 
         /// <summary>
-        /// The quantity in millimetresPerMinute
+        /// The quantity in MillimetresPerMinute
         /// </summary>
         public double MillimetresPerMinute
         {
@@ -322,24 +322,14 @@
             return From(millimetresPerMinute, SpeedUnit.MillimetresPerMinute);
         }
 
-        public static Length operator *(Speed left, Time right)
-        {
-            return Length.FromMetres(left.metresPerSecond * right.seconds);
-        }
-
-        public static Time operator /(Speed left, Acceleration right)
-        {
-            return Time.FromSeconds(left.metresPerSecond / right.metresPerSecondSquared);
-        }
-
-        public static Power operator *(Speed left, Force right)
-        {
-            return Power.FromWatts(left.metresPerSecond * right.newtons);
-        }
-
         public static Frequency operator /(Speed left, Length right)
         {
             return Frequency.FromHertz(left.metresPerSecond / right.metres);
+        }
+
+        public static Length operator *(Speed left, Time right)
+        {
+            return Length.FromMetres(left.metresPerSecond * right.seconds);
         }
 
         public static Acceleration operator /(Speed left, Time right)
@@ -352,9 +342,29 @@
             return VolumetricFlow.FromCubicMetresPerSecond(left.metresPerSecond * right.squareMetres);
         }
 
+        public static Power operator *(Speed left, Force right)
+        {
+            return Power.FromWatts(left.metresPerSecond * right.newtons);
+        }
+
         public static SpecificEnergy operator *(Speed left, Speed right)
         {
             return SpecificEnergy.FromJoulesPerKilogram(left.metresPerSecond * right.metresPerSecond);
+        }
+
+        public static Acceleration operator *(Speed left, Frequency right)
+        {
+            return Acceleration.FromMetresPerSecondSquared(left.metresPerSecond * right.hertz);
+        }
+
+        public static Length operator /(Speed left, Frequency right)
+        {
+            return Length.FromMetres(left.metresPerSecond / right.hertz);
+        }
+
+        public static Time operator /(Speed left, Acceleration right)
+        {
+            return Time.FromSeconds(left.metresPerSecond / right.metresPerSecondSquared);
         }
 
         public static double operator /(Speed left, Speed right)

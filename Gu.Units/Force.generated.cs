@@ -67,7 +67,7 @@
         }
 
         /// <summary>
-        /// The quantity in nanonewtons
+        /// The quantity in Nanonewtons
         /// </summary>
         public double Nanonewtons
         {
@@ -78,7 +78,7 @@
         }
 
         /// <summary>
-        /// The quantity in micronewtons
+        /// The quantity in Micronewtons
         /// </summary>
         public double Micronewtons
         {
@@ -89,7 +89,7 @@
         }
 
         /// <summary>
-        /// The quantity in millinewtons
+        /// The quantity in Millinewtons
         /// </summary>
         public double Millinewtons
         {
@@ -100,7 +100,7 @@
         }
 
         /// <summary>
-        /// The quantity in kilonewtons
+        /// The quantity in Kilonewtons
         /// </summary>
         public double Kilonewtons
         {
@@ -111,7 +111,7 @@
         }
 
         /// <summary>
-        /// The quantity in meganewtons
+        /// The quantity in Meganewtons
         /// </summary>
         public double Meganewtons
         {
@@ -122,7 +122,7 @@
         }
 
         /// <summary>
-        /// The quantity in giganewtons
+        /// The quantity in Giganewtons
         /// </summary>
         public double Giganewtons
         {
@@ -262,29 +262,14 @@
             return From(giganewtons, ForceUnit.Giganewtons);
         }
 
-        public static Mass operator /(Force left, Acceleration right)
+        public static Acceleration operator /(Force left, Mass right)
         {
-            return Mass.FromKilograms(left.newtons / right.metresPerSecondSquared);
-        }
-
-        public static Pressure operator /(Force left, Area right)
-        {
-            return Pressure.FromPascals(left.newtons / right.squareMetres);
+            return Acceleration.FromMetresPerSecondSquared(left.newtons / right.kilograms);
         }
 
         public static Energy operator *(Force left, Length right)
         {
             return Energy.FromJoules(left.newtons * right.metres);
-        }
-
-        public static Power operator *(Force left, Speed right)
-        {
-            return Power.FromWatts(left.newtons * right.metresPerSecond);
-        }
-
-        public static Acceleration operator /(Force left, Mass right)
-        {
-            return Acceleration.FromMetresPerSecondSquared(left.newtons / right.kilograms);
         }
 
         public static Stiffness operator /(Force left, Length right)
@@ -295,6 +280,41 @@
         public static ForcePerUnitless operator /(Force left, Unitless right)
         {
             return ForcePerUnitless.FromNewtonsPerUnitless(left.newtons / right.scalar);
+        }
+
+        public static Pressure operator /(Force left, Area right)
+        {
+            return Pressure.FromPascals(left.newtons / right.squareMetres);
+        }
+
+        public static Area operator /(Force left, Pressure right)
+        {
+            return Area.FromSquareMetres(left.newtons / right.pascals);
+        }
+
+        public static Power operator *(Force left, Speed right)
+        {
+            return Power.FromWatts(left.newtons * right.metresPerSecond);
+        }
+
+        public static Mass operator /(Force left, Acceleration right)
+        {
+            return Mass.FromKilograms(left.newtons / right.metresPerSecondSquared);
+        }
+
+        public static Length operator /(Force left, Stiffness right)
+        {
+            return Length.FromMetres(left.newtons / right.newtonsPerMetre);
+        }
+
+        public static Length operator *(Force left, Flexibility right)
+        {
+            return Length.FromMetres(left.newtons * right.metresPerNewton);
+        }
+
+        public static Unitless operator /(Force left, ForcePerUnitless right)
+        {
+            return Unitless.FromScalar(left.newtons / right.newtonsPerUnitless);
         }
 
         public static double operator /(Force left, Force right)

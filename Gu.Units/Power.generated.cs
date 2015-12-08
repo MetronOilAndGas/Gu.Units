@@ -67,7 +67,7 @@
         }
 
         /// <summary>
-        /// The quantity in nanowatts
+        /// The quantity in Nanowatts
         /// </summary>
         public double Nanowatts
         {
@@ -78,7 +78,7 @@
         }
 
         /// <summary>
-        /// The quantity in microwatts
+        /// The quantity in Microwatts
         /// </summary>
         public double Microwatts
         {
@@ -89,7 +89,7 @@
         }
 
         /// <summary>
-        /// The quantity in milliwatts
+        /// The quantity in Milliwatts
         /// </summary>
         public double Milliwatts
         {
@@ -100,7 +100,7 @@
         }
 
         /// <summary>
-        /// The quantity in kilowatts
+        /// The quantity in Kilowatts
         /// </summary>
         public double Kilowatts
         {
@@ -111,7 +111,7 @@
         }
 
         /// <summary>
-        /// The quantity in megawatts
+        /// The quantity in Megawatts
         /// </summary>
         public double Megawatts
         {
@@ -122,7 +122,7 @@
         }
 
         /// <summary>
-        /// The quantity in gigawatts
+        /// The quantity in Gigawatts
         /// </summary>
         public double Gigawatts
         {
@@ -262,14 +262,14 @@
             return From(gigawatts, PowerUnit.Gigawatts);
         }
 
-        public static Force operator /(Power left, Speed right)
-        {
-            return Force.FromNewtons(left.watts / right.metresPerSecond);
-        }
-
         public static Energy operator *(Power left, Time right)
         {
             return Energy.FromJoules(left.watts * right.seconds);
+        }
+
+        public static Voltage operator /(Power left, Current right)
+        {
+            return Voltage.FromVolts(left.watts / right.amperes);
         }
 
         public static Speed operator /(Power left, Force right)
@@ -277,9 +277,19 @@
             return Speed.FromMetresPerSecond(left.watts / right.newtons);
         }
 
+        public static VolumetricFlow operator /(Power left, Pressure right)
+        {
+            return VolumetricFlow.FromCubicMetresPerSecond(left.watts / right.pascals);
+        }
+
         public static Frequency operator /(Power left, Energy right)
         {
             return Frequency.FromHertz(left.watts / right.joules);
+        }
+
+        public static Force operator /(Power left, Speed right)
+        {
+            return Force.FromNewtons(left.watts / right.metresPerSecond);
         }
 
         public static Torque operator /(Power left, AngularSpeed right)
@@ -287,9 +297,24 @@
             return Torque.FromNewtonMetres(left.watts / right.radiansPerSecond);
         }
 
-        public static Voltage operator /(Power left, Current right)
+        public static Energy operator /(Power left, Frequency right)
         {
-            return Voltage.FromVolts(left.watts / right.amperes);
+            return Energy.FromJoules(left.watts / right.hertz);
+        }
+
+        public static AngularSpeed operator /(Power left, Torque right)
+        {
+            return AngularSpeed.FromRadiansPerSecond(left.watts / right.newtonMetres);
+        }
+
+        public static Pressure operator /(Power left, VolumetricFlow right)
+        {
+            return Pressure.FromPascals(left.watts / right.cubicMetresPerSecond);
+        }
+
+        public static Current operator /(Power left, Voltage right)
+        {
+            return Current.FromAmperes(left.watts / right.volts);
         }
 
         public static double operator /(Power left, Power right)

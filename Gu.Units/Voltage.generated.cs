@@ -67,7 +67,7 @@
         }
 
         /// <summary>
-        /// The quantity in millivolts
+        /// The quantity in Millivolts
         /// </summary>
         public double Millivolts
         {
@@ -78,7 +78,7 @@
         }
 
         /// <summary>
-        /// The quantity in kilovolts
+        /// The quantity in Kilovolts
         /// </summary>
         public double Kilovolts
         {
@@ -89,7 +89,7 @@
         }
 
         /// <summary>
-        /// The quantity in megavolts
+        /// The quantity in Megavolts
         /// </summary>
         public double Megavolts
         {
@@ -100,7 +100,7 @@
         }
 
         /// <summary>
-        /// The quantity in microvolts
+        /// The quantity in Microvolts
         /// </summary>
         public double Microvolts
         {
@@ -222,11 +222,6 @@
             return From(microvolts, VoltageUnit.Microvolts);
         }
 
-        public static Energy operator *(Voltage left, ElectricCharge right)
-        {
-            return Energy.FromJoules(left.volts * right.coulombs);
-        }
-
         public static Power operator *(Voltage left, Current right)
         {
             return Power.FromWatts(left.volts * right.amperes);
@@ -235,6 +230,21 @@
         public static Resistance operator /(Voltage left, Current right)
         {
             return Resistance.FromOhm(left.volts / right.amperes);
+        }
+
+        public static Current operator /(Voltage left, Resistance right)
+        {
+            return Current.FromAmperes(left.volts / right.ohm);
+        }
+
+        public static Energy operator *(Voltage left, ElectricCharge right)
+        {
+            return Energy.FromJoules(left.volts * right.coulombs);
+        }
+
+        public static ElectricCharge operator *(Voltage left, Capacitance right)
+        {
+            return ElectricCharge.FromCoulombs(left.volts * right.farads);
         }
 
         public static double operator /(Voltage left, Voltage right)

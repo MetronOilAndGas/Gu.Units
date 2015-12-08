@@ -67,7 +67,7 @@
         }
 
         /// <summary>
-        /// The quantity in gramsPerCubicMillimetre
+        /// The quantity in GramsPerCubicMillimetre
         /// </summary>
         public double GramsPerCubicMillimetre
         {
@@ -78,7 +78,7 @@
         }
 
         /// <summary>
-        /// The quantity in gramsPerCubicCentimetre
+        /// The quantity in GramsPerCubicCentimetre
         /// </summary>
         public double GramsPerCubicCentimetre
         {
@@ -185,6 +185,11 @@
         public static Mass operator *(Density left, Volume right)
         {
             return Mass.FromKilograms(left.kilogramsPerCubicMetre * right.cubicMetres);
+        }
+
+        public static Pressure operator *(Density left, SpecificEnergy right)
+        {
+            return Pressure.FromPascals(left.kilogramsPerCubicMetre * right.joulesPerKilogram);
         }
 
         public static double operator /(Density left, Density right)

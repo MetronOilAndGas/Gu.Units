@@ -67,7 +67,7 @@
         }
 
         /// <summary>
-        /// The quantity in grams
+        /// The quantity in Grams
         /// </summary>
         public double Grams
         {
@@ -78,7 +78,7 @@
         }
 
         /// <summary>
-        /// The quantity in milligrams
+        /// The quantity in Milligrams
         /// </summary>
         public double Milligrams
         {
@@ -89,7 +89,7 @@
         }
 
         /// <summary>
-        /// The quantity in micrograms
+        /// The quantity in Micrograms
         /// </summary>
         public double Micrograms
         {
@@ -202,6 +202,11 @@
             return From(micrograms, MassUnit.Micrograms);
         }
 
+        public static Density operator /(Mass left, Volume right)
+        {
+            return Density.FromKilogramsPerCubicMetre(left.kilograms / right.cubicMetres);
+        }
+
         public static Volume operator /(Mass left, Density right)
         {
             return Volume.FromCubicMetres(left.kilograms / right.kilogramsPerCubicMetre);
@@ -212,9 +217,9 @@
             return Force.FromNewtons(left.kilograms * right.metresPerSecondSquared);
         }
 
-        public static Density operator /(Mass left, Volume right)
+        public static Energy operator *(Mass left, SpecificEnergy right)
         {
-            return Density.FromKilogramsPerCubicMetre(left.kilograms / right.cubicMetres);
+            return Energy.FromJoules(left.kilograms * right.joulesPerKilogram);
         }
 
         public static double operator /(Mass left, Mass right)

@@ -67,7 +67,7 @@
         }
 
         /// <summary>
-        /// The quantity in millimetresPerSecondCubed
+        /// The quantity in MillimetresPerSecondCubed
         /// </summary>
         public double MillimetresPerSecondCubed
         {
@@ -78,73 +78,7 @@
         }
 
         /// <summary>
-        /// The quantity in millimetresPerHourCubed
-        /// </summary>
-        public double MillimetresPerHourCubed
-        {
-            get
-            {
-                return JerkUnit.MillimetresPerHourCubed.FromSiUnit(this.metresPerSecondCubed);
-            }
-        }
-
-        /// <summary>
-        /// The quantity in millimetresPerMinuteCubed
-        /// </summary>
-        public double MillimetresPerMinuteCubed
-        {
-            get
-            {
-                return JerkUnit.MillimetresPerMinuteCubed.FromSiUnit(this.metresPerSecondCubed);
-            }
-        }
-
-        /// <summary>
-        /// The quantity in metresPerHourCubed
-        /// </summary>
-        public double MetresPerHourCubed
-        {
-            get
-            {
-                return JerkUnit.MetresPerHourCubed.FromSiUnit(this.metresPerSecondCubed);
-            }
-        }
-
-        /// <summary>
-        /// The quantity in metresPerMinuteCubed
-        /// </summary>
-        public double MetresPerMinuteCubed
-        {
-            get
-            {
-                return JerkUnit.MetresPerMinuteCubed.FromSiUnit(this.metresPerSecondCubed);
-            }
-        }
-
-        /// <summary>
-        /// The quantity in nanometresPerHourCubed
-        /// </summary>
-        public double NanometresPerHourCubed
-        {
-            get
-            {
-                return JerkUnit.NanometresPerHourCubed.FromSiUnit(this.metresPerSecondCubed);
-            }
-        }
-
-        /// <summary>
-        /// The quantity in nanometresPerMinuteCubed
-        /// </summary>
-        public double NanometresPerMinuteCubed
-        {
-            get
-            {
-                return JerkUnit.NanometresPerMinuteCubed.FromSiUnit(this.metresPerSecondCubed);
-            }
-        }
-
-        /// <summary>
-        /// The quantity in centimetresPerSecondCubed
+        /// The quantity in CentimetresPerSecondCubed
         /// </summary>
         public double CentimetresPerSecondCubed
         {
@@ -155,7 +89,73 @@
         }
 
         /// <summary>
-        /// The quantity in centimetresPerHourCubed
+        /// The quantity in MillimetresPerHourCubed
+        /// </summary>
+        public double MillimetresPerHourCubed
+        {
+            get
+            {
+                return JerkUnit.MillimetresPerHourCubed.FromSiUnit(this.metresPerSecondCubed);
+            }
+        }
+
+        /// <summary>
+        /// The quantity in MillimetresPerMinuteCubed
+        /// </summary>
+        public double MillimetresPerMinuteCubed
+        {
+            get
+            {
+                return JerkUnit.MillimetresPerMinuteCubed.FromSiUnit(this.metresPerSecondCubed);
+            }
+        }
+
+        /// <summary>
+        /// The quantity in MetresPerHourCubed
+        /// </summary>
+        public double MetresPerHourCubed
+        {
+            get
+            {
+                return JerkUnit.MetresPerHourCubed.FromSiUnit(this.metresPerSecondCubed);
+            }
+        }
+
+        /// <summary>
+        /// The quantity in MetresPerMinuteCubed
+        /// </summary>
+        public double MetresPerMinuteCubed
+        {
+            get
+            {
+                return JerkUnit.MetresPerMinuteCubed.FromSiUnit(this.metresPerSecondCubed);
+            }
+        }
+
+        /// <summary>
+        /// The quantity in NanometresPerHourCubed
+        /// </summary>
+        public double NanometresPerHourCubed
+        {
+            get
+            {
+                return JerkUnit.NanometresPerHourCubed.FromSiUnit(this.metresPerSecondCubed);
+            }
+        }
+
+        /// <summary>
+        /// The quantity in NanometresPerMinuteCubed
+        /// </summary>
+        public double NanometresPerMinuteCubed
+        {
+            get
+            {
+                return JerkUnit.NanometresPerMinuteCubed.FromSiUnit(this.metresPerSecondCubed);
+            }
+        }
+
+        /// <summary>
+        /// The quantity in CentimetresPerHourCubed
         /// </summary>
         public double CentimetresPerHourCubed
         {
@@ -166,7 +166,7 @@
         }
 
         /// <summary>
-        /// The quantity in centimetresPerMinuteCubed
+        /// The quantity in CentimetresPerMinuteCubed
         /// </summary>
         public double CentimetresPerMinuteCubed
         {
@@ -264,6 +264,15 @@
         /// <summary>
         /// Creates a new instance of <see cref="Gu.Units.Jerk"/>.
         /// </summary>
+        /// <param name="centimetresPerSecondCubed">The value in cm⋅s⁻³</param>
+        public static Jerk FromCentimetresPerSecondCubed(double centimetresPerSecondCubed)
+        {
+            return From(centimetresPerSecondCubed, JerkUnit.CentimetresPerSecondCubed);
+        }
+
+        /// <summary>
+        /// Creates a new instance of <see cref="Gu.Units.Jerk"/>.
+        /// </summary>
         /// <param name="millimetresPerHourCubed">The value in mm⋅h⁻³</param>
         public static Jerk FromMillimetresPerHourCubed(double millimetresPerHourCubed)
         {
@@ -318,15 +327,6 @@
         /// <summary>
         /// Creates a new instance of <see cref="Gu.Units.Jerk"/>.
         /// </summary>
-        /// <param name="centimetresPerSecondCubed">The value in cm⋅s⁻³</param>
-        public static Jerk FromCentimetresPerSecondCubed(double centimetresPerSecondCubed)
-        {
-            return From(centimetresPerSecondCubed, JerkUnit.CentimetresPerSecondCubed);
-        }
-
-        /// <summary>
-        /// Creates a new instance of <see cref="Gu.Units.Jerk"/>.
-        /// </summary>
         /// <param name="centimetresPerHourCubed">The value in cm⋅h⁻³</param>
         public static Jerk FromCentimetresPerHourCubed(double centimetresPerHourCubed)
         {
@@ -342,14 +342,19 @@
             return From(centimetresPerMinuteCubed, JerkUnit.CentimetresPerMinuteCubed);
         }
 
-        public static Frequency operator /(Jerk left, Acceleration right)
-        {
-            return Frequency.FromHertz(left.metresPerSecondCubed / right.metresPerSecondSquared);
-        }
-
         public static Acceleration operator *(Jerk left, Time right)
         {
             return Acceleration.FromMetresPerSecondSquared(left.metresPerSecondCubed * right.seconds);
+        }
+
+        public static Acceleration operator /(Jerk left, Frequency right)
+        {
+            return Acceleration.FromMetresPerSecondSquared(left.metresPerSecondCubed / right.hertz);
+        }
+
+        public static Frequency operator /(Jerk left, Acceleration right)
+        {
+            return Frequency.FromHertz(left.metresPerSecondCubed / right.metresPerSecondSquared);
         }
 
         public static double operator /(Jerk left, Jerk right)
