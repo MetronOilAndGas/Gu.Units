@@ -78,52 +78,12 @@
             return sb.ToString();
         }
 
-        internal static string AsUnitName(this IReadOnlyCollection<UnitAndPower> unitAndPowers)
-        {
-            return unitAndPowers.Select(x => new SymbolAndPower(x.UnitName, x.Power))
-                .ToList()
-                .AsUnitName();
-        }
-
-        internal static string AsUnitName(this IReadOnlyCollection<SymbolAndPower> symbolAndPowers)
-        {
-            var builder = new StringBuilder();
-            int sign = 1;
-            foreach (var up in symbolAndPowers)
-            {
-                if (sign == 1 && up.Power < 0)
-                {
-                    builder.Append("Per");
-                    sign = -1;
-                }
-
-                var p = Math.Abs(up.Power);
-                switch (p)
-                {
-                    case 1:
-                        break;
-                    case 2:
-                        builder.Append("Square");
-                        break;
-                    case 3:
-                        builder.Append("Cubic");
-                        break;
-                    default:
-                        throw new NotImplementedException("message");
-                }
-
-                if (up.Power > 0)
-                {
-                    builder.Append(up.Symbol);
-                }
-                else
-                {
-                    builder.Append(up.Symbol.TrimEnd('s'));
-                }
-            }
-
-            return builder.ToString();
-        }
+        //internal static string AsUnitName(this IReadOnlyCollection<UnitAndPower> unitAndPowers)
+        //{
+        //    return unitAndPowers.Select(x => new SymbolAndPower(x.UnitName, x.Power))
+        //        .ToList()
+        //        .AsUnitName();
+        //}
 
         public class BaseUnitOrderComparer : IComparer<SymbolAndPower>
         {

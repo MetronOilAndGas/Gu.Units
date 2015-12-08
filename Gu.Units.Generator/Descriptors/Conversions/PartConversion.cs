@@ -31,10 +31,30 @@
 
         public bool CanRoundtrip => this.CanRoundtrip();
 
+        public static PartConversion Create(PowerPart c1)
+        {
+            var name = c1.Name;
+            var symbol = c1.Symbol;
+            var factor = c1.Factor;
+            return new PartConversion(name, symbol, factor);
+        }
+
         public static PartConversion Create(PowerPart c1, PowerPart c2)
         {
-            var name = c1.Conversion.Name + c2.Conversion.Name;
-            var symbolAndPowers = new[] {c1.AsSymbolAndPower(), c2.AsSymbolAndPower()};
+            string name;
+            if (c1.Power > 0 && c2.Power > 0)
+            {
+                name = $"{ c1.Name}{c2.Name}";
+            }
+            else if (c1.Power > 0 && c2.Power < 0)
+            {
+                name = $"{ c1.Name}Per{c2.Name.TrimEnd('s')}";
+            }
+            else
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+            var symbolAndPowers = new[] { c1.AsSymbolAndPower(), c2.AsSymbolAndPower() };
             var symbol = symbolAndPowers.AsSymbol();
             var factor = c1.Factor * c2.Factor;
             return new PartConversion(name, symbol, factor);
@@ -61,6 +81,37 @@
             public int Power { get; }
 
             public IConversion Conversion { get; }
+
+            public string Name
+            {
+                get
+                {
+                    var power = Math.Abs(Power);
+                    switch (power)
+                    {
+                        case 1:
+                            return Conversion.Name;
+                        case 2:
+                            return $"Square{Conversion.Name}";
+                        case 3:
+                            return $"Cubic{Conversion.Name}";
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(power));
+                    }
+                }
+            }
+
+            public string Symbol
+            {
+                get
+                {
+                    if (Power < 0)
+                    {
+                        return $"{Conversion.Symbol}{SuperScript.Minus}{SuperScript.GetChar(-1 * Power)}";
+                    }
+                    return $"{Conversion.Symbol}{SuperScript.GetChar(Power)}";
+                }
+            }
 
             public double Factor => Math.Pow(Conversion.Factor, Power);
 

@@ -1,6 +1,5 @@
 ﻿namespace Gu.Units.Generator
 {
-    using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.ComponentModel;
@@ -28,25 +27,36 @@
             this.unit = value;
             this.conversions.Clear();
 
-            if (this.unit == null ||
-                this.unit.Parts.BaseParts.Count != 2)
+            if (this.unit == null)
             {
                 return;
             }
-
-            var unitParts = this.unit.Parts.BaseParts.ToArray();
-            var p0s = CreatePowerParts(unitParts, 0);
-            var p1s = CreatePowerParts(unitParts, 1);
-            foreach (var c1 in p0s)
+            if (this.unit.Parts.BaseParts.Count == 1)
             {
-                var cs = new List<PartConversionVm>();
+                var unitParts = this.unit.Parts.BaseParts.ToArray();
+                var powerParts = CreatePowerParts(unitParts, 0);
 
-                foreach (var c2 in p1s)
+                var partConversionVms = powerParts.Select(x=>new PartConversionVm(this.unit.PartConversions, PartConversion.Create(x)))
+                    .ToArray();
+                this.conversions.Add(partConversionVms);
+            }
+
+            else if(this.unit.Parts.BaseParts.Count == 2)
+            {
+                var unitParts = this.unit.Parts.BaseParts.ToArray();
+                var p0s = CreatePowerParts(unitParts, 0);
+                var p1s = CreatePowerParts(unitParts, 1);
+                foreach (var c1 in p0s)
                 {
-                    cs.Add(new PartConversionVm(this.unit.PartConversions, PartConversion.Create(c1, c2)));
-                }
+                    var cs = new List<PartConversionVm>();
 
-                this.conversions.Add(cs.ToArray());
+                    foreach (var c2 in p1s)
+                    {
+                        cs.Add(new PartConversionVm(this.unit.PartConversions, PartConversion.Create(c1, c2)));
+                    }
+
+                    this.conversions.Add(cs.ToArray());
+                }
             }
         }
 
