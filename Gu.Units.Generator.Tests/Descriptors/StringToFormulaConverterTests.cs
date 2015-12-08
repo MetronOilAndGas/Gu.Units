@@ -6,13 +6,14 @@
     public class StringToFormulaConverterTests
     {
         [TestCase("10*x")]
-        public void SimpleFactorTest(string s)
+        public void SimpleFactorTest(string text)
         {
-            var converter = new StringToFormulaConverter();
-            Assert.True(converter.CanConvertFrom(null, typeof(string)));
-            var formula = (ConversionFormula)converter.ConvertFrom(null, null, s);
-            Assert.AreEqual(s, formula.ToSi);
-            Assert.AreEqual("x/10", formula.FromSi);
+            Assert.Fail();
+            //var converter = new StringToFormulaConverter();
+            //Assert.True(converter.CanConvertFrom(null, typeof(string)));
+            //var convertFrom = (FactorConversion)converter.ConvertFrom(null, null, text);
+            //Assert.AreEqual(text, convertFrom.ToSi);
+            //Assert.AreEqual("x/10", convertFrom.FromSi);
         }
     }
 }

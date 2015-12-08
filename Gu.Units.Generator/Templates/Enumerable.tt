@@ -23,6 +23,7 @@ namespace <#= Settings.Namespace #>
             {
                 throw new ArgumentNullException("source");
             }
+
             double sum = 0;
             checked
             {
@@ -31,6 +32,7 @@ namespace <#= Settings.Namespace #>
                     sum += v.<#= quantity.Unit.ParameterName #>;
                 }
             }
+
             return <#= quantity.Name #>.From<#= quantity.Unit.Name #>(sum);
         }
 
