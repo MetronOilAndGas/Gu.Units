@@ -75,7 +75,7 @@
                                 <DataGridTextColumn Binding="{Binding Name}" Header="Unit" />
                                 <DataGridTextColumn Binding="{Binding Parts}" Header="Parts" />
                                 <DataGridTextColumn Binding="{Binding Symbol}" Header="Symbol" />
-                                <DataGridTextColumn Binding="{Binding Parts.BaseUnitExpression}"
+                                <DataGridTextColumn Binding="{Binding Parts.BaseUnitSymbol}"
                                                     Header="In base Units"
                                                     IsReadOnly="True" />
                             </DataGrid.Columns>

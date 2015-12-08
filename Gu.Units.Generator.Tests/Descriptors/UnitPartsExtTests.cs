@@ -15,12 +15,12 @@
             var settings = MockSettings.Create();
             var parts = new[] { UnitAndPower.Create(settings.Metres, power) };
 
-            var actual = parts.ToUnitString();
+            var actual = parts.AsSymbol();
             Assert.AreEqual(expected, actual);
         }
 
         [TestCase(1, 1, "m⋅s")]
-        [TestCase(1, 1, "m/s")]
+        [TestCase(1, -1, "m/s")]
         [TestCase(3, -1, "m³/s")]
         [TestCase(-1, -1, "m⁻¹⋅s⁻¹")]
         public void MetresSecondsToUnitString(int metresPower, int secondsPower, string expected)
@@ -32,7 +32,7 @@
                 UnitAndPower.Create(settings.Seconds, secondsPower)
             };
 
-            var actual = parts.ToUnitString();
+            var actual = parts.AsSymbol();
             Assert.AreEqual(expected, actual);
         }
 
@@ -46,7 +46,7 @@
                 UnitAndPower.Create(settings.Metres, 1),
             };
 
-            var actual = parts.ToUnitString();
+            var actual = parts.AsSymbol();
             Assert.AreEqual("m/s", actual);
         }
     }

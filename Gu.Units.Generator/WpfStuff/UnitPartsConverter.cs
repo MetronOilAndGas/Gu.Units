@@ -95,7 +95,7 @@
 
         public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
         {
-            return ((UnitParts)value)?.Expression;
+            return ((UnitParts)value)?.Symbol;
         }
 
         private static IEnumerable<Match> Parse(string s)

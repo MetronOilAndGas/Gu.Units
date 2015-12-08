@@ -34,7 +34,8 @@
         public static PartConversion Create(PowerPart c1, PowerPart c2)
         {
             var name = c1.Conversion.Name + c2.Conversion.Name;
-            var symbol = c1.Conversion.Symbol + c2.Conversion.Symbol;
+            var symbolAndPowers = new[] {c1.AsSymbolAndPower(), c2.AsSymbolAndPower()};
+            var symbol = symbolAndPowers.AsSymbol();
             var factor = c1.Factor * c2.Factor;
             return new PartConversion(name, symbol, factor);
         }
@@ -62,6 +63,11 @@
             public IConversion Conversion { get; }
 
             public double Factor => Math.Pow(Conversion.Factor, Power);
+
+            internal SymbolAndPower AsSymbolAndPower()
+            {
+                return new SymbolAndPower(Conversion.Symbol, Power);
+            }
         }
 
         public class IdentityConversion : IConversion

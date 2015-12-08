@@ -7,12 +7,21 @@
 
     public static class UnitPartsExt
     {
-        public static string ToUnitString(this IEnumerable<UnitAndPower> unitAndPowers)
+        public static string AsSymbol(this IEnumerable<UnitAndPower> unitAndPowers)
         {
-            return unitAndPowers.ToList().ToUnitString();
+            return unitAndPowers.Select(x => new SymbolAndPower(x.Unit.Symbol, x.Power))
+                                .ToList()
+                                .AsSymbol();
         }
 
-        public static string ToUnitString(this IReadOnlyList<UnitAndPower> unitAndPowers)
+        public static string AsSymbol(this IReadOnlyList<UnitAndPower> unitAndPowers)
+        {
+            return unitAndPowers.Select(x => new SymbolAndPower(x.Unit.Symbol, x.Power))
+                      .ToList()
+                      .AsSymbol();
+        }
+
+        internal static string AsSymbol(this IReadOnlyList<SymbolAndPower> unitAndPowers)
         {
             if (!unitAndPowers.Any())
             {
@@ -20,18 +29,25 @@
             }
 
             var sb = new StringBuilder();
-            UnitAndPower previous = null;
-            foreach (var unitAndPower in unitAndPowers.OrderBy(x => x, UnitParts.BaseUnitOrderComparer.Default).ToArray())
+            var sorted = unitAndPowers.OrderBy(x => x, BaseUnitOrderComparer.Default).ToArray();
+            for (int i = 0; i < sorted.Length; i++)
             {
-                if (previous != null)
+                var unitAndPower = sorted[i];
+                if (i > 0)
                 {
-                    sb.Append("⋅");
+                    if (sorted[i - 1].Power > 0 &&
+                        sorted[i].Power < 0)
+                    {
+                        sb.Append("/");
+                    }
+                    else
+                    {
+                        sb.Append("⋅");
+                    }
                 }
 
-                sb.Append(unitAndPower.Unit == null
-                    ? unitAndPower.Unit.Name
-                    : unitAndPower.Unit.Symbol);
-                if (unitAndPower.Power < 0)
+                sb.Append(unitAndPower.Symbol);
+                if (unitAndPower.Power < 0 && sorted[0].Power < 0)
                 {
                     sb.Append("⁻");
                     if (unitAndPower.Power == -1)
@@ -39,6 +55,7 @@
                         sb.Append("¹");
                     }
                 }
+
                 switch (Math.Abs(unitAndPower.Power))
                 {
                     case 1:
@@ -57,9 +74,82 @@
                             .Append(Math.Abs(unitAndPower.Power));
                         break;
                 }
-                previous = unitAndPower;
             }
             return sb.ToString();
+        }
+
+        internal static string AsUnitName(this IReadOnlyCollection<UnitAndPower> unitAndPowers)
+        {
+            return unitAndPowers.Select(x => new SymbolAndPower(x.UnitName, x.Power))
+                .ToList()
+                .AsUnitName();
+        }
+
+        internal static string AsUnitName(this IReadOnlyCollection<SymbolAndPower> symbolAndPowers)
+        {
+            var builder = new StringBuilder();
+            int sign = 1;
+            foreach (var up in symbolAndPowers)
+            {
+                if (sign == 1 && up.Power < 0)
+                {
+                    builder.Append("Per");
+                    sign = -1;
+                }
+
+                var p = Math.Abs(up.Power);
+                switch (p)
+                {
+                    case 1:
+                        break;
+                    case 2:
+                        builder.Append("Square");
+                        break;
+                    case 3:
+                        builder.Append("Cubic");
+                        break;
+                    default:
+                        throw new NotImplementedException("message");
+                }
+
+                if (up.Power > 0)
+                {
+                    builder.Append(up.Symbol);
+                }
+                else
+                {
+                    builder.Append(up.Symbol.TrimEnd('s'));
+                }
+            }
+
+            return builder.ToString();
+        }
+
+        public class BaseUnitOrderComparer : IComparer<SymbolAndPower>
+        {
+            public static readonly BaseUnitOrderComparer Default = new BaseUnitOrderComparer();
+            private static readonly string[] Order = { "kg", "m", "s", "A", "cd", "mol" };
+
+            private BaseUnitOrderComparer()
+            {
+            }
+
+            int IComparer<SymbolAndPower>.Compare(SymbolAndPower x, SymbolAndPower y)
+            {
+                if (Math.Sign(x.Power) != Math.Sign(y.Power))
+                {
+                    return -1 * x.Power.CompareTo(y.Power);
+                }
+
+                var indexOfX = Array.IndexOf(Order, x.Symbol);
+                var indexOfY = Array.IndexOf(Order, y.Symbol);
+                if (indexOfX < 0 && indexOfY < 0)
+                {
+                    return String.Compare(x.Symbol, y.Symbol, StringComparison.Ordinal);
+                }
+
+                return indexOfX.CompareTo(indexOfY);
+            }
         }
     }
 }

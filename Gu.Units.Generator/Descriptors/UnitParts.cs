@@ -6,8 +6,6 @@
     using System.ComponentModel;
     using System.Diagnostics;
     using System.Linq;
-    using System.Text;
-
     using Gu.Units.Generator.WpfStuff;
 
     [TypeConverter(typeof(UnitPartsConverter))]
@@ -29,9 +27,9 @@
 
         internal ReadonlySet<UnitAndPower> BaseParts => this.baseParts ?? (this.baseParts = CreateBaseParts());
 
-        public string Expression => Parts.ToUnitString();
+        public string Symbol => Parts.AsSymbol();
 
-        public string BaseUnitExpression => BaseParts.ToUnitString();
+        public string BaseUnitSymbol => BaseParts.AsSymbol();
 
         public static UnitParts operator *(UnitParts left, UnitParts right)
         {
@@ -88,7 +86,7 @@
 
         public override string ToString()
         {
-            return this.Expression;
+            return this.Symbol;
         }
 
         private ReadonlySet<UnitAndPower> CreateBaseParts()
@@ -128,27 +126,6 @@
             foreach (var unitPart in derivedUnit.Parts)
             {
                 GetBaseParts(unitPart, unitPart.Power * power, list);
-            }
-        }
-
-        public class BaseUnitOrderComparer : IComparer<UnitAndPower>
-        {
-            public static readonly BaseUnitOrderComparer Default = new BaseUnitOrderComparer();
-
-            private BaseUnitOrderComparer()
-            {
-            }
-
-            private readonly string[] _order = { "kg", "m", "s", "A", "cd", "mol" };
-            public int Compare(UnitAndPower x, UnitAndPower y)
-            {
-                var indexOfX = Array.IndexOf(_order, x.Unit.Symbol);
-                var indexOfY = Array.IndexOf(_order, y.Unit.Symbol);
-                if (indexOfX < 0 && indexOfY < 0)
-                {
-                    return String.Compare(x.Unit.Symbol, y.Unit.Symbol, StringComparison.Ordinal);
-                }
-                return indexOfX.CompareTo(indexOfY);
             }
         }
 

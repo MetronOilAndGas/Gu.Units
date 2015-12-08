@@ -17,7 +17,7 @@
             CollectionAssert.AreEqual(data.Parts, parts);
             var convertTo = converter.ConvertTo(null, null, parts, typeof(string));
             Assert.AreEqual(data.Formatted, convertTo);
-            Assert.AreEqual(data.Formatted, parts.BaseUnitExpression);
+            Assert.AreEqual(data.Formatted, parts.BaseUnitSymbol);
         }
     }
 
