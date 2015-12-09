@@ -1,5 +1,7 @@
 ﻿namespace Gu.Units.Generator.Tests.Descriptors.Conversions
 {
+    using System;
+    using System.Globalization;
     using NUnit.Framework;
 
     public class ConversionTests
@@ -22,7 +24,7 @@
             var conversion = new FactorConversion("Inches", "in", 0.0254);
             settings.Metres.FactorConversions.Add(conversion);
             Assert.AreEqual("0.0254*inches", conversion.ToSi);
-            Assert.AreEqual("metres/0.0254", conversion.FromSi);
+            Assert.AreEqual("39.370078740157481*metres", conversion.FromSi);
             Assert.AreEqual("1 in = 0.0254 m", conversion.SymbolConversion);
             Assert.AreEqual(true, conversion.CanRoundtrip);
         }
@@ -30,12 +32,13 @@
         [Test]
         public void OffsetAndFactorConversion()
         {
+            Console.WriteLine((1/1.8).ToString("R", CultureInfo.InvariantCulture));
             var settings = MockSettings.Create();
-            var conversion = new OffsetConversion("Farenheit", "°F", 1.8, -459.67);
+            var conversion = new OffsetConversion("Farenheit", "°F", 5.0/9, 459.67);
             settings.Kelvins.OffsetConversions.Add(conversion);
-            Assert.AreEqual("0.5555555555555556(farenheit + 459.67)", conversion.ToSi);
-            Assert.AreEqual("kelvin/1.8 + 459.67", conversion.FromSi);
-            Assert.AreEqual("1 °F = 255.9278 K", conversion.SymbolConversion);
+            Assert.AreEqual("0.55555555555555558*(farenheit + 459.67)", conversion.ToSi);
+            Assert.AreEqual("1.7999999999999998*kelvin - 459.67", conversion.FromSi);
+            Assert.AreEqual("1 °F = 255.927777777778 K", conversion.SymbolConversion);
             Assert.AreEqual(true, conversion.CanRoundtrip);
         }
 
@@ -46,7 +49,7 @@
             var conversion = PrefixConversion.Create(settings.Grams, settings.Milli);
             settings.Grams.PrefixConversions.Add(conversion);
             Assert.AreEqual("1E-06*milligrams", conversion.ToSi);
-            Assert.AreEqual("kilograms/1E-06", conversion.FromSi);
+            Assert.AreEqual("1000000*kilograms", conversion.FromSi);
             Assert.AreEqual("1 mg = 1E-06 kg", conversion.SymbolConversion);
             Assert.AreEqual(true, conversion.CanRoundtrip);
         }
@@ -73,10 +76,10 @@
             settings.Metres.PrefixConversions.Add(millimetreConversion);
             var milliMetresPart = PartConversion.CreatePart(1, millimetreConversion);
             var secondsPart = PartConversion.CreatePart(-1, settings.Seconds);
-            var conversion = PartConversion.Create(settings.KilogramsPerCubicMetre, milliMetresPart, secondsPart);
+            var conversion = PartConversion.Create(settings.MetresPerSecond, milliMetresPart, secondsPart);
             settings.MetresPerSecond.PartConversions.Add(conversion);
             Assert.AreEqual("0.001*millimetresPerSecond", conversion.ToSi);
-            Assert.AreEqual("metresPerSecond/0.001", conversion.FromSi);
+            Assert.AreEqual("1000*metresPerSecond", conversion.FromSi);
             Assert.AreEqual("1 mm/s = 0.001 m/s", conversion.SymbolConversion);
             Assert.AreEqual(true, conversion.CanRoundtrip);
         }

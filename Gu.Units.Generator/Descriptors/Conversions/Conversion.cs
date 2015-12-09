@@ -36,47 +36,54 @@
 
         public static string GetToSi(this IConversion conversion)
         {
-            var builder = new StringBuilder();
+            var factor = conversion.Factor.ToString("R", CultureInfo.InvariantCulture);
+            if (conversion.Offset == 0)
+            {
+                if (conversion.Factor == 1)
+                {
+                    return conversion.ParameterName;
+                }
+
+                return $"{factor}*{conversion.ParameterName}";
+            }
+
+            var sign = Math.Sign(conversion.Offset) == 1
+                ? "+"
+                : "-";
+
+            var offset = Math.Abs(conversion.Offset).ToString("R", CultureInfo.InvariantCulture);
             if (conversion.Factor != 1)
             {
-                builder.Append(conversion.Factor.ToString(CultureInfo.InvariantCulture) + "*");
+                return $"{factor}*({conversion.ParameterName} {sign} {offset})";
             }
-            builder.Append(conversion.ParameterName);
-            if (conversion.Offset != 0)
-            {
-                if (conversion.Offset > 0)
-                {
-                    builder.AppendFormat(" + {0}", conversion.Offset.ToString(CultureInfo.InvariantCulture));
-                }
-                else
-                {
-                    builder.AppendFormat(" - {0}", (-conversion.Offset).ToString(CultureInfo.InvariantCulture));
-                }
-            }
-            return builder.ToString();
+
+            return $"{conversion.ParameterName} {sign} {offset}";
         }
 
         public static string GetFromSi(this IConversion conversion)
         {
-            var builder = new StringBuilder();
+            var factor = (1 / conversion.Factor).ToString("R", CultureInfo.InvariantCulture);
+            if (conversion.Offset == 0)
+            {
+                if (conversion.Factor == 1)
+                {
+                    return conversion.Unit.ParameterName;
+                }
 
-            builder.Append(conversion.Unit.ParameterName);
+                return $"{factor}*{conversion.Unit.ParameterName}";
+            }
+
+            var sign = Math.Sign(conversion.Offset) == -1
+                ? "+"
+                : "-";
+
+            var offset = Math.Abs(conversion.Offset).ToString("R", CultureInfo.InvariantCulture);
             if (conversion.Factor != 1)
             {
-                builder.Append("/" + conversion.Factor.ToString(CultureInfo.InvariantCulture));
+                return $"{factor}*{conversion.Unit.ParameterName} {sign} {offset}";
             }
-            if (conversion.Offset != 0)
-            {
-                if (conversion.Offset < 0)
-                {
-                    builder.AppendFormat(" + {0}", (-1 * conversion.Offset).ToString(CultureInfo.InvariantCulture));
-                }
-                else
-                {
-                    builder.AppendFormat(" - {0}", conversion.Offset.ToString(CultureInfo.InvariantCulture));
-                }
-            }
-            return builder.ToString();
+
+            return $"{conversion.Unit.ParameterName} {sign} {offset}";
         }
 
         public static string GetSymbolConversion(this IConversion conversion)
@@ -103,12 +110,12 @@
 
         internal static double ConvertToSi(double value, IConversion conversion)
         {
-            return value * conversion.Factor + conversion.Offset;
+            return conversion.Factor * (value + conversion.Offset);
         }
 
         internal static double ConvertFromSi(double value, IConversion conversion)
         {
-            return (value - conversion.Offset) / conversion.Factor;
+            return value / conversion.Factor - conversion.Factor;
         }
 
         public static bool IsSymbolNameValid(this IConversion conversion) => CodeDomProvider.IsValidIdentifier(conversion.Symbol);
