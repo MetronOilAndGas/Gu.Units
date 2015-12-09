@@ -351,35 +351,36 @@
           "Symbol": "L",
           "Factor": 0.0010000000000000002,
           "PrefixConversions": []
-        },
-        {
-          "Name": "CubicCentimetres",
-          "Symbol": "cm³",
-          "Factor": 1.0000000000000002E-06,
-          "PrefixConversions": []
-        },
-        {
-          "Name": "CubicMillimetres",
-          "Symbol": "mm³",
-          "Factor": 1E-09,
-          "PrefixConversions": []
-        },
-        {
-          "Name": "CubicInches",
-          "Symbol": "in³",
-          "Factor": 1.6387064E-05,
-          "PrefixConversions": []
-        },
-        {
-          "Name": "CubicDecimetres",
-          "Symbol": "dm³",
-          "Factor": 0.0010000000000000002,
-          "PrefixConversions": []
         }
       ],
       "OffsetConversions": [],
       "PrefixConversions": [],
-      "PartConversions": []
+      "PartConversions": [
+	    {
+		  "Name": "CubicCentimetres",
+		  "Symbol": "cm³",
+		  "Factor": 1.0000000000000002E-06,
+		  "PrefixConversions": []
+		},
+		{
+		  "Name": "CubicMillimetres",
+		  "Symbol": "mm³",
+		  "Factor": 1E-09,
+		  "PrefixConversions": []
+		},
+		{
+		  "Name": "CubicInches",
+		  "Symbol": "in³",
+		  "Factor": 1.6387064E-05,
+		  "PrefixConversions": []
+		},
+		{
+		  "Name": "CubicDecimetres",
+		  "Symbol": "dm³",
+		  "Factor": 0.0010000000000000002,
+		  "PrefixConversions": []
+		}
+	  ]
     },
     {
       "Parts": [

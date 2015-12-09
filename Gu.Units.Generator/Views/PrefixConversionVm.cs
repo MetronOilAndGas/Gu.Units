@@ -3,10 +3,12 @@
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.ComponentModel;
+    using System.Diagnostics;
     using System.Linq;
     using System.Runtime.CompilerServices;
     using JetBrains.Annotations;
 
+    [DebuggerDisplay("{Conversion.Symbol}")]
     public class PrefixConversionVm : INotifyPropertyChanged
     {
         private readonly IList<PrefixConversion> conversions;
@@ -50,8 +52,6 @@
                 OnPropertyChanged();
             }
         }
-
-        public object Formula => $"1 {Conversion.Symbol} = 1E{Conversion.Prefix.Power} {this.baseConversion.Symbol}";
 
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)

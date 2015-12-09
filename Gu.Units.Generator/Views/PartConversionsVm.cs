@@ -22,7 +22,7 @@
 
         public ObservableCollection<PartConversionVm[]> Conversions => this.conversions;
 
-        public void SetBaseUnit(Unit value)
+        public void SetUnit(Unit value)
         {
             this.unit = value;
             this.conversions.Clear();
@@ -31,17 +31,23 @@
             {
                 return;
             }
+
             if (this.unit.Parts.BaseParts.Count == 1)
             {
+                var part = this.unit.Parts.BaseParts.Single();
+                if (part.Power == 1)
+                {
+                    return;
+                }
                 var unitParts = this.unit.Parts.BaseParts.ToArray();
                 var powerParts = CreatePowerParts(unitParts, 0);
 
-                var partConversionVms = powerParts.Select(x=>new PartConversionVm(this.unit.PartConversions, PartConversion.Create(x)))
+                var partConversionVms = powerParts.Select(x => new PartConversionVm(this.unit.PartConversions, PartConversion.Create(this.unit, x)))
                     .ToArray();
                 this.conversions.Add(partConversionVms);
             }
 
-            else if(this.unit.Parts.BaseParts.Count == 2)
+            else if (this.unit.Parts.BaseParts.Count == 2)
             {
                 var unitParts = this.unit.Parts.BaseParts.ToArray();
                 var p0s = CreatePowerParts(unitParts, 0);
@@ -52,7 +58,7 @@
 
                     foreach (var c2 in p1s)
                     {
-                        cs.Add(new PartConversionVm(this.unit.PartConversions, PartConversion.Create(c1, c2)));
+                        cs.Add(new PartConversionVm(this.unit.PartConversions, PartConversion.Create(this.unit, c1, c2)));
                     }
 
                     this.conversions.Add(cs.ToArray());

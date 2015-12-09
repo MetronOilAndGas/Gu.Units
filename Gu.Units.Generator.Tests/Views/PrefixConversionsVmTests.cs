@@ -36,7 +36,6 @@
             var expected = new[]
             {
                 PrefixConversionVm.Create(settings.Grams, settings.Milli),
-                PrefixConversionVm.Create(settings.Grams, settings.Milli),
             };
 
             CollectionAssert.AreEqual(expected, vm.Prefixes.Single(), PrefixConversionVmComparer.Default);

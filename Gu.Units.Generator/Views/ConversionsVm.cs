@@ -34,7 +34,7 @@
                 this.baseUnit = value;
                 this.allConversions.SetSource(this.baseUnit?.AllConversions);
                 PrefixConversions.SetBaseUnit(value);
-                PartConversions.SetBaseUnit(value);
+                PartConversions.SetUnit(value);
                 OnPropertyChanged();
             }
         }

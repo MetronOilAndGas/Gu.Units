@@ -14,24 +14,33 @@
             Assert.IsEmpty(settings.Amperes.PrefixConversions);
 
             conversionVm.IsUsed = true;
-            var expected = new[] {prefixConversion};
+            var expected = new[] { prefixConversion };
             CollectionAssert.AreEqual(expected, settings.Amperes.PrefixConversions, PrefixConversionComparer.Default);
         }
 
         [Test]
-        public void MilliAmpereExpression()
+        public void MilliAmperes()
         {
             var settings = MockSettings.Create();
-            var prefixConversionVm = PrefixConversionVm.Create(settings.Amperes, settings.Milli);
-            Assert.AreEqual("1 mA = 1E-3 A", prefixConversionVm.Formula);
+            var conversionVm = PrefixConversionVm.Create(settings.Amperes, settings.Milli);
+            Assert.AreEqual("0.001*milliamperes", conversionVm.Conversion.ToSi);
+            Assert.AreEqual("amperes/0.001", conversionVm.Conversion.FromSi);
+            Assert.AreEqual("1 mA = 0.001 A", conversionVm.Conversion.SymbolConversion);
+            Assert.AreEqual(true, conversionVm.Conversion.CanRoundtrip);
         }
 
         [Test]
-        public void MilliGramExpression()
+        public void MilliGrams()
         {
             var settings = MockSettings.Create();
-            var prefixConversionVm = PrefixConversionVm.Create(settings.Grams, settings.Milli);
-            Assert.AreEqual("1 mg = 1E-3 g (1E-6 kg)", prefixConversionVm.Formula);
+            var conversionVm = PrefixConversionVm.Create(settings.Grams, settings.Milli);
+            Assert.AreEqual(1E-6, conversionVm.Conversion.Factor);
+            Assert.AreEqual(0, conversionVm.Conversion.Offset);
+            Assert.AreEqual(false, conversionVm.Conversion.IsOffset);
+            Assert.AreEqual("1E-06*milligrams", conversionVm.Conversion.ToSi);
+            Assert.AreEqual("kilograms/1E-06", conversionVm.Conversion.FromSi);
+            Assert.AreEqual("1 mg = 1E-6 kg", conversionVm.Conversion.SymbolConversion);
+            Assert.AreEqual(true, conversionVm.Conversion.CanRoundtrip);
         }
     }
 }

@@ -65,6 +65,8 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="ToJson\ParseAndDump.cs" />
+    <Compile Include="Views\PartConversionsVmTests.cs" />
+    <Compile Include="Views\PartConversionVmTests.cs" />
     <Compile Include="Views\PrefixConversionsVmTests.cs" />
     <Compile Include="Helpers\PrefixConversionVmComparer.cs" />
     <Compile Include="Views\PrefixConversionVmTests.cs" />

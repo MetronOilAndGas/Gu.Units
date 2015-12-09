@@ -52,7 +52,10 @@
 
                 foreach (var conversion in this.unit.FactorConversions)
                 {
-                    this.prefixes.Add(this.settings.Prefixes.Select(x => PrefixConversionVm.Create(conversion, x)).ToArray());
+                    var prefixConversionVms = this.settings.Prefixes.Select(x => PrefixConversionVm.Create(conversion, x))
+                                                                    .Where(x => !string.Equals(x.Conversion.Name, this.unit.Name, StringComparison.OrdinalIgnoreCase)) // filter out kilograms
+                                                                    .ToArray();
+                    this.prefixes.Add(prefixConversionVms);
                 }
             }
         }

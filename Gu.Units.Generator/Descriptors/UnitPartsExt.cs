@@ -21,15 +21,21 @@
                       .AsSymbol();
         }
 
-        internal static string AsSymbol(this IReadOnlyList<SymbolAndPower> unitAndPowers)
+        internal static string AsSymbol(this IEnumerable<SymbolAndPower> symbolAndPowers)
         {
-            if (!unitAndPowers.Any())
+            return symbolAndPowers.ToList()
+                                .AsSymbol();
+        }
+
+        internal static string AsSymbol(this IReadOnlyList<SymbolAndPower> symbolAndPowers)
+        {
+            if (!symbolAndPowers.Any())
             {
                 return "";
             }
 
             var sb = new StringBuilder();
-            var sorted = unitAndPowers.OrderBy(x => x, BaseUnitOrderComparer.Default).ToArray();
+            var sorted = symbolAndPowers.OrderBy(x => x, BaseUnitOrderComparer.Default).ToArray();
             for (int i = 0; i < sorted.Length; i++)
             {
                 var unitAndPower = sorted[i];

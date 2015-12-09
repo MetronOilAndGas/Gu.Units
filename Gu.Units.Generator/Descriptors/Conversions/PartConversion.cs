@@ -1,9 +1,13 @@
 ﻿namespace Gu.Units.Generator
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
 
     public class PartConversion : IConversion
     {
+        private Unit unit;
+
         public PartConversion(string name, string symbol, double factor)
         {
             Name = name;
@@ -29,17 +33,19 @@
 
         public string SymbolConversion => this.GetSymbolConversion();
 
+        public Unit Unit => this.unit ?? (this.unit = this.GetUnit());
+
         public bool CanRoundtrip => this.CanRoundtrip();
 
-        public static PartConversion Create(PowerPart c1)
+        public static PartConversion Create(Unit unit, PowerPart c1)
         {
             var name = c1.Name;
             var symbol = c1.Symbol;
             var factor = c1.Factor;
-            return new PartConversion(name, symbol, factor);
+            return new PartConversion(name, symbol, factor) { unit = unit }; // hacking unit like this for simpler serialization
         }
 
-        public static PartConversion Create(PowerPart c1, PowerPart c2)
+        public static PartConversion Create(Unit unit, PowerPart c1, PowerPart c2)
         {
             string name;
             if (c1.Power > 0 && c2.Power > 0)
@@ -54,10 +60,11 @@
             {
                 throw new ArgumentOutOfRangeException();
             }
-            var symbolAndPowers = new[] { c1.AsSymbolAndPower(), c2.AsSymbolAndPower() };
+
+            var symbolAndPowers = c1.AsSymbolAndPowers().Concat(c2.AsSymbolAndPowers());
             var symbol = symbolAndPowers.AsSymbol();
             var factor = c1.Factor * c2.Factor;
-            return new PartConversion(name, symbol, factor);
+            return new PartConversion(name, symbol, factor) { unit = unit }; // hacking unit like this for simpler serialization
         }
 
         public static PowerPart CreatePart(int power, IConversion conversion)
@@ -105,36 +112,43 @@
             {
                 get
                 {
-                    if (Power < 0)
+                    IReadOnlyList<SymbolAndPower> symbolAndPowers;
+                    if (SymbolAndPowerReader.TryRead(Conversion.Symbol, out symbolAndPowers))
                     {
-                        return $"{Conversion.Symbol}{SuperScript.Minus}{SuperScript.GetChar(-1 * Power)}";
+                        return symbolAndPowers.Select(x => new SymbolAndPower(x.Symbol, x.Power * Power)).AsSymbol();
                     }
-                    return $"{Conversion.Symbol}{SuperScript.GetChar(Power)}";
+
+                    return "Error";
                 }
             }
 
             public double Factor => Math.Pow(Conversion.Factor, Power);
 
-            internal SymbolAndPower AsSymbolAndPower()
+            internal IReadOnlyList<SymbolAndPower> AsSymbolAndPowers()
             {
-                return new SymbolAndPower(Conversion.Symbol, Power);
+                IReadOnlyList<SymbolAndPower> symbolAndPowers;
+                if (SymbolAndPowerReader.TryRead(Conversion.Symbol, out symbolAndPowers))
+                {
+                    return symbolAndPowers.Select(x => new SymbolAndPower(x.Symbol, x.Power * Power)).ToList();
+                }
+
+                throw new InvalidOperationException();
             }
         }
 
         public class IdentityConversion : IConversion
         {
-            private readonly Unit unit;
 
             public IdentityConversion(Unit unit)
             {
-                this.unit = unit;
+                Unit = unit;
             }
 
-            public string Name => this.unit.Name;
+            public string Name => Unit.Name;
 
             public string ParameterName => Name.ToFirstCharLower();
 
-            public string Symbol => this.unit.Symbol;
+            public string Symbol => Unit.Symbol;
 
             public double Factor => 1;
 
@@ -145,6 +159,8 @@
             public string ToSi => this.GetToSi();
 
             public string FromSi => this.GetFromSi();
+
+            public Unit Unit { get; }
 
             public string SymbolConversion => this.GetSymbolConversion();
 

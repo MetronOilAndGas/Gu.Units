@@ -10,6 +10,7 @@
         private string name;
         private string symbol;
         private double factor;
+        private Unit unit;
 
         public FactorConversion(string name, string symbol, double factor)
         {
@@ -76,6 +77,8 @@
         public string FromSi => this.GetFromSi();
 
         public string SymbolConversion => this.GetSymbolConversion();
+
+        public Unit Unit => this.unit ?? (this.unit = this.GetUnit());
 
         public bool CanRoundtrip => this.CanRoundtrip();
 

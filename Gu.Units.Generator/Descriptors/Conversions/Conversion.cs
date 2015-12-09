@@ -2,6 +2,7 @@
 {
     using System;
     using System.CodeDom.Compiler;
+    using System.Collections.Generic;
     using System.Diagnostics;
     using System.Globalization;
     using System.Linq;
@@ -18,7 +19,8 @@
             var identityConversion = conversion as PartConversion.IdentityConversion;
             if (identityConversion != null)
             {
-                return Settings.Instance.AllUnits.Single(x => x.Symbol == identityConversion.Symbol);
+                var unit = Settings.Instance.AllUnits.Single(x => x.Symbol == identityConversion.Symbol);
+                return unit;
             }
 
             foreach (var unit in Settings.Instance.AllUnits)
@@ -32,13 +34,6 @@
             throw new ArgumentOutOfRangeException();
         }
 
-        public static string GetSymbolConversion(this IConversion conversion)
-        {
-            var unit = conversion.GetUnit();
-            var convert = ConvertToSi(1, conversion);
-            return $"1 {conversion.Symbol} = {convert.ToString(CultureInfo.InvariantCulture)} {unit.Symbol}";
-        }
-
         public static string GetToSi(this IConversion conversion)
         {
             var builder = new StringBuilder();
@@ -46,7 +41,7 @@
             {
                 builder.Append(conversion.Factor.ToString(CultureInfo.InvariantCulture) + "*");
             }
-            builder.Append(conversion.GetUnit().ParameterName);
+            builder.Append(conversion.ParameterName);
             if (conversion.Offset != 0)
             {
                 if (conversion.Offset > 0)
@@ -65,7 +60,7 @@
         {
             var builder = new StringBuilder();
 
-            builder.Append(conversion.GetUnit().ParameterName);
+            builder.Append(conversion.Unit.ParameterName);
             if (conversion.Factor != 1)
             {
                 builder.Append("/" + conversion.Factor.ToString(CultureInfo.InvariantCulture));
@@ -84,9 +79,16 @@
             return builder.ToString();
         }
 
+        public static string GetSymbolConversion(this IConversion conversion)
+        {
+            var unit = conversion.Unit;
+            var convert = ConvertToSi(1, conversion);
+            return $"1 {conversion.Symbol} = {convert.ToString(CultureInfo.InvariantCulture)} {unit.Symbol}";
+        }
+
         public static bool CanRoundtrip(this IConversion conversion)
         {
-            foreach (var value in new[] {0,100})
+            foreach (var value in new[] { 0, 100 })
             {
                 var si = ConvertToSi(value, conversion);
                 var roundtrip = ConvertFromSi(si, conversion);

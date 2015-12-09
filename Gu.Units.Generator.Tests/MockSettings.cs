@@ -26,6 +26,9 @@
         public readonly DerivedUnit CubicMetres;
         public readonly Quantity Volume;
 
+        public readonly DerivedUnit KilogramsPerCubicMetre;
+        public readonly Quantity Density;
+
         public readonly BaseUnit Amperes;
         public readonly Quantity Current;
 
@@ -48,6 +51,7 @@
         public readonly Quantity Frequency;
         public Prefix Milli = new Prefix("Milli", "m", -3);
         public Prefix Kilo = new Prefix("Kilo", "k", 3);
+
 
         private MockSettings()
             : base(new ObservableCollection<Prefix>(), new ObservableCollection<BaseUnit>(), new ObservableCollection<DerivedUnit>())
@@ -138,6 +142,10 @@
             CubicMetres = new DerivedUnit("CubicMetres", "m^3", "Volume", new[] { UnitAndPower.Create(Metres, 3) });
             DerivedUnits.Add(CubicMetres);
             Volume = CubicMetres.Quantity;
+
+            KilogramsPerCubicMetre = new DerivedUnit("KilogramsPerCubicMetre", "kg/m^3", "Density", new[] {UnitAndPower.Create(this.Kilograms,1), UnitAndPower.Create(Metres, -3) });
+            DerivedUnits.Add(KilogramsPerCubicMetre);
+            Density = CubicMetres.Quantity;
 
             Hertz = new DerivedUnit("Hertz", "1/s", "Frequency", new[] { UnitAndPower.Create(Seconds, -1) });
 

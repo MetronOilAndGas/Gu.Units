@@ -10,6 +10,7 @@
         private string symbol;
         private double factor;
         private double offset;
+        private Unit unit;
 
         public OffsetConversion(string name, string symbol, double factor, double offset)
         {
@@ -90,6 +91,8 @@
         public string FromSi => this.GetFromSi();
 
         public string SymbolConversion => this.GetSymbolConversion();
+
+        public Unit Unit => this.unit ?? (this.unit = this.GetUnit());
 
         public bool CanRoundtrip => this.CanRoundtrip();
 

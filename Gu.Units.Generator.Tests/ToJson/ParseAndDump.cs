@@ -6,11 +6,11 @@
     using System.IO;
     using System.Linq;
     using System.Xml.Linq;
-    using Moq;
     using Newtonsoft.Json;
     using NUnit.Framework;
     using WpfStuff;
 
+    [Explicit("Remove")]
     public class ParseAndDump
     {
         private static List<Prefix> prefixes;

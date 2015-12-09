@@ -23,6 +23,9 @@
 
     public class UnitPartsConverterSource : IEnumerable
     {
+        private const string Superscripts = "⁺⁻⁰¹²³⁴⁵⁶⁷⁸⁹";
+        private const char MultiplyDot = '⋅';
+
         public readonly BaseUnit Metres;
         public readonly BaseUnit Kilograms;
         public readonly BaseUnit Seconds;
@@ -40,14 +43,14 @@
                                             new Data("m^2","m²", UnitAndPower.Create(this.Metres, 2)),
                                             new Data("m²","m²", UnitAndPower.Create(this.Metres, 2)),
                                             new Data("m³","m³", UnitAndPower.Create(this.Metres, 3)),
-                                            new Data("kg⋅m/s²","kg⋅m⋅s⁻²",UnitAndPower.Create(this.Kilograms, 1),UnitAndPower.Create(this.Metres, 1),UnitAndPower.Create(this.Seconds, -2)),
-                                            new Data("kg⋅m⋅s⁻²","kg⋅m⋅s⁻²",UnitAndPower.Create(this.Kilograms, 1),UnitAndPower.Create(this.Metres, 1),UnitAndPower.Create(this.Seconds, -2)),
-                                            new Data("kg*m/s²","kg⋅m⋅s⁻²",UnitAndPower.Create(this.Kilograms, 1),UnitAndPower.Create(this.Metres, 1),UnitAndPower.Create(this.Seconds, -2)),
-                                            new Data("m/s","m⋅s⁻¹", UnitAndPower.Create(this.Metres,1), UnitAndPower.Create(this.Seconds,-1)),
-                                            new Data("m/s","m⋅s⁻¹", UnitAndPower.Create(this.Metres,1), UnitAndPower.Create(this.Seconds,-1)),
-                                            new Data("m¹⋅s^-1","m⋅s⁻¹", UnitAndPower.Create(this.Metres,1), UnitAndPower.Create(this.Seconds,-1)),
-                                            new Data("m^1⋅s^-1","m⋅s⁻¹", UnitAndPower.Create(this.Metres,1), UnitAndPower.Create(this.Seconds,-1)),
-                                            new Data("m⋅s⁻¹","m⋅s⁻¹", UnitAndPower.Create(this.Metres,1), UnitAndPower.Create(this.Seconds,-1)),
+                                            new Data("kg⋅m/s²","kg⋅m/s²",UnitAndPower.Create(this.Kilograms, 1),UnitAndPower.Create(this.Metres, 1),UnitAndPower.Create(this.Seconds, -2)),
+                                            new Data("kg⋅m⋅s⁻²","kg⋅m/s²",UnitAndPower.Create(this.Kilograms, 1),UnitAndPower.Create(this.Metres, 1),UnitAndPower.Create(this.Seconds, -2)),
+                                            new Data("kg*m/s²","kg⋅m/s²",UnitAndPower.Create(this.Kilograms, 1),UnitAndPower.Create(this.Metres, 1),UnitAndPower.Create(this.Seconds, -2)),
+                                            new Data("m/s¹","m/s", UnitAndPower.Create(this.Metres,1), UnitAndPower.Create(this.Seconds,-1)),
+                                            new Data("m⋅s⁻¹","m/s", UnitAndPower.Create(this.Metres,1), UnitAndPower.Create(this.Seconds,-1)),
+                                            new Data("m¹⋅s^-1","m/s", UnitAndPower.Create(this.Metres,1), UnitAndPower.Create(this.Seconds,-1)),
+                                            new Data("m^1⋅s^-1","m/s", UnitAndPower.Create(this.Metres,1), UnitAndPower.Create(this.Seconds,-1)),
+                                            new Data("m¹⋅s⁻¹","m/s", UnitAndPower.Create(this.Metres,1), UnitAndPower.Create(this.Seconds,-1)),
                                             new Data("1/s","s⁻¹", UnitAndPower.Create(this.Seconds,-1)),
                                             new Data("s^-1","s⁻¹", UnitAndPower.Create(this.Seconds,-1))
                                             //new Data("J/s",UnitAndPower.Create(Joules, 1),UnitAndPower.Create(Seconds, -1)),

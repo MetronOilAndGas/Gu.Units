@@ -10,6 +10,8 @@
     {
         private string name;
         private string symbol;
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        private Unit unit;
 
         public PrefixConversion(string name, string symbol, string prefixName)
         {
@@ -60,21 +62,13 @@
         {
             get
             {
-                foreach (var unit in Settings.Instance.AllUnits)
+                var factorConversion = Unit.FactorConversions.SingleOrDefault(x => x.PrefixConversions.Any(pc => pc == this));
+                if (factorConversion != null)
                 {
-                    if (unit.PrefixConversions.Any(pc => pc == this))
-                    {
-                        return Math.Pow(10, Prefix.Power);
-                    }
-
-                    var factorConversion = unit.FactorConversions.SingleOrDefault(x => x.PrefixConversions.Any(pc => pc == this));
-                    if (factorConversion != null)
-                    {
-                        return factorConversion.Factor * Math.Pow(10, Prefix.Power);
-                    }
+                    return factorConversion.Factor * Math.Pow(10, Prefix.Power);
                 }
 
-                throw new ArgumentOutOfRangeException();
+                return Math.Pow(10, Prefix.Power);
             }
         }
 
@@ -88,16 +82,22 @@
 
         public string SymbolConversion => this.GetSymbolConversion();
 
+        public Unit Unit => this.unit ?? (this.unit = this.GetUnit());
+
         public bool CanRoundtrip => this.CanRoundtrip();
 
         public static PrefixConversion Create(Unit unit, Prefix prefix)
         {
-            return Create((INameAndSymbol)unit, prefix);
+            var prefixConversion = Create((INameAndSymbol)unit, prefix);
+            prefixConversion.unit = unit;
+            return prefixConversion;
         }
 
         public static PrefixConversion Create(FactorConversion factorConversion, Prefix prefix)
         {
-            return Create((INameAndSymbol)factorConversion, prefix);
+            var prefixConversion = Create((INameAndSymbol)factorConversion, prefix);
+            prefixConversion.unit = factorConversion.GetUnit();
+            return prefixConversion;
         }
 
         private static PrefixConversion Create(INameAndSymbol nas, Prefix prefix)
