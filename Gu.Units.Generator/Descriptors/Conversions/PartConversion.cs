@@ -39,7 +39,7 @@
 
         public static PartConversion Create(Unit unit, PowerPart c1)
         {
-            var name = c1.Name;
+            var name = c1.FirstName;
             var symbol = c1.Symbol;
             var factor = c1.Factor;
             return new PartConversion(name, symbol, factor) { unit = unit }; // hacking unit like this for simpler serialization
@@ -51,11 +51,11 @@
             if (c1.Power > 0 &&
                 c2.Power > 0)
             {
-                name = $"{c1.Name}{c2.Name}";
+                name = $"{c1.FirstName}{c2.LastName}";
             }
             else if (c1.Power > 0 && c2.Power < 0)
             {
-                name = $"{c1.Name}Per{c2.Name.TrimEnd('s')}";
+                name = $"{c1.FirstName}Per{c2.LastName}";
             }
             else
             {
@@ -64,9 +64,9 @@
 
             var symbolAndPowers = c1.AsSymbolAndPowers().Concat(c2.AsSymbolAndPowers());
             var symbol = symbolAndPowers.AsSymbol();
-            var factor = c1.Factor*c2.Factor;
+            var factor = c1.Factor * c2.Factor;
             // hacking unit like this for simpler serialization
-            return new PartConversion(name, symbol, factor) {unit = unit};
+            return new PartConversion(name, symbol, factor) { unit = unit };
         }
 
         public static PowerPart CreatePart(int power, IConversion conversion)
@@ -91,22 +91,52 @@
 
             public IConversion Conversion { get; }
 
-            public string Name
+            public string FirstName
             {
                 get
                 {
-                    var power = Math.Abs(Power);
+                    var isLength = IsLength(Conversion);
+                    return CreateName(Power, Conversion.Name, isLength);
+                }
+            }
+
+            public object LastName
+            {
+                get
+                {
+                    var trimmedS = Conversion.Name.TrimEnd('s');
+                    var isLength = IsLength(Conversion);
+                    return CreateName(Power, trimmedS, isLength);
+                }
+            }
+
+            private static string CreateName(int power, string name, bool isLength)
+            {
+                power = Math.Abs(power);
+                if (isLength)
+                {
                     switch (power)
                     {
                         case 1:
-                            return Conversion.Name;
+                            return name;
                         case 2:
-                            return $"Square{Conversion.Name}";
+                            return $"Square{name}";
                         case 3:
-                            return $"Cubic{Conversion.Name}";
+                            return $"Cubic{name}";
                         default:
                             throw new ArgumentOutOfRangeException(nameof(power));
                     }
+                }
+                switch (power)
+                {
+                    case 1:
+                        return name;
+                    case 2:
+                        return $"{name}Squared";
+                    case 3:
+                        return $"{name}Cubed";
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(power));
                 }
             }
 
@@ -135,6 +165,11 @@
                 }
 
                 throw new InvalidOperationException();
+            }
+
+            private static bool IsLength(IConversion conversion)
+            {
+                return conversion.Unit.QuantityName == "Length";
             }
         }
 

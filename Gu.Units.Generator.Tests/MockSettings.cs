@@ -20,6 +20,9 @@
         public readonly DerivedUnit MetresPerSecond;
         public readonly Quantity Speed;
 
+        public readonly DerivedUnit MetresPerSecondSquared;
+        public readonly Quantity Acceleration;
+
         public readonly DerivedUnit SquareMetres;
         public readonly Quantity Area;
 
@@ -88,6 +91,18 @@
                UnitAndPower.Create(Seconds, -1)});
             DerivedUnits.Add(MetresPerSecond);
             Speed = MetresPerSecond.Quantity;
+
+            MetresPerSecondSquared = new DerivedUnit(
+                "MetresPerSecondSquared",
+                "m/s^2",
+                "Acceleration",
+                new[]
+                {
+                    UnitAndPower.Create(Metres, 1),
+                    UnitAndPower.Create(Seconds, -2)
+                });
+            DerivedUnits.Add(MetresPerSecondSquared);
+            Acceleration = MetresPerSecondSquared.Quantity;
 
             Newtons = new DerivedUnit(
                 "Newtons",

@@ -36,6 +36,7 @@
             {
                 new OperatorOverload(this.settings.Time, Operator.Multiply, this.settings.Current, this.settings.ElectricCharge),
                 new OperatorOverload(this.settings.Time, Operator.Multiply, this.settings.Speed, this.settings.Length),
+                new OperatorOverload(this.settings.Time, Operator.Multiply, this.settings.Acceleration, this.settings.Speed),
                 new OperatorOverload(this.settings.Time, Operator.Multiply, this.settings.Power, this.settings.Energy),
             };
             CollectionAssert.AreEqual(expected, actual);

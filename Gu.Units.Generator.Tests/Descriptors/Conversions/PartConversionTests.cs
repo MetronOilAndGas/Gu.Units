@@ -45,5 +45,33 @@
             Assert.AreEqual("MilligramsPerCubicMetre", conversion.Name);
             Assert.AreEqual(1E-6, conversion.Factor);
         }
+
+        [Test]
+        public void MetresPerSecondCubed()
+        {
+            var settings = MockSettings.Create();
+            var metrePart = PartConversion.CreatePart(1, settings.Metres);
+            var secondPart = PartConversion.CreatePart(-2, settings.Seconds);
+            var conversion = PartConversion.Create(settings.MetresPerSecondSquared, metrePart, secondPart);
+            Assert.AreEqual("m/s²", conversion.Symbol);
+            Assert.AreEqual("MetresPerSecondSquared", conversion.Name);
+            Assert.AreEqual(1, conversion.Factor);
+            Assert.AreEqual(true, conversion.CanRoundtrip);
+        }
+
+        [Test]
+        public void MilliMetresPerSecondCubed()
+        {
+            var settings = MockSettings.Create();
+            var millimetres = PrefixConversion.Create(settings.Metres,settings.Milli);
+            settings.Metres.PrefixConversions.Add(millimetres);
+            var metrePart = PartConversion.CreatePart(1, millimetres);
+            var secondPart = PartConversion.CreatePart(-2, settings.Seconds);
+            var conversion = PartConversion.Create(settings.MetresPerSecondSquared, metrePart, secondPart);
+            Assert.AreEqual("mm/s²", conversion.Symbol);
+            Assert.AreEqual("MillimetresPerSecondSquared", conversion.Name);
+            Assert.AreEqual(0.001, conversion.Factor);
+            Assert.AreEqual(true, conversion.CanRoundtrip);
+        }
     }
 }
