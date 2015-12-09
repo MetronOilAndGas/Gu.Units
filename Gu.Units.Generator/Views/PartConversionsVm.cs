@@ -47,9 +47,9 @@
                 this.conversions.Add(partConversionVms);
             }
 
-            else if (this.unit.Parts.BaseParts.Count == 2)
+            else if (this.unit.Parts.Count == 2)
             {
-                var unitParts = this.unit.Parts.BaseParts.ToArray();
+                var unitParts = this.unit.Parts.ToArray();
                 var p0s = CreatePowerParts(unitParts, 0);
                 var p1s = CreatePowerParts(unitParts, 1);
                 foreach (var c1 in p0s)

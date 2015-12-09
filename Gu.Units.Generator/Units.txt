@@ -321,11 +321,6 @@
           "Factor": 1000000.0
         },
         {
-          "Name": "SquareInches",
-          "Symbol": "in²",
-          "Factor": 0.00064516
-        },
-        {
           "Name": "SquareMile",
           "Symbol": "mi²",
           "Factor": 2589988.110336
@@ -334,6 +329,11 @@
           "Name": "SquareYard",
           "Symbol": "yd²",
           "Factor": 0.83612736
+        },
+        {
+          "Name": "SquareInches",
+          "Symbol": "in²",
+          "Factor": 0.00064516
         }
       ]
     },
@@ -352,7 +352,23 @@
           "Name": "Litres",
           "Symbol": "L",
           "Factor": 0.0010000000000000002,
-          "PrefixConversions": []
+          "PrefixConversions": [
+            {
+              "Name": "Millilitres",
+              "Symbol": "ml",
+              "PrefixName": "Milli"
+            },
+            {
+              "Name": "Centilitres",
+              "Symbol": "cl",
+              "PrefixName": "Centi"
+            },
+            {
+              "Name": "Decilitres",
+              "Symbol": "dl",
+              "PrefixName": "Deci"
+            }
+          ]
         }
       ],
       "OffsetConversions": [],
@@ -709,12 +725,12 @@
         {
           "Name": "MillimetresPerSecond",
           "Symbol": "mm/s",
-          "Factor": 0.0
+          "Factor": 0.001
         },
         {
           "Name": "CentimetresPerSecond",
           "Symbol": "cm/s",
-          "Factor": 0.0
+          "Factor": 0.01
         }
       ]
     },

@@ -72,10 +72,22 @@
                 return false;
             }
 
-            var conversion = item as BaseUnit;
-            if (conversion != null)
+            var baseUnit = item as BaseUnit;
+            if (baseUnit != null)
             {
                 return true;
+            }
+
+            var derivedUnit = item as DerivedUnit;
+            if (derivedUnit != null)
+            {
+                IReadOnlyList<SymbolAndPower> symbolAndPowers;
+                if (SymbolAndPowerReader.TryRead(derivedUnit.Symbol, out symbolAndPowers))
+                {
+                    return symbolAndPowers.Count == 1 && symbolAndPowers[0].Power == 1;
+                }
+
+                return false;
             }
 
             var factorConversion = item as FactorConversion;

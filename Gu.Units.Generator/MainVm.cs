@@ -3,7 +3,9 @@
     using System.Collections.ObjectModel;
     using System.ComponentModel;
     using System.Runtime.CompilerServices;
+    using System.Windows.Input;
     using JetBrains.Annotations;
+    using Wpf.Reactive;
 
     public class MainVm : INotifyPropertyChanged
     {
@@ -46,6 +48,9 @@
             }
         }
 
+        public ICommand AddBaseUnit { get; }
+
+        public ICommand AddDerviedUnit { get; }
 
         public void Save()
         {

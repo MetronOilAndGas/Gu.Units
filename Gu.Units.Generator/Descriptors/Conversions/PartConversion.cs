@@ -48,13 +48,14 @@
         public static PartConversion Create(Unit unit, PowerPart c1, PowerPart c2)
         {
             string name;
-            if (c1.Power > 0 && c2.Power > 0)
+            if (c1.Power > 0 &&
+                c2.Power > 0)
             {
-                name = $"{ c1.Name}{c2.Name}";
+                name = $"{c1.Name}{c2.Name}";
             }
             else if (c1.Power > 0 && c2.Power < 0)
             {
-                name = $"{ c1.Name}Per{c2.Name.TrimEnd('s')}";
+                name = $"{c1.Name}Per{c2.Name.TrimEnd('s')}";
             }
             else
             {
@@ -63,8 +64,9 @@
 
             var symbolAndPowers = c1.AsSymbolAndPowers().Concat(c2.AsSymbolAndPowers());
             var symbol = symbolAndPowers.AsSymbol();
-            var factor = c1.Factor * c2.Factor;
-            return new PartConversion(name, symbol, factor) { unit = unit }; // hacking unit like this for simpler serialization
+            var factor = c1.Factor*c2.Factor;
+            // hacking unit like this for simpler serialization
+            return new PartConversion(name, symbol, factor) {unit = unit};
         }
 
         public static PowerPart CreatePart(int power, IConversion conversion)

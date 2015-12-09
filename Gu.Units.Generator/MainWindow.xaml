@@ -44,15 +44,25 @@
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
                         <GroupBox Grid.Column="0" Header="Base Units:">
-                            <DataGrid AutoGenerateColumns="False"
-                                      ItemsSource="{Binding SiUnits}"
-                                      SelectedItem="{Binding Conversions.Unit}">
-                                <DataGrid.Columns>
-                                    <DataGridTextColumn Binding="{Binding QuantityName}" Header="Quantity" />
-                                    <DataGridTextColumn Binding="{Binding Name}" Header="Unit" />
-                                    <DataGridTextColumn Binding="{Binding Symbol}" Header="Symbol" />
-                                </DataGrid.Columns>
-                            </DataGrid>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="20" />
+                                </Grid.RowDefinitions>
+                                <DataGrid AutoGenerateColumns="False"
+                                          ItemsSource="{Binding SiUnits}"
+                                          SelectedItem="{Binding Conversions.Unit}">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Binding="{Binding QuantityName}" Header="Quantity" />
+                                        <DataGridTextColumn Binding="{Binding Name}" Header="Unit" />
+                                        <DataGridTextColumn Binding="{Binding Symbol}" Header="Symbol" />
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                                <Button Grid.Row="1"
+                                        Command="{Binding AddBaseUnit}"
+                                        Content="Add Unit" />
+                            </Grid>
+
                         </GroupBox>
 
                         <GroupBox Grid.Column="1" Header="Prefixes">
@@ -67,19 +77,29 @@
                     </Grid>
 
                     <GroupBox Grid.Row="1" Header="Derived Units:">
-                        <DataGrid AutoGenerateColumns="False"
-                                  ItemsSource="{Binding DerivedUnits}"
-                                  SelectedItem="{Binding Conversions.Unit}">
-                            <DataGrid.Columns>
-                                <DataGridTextColumn Binding="{Binding QuantityName}" Header="Quantity" />
-                                <DataGridTextColumn Binding="{Binding Name}" Header="Unit" />
-                                <DataGridTextColumn Binding="{Binding Parts}" Header="Parts" />
-                                <DataGridTextColumn Binding="{Binding Symbol}" Header="Symbol" />
-                                <DataGridTextColumn Binding="{Binding Parts.BaseUnitSymbol}"
-                                                    Header="In base Units"
-                                                    IsReadOnly="True" />
-                            </DataGrid.Columns>
-                        </DataGrid>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="20" />
+                            </Grid.RowDefinitions>
+                            <DataGrid AutoGenerateColumns="False"
+                                      ItemsSource="{Binding DerivedUnits}"
+                                      SelectedItem="{Binding Conversions.Unit}">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Binding="{Binding QuantityName}" Header="Quantity" />
+                                    <DataGridTextColumn Binding="{Binding Name}" Header="Unit" />
+                                    <DataGridTextColumn Binding="{Binding Parts}" Header="Parts" />
+                                    <DataGridTextColumn Binding="{Binding Symbol}" Header="Symbol" />
+                                    <DataGridTextColumn Binding="{Binding Parts.BaseUnitSymbol}"
+                                                        Header="In base Units"
+                                                        IsReadOnly="True" />
+                                </DataGrid.Columns>
+                            </DataGrid>
+                            <Button Grid.Row="1"
+                                    Command="{Binding AddDerivedUnit}"
+                                    Content="Add Unit" />
+                        </Grid>
+
                     </GroupBox>
                 </Grid>
             </GroupBox>
