@@ -276,6 +276,31 @@
       "OffsetConversions": [],
       "PrefixConversions": [],
       "PartConversions": []
+    },
+    {
+      "Name": "Bit",
+      "Symbol": "bit",
+      "QuantityName": "UnitOfInformation",
+      "FactorConversions": [],
+      "OffsetConversions": [],
+      "PrefixConversions": [
+        {
+          "Name": "Megabit",
+          "Symbol": "Mbit",
+          "PrefixName": "Mega"
+        },
+        {
+          "Name": "Gigabit",
+          "Symbol": "Gbit",
+          "PrefixName": "Giga"
+        },
+        {
+          "Name": "Kilobit",
+          "Symbol": "kbit",
+          "PrefixName": "Kilo"
+        }
+      ],
+      "PartConversions": []
     }
   ],
   "DerivedUnits": [

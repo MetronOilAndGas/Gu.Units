@@ -20,6 +20,7 @@
         private readonly ReadOnlySerialView<IConversion> allConversions = new ReadOnlySerialView<IConversion>();
         private Unit unit;
         private IConversion selectedConversion;
+        private BaseUnitViewModel selectedBaseUnit;
 
         public ConversionsVm(Settings settings)
         {
@@ -71,6 +72,25 @@
 
         public ICommand DeleteSelectedCommand { get; }
 
+        public object SelectedBaseUnit
+        {
+            get { return this.selectedBaseUnit; }
+            set
+            {
+                var selected = value as BaseUnitViewModel;
+                if (Equals(selected, this.selectedBaseUnit))
+                {
+                    return;
+                }
+                this.selectedBaseUnit = selected;
+                if (selected != null && !selected.IsUnknown)
+                {
+                    Unit = selected.Unit;
+                }
+                OnPropertyChanged();
+            }
+        }
+
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
@@ -115,7 +135,7 @@
             TryRemove(this.unit.PartConversions, this.selectedConversion);
         }
 
-        private static void TryRemove<T>(ObservableCollection<T> collection, IConversion item) 
+        private static void TryRemove<T>(ObservableCollection<T> collection, IConversion item)
             where T : IConversion
         {
             ((IList)collection).Remove(item);

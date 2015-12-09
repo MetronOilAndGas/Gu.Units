@@ -1,10 +1,14 @@
 ﻿namespace Gu.Units.Generator
 {
+    using System;
     using System.Collections.ObjectModel;
+    using System.Collections.Specialized;
     using System.ComponentModel;
+    using System.Linq;
     using System.Runtime.CompilerServices;
     using System.Windows.Input;
     using JetBrains.Annotations;
+    using Reactive;
     using Wpf.Reactive;
 
     public class MainVm : INotifyPropertyChanged
@@ -18,6 +22,9 @@
         {
             this.settings = Settings.FromResource;
             NameSpace = Settings.ProjectName;
+            BaseUnits = new ObservableCollection<BaseUnitViewModel>(this.settings.BaseUnits.Select(x => new BaseUnitViewModel(x)));
+            BaseUnits.ObserveCollectionChangedSlim(false)
+                     .Subscribe(OnBaseUnitsChanged);
             this.conversions = new ConversionsVm(this.settings);
         }
 
@@ -25,7 +32,7 @@
 
         public ObservableCollection<Prefix> Prefixes => this.settings.Prefixes;
 
-        public ObservableCollection<BaseUnit> SiUnits => this.settings.BaseUnits;
+        public ObservableCollection<BaseUnitViewModel> BaseUnits { get; }
 
         public ObservableCollection<DerivedUnit> DerivedUnits => this.settings.DerivedUnits;
 
@@ -48,10 +55,6 @@
             }
         }
 
-        public ICommand AddBaseUnit { get; }
-
-        public ICommand AddDerviedUnit { get; }
-
         public void Save()
         {
             Persister.Save(Persister.SettingsFileName);
@@ -61,6 +64,29 @@
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        private void OnBaseUnitsChanged(NotifyCollectionChangedEventArgs args)
+        {
+            var typedArgs = args.As<BaseUnitViewModel>();
+            switch (typedArgs.Action)
+            {
+                case NotifyCollectionChangedAction.Add:
+                    // NOP
+                    break;
+                case NotifyCollectionChangedAction.Remove:
+                    this.settings.BaseUnits.Remove(typedArgs.OldItems.Single().Unit);
+                    break;
+                case NotifyCollectionChangedAction.Replace:
+                    break;
+                case NotifyCollectionChangedAction.Move:
+                    break;
+                case NotifyCollectionChangedAction.Reset:
+                    throw new NotImplementedException();
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
     }
 }

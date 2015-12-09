@@ -1,8 +1,6 @@
 ﻿namespace Gu.Units.Generator
 {
     using System;
-    using System.Collections.Generic;
-    using System.Collections.ObjectModel;
     using System.ComponentModel;
     using System.Linq;
     using System.Runtime.CompilerServices;
@@ -19,7 +17,7 @@
             Conversion = conversion;
             IsEditable = Conversion.Name != unit.Name;
             unit.PartConversions.ObservePropertyChangedSlim()
-                .Subscribe(_ => OnPropertyChanged(nameof(IsUsed)));
+                .Subscribe(_ => OnPropertyChanged(nameof(IsUsed))); // no need for IDisposable
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

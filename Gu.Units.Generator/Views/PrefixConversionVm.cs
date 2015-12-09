@@ -22,7 +22,7 @@
             this.baseConversion = baseConversion;
             Conversion = prefixConversion;
             conversions.ObservePropertyChangedSlim()
-                       .Subscribe(_ => OnPropertyChanged(nameof(IsUsed)));
+                       .Subscribe(_ => OnPropertyChanged(nameof(IsUsed))); // no need for IDisposable
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
