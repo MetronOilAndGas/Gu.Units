@@ -17,7 +17,9 @@
                 <ItemsControl ItemsSource="{Binding}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate DataType="{x:Type local:PartConversionVm}">
-                            <CheckBox Content="{Binding Conversion.Symbol}" IsChecked="{Binding IsUsed}" />
+                            <CheckBox Content="{Binding Conversion.Symbol}"
+                                      IsChecked="{Binding IsUsed}"
+                                      IsEnabled="{Binding IsEditable}" />
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>

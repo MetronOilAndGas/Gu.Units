@@ -9,12 +9,13 @@
 
     public class PartConversionVm : INotifyPropertyChanged
     {
-        private readonly IList<PartConversion> conversions;
+        private readonly Unit unit;
 
-        public PartConversionVm(IList<PartConversion> conversions, PartConversion conversion)
+        public PartConversionVm(Unit unit, PartConversion conversion)
         {
-            this.conversions = conversions;
+            this.unit = unit;
             Conversion = conversion;
+            IsEditable = Conversion.Name != unit.Name;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -25,29 +26,38 @@
         {
             get
             {
-                return conversions.Any(IsMatch);
+                if (!IsEditable)
+                {
+                    return true;
+                }
+
+                return this.unit.PartConversions.Any(IsMatch);
             }
             set
             {
-                if (value.Equals(IsUsed))
+                if (value.Equals(IsUsed) || !IsEditable)
                 {
                     return;
                 }
+
                 if (value)
                 {
-                    conversions.Add(Conversion);
+                    this.unit.PartConversions.Add(Conversion);
                 }
                 else
                 {
-                    var match = this.conversions.FirstOrDefault(IsMatch);
+                    var match = this.unit.PartConversions.FirstOrDefault(IsMatch);
                     if (match != null)
                     {
-                        conversions.Remove(match);
+                        this.unit.PartConversions.Remove(match);
                     }
                 }
+
                 OnPropertyChanged();
             }
         }
+
+        public bool IsEditable { get; }
 
         public override string ToString()
         {

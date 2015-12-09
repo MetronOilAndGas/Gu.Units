@@ -7,7 +7,7 @@
     /// <summary>
     /// http://en.wikipedia.org/wiki/SI_derived_unit
     /// </summary>
-    public class DerivedUnit : BaseUnit
+    public class DerivedUnit : Unit
     {
         public DerivedUnit(string name, string symbol, string quantityName, IReadOnlyList<UnitAndPower> parts)
             : base(name, symbol, quantityName)
@@ -25,6 +25,6 @@
             Parts = new UnitParts(parts);
         }
 
-        public UnitParts Parts { get; }
+        public override UnitParts Parts { get; }
     }
 }

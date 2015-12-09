@@ -83,7 +83,7 @@
         {
             var unit = conversion.Unit;
             var convert = ConvertToSi(1, conversion);
-            return $"1 {conversion.Symbol} = {convert.ToString(CultureInfo.InvariantCulture)} {unit.Symbol}";
+            return $"1 {conversion.Symbol.NormalizeSymbol()} = {convert.ToString(CultureInfo.InvariantCulture)} {unit.Symbol.NormalizeSymbol()}";
         }
 
         public static bool CanRoundtrip(this IConversion conversion)

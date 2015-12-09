@@ -62,13 +62,18 @@
         {
             get
             {
-                var factorConversion = Unit.FactorConversions.SingleOrDefault(x => x.PrefixConversions.Any(pc => pc == this));
+                if (string.Equals($"{Prefix.Name}{Unit.Name}", Name, StringComparison.OrdinalIgnoreCase))
+                {
+                    return Math.Pow(10, Prefix.Power);
+                }
+
+                var factorConversion = Unit.FactorConversions.SingleOrDefault(x => string.Equals($"{Prefix.Name}{x.Name}", Name, StringComparison.OrdinalIgnoreCase));
                 if (factorConversion != null)
                 {
                     return factorConversion.Factor * Math.Pow(10, Prefix.Power);
                 }
 
-                return Math.Pow(10, Prefix.Power);
+                throw new ArgumentOutOfRangeException($"Could not calculate factor for {Name}");
             }
         }
 

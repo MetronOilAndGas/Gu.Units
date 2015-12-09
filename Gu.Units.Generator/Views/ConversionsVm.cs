@@ -10,29 +10,29 @@
     {
         private readonly Settings settings;
         private readonly ReadOnlySerialView<IConversion> allConversions = new ReadOnlySerialView<IConversion>();
-        private BaseUnit baseUnit;
+        private Unit unit;
 
         public ConversionsVm(Settings settings)
         {
             this.settings = settings;
             PrefixConversions = new PrefixConversionsVm(settings);
             PartConversions = new PartConversionsVm(settings);
-            BaseUnit = settings.AllUnits.FirstOrDefault(x => x.QuantityName == "Speed"); // for designtime
+            Unit = settings.AllUnits.FirstOrDefault(x => x.QuantityName == "Speed"); // for designtime
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public BaseUnit BaseUnit
+        public Unit Unit
         {
-            get { return this.baseUnit; }
+            get { return this.unit; }
             set
             {
-                if (Equals(value, this.baseUnit))
+                if (Equals(value, this.unit))
                 {
                     return;
                 }
-                this.baseUnit = value;
-                this.allConversions.SetSource(this.baseUnit?.AllConversions);
+                this.unit = value;
+                this.allConversions.SetSource(this.unit?.AllConversions);
                 PrefixConversions.SetBaseUnit(value);
                 PartConversions.SetUnit(value);
                 OnPropertyChanged();

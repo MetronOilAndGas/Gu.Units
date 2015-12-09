@@ -28,7 +28,7 @@
                     </Grid.RowDefinitions>
                     <TextBlock Grid.Row="0"
                                Grid.Column="0"
-                               Text="{Binding Conversions.BaseUnit.Name,
+                               Text="{Binding Conversions.Unit.Name,
                                               StringFormat='BaseUnit: {0}'}" />
                     <GroupBox Grid.Row="1"
                               MinHeight="100"
@@ -61,14 +61,14 @@
 
         <GroupBox Grid.Row="1" Header="Overloads">
             <StackPanel>
-                <ItemsControl ItemsSource="{Binding Conversions.BaseUnit.Quantity.OperatorOverloads}">
+                <ItemsControl ItemsSource="{Binding Conversions.Unit.Quantity.OperatorOverloads}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate DataType="{x:Type local:OperatorOverload}">
                             <TextBlock Text="{Binding}" />
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
-                <TextBlock Text="{Binding Conversions.BaseUnit.Quantity.Inverse}" />
+                <TextBlock Text="{Binding Conversions.Unit.Quantity.Inverse}" />
             </StackPanel>
         </GroupBox>
     </Grid>

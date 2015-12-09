@@ -42,7 +42,7 @@
                 var unitParts = this.unit.Parts.BaseParts.ToArray();
                 var powerParts = CreatePowerParts(unitParts, 0);
 
-                var partConversionVms = powerParts.Select(x => new PartConversionVm(this.unit.PartConversions, PartConversion.Create(this.unit, x)))
+                var partConversionVms = powerParts.Select(x => new PartConversionVm(this.unit, PartConversion.Create(this.unit, x)))
                     .ToArray();
                 this.conversions.Add(partConversionVms);
             }
@@ -58,7 +58,7 @@
 
                     foreach (var c2 in p1s)
                     {
-                        cs.Add(new PartConversionVm(this.unit.PartConversions, PartConversion.Create(this.unit, c1, c2)));
+                        cs.Add(new PartConversionVm(this.unit, PartConversion.Create(this.unit, c1, c2)));
                     }
 
                     this.conversions.Add(cs.ToArray());

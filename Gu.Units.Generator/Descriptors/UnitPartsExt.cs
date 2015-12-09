@@ -84,12 +84,15 @@
             return sb.ToString();
         }
 
-        //internal static string AsUnitName(this IReadOnlyCollection<UnitAndPower> unitAndPowers)
-        //{
-        //    return unitAndPowers.Select(x => new SymbolAndPower(x.UnitName, x.Power))
-        //        .ToList()
-        //        .AsUnitName();
-        //}
+        internal static string NormalizeSymbol(this string symbol)
+        {
+            IReadOnlyList<SymbolAndPower> symbolAndPowers;
+            if (SymbolAndPowerReader.TryRead(symbol, out symbolAndPowers))
+            {
+                return symbolAndPowers.AsSymbol();
+            }
+            return $"Failed normalizing {symbol}";
+        }
 
         public class BaseUnitOrderComparer : IComparer<SymbolAndPower>
         {

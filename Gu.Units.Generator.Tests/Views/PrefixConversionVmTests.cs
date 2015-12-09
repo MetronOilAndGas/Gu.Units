@@ -27,6 +27,15 @@
             Assert.AreEqual("amperes/0.001", conversionVm.Conversion.FromSi);
             Assert.AreEqual("1 mA = 0.001 A", conversionVm.Conversion.SymbolConversion);
             Assert.AreEqual(true, conversionVm.Conversion.CanRoundtrip);
+
+
+            CollectionAssert.DoesNotContain(settings.Amperes.PrefixConversions, conversionVm.Conversion);
+
+            conversionVm.IsUsed = true;
+            CollectionAssert.Contains(settings.Amperes.PrefixConversions, conversionVm.Conversion);
+
+            conversionVm.IsUsed = false;
+            CollectionAssert.DoesNotContain(settings.Amperes.PrefixConversions, conversionVm.Conversion);
         }
 
         [Test]
@@ -39,8 +48,16 @@
             Assert.AreEqual(false, conversionVm.Conversion.IsOffset);
             Assert.AreEqual("1E-06*milligrams", conversionVm.Conversion.ToSi);
             Assert.AreEqual("kilograms/1E-06", conversionVm.Conversion.FromSi);
-            Assert.AreEqual("1 mg = 1E-6 kg", conversionVm.Conversion.SymbolConversion);
+            Assert.AreEqual("1 mg = 1E-06 kg", conversionVm.Conversion.SymbolConversion);
             Assert.AreEqual(true, conversionVm.Conversion.CanRoundtrip);
+
+            CollectionAssert.DoesNotContain(settings.Grams.PrefixConversions, conversionVm.Conversion);
+
+            conversionVm.IsUsed = true;
+            CollectionAssert.Contains(settings.Grams.PrefixConversions, conversionVm.Conversion);
+
+            conversionVm.IsUsed = false;
+            CollectionAssert.DoesNotContain(settings.Grams.PrefixConversions, conversionVm.Conversion);
         }
     }
 }

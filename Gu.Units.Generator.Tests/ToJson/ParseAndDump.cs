@@ -139,7 +139,7 @@
         {
             var baseUnits = BaseUnits;
             var derivedUnits = DerivedUnits;
-            var allUnits = baseUnits.Concat(derivedUnits).ToList();
+            var allUnits = baseUnits.Concat<Unit>(derivedUnits).ToList();
             var settings = Settings.CreateEmpty();
             settings.DerivedUnits.InvokeAddRange(derivedUnits);
             var xDocument = XDocument.Parse(Properties.Resources.GeneratorSettings);
@@ -163,7 +163,7 @@
         {
             var baseUnits = BaseUnits;
             var derivedUnits = DerivedUnits;
-            var allUnits = baseUnits.Concat(derivedUnits).ToList();
+            var allUnits = baseUnits.Concat<Unit>(derivedUnits).ToList();
             var settings = Settings.CreateEmpty();
             settings.DerivedUnits.InvokeAddRange(derivedUnits);
             settings.Prefixes.InvokeAddRange(Prefixes);
@@ -186,7 +186,7 @@
             File.WriteAllText(@"C:\Temp\Units.txt", json);
         }
 
-        private static UnitAndPower[] ReadParts(XElement partsElement, IReadOnlyList<BaseUnit> allUnits)
+        private static UnitAndPower[] ReadParts(XElement partsElement, IReadOnlyList<Unit> allUnits)
         {
             var unitAndPowers = new List<UnitAndPower>();
             foreach (var e in partsElement.Elements("UnitAndPower"))
@@ -198,7 +198,7 @@
             return unitAndPowers.ToArray();
         }
 
-        private static void ReadConversions(BaseUnit unit, XElement conversionsElement)
+        private static void ReadConversions(Unit unit, XElement conversionsElement)
         {
             foreach (var conversionElement in conversionsElement.Elements("Conversion"))
             {

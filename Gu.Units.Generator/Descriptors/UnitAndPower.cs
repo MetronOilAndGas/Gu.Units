@@ -16,7 +16,7 @@
 
         public string UnitName { get; }
 
-        public BaseUnit Unit => Settings.Instance.AllUnits.Single(x => x.Name == UnitName);
+        public Unit Unit => Settings.Instance.AllUnits.Single(x => x.Name == UnitName);
 
         public int Power { get; }
 
@@ -30,12 +30,12 @@
             return !Equals(left, right);
         }
 
-        public static UnitAndPower Create(BaseUnit unit)
+        public static UnitAndPower Create(Unit unit)
         {
             return new UnitAndPower(unit.Name, 1);
         }
 
-        public static UnitAndPower Create(BaseUnit unit, int power)
+        public static UnitAndPower Create(Unit unit, int power)
         {
             if (power == 0)
             {

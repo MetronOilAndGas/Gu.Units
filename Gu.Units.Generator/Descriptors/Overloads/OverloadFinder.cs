@@ -5,14 +5,14 @@
 
     public static class OverloadFinder
     {
-        public static void Find(IReadOnlyList<BaseUnit> units)
+        public static void Find(IReadOnlyList<Unit> units)
         {
             var quantities = units.Select(u => u.Quantity).ToList();
             FindOperatorOverloads(units.ToList(), quantities);
             FindInverseOverloads(quantities);
         }
 
-        private static void FindOperatorOverloads(IReadOnlyList<BaseUnit> units, IReadOnlyList<Quantity> quantities)
+        private static void FindOperatorOverloads(IReadOnlyList<Unit> units, IReadOnlyList<Quantity> quantities)
         {
             foreach (var left in quantities)
             {

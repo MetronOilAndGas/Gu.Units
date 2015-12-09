@@ -46,7 +46,7 @@
                         <GroupBox Grid.Column="0" Header="Base Units:">
                             <DataGrid AutoGenerateColumns="False"
                                       ItemsSource="{Binding SiUnits}"
-                                      SelectedItem="{Binding Conversions.BaseUnit}">
+                                      SelectedItem="{Binding Conversions.Unit}">
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Binding="{Binding QuantityName}" Header="Quantity" />
                                     <DataGridTextColumn Binding="{Binding Name}" Header="Unit" />
@@ -69,7 +69,7 @@
                     <GroupBox Grid.Row="1" Header="Derived Units:">
                         <DataGrid AutoGenerateColumns="False"
                                   ItemsSource="{Binding DerivedUnits}"
-                                  SelectedItem="{Binding Conversions.BaseUnit}">
+                                  SelectedItem="{Binding Conversions.Unit}">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Binding="{Binding QuantityName}" Header="Quantity" />
                                 <DataGridTextColumn Binding="{Binding Name}" Header="Unit" />
