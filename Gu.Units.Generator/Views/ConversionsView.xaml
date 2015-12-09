@@ -25,6 +25,8 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <TextBlock Grid.Row="0"
                                Grid.Column="0"
@@ -41,21 +43,75 @@
                               Header="Subparts">
                         <local:PartConversionsView />
                     </GroupBox>
-                </Grid>
+                    <GroupBox Grid.Row="3" Header="FactorConversions">
+                        <DataGrid AutoGenerateColumns="False"
+                                  CanUserAddRows="True"
+                                  CanUserDeleteRows="True"
+                                  CanUserReorderColumns="True"
+                                  ItemsSource="{Binding Conversions.Unit.FactorConversions}">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Binding="{Binding Name}" Header="Unit" />
+                                <DataGridTextColumn Binding="{Binding Symbol}" Header="Symbol" />
+                                <DataGridTextColumn Binding="{Binding Factor}" Header="Factor" />
+                                <DataGridTextColumn Binding="{Binding Offset}"
+                                                    Header="Offset"
+                                                    IsReadOnly="True" />
+                                <DataGridTextColumn Binding="{Binding SymbolConversion}"
+                                                    Header="Conversion"
+                                                    IsReadOnly="True" />
+                                <DataGridTextColumn Binding="{Binding ToSi}"
+                                                    Header="ToSi"
+                                                    IsReadOnly="True" />
+                                <DataGridTextColumn Binding="{Binding FromSi}"
+                                                    Header="FromSi"
+                                                    IsReadOnly="True" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </GroupBox>
 
-                <DataGrid Grid.Row="1"
-                          AutoGenerateColumns="False"
-                          IsReadOnly="True"
-                          ItemsSource="{Binding Conversions.AllConversions}">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Binding="{Binding Name}" Header="Unit" />
-                        <DataGridTextColumn Binding="{Binding Symbol}" Header="Symbol" />
-                        <DataGridTextColumn Binding="{Binding SymbolConversion}" Header="Conversion" />
-                        <DataGridTextColumn Binding="{Binding ToSi}" Header="ToSi" />
-                        <DataGridTextColumn Binding="{Binding FromSi}" Header="FromSi" />
-                        <!--<DataGridTextColumn Binding="{Binding Formula}" Header="Formula" />-->
-                    </DataGrid.Columns>
-                </DataGrid>
+                    <GroupBox Grid.Row="4" Header="OffsetConversions">
+                        <DataGrid AutoGenerateColumns="False"
+                                  CanUserAddRows="True"
+                                  CanUserDeleteRows="True"
+                                  CanUserReorderColumns="True"
+                                  ItemsSource="{Binding Conversions.Unit.OffsetConversions}">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Binding="{Binding Name}" Header="Unit" />
+                                <DataGridTextColumn Binding="{Binding Symbol}" Header="Symbol" />
+                                <DataGridTextColumn Binding="{Binding Factor}" Header="Factor" />
+                                <DataGridTextColumn Binding="{Binding Offset}" Header="Offset" />
+                                <DataGridTextColumn Binding="{Binding SymbolConversion}"
+                                                    Header="Conversion"
+                                                    IsReadOnly="True" />
+                                <DataGridTextColumn Binding="{Binding ToSi}"
+                                                    Header="ToSi"
+                                                    IsReadOnly="True" />
+                                <DataGridTextColumn Binding="{Binding FromSi}"
+                                                    Header="FromSi"
+                                                    IsReadOnly="True" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </GroupBox>
+                </Grid>
+                <GroupBox Grid.Row="1" Header="All">
+                    <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Conversions.AllConversions}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding Name}" Header="Unit" />
+                            <DataGridTextColumn Binding="{Binding Symbol}" Header="Symbol" />
+                            <DataGridTextColumn Binding="{Binding SymbolConversion}"
+                                                Header="Conversion"
+                                                IsReadOnly="True" />
+                            <DataGridTextColumn Binding="{Binding ToSi}"
+                                                Header="ToSi"
+                                                IsReadOnly="True" />
+                            <DataGridTextColumn Binding="{Binding FromSi}"
+                                                Header="FromSi"
+                                                IsReadOnly="True" />
+                            <!--<DataGridTextColumn Binding="{Binding Formula}" Header="Formula" />-->
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </GroupBox>
+
             </Grid>
         </GroupBox>
 

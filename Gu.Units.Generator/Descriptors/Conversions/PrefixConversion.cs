@@ -34,6 +34,9 @@
 
                 this.name = value;
                 OnPropertyChanged();
+                OnPropertyChanged(nameof(ToSi));
+                OnPropertyChanged(nameof(FromSi));
+                OnPropertyChanged(nameof(ParameterName));
             }
         }
 
@@ -51,6 +54,7 @@
 
                 this.symbol = value;
                 OnPropertyChanged();
+                OnPropertyChanged(nameof(SymbolConversion));
             }
         }
 

@@ -33,6 +33,9 @@
 
                 this.name = value;
                 OnPropertyChanged();
+                OnPropertyChanged(nameof(ToSi));
+                OnPropertyChanged(nameof(FromSi));
+                OnPropertyChanged(nameof(ParameterName));
             }
         }
 
@@ -64,6 +67,7 @@
                 OnPropertyChanged();
                 OnPropertyChanged(nameof(ToSi));
                 OnPropertyChanged(nameof(FromSi));
+                OnPropertyChanged(nameof(SymbolConversion));
                 OnPropertyChanged(nameof(CanRoundtrip));
             }
         }
