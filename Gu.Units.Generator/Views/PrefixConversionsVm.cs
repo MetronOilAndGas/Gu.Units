@@ -10,7 +10,6 @@
 
     public class PrefixConversionsVm : INotifyPropertyChanged
     {
-        private static readonly IReadOnlyList<string> Illegals = new[] { "cubic", "square", "per" };
         private readonly Settings settings;
         private readonly ObservableCollection<PrefixConversionVm[]> prefixes = new ObservableCollection<PrefixConversionVm[]>();
         private Unit unit;
@@ -63,11 +62,6 @@
         private bool IsValidPrefixUnit(INameAndSymbol item)
         {
             if (this.settings.Prefixes.Any(p => item.Name.StartsWith(p.Name, StringComparison.OrdinalIgnoreCase)))
-            {
-                return false;
-            }
-
-            if (Illegals.Any(x => item.Name.IndexOf(x, StringComparison.OrdinalIgnoreCase) >= 0))
             {
                 return false;
             }

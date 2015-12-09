@@ -1,11 +1,14 @@
 ﻿namespace Gu.Units.Generator
 {
+    using System;
     using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     using System.ComponentModel;
     using System.Diagnostics;
     using System.Linq;
     using System.Runtime.CompilerServices;
     using JetBrains.Annotations;
+    using Reactive;
 
     [DebuggerDisplay("{Conversion.Symbol}")]
     public class PrefixConversionVm : INotifyPropertyChanged
@@ -13,11 +16,13 @@
         private readonly IList<PrefixConversion> conversions;
         private readonly IConversion baseConversion;
 
-        private PrefixConversionVm(IList<PrefixConversion> conversions, IConversion baseConversion, PrefixConversion prefixConversion)
+        private PrefixConversionVm(ObservableCollection<PrefixConversion> conversions, IConversion baseConversion, PrefixConversion prefixConversion)
         {
             this.conversions = conversions;
             this.baseConversion = baseConversion;
             Conversion = prefixConversion;
+            conversions.ObservePropertyChangedSlim()
+                       .Subscribe(_ => OnPropertyChanged(nameof(IsUsed)));
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

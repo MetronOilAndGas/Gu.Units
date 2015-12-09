@@ -1,11 +1,13 @@
 ﻿namespace Gu.Units.Generator
 {
+    using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.ComponentModel;
     using System.Linq;
     using System.Runtime.CompilerServices;
     using JetBrains.Annotations;
+    using Reactive;
 
     public class PartConversionVm : INotifyPropertyChanged
     {
@@ -16,6 +18,8 @@
             this.unit = unit;
             Conversion = conversion;
             IsEditable = Conversion.Name != unit.Name;
+            unit.PartConversions.ObservePropertyChangedSlim()
+                .Subscribe(_ => OnPropertyChanged(nameof(IsUsed)));
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

@@ -68,6 +68,7 @@
         }
 
         public IReadOnlyObservableCollection<IConversion> AllConversions => this.allConversions;
+
         public ICommand DeleteSelectedCommand { get; }
 
         [NotifyPropertyChangedInvocator]
@@ -78,6 +79,8 @@
 
         private void UpdateAllConversionsSubscription()
         {
+            this.allConversions.SetSource(null);
+            this.allConversions.SetSource(this.unit.AllConversions);
             if (this.unit == null)
             {
                 this.subscription.Disposable.Dispose();
@@ -91,7 +94,6 @@
                                                   this.unit.PrefixConversions.ObservePropertyChangedSlim(),
                                                   this.unit.PartConversions.ObservePropertyChangedSlim());
                 this.subscription.Disposable = observable.Subscribe(_ => UpdateAllConversionsSubscription());
-                this.allConversions.SetSource(this.unit.AllConversions);
             }
         }
 
