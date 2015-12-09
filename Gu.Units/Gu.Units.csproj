@@ -227,6 +227,7 @@
     </Compile>
     <Compile Include="Interfaces\IQuantity.cs" />
     <Compile Include="Interfaces\IUnit{TQuantity}.cs" />
+    <Compile Include="Internals\Ensure\Ensure.collection.cs" />
     <Compile Include="Internals\Ensure\Ensure.compare.cs" />
     <Compile Include="Internals\Ensure\Ensure.cs" />
     <Compile Include="Internals\Ensure\Ensure.string.cs" />

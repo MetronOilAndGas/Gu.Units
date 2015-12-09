@@ -32,9 +32,8 @@
         [Test]
         public void OffsetAndFactorConversion()
         {
-            Console.WriteLine((1/1.8).ToString("R", CultureInfo.InvariantCulture));
             var settings = MockSettings.Create();
-            var conversion = new OffsetConversion("Farenheit", "°F", 5.0/9, 459.67);
+            var conversion = new OffsetConversion("Farenheit", "°F", 0.55555555555555558, 459.67);
             settings.Kelvins.OffsetConversions.Add(conversion);
             Assert.AreEqual("0.55555555555555558*(farenheit + 459.67)", conversion.ToSi);
             Assert.AreEqual("1.7999999999999998*kelvin - 459.67", conversion.FromSi);

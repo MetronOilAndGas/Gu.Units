@@ -92,6 +92,9 @@
     <Compile Include="..\Gu.Units\Internals\Caching\ReadonlySet{T}.cs">
       <Link>Imports\ReadonlySet{T}.cs</Link>
     </Compile>
+    <Compile Include="..\Gu.Units\Internals\Ensure\Ensure.collection.cs">
+      <Link>Imports\Ensure.collection.cs</Link>
+    </Compile>
     <Compile Include="..\Gu.Units\Internals\Ensure\Ensure.compare.cs">
       <Link>Imports\Ensure.compare.cs</Link>
     </Compile>

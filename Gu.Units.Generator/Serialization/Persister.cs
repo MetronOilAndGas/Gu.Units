@@ -1,12 +1,12 @@
 ﻿namespace Gu.Units.Generator
 {
-    using System;
     using System.IO;
     using System.Reflection;
     using Newtonsoft.Json;
 
     public static class Persister
     {
+        private static readonly JsonSerializerSettings SerializerSettings = CreateSettings();
         public static string SettingsFileName
         {
             get
@@ -26,7 +26,7 @@
                     return true;
                 }
 
-                var json = JsonConvert.SerializeObject(Settings.Instance);
+                var json = JsonConvert.SerializeObject(Settings.Instance, SerializerSettings);
                 var file = File.ReadAllText(SettingsFileName);
                 return json != file;
             }
@@ -37,14 +37,14 @@
             if (Settings.Instance == null)
             {
                 var json = File.ReadAllText(SettingsFileName);
-                Settings.Instance = JsonConvert.DeserializeObject<Settings>(json, CreateSettings());
+                Settings.Instance = JsonConvert.DeserializeObject<Settings>(json, SerializerSettings);
             }
             return Settings.Instance;
         }
 
         public static void Save(string fileName)
         {
-            var json = JsonConvert.SerializeObject(Settings.Instance);
+            var json = JsonConvert.SerializeObject(Settings.Instance, SerializerSettings);
             File.WriteAllText(fileName, json);
         }
 
@@ -53,8 +53,8 @@
             return new JsonSerializerSettings
             {
                 Formatting = Formatting.Indented,
-                PreserveReferencesHandling = PreserveReferencesHandling.Objects,
-                ReferenceLoopHandling = ReferenceLoopHandling.Serialize,
+                PreserveReferencesHandling = PreserveReferencesHandling.None,
+                ReferenceLoopHandling = ReferenceLoopHandling.Error,
                 ContractResolver = ExcludeCalculatedResolver.Default,
                 MissingMemberHandling = MissingMemberHandling.Error
             };

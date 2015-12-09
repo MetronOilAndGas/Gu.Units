@@ -115,7 +115,7 @@
 
         internal static double ConvertFromSi(double value, IConversion conversion)
         {
-            return value / conversion.Factor - conversion.Factor;
+            return value / conversion.Factor - conversion.Offset;
         }
 
         public static bool IsSymbolNameValid(this IConversion conversion) => CodeDomProvider.IsValidIdentifier(conversion.Symbol);

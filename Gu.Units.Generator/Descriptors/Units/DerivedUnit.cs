@@ -1,8 +1,6 @@
 ﻿namespace Gu.Units.Generator
 {
-    using System;
     using System.Collections.Generic;
-    using System.Linq;
 
     /// <summary>
     /// http://en.wikipedia.org/wiki/SI_derived_unit
@@ -12,16 +10,8 @@
         public DerivedUnit(string name, string symbol, string quantityName, IReadOnlyList<UnitAndPower> parts)
             : base(name, symbol, quantityName)
         {
-            if (parts.Count == 0)
-            {
-                throw new ArgumentException("No units", "units");
-            }
-
-            if (parts.Count != parts.Select(x => x.UnitName).Distinct().Count())
-            {
-                throw new ArgumentException("Units must be distinct", nameof(parts));
-            }
-
+            Ensure.NotNullOrEmpty(parts, nameof(parts));
+            Ensure.Distinct(parts, x => x.UnitName, nameof(parts));
             Parts = new UnitParts(parts);
         }
 

@@ -1,6 +1,5 @@
 ﻿namespace Gu.Units.Generator
 {
-    using System;
     using System.ComponentModel;
     using System.Linq;
 
@@ -32,16 +31,14 @@
 
         public static UnitAndPower Create(Unit unit)
         {
+            Ensure.NotNull(unit, nameof(unit));
             return new UnitAndPower(unit.Name, 1);
         }
 
         public static UnitAndPower Create(Unit unit, int power)
         {
-            if (power == 0)
-            {
-                throw new ArgumentException("power == 0", nameof(power));
-            }
-
+            Ensure.NotNull(unit, nameof(unit));
+            Ensure.NotEqual(power, 0, nameof(power));
             return new UnitAndPower(unit.Name, power);
         }
 
@@ -52,7 +49,7 @@
                 return this.Unit.Symbol;
             }
 
-            return $"{Unit.Symbol}^{Power}";
+            return $"{Unit.Symbol}{SuperScript.GetString(Power)}";
         }
 
         protected bool Equals(UnitAndPower other)
@@ -68,14 +65,14 @@
                 return true;
             if (obj.GetType() != this.GetType())
                 return false;
-            return Equals((UnitAndPower) obj);
+            return Equals((UnitAndPower)obj);
         }
 
         public override int GetHashCode()
         {
             unchecked
             {
-                return (UnitName.GetHashCode()*397) ^ Power;
+                return (UnitName.GetHashCode() * 397) ^ Power;
             }
         }
     }
