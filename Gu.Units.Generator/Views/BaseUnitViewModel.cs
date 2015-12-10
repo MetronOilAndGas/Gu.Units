@@ -1,23 +1,18 @@
 ﻿namespace Gu.Units.Generator
 {
     using System;
-    using System.ComponentModel;
     using System.Linq;
     using System.Reactive.Disposables;
     using System.Reactive.Linq;
-    using System.Runtime.CompilerServices;
-    using JetBrains.Annotations;
     using Reactive;
 
-    public class BaseUnitViewModel : INotifyPropertyChanged
+    public class BaseUnitViewModel : UnitViewModel<BaseUnit>
     {
-        private const string UnknownName = "Unknown";
-        private const string UnknownSymbol = "??";
         private readonly SerialDisposable subscription = new SerialDisposable();
 
         public BaseUnitViewModel()
+            : this(new BaseUnit(UnknownName, UnknownSymbol, UnknownName))
         {
-            Unit = new BaseUnit(UnknownName, UnknownSymbol, UnknownName);
             Unit.ObservePropertyChangedSlim().Subscribe(_ =>
             {
                 if (Settings.Instance.BaseUnits.Contains(Unit))
@@ -32,32 +27,13 @@
             });
         }
 
-        public BaseUnitViewModel(BaseUnit unit)
+        public BaseUnitViewModel(BaseUnit unit) 
+            : base(unit)
         {
-            Unit = unit;
+            UpdateSubscriptions();
         }
-
-        public bool IsUnknown => Unit.Name == UnknownName ||
-                                  Unit.QuantityName == UnknownName ||
-                                  Unit.Symbol == UnknownSymbol;
 
         public bool IsOk => IsEverythingOk();
-
-        public BaseUnit Unit { get; }
-
-        private bool IsEverythingOk()
-        {
-            if (!Unit.AllConversions.All(c => c.CanRoundtrip))
-            {
-                return false;
-            }
-
-            if (IsUnknown)
-            {
-                return false;
-            }
-            return true;
-        }
 
         private void UpdateSubscriptions()
         {
@@ -67,16 +43,9 @@
                 Unit.FactorConversions.Select(x => x.PrefixConversions.ObservePropertyChangedSlim()).Merge(),
                 Unit.OffsetConversions.ObservePropertyChangedSlim(),
                 Unit.PrefixConversions.ObservePropertyChangedSlim(),
-                Unit.PartConversions.ObservePropertyChangedSlim());
+                Unit.PartConversions.ObservePropertyChangedSlim(),
+                Unit.ObservePropertyChangedSlim());
             this.subscription.Disposable = observable.Subscribe(_ => UpdateSubscriptions());
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

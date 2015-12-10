@@ -1,6 +1,7 @@
 NUGET
   remote: http://www.nuget.org/api/v2
   specs:
+    Gu.ChangeTracking (1.0.0.0)
     Gu.Reactive (1.10.0.0)
       Rx-Main (>= 2.0.0 < 3.0.0)
     Gu.Wpf.Reactive (1.10.0.0)

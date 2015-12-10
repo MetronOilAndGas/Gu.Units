@@ -1,4 +1,5 @@
 T4.TemplateFileManager
 Gu.Wpf.Reactive
+Gu.ChangeTracking
 JetBrains.Annotations
 Newtonsoft.Json
