@@ -3,3 +3,4 @@ Gu.Wpf.Reactive
 Gu.ChangeTracking
 JetBrains.Annotations
 Newtonsoft.Json
+Microsoft.CodeAnalysis.CSharp.Scripting

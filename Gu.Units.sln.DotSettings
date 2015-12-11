@@ -89,4 +89,6 @@ public void $TestName$()&#xD;
  private $TypeName$()&#xD;
  {&#xD;
  }</s:String>
+	<s:Boolean x:Key="/Default/ReSpeller/UserDictionaries/=en_005Fus/@KeyIndexDefined">True</s:Boolean>
+	<s:Boolean x:Key="/Default/ReSpeller/UserDictionaries/=en_005Fus/Words/=Milli/@EntryIndexedValue">True</s:Boolean>
 </wpf:ResourceDictionary>
