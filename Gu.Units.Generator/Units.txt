@@ -39,6 +39,11 @@
       "Name": "Giga",
       "Symbol": "G",
       "Power": 9
+    },
+    {
+      "Name": "Tera",
+      "Symbol": "T",
+      "Power": 12
     }
   ],
   "BaseUnits": [
@@ -264,6 +269,16 @@
           "Name": "Microamperes",
           "Symbol": "µA",
           "PrefixName": "Micro"
+        },
+        {
+          "Name": "Nanoamperes",
+          "Symbol": "nA",
+          "PrefixName": "Nano"
+        },
+        {
+          "Name": "Gigaamperes",
+          "Symbol": "GA",
+          "PrefixName": "Giga"
         }
       ],
       "PartConversions": []
@@ -280,7 +295,7 @@
     {
       "Name": "Bit",
       "Symbol": "bit",
-      "QuantityName": "UnitOfInformation",
+      "QuantityName": "Data",
       "FactorConversions": [],
       "OffsetConversions": [],
       "PrefixConversions": [
@@ -581,6 +596,21 @@
           "Name": "GramsPerCubicCentimetre",
           "Symbol": "g/cm³",
           "Factor": 999.99999999999989
+        },
+        {
+          "Name": "MilligramsPerCubicMillimetre",
+          "Symbol": "mg/mm³",
+          "Factor": 999.99999999999989
+        },
+        {
+          "Name": "GramsPerCubicMetre",
+          "Symbol": "g/m³",
+          "Factor": 0.001
+        },
+        {
+          "Name": "MilligramsPerCubicMetre",
+          "Symbol": "mg/m³",
+          "Factor": 1E-06
         }
       ]
     },
@@ -861,19 +891,39 @@
       "QuantityName": "Acceleration",
       "FactorConversions": [],
       "OffsetConversions": [],
-      "PrefixConversions": [
-        {
-          "Name": "MillimetresPerSecondSquared",
-          "Symbol": "mm/s²",
-          "PrefixName": "Milli"
-        },
+      "PrefixConversions": [],
+      "PartConversions": [
         {
           "Name": "CentimetresPerSecondSquared",
           "Symbol": "cm/s²",
-          "PrefixName": "Centi"
+          "Factor": 0.01
+        },
+        {
+          "Name": "MillimetresPerSecondSquared",
+          "Symbol": "mm/s²",
+          "Factor": 0.001
+        },
+        {
+          "Name": "MillimetresPerHourSquared",
+          "Symbol": "mm/h²",
+          "Factor": 7.7160493827160491E-11
+        },
+        {
+          "Name": "CentimetresPerHourSquared",
+          "Symbol": "cm/h²",
+          "Factor": 7.71604938271605E-10
+        },
+        {
+          "Name": "MetresPerHourSquared",
+          "Symbol": "m/h²",
+          "Factor": 7.71604938271605E-08
+        },
+        {
+          "Name": "MetresPerMinuteSquared",
+          "Symbol": "m/min²",
+          "Factor": 0.00027777777777777778
         }
-      ],
-      "PartConversions": []
+      ]
     },
     {
       "Parts": [
@@ -915,7 +965,68 @@
       "FactorConversions": [],
       "OffsetConversions": [],
       "PrefixConversions": [],
-      "PartConversions": []
+      "PartConversions": [
+        {
+          "Name": "NewtonsPerNanometre",
+          "Symbol": "N/nm",
+          "Factor": 999999999.99999988
+        },
+        {
+          "Name": "NewtonsPerMicrometre",
+          "Symbol": "N/µm",
+          "Factor": 1000000.0
+        },
+        {
+          "Name": "NewtonsPerMillimetre",
+          "Symbol": "N/mm",
+          "Factor": 1000.0
+        },
+        {
+          "Name": "KilonewtonsPerNanometre",
+          "Symbol": "kN/nm",
+          "Factor": 999999999999.99988
+        },
+        {
+          "Name": "KilonewtonsPerMicrometre",
+          "Symbol": "kN/µm",
+          "Factor": 1000000000.0
+        },
+        {
+          "Name": "KilonewtonsPerMillimetre",
+          "Symbol": "kN/mm",
+          "Factor": 1000000.0
+        },
+        {
+          "Name": "MeganewtonsPerNanometre",
+          "Symbol": "MN/nm",
+          "Factor": 999999999999999.88
+        },
+        {
+          "Name": "MeganewtonsPerMicrometre",
+          "Symbol": "MN/µm",
+          "Factor": 1000000000000.0
+        },
+        {
+          "Name": "MeganewtonsPerMillimetre",
+          "Symbol": "MN/mm",
+          "Factor": 1000000000.0
+        },
+        {
+          "Name": "GiganewtonsPerNanometre",
+          "Symbol": "GN/nm",
+          "Factor": 9.9999999999999987E+17
+        },
+        {
+          "Name": "GiganewtonsPerMicrometre",
+          "Symbol": "GN/µm",
+          "Factor": 1E+15
+        },
+        {
+          "Name": "GiganewtonsPerMillimetre",
+          "Symbol": "GN/mm",
+          "Factor": 1000000000000.0
+        }
+      ]
     },
     {
       "Parts": [
@@ -934,7 +1045,63 @@
       "FactorConversions": [],
       "OffsetConversions": [],
       "PrefixConversions": [],
-      "PartConversions": []
+      "PartConversions": [
+        {
+          "Name": "CubicMetresPerMinute",
+          "Symbol": "m³/min",
+          "Factor": 0.016666666666666666
+        },
+        {
+          "Name": "CubicMetresPerHour",
+          "Symbol": "m³/h",
+          "Factor": 0.00027777777777777778
+        },
+        {
+          "Name": "LitresPerSecond",
+          "Symbol": "L/s",
+          "Factor": 0.0010000000000000002
+        },
+        {
+          "Name": "LitresPerHour",
+          "Symbol": "L/h",
+          "Factor": 2.7777777777777787E-07
+        },
+        {
+          "Name": "LitresPerMinute",
+          "Symbol": "L/min",
+          "Factor": 1.6666666666666671E-05
+        },
+        {
+          "Name": "MillilitresPerSecond",
+          "Symbol": "ml/s",
+          "Factor": 1.0000000000000002E-06
+        },
+        {
+          "Name": "MillilitresPerHour",
+          "Symbol": "ml/h",
+          "Factor": 2.7777777777777782E-10
+        },
+        {
+          "Name": "MillilitresPerMinute",
+          "Symbol": "ml/min",
+          "Factor": 1.666666666666667E-08
+        },
+        {
+          "Name": "CentilitresPerSecond",
+          "Symbol": "cl/s",
+          "Factor": 1.0000000000000003E-05
+        },
+        {
+          "Name": "CentilitresPerHour",
+          "Symbol": "cl/h",
+          "Factor": 2.7777777777777784E-09
+        },
+        {
+          "Name": "CentilitresPerMinute",
+          "Symbol": "cl/min",
+          "Factor": 1.666666666666667E-07
+        }
+      ]
     },
     {
       "Parts": [
@@ -972,6 +1139,16 @@
           "Name": "Microvolts",
           "Symbol": "µV",
           "PrefixName": "Micro"
+        },
+        {
+          "Name": "Nanovolts",
+          "Symbol": "nV",
+          "PrefixName": "Nano"
+        },
+        {
+          "Name": "Gigavolts",
+          "Symbol": "GV",
+          "PrefixName": "Giga"
         }
       ],
       "PartConversions": []
@@ -1051,7 +1228,38 @@
       "QuantityName": "ElectricCharge",
       "FactorConversions": [],
       "OffsetConversions": [],
-      "PrefixConversions": [],
+      "PrefixConversions": [
+        {
+          "Name": "Nanocoulombs",
+          "Symbol": "nC",
+          "PrefixName": "Nano"
+        },
+        {
+          "Name": "Microcoulombs",
+          "Symbol": "µC",
+          "PrefixName": "Micro"
+        },
+        {
+          "Name": "Millicoulombs",
+          "Symbol": "mC",
+          "PrefixName": "Milli"
+        },
+        {
+          "Name": "Kilocoulombs",
+          "Symbol": "kC",
+          "PrefixName": "Kilo"
+        },
+        {
+          "Name": "Megacoulombs",
+          "Symbol": "MC",
+          "PrefixName": "Mega"
+        },
+        {
+          "Name": "Gigacoulombs",
+          "Symbol": "GC",
+          "PrefixName": "Giga"
+        }
+      ],
       "PartConversions": []
     },
     {
@@ -1074,7 +1282,38 @@
       "QuantityName": "Inductance",
       "FactorConversions": [],
       "OffsetConversions": [],
-      "PrefixConversions": [],
+      "PrefixConversions": [
+        {
+          "Name": "Nanohenrys",
+          "Symbol": "nH",
+          "PrefixName": "Nano"
+        },
+        {
+          "Name": "Microhenrys",
+          "Symbol": "µH",
+          "PrefixName": "Micro"
+        },
+        {
+          "Name": "Millihenrys",
+          "Symbol": "mH",
+          "PrefixName": "Milli"
+        },
+        {
+          "Name": "Kilohenrys",
+          "Symbol": "kH",
+          "PrefixName": "Kilo"
+        },
+        {
+          "Name": "Megahenrys",
+          "Symbol": "MH",
+          "PrefixName": "Mega"
+        },
+        {
+          "Name": "Gigahenrys",
+          "Symbol": "GH",
+          "PrefixName": "Giga"
+        }
+      ],
       "PartConversions": []
     },
     {
@@ -1093,7 +1332,38 @@
       "QuantityName": "Capacitance",
       "FactorConversions": [],
       "OffsetConversions": [],
-      "PrefixConversions": [],
+      "PrefixConversions": [
+        {
+          "Name": "Nanofarads",
+          "Symbol": "nF",
+          "PrefixName": "Nano"
+        },
+        {
+          "Name": "Microfarads",
+          "Symbol": "µF",
+          "PrefixName": "Micro"
+        },
+        {
+          "Name": "Millifarads",
+          "Symbol": "mF",
+          "PrefixName": "Milli"
+        },
+        {
+          "Name": "Kilofarads",
+          "Symbol": "kF",
+          "PrefixName": "Kilo"
+        },
+        {
+          "Name": "Megafarads",
+          "Symbol": "MF",
+          "PrefixName": "Mega"
+        },
+        {
+          "Name": "Gigafarads",
+          "Symbol": "GF",
+          "PrefixName": "Giga"
+        }
+      ],
       "PartConversions": []
     },
     {

@@ -24,7 +24,11 @@
             NameSpace = Settings.ProjectName;
             BaseUnits = new ObservableCollection<BaseUnitViewModel>(this.settings.BaseUnits.Select(x => new BaseUnitViewModel(x)));
             BaseUnits.ObserveCollectionChangedSlim(false)
-                     .Subscribe(OnBaseUnitsChanged);
+                .Subscribe(OnBaseUnitsChanged);
+            DerivedUnits = new ObservableCollection<DerivedUnitViewModel>(this.settings.DerivedUnits.Select(x => new DerivedUnitViewModel(x)));
+
+            DerivedUnits.ObserveCollectionChangedSlim(false)
+                .Subscribe(OnDerivedUnitsChanged);
             this.conversions = new ConversionsVm(this.settings);
         }
 
@@ -34,7 +38,7 @@
 
         public ObservableCollection<BaseUnitViewModel> BaseUnits { get; }
 
-        public ObservableCollection<DerivedUnit> DerivedUnits => this.settings.DerivedUnits;
+        public ObservableCollection<DerivedUnitViewModel> DerivedUnits { get; }
 
         public ConversionsVm Conversions => this.conversions;
 
@@ -76,6 +80,29 @@
                     break;
                 case NotifyCollectionChangedAction.Remove:
                     this.settings.BaseUnits.Remove(typedArgs.OldItems.Single().Unit);
+                    break;
+                case NotifyCollectionChangedAction.Replace:
+                    break;
+                case NotifyCollectionChangedAction.Move:
+                    break;
+                case NotifyCollectionChangedAction.Reset:
+                    throw new NotImplementedException();
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        private void OnDerivedUnitsChanged(NotifyCollectionChangedEventArgs args)
+        {
+            var typedArgs = args.As<DerivedUnitViewModel>();
+            switch (typedArgs.Action)
+            {
+                case NotifyCollectionChangedAction.Add:
+                    // NOP
+                    break;
+                case NotifyCollectionChangedAction.Remove:
+                    this.settings.DerivedUnits.Remove(typedArgs.OldItems.Single().Unit);
                     break;
                 case NotifyCollectionChangedAction.Replace:
                     break;

@@ -32,6 +32,11 @@
         [Test]
         public void OffsetAndFactorConversion()
         {
+            var farenheit = 1;
+            var d = 0.55555555555555558;
+            var kelvin = d * (farenheit + 459.67);
+            var rt = kelvin / d - 459.67;
+            Assert.AreEqual(farenheit, rt);
             var settings = MockSettings.Create();
             var conversion = new OffsetConversion("Farenheit", "°F", 0.55555555555555558, 459.67);
             settings.Kelvins.OffsetConversions.Add(conversion);

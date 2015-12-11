@@ -21,6 +21,7 @@
         private Unit unit;
         private IConversion selectedConversion;
         private BaseUnitViewModel selectedBaseUnit;
+        private DerivedUnitViewModel selectedDerivedUnit;
 
         public ConversionsVm(Settings settings)
         {
@@ -87,6 +88,25 @@
                 {
                     Unit = selected.Unit;
                 }
+                OnPropertyChanged();
+            }
+        }
+        public object SelectedDerivedUnit
+        {
+            get { return this.selectedDerivedUnit; }
+            set
+            {
+                var selected = value as DerivedUnitViewModel;
+                if (Equals(selected, this.selectedDerivedUnit))
+                {
+                    return;
+                }
+                this.selectedDerivedUnit = selected;
+                if (selected != null && !selected.IsUnknown)
+                {
+                    Unit = selected.Unit;
+                }
+
                 OnPropertyChanged();
             }
         }
