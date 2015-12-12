@@ -173,6 +173,15 @@
     <Compile Include="StringExt.cs" />
     <Compile Include="Views\BaseUnitViewModel.cs" />
     <Compile Include="Views\DerivedUnitViewModel.cs" />
+    <Compile Include="Views\FactorConversionsView.xaml.cs">
+      <DependentUpon>FactorConversionsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FactorConversionsVm.cs">
+      <DependentUpon>FactorConversionsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FactorConversionVm.cs">
+      <DependentUpon>FactorConversionsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\PartConversionsView.xaml.cs">
       <DependentUpon>PartConversionsView.xaml</DependentUpon>
     </Compile>
@@ -218,6 +227,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Views\ConversionsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\FactorConversionsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -45,8 +45,8 @@
             var settings = MockSettings.Create();
             var conversion = new FactorConversion("Inches", "in", 0.0254);
             settings.Metres.FactorConversions.Add(conversion);
-            Assert.AreEqual("0.025399999999999999*inches", conversion.ToSi);
-            Assert.AreEqual("39.370078740157481*metres", conversion.FromSi);
+            Assert.AreEqual("0.0254*inches", conversion.ToSi);
+            Assert.AreEqual("metres/0.0254", conversion.FromSi);
             Assert.AreEqual("1 in = 0.0254 m", conversion.SymbolConversion);
             Assert.AreEqual(true, conversion.CanRoundtrip);
         }

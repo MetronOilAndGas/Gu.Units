@@ -22,6 +22,8 @@
 
         public ObservableCollection<PartConversionVm[]> Conversions => this.conversions;
 
+        public bool HasItems => Conversions.Any(x => x.Length > 0);
+
         public void SetUnit(Unit value)
         {
             this.unit = value;
@@ -29,6 +31,7 @@
 
             if (this.unit == null)
             {
+                OnPropertyChanged(nameof(HasItems));
                 return;
             }
 
@@ -44,7 +47,10 @@
 
                 var partConversionVms = powerParts.Select(x => new PartConversionVm(this.unit, PartConversion.Create(this.unit, x)))
                     .ToArray();
-                this.conversions.Add(partConversionVms);
+                if (partConversionVms.Any())
+                {
+                    this.conversions.Add(partConversionVms);
+                }
             }
 
             else if (this.unit.Parts.Count == 2)
@@ -61,9 +67,15 @@
                         cs.Add(new PartConversionVm(this.unit, PartConversion.Create(this.unit, c1, c2)));
                     }
 
-                    this.conversions.Add(cs.ToArray());
+                    var conversionVms = cs.ToArray();
+                    if (conversionVms.Any())
+                    {
+                        this.conversions.Add(conversionVms);
+                    }
                 }
             }
+
+            OnPropertyChanged(nameof(HasItems));
         }
 
         [NotifyPropertyChangedInvocator]

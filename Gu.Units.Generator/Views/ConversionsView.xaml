@@ -5,7 +5,8 @@
              xmlns:local="clr-namespace:Gu.Units.Generator"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:reactive="http://Gu.com/Reactive"
-             DataContext="{Binding Conversions, Source={ x:Static local:MainVm.Instance}}"
+             DataContext="{Binding Conversions,
+                                   Source={x:Static local:MainVm.Instance}}"
              mc:Ignorable="d">
     <Grid>
         <Grid.RowDefinitions>
@@ -35,39 +36,24 @@
                                               StringFormat='BaseUnit: {0}'}" />
                     <GroupBox Grid.Row="1"
                               MinHeight="100"
-                              Header="Prefixes">
+                              Header="Prefixes"
+                              Visibility="{Binding PrefixConversions.HasItems,
+                                                   Converter={reactive:BooleanToVisibilityConverter WhenFalse=Collapsed,
+                                                                                                    WhenTrue=Visible}}">
                         <local:PrefixConversionsView />
                     </GroupBox>
 
                     <GroupBox Grid.Row="2"
                               MinHeight="100"
-                              Header="Subparts">
+                              Header="Subparts"
+                              Visibility="{Binding PartConversions.HasItems,
+                                                   Converter={reactive:BooleanToVisibilityConverter WhenFalse=Collapsed,
+                                                                                                    WhenTrue=Visible}}">
                         <local:PartConversionsView />
                     </GroupBox>
+
                     <GroupBox Grid.Row="3" Header="FactorConversions">
-                        <DataGrid AutoGenerateColumns="False"
-                                  CanUserAddRows="True"
-                                  CanUserDeleteRows="True"
-                                  CanUserReorderColumns="True"
-                                  ItemsSource="{Binding Unit.FactorConversions}">
-                            <DataGrid.Columns>
-                                <DataGridTextColumn Binding="{Binding Name}" Header="Unit" />
-                                <DataGridTextColumn Binding="{Binding Symbol}" Header="Symbol" />
-                                <DataGridTextColumn Binding="{Binding Factor}" Header="Factor" />
-                                <DataGridTextColumn Binding="{Binding Offset}"
-                                                    Header="Offset"
-                                                    IsReadOnly="True" />
-                                <DataGridTextColumn Binding="{Binding SymbolConversion}"
-                                                    Header="Conversion"
-                                                    IsReadOnly="True" />
-                                <DataGridTextColumn Binding="{Binding ToSi}"
-                                                    Header="ToSi"
-                                                    IsReadOnly="True" />
-                                <DataGridTextColumn Binding="{Binding FromSi}"
-                                                    Header="FromSi"
-                                                    IsReadOnly="True" />
-                            </DataGrid.Columns>
-                        </DataGrid>
+                        <local:FactorConversionsView />
                     </GroupBox>
 
                     <GroupBox Grid.Row="4" Header="OffsetConversions">
@@ -100,7 +86,7 @@
                               ItemsSource="{Binding AllConversions}"
                               SelectedItem="{Binding SelectedConversion}">
                         <DataGrid.InputBindings>
-                            <KeyBinding Key="Delete" Command="{Binding DeleteSelectedCommand}"></KeyBinding>
+                            <KeyBinding Key="Delete" Command="{Binding DeleteSelectedCommand}" />
                         </DataGrid.InputBindings>
                         <DataGrid.Columns>
                             <DataGridTemplateColumn Header="Status">
@@ -110,6 +96,7 @@
                                                  Height="10"
                                                  Fill="{Binding CanRoundtrip,
                                                                 Converter={reactive:BooleanToBrushConverter WhenFalse=Red,
+                                                                                                            WhenNull=Gray,
                                                                                                             WhenTrue=GreenYellow}}" />
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>

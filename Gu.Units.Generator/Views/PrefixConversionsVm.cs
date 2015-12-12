@@ -37,6 +37,7 @@
                 OnPropertyChanged();
             }
         }
+        public bool HasItems => Prefixes.Any();
 
         public void SetBaseUnit(Unit value)
         {
@@ -57,6 +58,8 @@
                     this.prefixes.Add(prefixConversionVms);
                 }
             }
+
+            OnPropertyChanged(nameof(HasItems));
         }
 
         private bool IsValidPrefixUnit(INameAndSymbol item)

@@ -28,7 +28,7 @@
             this.settings = settings;
             PrefixConversions = new PrefixConversionsVm(settings);
             PartConversions = new PartConversionsVm(settings);
-            Unit = settings.AllUnits.FirstOrDefault(x => x.QuantityName == "Speed"); // for designtime
+            Unit = settings.AllUnits.FirstOrDefault(x => x.QuantityName == "Angle"); // for designtime
             DeleteSelectedCommand = new RelayCommand(DeleteSelected);
         }
 
@@ -49,6 +49,7 @@
 
                 PrefixConversions.SetBaseUnit(value);
                 PartConversions.SetUnit(value);
+                FactorConversions.SetUnit(value);
                 OnPropertyChanged();
             }
         }
@@ -56,6 +57,8 @@
         public PrefixConversionsVm PrefixConversions { get; }
 
         public PartConversionsVm PartConversions { get; }
+
+        public FactorConversionsVm FactorConversions { get; } = new FactorConversionsVm();
 
         public IConversion SelectedConversion
         {
@@ -91,6 +94,7 @@
                 OnPropertyChanged();
             }
         }
+
         public object SelectedDerivedUnit
         {
             get { return this.selectedDerivedUnit; }

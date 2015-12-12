@@ -41,7 +41,7 @@
                 var intFactor = conversion.Factor.IntFactor();
                 if (intFactor == 0)
                 {
-                    return $"{conversion.Factor.ToString("G17", CultureInfo.InvariantCulture)}*{conversion.ParameterName}";
+                    return $"{conversion.Factor.ToString(CultureInfo.InvariantCulture)}*{conversion.ParameterName}";
                 }
 
                 if (intFactor < 0)
@@ -78,7 +78,7 @@
                 var intFactor = conversion.Factor.IntFactor();
                 if (intFactor == 0)
                 {
-                    return $"{(1.0 / conversion.Factor).ToString("G17", CultureInfo.InvariantCulture)}*{parameter}";
+                    return $"{parameter}/{conversion.Factor.ToString(CultureInfo.InvariantCulture)}";
                 }
 
                 if (intFactor < 0)
