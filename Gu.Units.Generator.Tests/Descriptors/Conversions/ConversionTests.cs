@@ -104,5 +104,25 @@
             Assert.AreEqual("1 mm/s = 0.001 m/s", conversion.SymbolConversion);
             Assert.AreEqual(true, conversion.CanRoundtrip);
         }
+
+        [Test]
+        public void CentimetresPerMinute()
+        {
+            var settings = MockSettings.Create();
+            var centi = new Prefix("Centi", "c", -2);
+            settings.Prefixes.Add(centi);
+            var centimetresConversion = PrefixConversion.Create(settings.Metres, centi);
+            var minuteConversion = new Generator.FactorConversion("Minute", "min", 60);
+            settings.Seconds.FactorConversions.Add(minuteConversion);
+            settings.Metres.PrefixConversions.Add(centimetresConversion);
+            var centiMetresPart = PartConversion.CreatePart(1, centimetresConversion);
+            var minutesPart = PartConversion.CreatePart(-1, minuteConversion);
+            var conversion = PartConversion.Create(settings.MetresPerSecond, centiMetresPart, minutesPart);
+            settings.MetresPerSecond.PartConversions.Add(conversion);
+            Assert.AreEqual("centimetresPerMinute/6000", conversion.ToSi);
+            Assert.AreEqual("6000*metresPerSecond", conversion.FromSi);
+            Assert.AreEqual("1 cm/min = 0.000166666666666667 m/s", conversion.SymbolConversion);
+            Assert.AreEqual(true, conversion.CanRoundtrip);
+        }
     }
 }

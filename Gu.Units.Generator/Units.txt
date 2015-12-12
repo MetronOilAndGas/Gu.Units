@@ -293,24 +293,24 @@
       "PartConversions": []
     },
     {
-      "Name": "Bit",
+      "Name": "Bits",
       "Symbol": "bit",
       "QuantityName": "Data",
       "FactorConversions": [],
       "OffsetConversions": [],
       "PrefixConversions": [
         {
-          "Name": "Megabit",
+          "Name": "Megabits",
           "Symbol": "Mbit",
           "PrefixName": "Mega"
         },
         {
-          "Name": "Gigabit",
+          "Name": "Gigabits",
           "Symbol": "Gbit",
           "PrefixName": "Giga"
         },
         {
-          "Name": "Kilobit",
+          "Name": "Kilobits",
           "Symbol": "kbit",
           "PrefixName": "Kilo"
         }
@@ -1012,11 +1012,6 @@
           "Factor": 1000000000.0
         },
         {
-          "Name": "GiganewtonsPerNanometre",
-          "Symbol": "GN/nm",
-          "Factor": 9.9999999999999987E+17
-        },
-        {
           "Name": "GiganewtonsPerMicrometre",
           "Symbol": "GN/µm",
           "Factor": 1E+15
@@ -1542,16 +1537,6 @@
           "Factor": 4.6296296296296296E-06
         },
         {
-          "Name": "NanometresPerHourCubed",
-          "Symbol": "nm⋅h⁻³",
-          "Factor": 2.1433470507544585E-20
-        },
-        {
-          "Name": "NanometresPerMinuteCubed",
-          "Symbol": "nm⋅min⁻³",
-          "Factor": 4.62962962962963E-15
-        },
-        {
           "Name": "CentimetresPerHourCubed",
           "Symbol": "cm⋅h⁻³",
           "Factor": 2.1433470507544584E-13
@@ -1590,11 +1575,6 @@
           "Name": "MicrometresPerPercent",
           "Symbol": "µm/%",
           "Factor": 9.9999999999999991E-05
-        },
-        {
-          "Name": "NanometresPerPercent",
-          "Symbol": "nm/%",
-          "Factor": 1.0000000000000001E-07
         },
         {
           "Name": "MetresPerPercent",

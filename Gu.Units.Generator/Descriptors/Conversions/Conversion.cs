@@ -38,18 +38,18 @@
                     return conversion.ParameterName;
                 }
 
-                var exponent = conversion.Factor.Exponent();
-                if (exponent == 0)
+                var intFactor = conversion.Factor.IntFactor();
+                if (intFactor == 0)
                 {
                     return $"{conversion.Factor.ToString("G17", CultureInfo.InvariantCulture)}*{conversion.ParameterName}";
                 }
 
-                if (exponent < 0)
+                if (intFactor < 0)
                 {
-                    return $"{conversion.ParameterName}/1{new string('0', Math.Abs(exponent))}";
+                    return $"{conversion.ParameterName}/{Math.Abs(intFactor)}";
                 }
 
-                return $"1{new string('0', exponent)}*{conversion.ParameterName}";
+                return $"{intFactor}*{conversion.ParameterName}";
             }
 
             var sign = Math.Sign(conversion.Offset) == 1
@@ -75,18 +75,18 @@
                     return parameter;
                 }
 
-                var exponent = conversion.Factor.Exponent();
-                if (exponent == 0)
+                var intFactor = conversion.Factor.IntFactor();
+                if (intFactor == 0)
                 {
                     return $"{(1.0 / conversion.Factor).ToString("G17", CultureInfo.InvariantCulture)}*{parameter}";
                 }
 
-                if (exponent < 0)
+                if (intFactor < 0)
                 {
-                    return $"1{new string('0', Math.Abs(exponent))}*{parameter}";
+                    return $"{Math.Abs(intFactor)}*{parameter}";
                 }
 
-                return $"{parameter}/1{new string('0', exponent)}";
+                return $"{parameter}/{intFactor}";
             }
 
             var sign = Math.Sign(conversion.Offset) == -1
@@ -142,17 +142,32 @@
             return result;
         }
 
-        private static int Exponent(this double factor)
+        private static long IntFactor(this double factor)
         {
-            for (int i = -12; i <= 12; i++)
+            if (factor >= 1)
             {
-                if (Math.Abs(factor - Math.Pow(10, i)) < float.Epsilon)
+                if (factor > 1E15)
                 {
-                    return i;
+                    return 0;
                 }
+                if (Math.Floor(factor) == factor)
+                {
+                    return (long)factor;
+                }
+
+                // this is an ad hoc mess
+                var digits = 14 - (int)Math.Log10(factor);
+                var round = Math.Round(factor, digits > 0 ? digits : 0);
+                var integer = (long)round;
+                if (round == integer)
+                {
+                    return integer;
+                }
+
+                return 0;
             }
 
-            return 0;
+            return -IntFactor(1 / factor);
         }
     }
 }
