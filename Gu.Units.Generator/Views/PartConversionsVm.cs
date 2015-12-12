@@ -89,7 +89,7 @@
             var powerParts = new List<PartConversion.PowerPart>();
             var unitAndPower = parts[index];
             powerParts.Add(new PartConversion.PowerPart(unitAndPower.Power, new PartConversion.IdentityConversion(unitAndPower.Unit)));
-            powerParts.AddRange(unitAndPower.Unit.AllConversions.Select(x => new PartConversion.PowerPart(unitAndPower.Power, x)));
+            powerParts.AddRange(unitAndPower.Unit.AllConversions.OfType<IFactorConversion>().Select(x => new PartConversion.PowerPart(unitAndPower.Power, x)));
             return powerParts;
         }
     }

@@ -44,8 +44,6 @@
             var settings = MockSettings.Create();
             var conversionVm = PrefixConversionVm.Create(settings.Grams, settings.Milli);
             Assert.AreEqual(1E-6, conversionVm.Conversion.Factor);
-            Assert.AreEqual(0, conversionVm.Conversion.Offset);
-            Assert.AreEqual(false, conversionVm.Conversion.IsOffset);
             Assert.AreEqual("milligrams/1000000", conversionVm.Conversion.ToSi);
             Assert.AreEqual("1000000*kilograms", conversionVm.Conversion.FromSi);
             Assert.AreEqual("1 mg = 1E-06 kg", conversionVm.Conversion.SymbolConversion);

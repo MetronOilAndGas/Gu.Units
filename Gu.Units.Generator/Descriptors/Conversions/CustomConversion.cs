@@ -1,23 +1,27 @@
 ﻿namespace Gu.Units.Generator
 {
+    using System;
     using System.ComponentModel;
     using System.Runtime.CompilerServices;
     using JetBrains.Annotations;
 
-    public class OffsetConversion : IConversion, INotifyPropertyChanged
+    public class CustomConversion : IConversion, INotifyPropertyChanged
     {
         private string name;
         private string symbol;
-        private double factor;
-        private double offset;
         private Unit unit;
+        private string toSi;
+        private string fromSi;
 
-        public OffsetConversion(string name, string symbol, double factor, double offset)
+        public CustomConversion(string name,
+            string symbol,
+            string toSi,
+            string fromSi)
         {
             this.name = name;
             this.symbol = symbol;
-            this.factor = factor;
-            this.offset = offset;
+            this.toSi = toSi;
+            this.fromSi = fromSi;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -58,43 +62,50 @@
             }
         }
 
-        public double Factor
+        public string ToSi
         {
-            get { return this.factor; }
+            get { return this.toSi; }
             set
             {
-                if (value.Equals(this.factor))
+                if (value == this.toSi)
                     return;
-                this.factor = value;
+                this.toSi = value;
                 OnPropertyChanged();
-                OnPropertyChanged(nameof(ToSi));
-                OnPropertyChanged(nameof(FromSi));
-                OnPropertyChanged(nameof(SymbolConversion));
                 OnPropertyChanged(nameof(CanRoundtrip));
+                try
+                {
+                    var temp = ExpressionParser.Evaluate(1, ParameterName, value);
+                }
+                catch (Exception e)
+                {
+                    throw new ArgumentException("Failed roundtripping", e);
+                }
             }
         }
 
-        public double Offset
+        public string FromSi
         {
-            get { return this.offset; }
+            get { return this.fromSi; }
             set
             {
-                if (value.Equals(this.offset))
+                if (value == this.fromSi)
+                {
                     return;
-                this.offset = value;
+                }
+
+                this.fromSi = value;
                 OnPropertyChanged();
-                OnPropertyChanged(nameof(ToSi));
-                OnPropertyChanged(nameof(FromSi));
-                OnPropertyChanged(nameof(SymbolConversion));
                 OnPropertyChanged(nameof(CanRoundtrip));
+                try
+                {
+                    var temp = ExpressionParser.Evaluate(1, Unit.ParameterName, value);
+                }
+                catch (Exception e)
+                {
+                    throw new ArgumentException(e.Message, e);
+                }
             }
         }
-
-        public bool IsOffset => true;
-
-        public string ToSi => this.GetToSi();
-
-        public string FromSi => this.GetFromSi();
 
         public string SymbolConversion => this.GetSymbolConversion();
 

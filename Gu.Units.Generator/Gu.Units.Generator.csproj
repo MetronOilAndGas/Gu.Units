@@ -147,9 +147,10 @@
     <Compile Include="Descriptors\Conversions\ExpressionParser.cs" />
     <Compile Include="Descriptors\Conversions\FactorConversion.cs" />
     <Compile Include="Descriptors\Conversions\IConversion.cs" />
+    <Compile Include="Descriptors\Conversions\IFactorConversion.cs" />
     <Compile Include="Descriptors\Conversions\PartConversion.cs" />
     <Compile Include="Descriptors\INameAndSymbol.cs" />
-    <Compile Include="Descriptors\Conversions\OffsetConversion.cs" />
+    <Compile Include="Descriptors\Conversions\CustomConversion.cs" />
     <Compile Include="Descriptors\Overloads\InverseOverload.cs" />
     <Compile Include="Descriptors\Overloads\Operator.cs" />
     <Compile Include="Descriptors\Overloads\OverloadFinder.cs" />

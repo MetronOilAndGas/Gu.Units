@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Descriptors\Conversions\ConversionTests.cs" />
+    <Compile Include="Descriptors\Conversions\CustomConversionTests.cs" />
     <Compile Include="Descriptors\Conversions\ExpressionParserTests.cs" />
     <Compile Include="Descriptors\Conversions\PartConversionTests.cs" />
     <Compile Include="Descriptors\Conversions\PrefixConversionTests.cs" />

@@ -18,11 +18,6 @@ namespace Gu.Units.Generator.Tests
                 return -1;
             }
 
-            if (x.Offset != y.Offset)
-            {
-                return -1;
-            }
-
             return 0;
         }
 

@@ -29,84 +29,56 @@
             throw new ArgumentOutOfRangeException($"Could not find a unit matching symbol {conversion.Symbol} for conversion {conversion.Name}");
         }
 
-        public static string GetToSi(this IConversion conversion)
+        public static string GetToSi(this IFactorConversion conversion)
         {
-            if (conversion.Offset == 0)
-            {
-                if (conversion.Factor == 1)
-                {
-                    return conversion.ParameterName;
-                }
-
-                var intFactor = conversion.Factor.IntFactor();
-                if (intFactor == 0)
-                {
-                    return $"{conversion.Factor.ToString(CultureInfo.InvariantCulture)}*{conversion.ParameterName}";
-                }
-
-                if (intFactor < 0)
-                {
-                    return $"{conversion.ParameterName}/{Math.Abs(intFactor)}";
-                }
-
-                return $"{intFactor}*{conversion.ParameterName}";
-            }
-
-            var sign = Math.Sign(conversion.Offset) == 1
-                ? "+"
-                : "-";
-
-            var offset = Math.Abs(conversion.Offset).ToString("G17", CultureInfo.InvariantCulture);
+            var parameter = conversion.ParameterName;
             if (conversion.Factor == 1)
             {
-                return $"{conversion.ParameterName} {sign} {offset}";
+                return parameter;
             }
 
-            return $"{conversion.Factor.ToString("G17", CultureInfo.InvariantCulture)}*({conversion.ParameterName} {sign} {offset})";
+            var intFactor = conversion.Factor.IntFactor();
+            if (intFactor == 0)
+            {
+                return $"{conversion.Factor.ToString(CultureInfo.InvariantCulture)}*{parameter}";
+            }
+
+            if (intFactor < 0)
+            {
+                return $"{parameter}/{Math.Abs(intFactor)}";
+            }
+
+            return $"{intFactor}*{parameter}";
         }
 
-        public static string GetFromSi(this IConversion conversion)
+        public static string GetFromSi(this IFactorConversion conversion)
         {
             var parameter = conversion.Unit.ParameterName;
-            if (conversion.Offset == 0)
-            {
-                if (conversion.Factor == 1)
-                {
-                    return parameter;
-                }
 
-                var intFactor = conversion.Factor.IntFactor();
-                if (intFactor == 0)
-                {
-                    return $"{parameter}/{conversion.Factor.ToString(CultureInfo.InvariantCulture)}";
-                }
-
-                if (intFactor < 0)
-                {
-                    return $"{Math.Abs(intFactor)}*{parameter}";
-                }
-
-                return $"{parameter}/{intFactor}";
-            }
-
-            var sign = Math.Sign(conversion.Offset) == -1
-                ? "+"
-                : "-";
-
-            var offset = Math.Abs(conversion.Offset).ToString("G17", CultureInfo.InvariantCulture);
             if (conversion.Factor == 1)
             {
-                return $"{parameter} {sign} {offset}";
+                return parameter;
             }
 
-            return $"{(1.0 / conversion.Factor).ToString("G17", CultureInfo.InvariantCulture)}*{parameter} {sign} {offset}";
+            var intFactor = conversion.Factor.IntFactor();
+            if (intFactor == 0)
+            {
+                return $"{parameter}/{conversion.Factor.ToString(CultureInfo.InvariantCulture)}";
+            }
+
+            if (intFactor < 0)
+            {
+                return $"{Math.Abs(intFactor)}*{parameter}";
+            }
+
+            return $"{parameter}/{intFactor}";
         }
 
         public static string GetSymbolConversion(this IConversion conversion)
         {
             var unit = conversion.Unit;
             var toSi = conversion.ToSi;
-            var convert = ConvertToSi(1, toSi);
+            var convert = ConvertToSi(1, conversion.ParameterName, toSi);
 
             return $"1 {conversion.Symbol.NormalizeSymbol()} = {convert.ToString(CultureInfo.InvariantCulture)} {unit.Symbol.NormalizeSymbol()}";
         }
@@ -117,8 +89,8 @@
             var fromSi = conversion.FromSi;
             foreach (var value in new[] { 0, 100 })
             {
-                var si = ConvertToSi(value, toSi);
-                var roundtrip = ConvertFromSi(si, fromSi);
+                var si = ConvertToSi(value, conversion.ParameterName, toSi);
+                var roundtrip = ConvertFromSi(si, conversion.Unit.ParameterName, fromSi);
                 if (roundtrip != value)
                 {
                     return false;
@@ -130,15 +102,15 @@
 
         public static bool IsSymbolNameValid(this IConversion conversion) => CodeDomProvider.IsValidIdentifier(conversion.Symbol);
 
-        internal static double ConvertToSi(double value, string toSi)
+        internal static double ConvertToSi(double value, string parameter, string toSi)
         {
-            var result = ExpressionParser.Evaluate(value, toSi);
+            var result = ExpressionParser.Evaluate(value, parameter, toSi);
             return result;
         }
 
-        internal static double ConvertFromSi(double value, string fromSi)
+        internal static double ConvertFromSi(double value, string parameter, string fromSi)
         {
-            var result = ExpressionParser.Evaluate(value, fromSi);
+            var result = ExpressionParser.Evaluate(value, parameter, fromSi);
             return result;
         }
 

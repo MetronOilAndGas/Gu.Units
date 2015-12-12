@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
 
-    public class PartConversion : IConversion
+    public class PartConversion : IFactorConversion
     {
         private Unit unit;
 
@@ -22,10 +22,6 @@
         public string Symbol { get; }
 
         public double Factor { get; }
-
-        public double Offset => 0;
-
-        public bool IsOffset => false;
 
         public string ToSi => this.GetToSi();
 
@@ -69,7 +65,7 @@
             return new PartConversion(name, symbol, factor) { unit = unit };
         }
 
-        public static PowerPart CreatePart(int power, IConversion conversion)
+        public static PowerPart CreatePart(int power, IFactorConversion conversion)
         {
             return new PowerPart(power, conversion);
         }
@@ -81,7 +77,7 @@
 
         public class PowerPart
         {
-            public PowerPart(int power, IConversion conversion)
+            public PowerPart(int power, IFactorConversion conversion)
             {
                 Power = power;
                 Conversion = conversion;
@@ -89,7 +85,7 @@
 
             public int Power { get; }
 
-            public IConversion Conversion { get; }
+            public IFactorConversion Conversion { get; }
 
             public string FirstName
             {
@@ -173,7 +169,7 @@
             }
         }
 
-        public class IdentityConversion : IConversion
+        public class IdentityConversion : IFactorConversion
         {
 
             public IdentityConversion(Unit unit)
@@ -188,10 +184,6 @@
             public string Symbol => Unit.Symbol;
 
             public double Factor => 1;
-
-            public double Offset => 0;
-
-            public bool IsOffset => false;
 
             public string ToSi => this.GetToSi();
 

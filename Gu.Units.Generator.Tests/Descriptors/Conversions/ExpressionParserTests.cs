@@ -8,7 +8,7 @@
         public void FactorConversion()
         {
             var text = "1E6*kilograms";
-            var actual = ExpressionParser.Evaluate(1, text);
+            var actual = ExpressionParser.Evaluate(1, "kilograms", text);
             Assert.AreEqual(1E6 * 1, actual);
         }
     }

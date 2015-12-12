@@ -5,7 +5,7 @@
     using System.Runtime.CompilerServices;
     using JetBrains.Annotations;
 
-    public class FactorConversion : IConversion, INotifyPropertyChanged
+    public class FactorConversion : IFactorConversion, INotifyPropertyChanged
     {
         private string name;
         private string symbol;
@@ -71,10 +71,6 @@
                 OnPropertyChanged(nameof(CanRoundtrip));
             }
         }
-
-        public double Offset => 0;
-
-        public bool IsOffset => false;
 
         public string ToSi => this.GetToSi();
 

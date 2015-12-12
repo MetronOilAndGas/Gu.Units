@@ -52,13 +52,13 @@
         }
 
         [Test]
-        public void OffsetAndFactorConversion()
+        public void CustomConversion()
         {
             var settings = MockSettings.Create();
-            var conversion = new OffsetConversion("Farenheit", "°F", 0.55555555555555558, 459.67);
+            var conversion = new CustomConversion("Farenheit", "°F", "(farenheit + 459.67)/1.8", "1.8*kelvin - 459.67");
             settings.Kelvins.OffsetConversions.Add(conversion);
-            Assert.AreEqual("5/9*(farenheit + 459.67)", conversion.ToSi);
-            Assert.AreEqual("9/5*kelvin - 459.67000000000002", conversion.FromSi);
+            Assert.AreEqual("(farenheit + 459.67)/1.8", conversion.ToSi);
+            Assert.AreEqual("1.8*kelvin - 459.67", conversion.FromSi);
             Assert.AreEqual("1 °F = 255.927777777778 K", conversion.SymbolConversion);
             Assert.AreEqual(true, conversion.CanRoundtrip);
         }

@@ -6,7 +6,7 @@
     using System.Runtime.CompilerServices;
     using JetBrains.Annotations;
 
-    public class PrefixConversion : IConversion
+    public class PrefixConversion : IFactorConversion
     {
         private string name;
         private string symbol;
@@ -80,10 +80,6 @@
                 throw new ArgumentOutOfRangeException($"Could not calculate factor for {Name}");
             }
         }
-
-        public double Offset => 0;
-
-        public bool IsOffset => false;
 
         public string ToSi => this.GetToSi();
 

@@ -69,7 +69,7 @@ namespace Gu.Units.Generator
 
         public ObservableCollection<FactorConversion> FactorConversions { get; } = new ObservableCollection<FactorConversion>();
 
-        public ObservableCollection<OffsetConversion> OffsetConversions { get; } = new ObservableCollection<OffsetConversion>();
+        public ObservableCollection<CustomConversion> OffsetConversions { get; } = new ObservableCollection<CustomConversion>();
 
         public ObservableCollection<PrefixConversion> PrefixConversions { get; } = new ObservableCollection<PrefixConversion>();
 
