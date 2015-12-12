@@ -56,7 +56,7 @@
         {
             var settings = MockSettings.Create();
             var conversion = new CustomConversion("Farenheit", "°F", "(farenheit + 459.67)/1.8", "1.8*kelvin - 459.67");
-            settings.Kelvins.OffsetConversions.Add(conversion);
+            settings.Kelvins.CustomConversions.Add(conversion);
             Assert.AreEqual("(farenheit + 459.67)/1.8", conversion.ToSi);
             Assert.AreEqual("1.8*kelvin - 459.67", conversion.FromSi);
             Assert.AreEqual("1 °F = 255.927777777778 K", conversion.SymbolConversion);

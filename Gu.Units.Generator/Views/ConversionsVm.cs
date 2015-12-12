@@ -50,6 +50,7 @@
                 PrefixConversions.SetBaseUnit(value);
                 PartConversions.SetUnit(value);
                 FactorConversions.SetUnit(value);
+                CustomConversions.SetUnit(value);
                 OnPropertyChanged();
             }
         }
@@ -59,6 +60,8 @@
         public PartConversionsVm PartConversions { get; }
 
         public FactorConversionsVm FactorConversions { get; } = new FactorConversionsVm();
+
+        public CustomConversionsVm CustomConversions { get; } = new CustomConversionsVm();
 
         public IConversion SelectedConversion
         {
@@ -134,7 +137,7 @@
             {
                 var observable = Observable.Merge(this.unit.FactorConversions.ObservePropertyChangedSlim(),
                                                   this.unit.FactorConversions.Select(x => x.PrefixConversions.ObservePropertyChangedSlim()).Merge(),
-                                                  this.unit.OffsetConversions.ObservePropertyChangedSlim(),
+                                                  this.unit.CustomConversions.ObservePropertyChangedSlim(),
                                                   this.unit.PrefixConversions.ObservePropertyChangedSlim(),
                                                   this.unit.PartConversions.ObservePropertyChangedSlim());
                 this.subscription.Disposable = observable.Subscribe(_ => UpdateAllConversionsSubscription());
@@ -154,7 +157,7 @@
                 TryRemove(factorConversion.PrefixConversions, this.selectedConversion);
             }
 
-            TryRemove(this.unit.OffsetConversions, this.selectedConversion);
+            TryRemove(this.unit.CustomConversions, this.selectedConversion);
             TryRemove(this.unit.PrefixConversions, this.selectedConversion);
             TryRemove(this.unit.PartConversions, this.selectedConversion);
         }

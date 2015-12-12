@@ -143,6 +143,9 @@
     <Compile Include="..\Gu.Units\SuperScript.cs">
       <Link>Imports\SuperScript.cs</Link>
     </Compile>
+    <Compile Include="Views\CustomConversionsView.xaml.cs">
+      <DependentUpon>CustomConversionsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Descriptors\Conversions\ConversionFormula.cs" />
     <Compile Include="Descriptors\Conversions\ExpressionParser.cs" />
     <Compile Include="Descriptors\Conversions\FactorConversion.cs" />
@@ -172,8 +175,14 @@
     <Compile Include="Serialization\ExcludeCalculatedResolver.cs" />
     <Compile Include="Serialization\Persister.cs" />
     <Compile Include="StringExt.cs" />
-    <Compile Include="Views\BaseUnitViewModel.cs" />
-    <Compile Include="Views\DerivedUnitViewModel.cs" />
+    <Compile Include="Views\CustomConversionsVm.cs">
+      <DependentUpon>CustomConversionsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CustomConversionVm.cs">
+      <DependentUpon>CustomConversionsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UnitViewModels\BaseUnitViewModel.cs" />
+    <Compile Include="Views\UnitViewModels\DerivedUnitViewModel.cs" />
     <Compile Include="Views\FactorConversionsView.xaml.cs">
       <DependentUpon>FactorConversionsView.xaml</DependentUpon>
     </Compile>
@@ -209,12 +218,16 @@
     <Compile Include="Views\PrefixConversionVm.cs">
       <DependentUpon>PrefixConversionsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\UnitViewModel.cs" />
+    <Compile Include="Views\UnitViewModels\UnitViewModel.cs" />
     <Compile Include="WpfStuff\ObservableCollectionExt.cs" />
     <Compile Include="WpfStuff\RelayCommand.cs" />
     <Compile Include="WpfStuff\StringToFormulaConverter.cs" />
     <Compile Include="WpfStuff\ParentCollection.cs" />
     <Compile Include="WpfStuff\UnitPartsConverter.cs" />
+    <Page Include="Views\CustomConversionsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

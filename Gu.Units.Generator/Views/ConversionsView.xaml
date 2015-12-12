@@ -56,28 +56,8 @@
                         <local:FactorConversionsView />
                     </GroupBox>
 
-                    <GroupBox Grid.Row="4" Header="OffsetConversions">
-                        <DataGrid AutoGenerateColumns="False"
-                                  CanUserAddRows="True"
-                                  CanUserDeleteRows="True"
-                                  CanUserReorderColumns="True"
-                                  ItemsSource="{Binding Unit.OffsetConversions}">
-                            <DataGrid.Columns>
-                                <DataGridTextColumn Binding="{Binding Name}" Header="Unit" />
-                                <DataGridTextColumn Binding="{Binding Symbol}" Header="Symbol" />
-                                <DataGridTextColumn Binding="{Binding Factor}" Header="Factor" />
-                                <DataGridTextColumn Binding="{Binding Offset}" Header="Offset" />
-                                <DataGridTextColumn Binding="{Binding SymbolConversion}"
-                                                    Header="Conversion"
-                                                    IsReadOnly="True" />
-                                <DataGridTextColumn Binding="{Binding ToSi}"
-                                                    Header="ToSi"
-                                                    IsReadOnly="True" />
-                                <DataGridTextColumn Binding="{Binding FromSi}"
-                                                    Header="FromSi"
-                                                    IsReadOnly="True" />
-                            </DataGrid.Columns>
-                        </DataGrid>
+                    <GroupBox Grid.Row="4" Header="CustomConversions">
+                        <local:CustomConversionsView />
                     </GroupBox>
                 </Grid>
                 <GroupBox Grid.Row="1" Header="All">

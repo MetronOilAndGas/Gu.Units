@@ -253,7 +253,7 @@
 
 //                if (offset != 0)
 //                {
-//                    unit.OffsetConversions.Add(new CustomConversion(name, symbol, factor, offset));
+//                    unit.CustomConversions.Add(new CustomConversion(name, symbol, factor, offset));
 //                    continue;
 //                }
 //                throw new NotImplementedException();

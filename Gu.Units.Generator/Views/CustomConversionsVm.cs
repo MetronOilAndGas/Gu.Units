@@ -6,17 +6,17 @@
     using System.Linq;
     using Reactive;
 
-    public class FactorConversionsVm
+    public class CustomConversionsVm
     {
         private Unit unit;
         private bool isUpdating;
-        public FactorConversionsVm()
+        public CustomConversionsVm()
         {
             Conversions.ObserveCollectionChangedSlim(false)
                        .Subscribe(Synchronize);
         }
 
-        public ObservableCollection<FactorConversionVm> Conversions { get; } = new ObservableCollection<FactorConversionVm>();
+        public ObservableCollection<CustomConversionVm> Conversions { get; } = new ObservableCollection<CustomConversionVm>();
 
         public void SetUnit(Unit unit)
         {
@@ -29,9 +29,9 @@
             try
             {
                 this.isUpdating = true;
-                foreach (var conversion in unit.FactorConversions)
+                foreach (var conversion in unit.CustomConversions)
                 {
-                    Conversions.Add(new FactorConversionVm(conversion));
+                    Conversions.Add(new CustomConversionVm(conversion));
                 }
             }
             finally
@@ -46,14 +46,14 @@
             {
                 return;
             }
-            var args = e.As<FactorConversionVm>();
+            var args = e.As<CustomConversionVm>();
             switch (args.Action)
             {
                 case NotifyCollectionChangedAction.Add:
-                    this.unit.FactorConversions.Add(args.NewItems.Single().Conversion);
+                    this.unit.CustomConversions.Add(args.NewItems.Single().Conversion);
                     break;
                 case NotifyCollectionChangedAction.Remove:
-                    this.unit.FactorConversions.Remove(args.NewItems.Single().Conversion);
+                    this.unit.CustomConversions.Remove(args.NewItems.Single().Conversion);
                     break;
                 case NotifyCollectionChangedAction.Replace:
                 case NotifyCollectionChangedAction.Move:

@@ -70,7 +70,7 @@
           ]
         }
       ],
-      "OffsetConversions": [],
+      "CustomConversions": [],
       "PrefixConversions": [],
       "PartConversions": []
     },
@@ -104,7 +104,7 @@
           "PrefixConversions": []
         }
       ],
-      "OffsetConversions": [],
+      "CustomConversions": [],
       "PrefixConversions": [
         {
           "Name": "Nanometres",
@@ -157,7 +157,7 @@
           "PrefixConversions": []
         }
       ],
-      "OffsetConversions": [],
+      "CustomConversions": [],
       "PrefixConversions": [
         {
           "Name": "Nanoseconds",
@@ -182,18 +182,18 @@
       "Symbol": "K",
       "QuantityName": "Temperature",
       "FactorConversions": [],
-      "OffsetConversions": [
+      "CustomConversions": [
         {
           "Name": "Celsius",
           "Symbol": "°C",
-          "Factor": 1.0,
-          "Offset": -273.15
+          "ToSi": "celsius + 273.15",
+          "FromSi": "kelvin - 273.15"
         },
         {
           "Name": "Fahrenheit",
           "Symbol": "°F",
-          "Factor": 1.8,
-          "Offset": -459.67
+          "ToSi": "(fahrenheit + 459.67)/1.8",
+          "FromSi": "1.8*kelvin - 459.67"
         }
       ],
       "PrefixConversions": [],
@@ -211,7 +211,7 @@
           "PrefixConversions": []
         }
       ],
-      "OffsetConversions": [],
+      "CustomConversions": [],
       "PrefixConversions": [],
       "PartConversions": []
     },
@@ -239,7 +239,7 @@
           "PrefixConversions": []
         }
       ],
-      "OffsetConversions": [],
+      "CustomConversions": [],
       "PrefixConversions": [],
       "PartConversions": []
     },
@@ -248,7 +248,7 @@
       "Symbol": "A",
       "QuantityName": "Current",
       "FactorConversions": [],
-      "OffsetConversions": [],
+      "CustomConversions": [],
       "PrefixConversions": [
         {
           "Name": "Milliamperes",
@@ -288,7 +288,7 @@
       "Symbol": "cd",
       "QuantityName": "LuminousIntensity",
       "FactorConversions": [],
-      "OffsetConversions": [],
+      "CustomConversions": [],
       "PrefixConversions": [],
       "PartConversions": []
     },
@@ -297,7 +297,7 @@
       "Symbol": "bit",
       "QuantityName": "Data",
       "FactorConversions": [],
-      "OffsetConversions": [],
+      "CustomConversions": [],
       "PrefixConversions": [
         {
           "Name": "Megabits",
@@ -337,7 +337,7 @@
           "PrefixConversions": []
         }
       ],
-      "OffsetConversions": [],
+      "CustomConversions": [],
       "PrefixConversions": [],
       "PartConversions": [
         {
@@ -411,7 +411,7 @@
           ]
         }
       ],
-      "OffsetConversions": [],
+      "CustomConversions": [],
       "PrefixConversions": [],
       "PartConversions": [
         {
@@ -455,7 +455,7 @@
       "Symbol": "N",
       "QuantityName": "Force",
       "FactorConversions": [],
-      "OffsetConversions": [],
+      "CustomConversions": [],
       "PrefixConversions": [
         {
           "Name": "Nanonewtons",
@@ -518,7 +518,7 @@
           ]
         }
       ],
-      "OffsetConversions": [],
+      "CustomConversions": [],
       "PrefixConversions": [
         {
           "Name": "Nanopascals",
@@ -584,7 +584,7 @@
       "Symbol": "kg/m³",
       "QuantityName": "Density",
       "FactorConversions": [],
-      "OffsetConversions": [],
+      "CustomConversions": [],
       "PrefixConversions": [],
       "PartConversions": [
         {
@@ -633,7 +633,7 @@
       "Symbol": "J",
       "QuantityName": "Energy",
       "FactorConversions": [],
-      "OffsetConversions": [],
+      "CustomConversions": [],
       "PrefixConversions": [
         {
           "Name": "Nanojoules",
@@ -689,7 +689,7 @@
       "Symbol": "W",
       "QuantityName": "Power",
       "FactorConversions": [],
-      "OffsetConversions": [],
+      "CustomConversions": [],
       "PrefixConversions": [
         {
           "Name": "Nanowatts",
@@ -739,7 +739,7 @@
       "Symbol": "m/s",
       "QuantityName": "Speed",
       "FactorConversions": [],
-      "OffsetConversions": [],
+      "CustomConversions": [],
       "PrefixConversions": [],
       "PartConversions": [
         {
@@ -804,7 +804,7 @@
       "Symbol": "rad/s",
       "QuantityName": "AngularSpeed",
       "FactorConversions": [],
-      "OffsetConversions": [],
+      "CustomConversions": [],
       "PrefixConversions": [],
       "PartConversions": [
         {
@@ -850,7 +850,7 @@
       "Symbol": "Hz",
       "QuantityName": "Frequency",
       "FactorConversions": [],
-      "OffsetConversions": [],
+      "CustomConversions": [],
       "PrefixConversions": [
         {
           "Name": "Millihertz",
@@ -890,7 +890,7 @@
       "Symbol": "m/s²",
       "QuantityName": "Acceleration",
       "FactorConversions": [],
-      "OffsetConversions": [],
+      "CustomConversions": [],
       "PrefixConversions": [],
       "PartConversions": [
         {
@@ -944,7 +944,7 @@
       "Symbol": "N⋅m",
       "QuantityName": "Torque",
       "FactorConversions": [],
-      "OffsetConversions": [],
+      "CustomConversions": [],
       "PrefixConversions": [],
       "PartConversions": []
     },
@@ -963,7 +963,7 @@
       "Symbol": "N/m",
       "QuantityName": "Stiffness",
       "FactorConversions": [],
-      "OffsetConversions": [],
+      "CustomConversions": [],
       "PrefixConversions": [],
       "PartConversions": [
         {
@@ -1038,7 +1038,7 @@
       "Symbol": "m³/s",
       "QuantityName": "VolumetricFlow",
       "FactorConversions": [],
-      "OffsetConversions": [],
+      "CustomConversions": [],
       "PrefixConversions": [],
       "PartConversions": [
         {
@@ -1113,7 +1113,7 @@
       "Symbol": "V",
       "QuantityName": "Voltage",
       "FactorConversions": [],
-      "OffsetConversions": [],
+      "CustomConversions": [],
       "PrefixConversions": [
         {
           "Name": "Millivolts",
@@ -1163,7 +1163,7 @@
       "Symbol": "Ω",
       "QuantityName": "Resistance",
       "FactorConversions": [],
-      "OffsetConversions": [],
+      "CustomConversions": [],
       "PrefixConversions": [
         {
           "Name": "Microohm",
@@ -1203,7 +1203,7 @@
       "Symbol": "J/kg",
       "QuantityName": "SpecificEnergy",
       "FactorConversions": [],
-      "OffsetConversions": [],
+      "CustomConversions": [],
       "PrefixConversions": [],
       "PartConversions": []
     },
@@ -1222,7 +1222,7 @@
       "Symbol": "C",
       "QuantityName": "ElectricCharge",
       "FactorConversions": [],
-      "OffsetConversions": [],
+      "CustomConversions": [],
       "PrefixConversions": [
         {
           "Name": "Nanocoulombs",
@@ -1276,7 +1276,7 @@
       "Symbol": "H",
       "QuantityName": "Inductance",
       "FactorConversions": [],
-      "OffsetConversions": [],
+      "CustomConversions": [],
       "PrefixConversions": [
         {
           "Name": "Nanohenrys",
@@ -1326,7 +1326,7 @@
       "Symbol": "F",
       "QuantityName": "Capacitance",
       "FactorConversions": [],
-      "OffsetConversions": [],
+      "CustomConversions": [],
       "PrefixConversions": [
         {
           "Name": "Nanofarads",
@@ -1376,7 +1376,7 @@
       "Symbol": "m/N",
       "QuantityName": "Flexibility",
       "FactorConversions": [],
-      "OffsetConversions": [],
+      "CustomConversions": [],
       "PrefixConversions": [
         {
           "Name": "MillimetresPerNewton",
@@ -1412,7 +1412,7 @@
       "Symbol": "rad/s²",
       "QuantityName": "AngularAcceleration",
       "FactorConversions": [],
-      "OffsetConversions": [],
+      "CustomConversions": [],
       "PrefixConversions": [],
       "PartConversions": [
         {
@@ -1457,7 +1457,7 @@
       "Symbol": "rad/s³",
       "QuantityName": "AngularJerk",
       "FactorConversions": [],
-      "OffsetConversions": [],
+      "CustomConversions": [],
       "PrefixConversions": [],
       "PartConversions": [
         {
@@ -1502,7 +1502,7 @@
       "Symbol": "m/s³",
       "QuantityName": "Jerk",
       "FactorConversions": [],
-      "OffsetConversions": [],
+      "CustomConversions": [],
       "PrefixConversions": [
         {
           "Name": "MillimetresPerSecondCubed",
@@ -1563,7 +1563,7 @@
       "Symbol": "m/ul",
       "QuantityName": "LengthPerUnitless",
       "FactorConversions": [],
-      "OffsetConversions": [],
+      "CustomConversions": [],
       "PrefixConversions": [],
       "PartConversions": [
         {
@@ -1598,7 +1598,7 @@
       "Symbol": "rad/ul",
       "QuantityName": "AnglePerUnitless",
       "FactorConversions": [],
-      "OffsetConversions": [],
+      "CustomConversions": [],
       "PrefixConversions": [],
       "PartConversions": [
         {
@@ -1628,7 +1628,7 @@
       "Symbol": "N/ul",
       "QuantityName": "ForcePerUnitless",
       "FactorConversions": [],
-      "OffsetConversions": [],
+      "CustomConversions": [],
       "PrefixConversions": [],
       "PartConversions": [
         {

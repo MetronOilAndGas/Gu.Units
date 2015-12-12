@@ -71,6 +71,7 @@
                     return;
                 this.toSi = value;
                 OnPropertyChanged();
+                OnPropertyChanged(SymbolConversion);
                 OnPropertyChanged(nameof(CanRoundtrip));
                 try
                 {
@@ -95,7 +96,9 @@
 
                 this.fromSi = value;
                 OnPropertyChanged();
+                OnPropertyChanged(SymbolConversion);
                 OnPropertyChanged(nameof(CanRoundtrip));
+
                 try
                 {
                     var temp = ExpressionParser.Evaluate(1, Unit.ParameterName, value);

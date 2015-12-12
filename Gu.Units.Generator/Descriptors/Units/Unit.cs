@@ -69,7 +69,7 @@ namespace Gu.Units.Generator
 
         public ObservableCollection<FactorConversion> FactorConversions { get; } = new ObservableCollection<FactorConversion>();
 
-        public ObservableCollection<CustomConversion> OffsetConversions { get; } = new ObservableCollection<CustomConversion>();
+        public ObservableCollection<CustomConversion> CustomConversions { get; } = new ObservableCollection<CustomConversion>();
 
         public ObservableCollection<PrefixConversion> PrefixConversions { get; } = new ObservableCollection<PrefixConversion>();
 
@@ -88,7 +88,7 @@ namespace Gu.Units.Generator
                     }
                 }
 
-                foreach (var offsetConversion in OffsetConversions)
+                foreach (var offsetConversion in CustomConversions)
                 {
                     yield return offsetConversion;
                 }
