@@ -15,6 +15,7 @@
             vm.SetBaseUnit(settings.Metres);
             var expected = new[]
             {
+                PrefixConversionVm.Create(settings.Metres, settings.Micro),
                 PrefixConversionVm.Create(settings.Metres, settings.Milli),
                 PrefixConversionVm.Create( settings.Metres, settings.Kilo),
             };
@@ -35,6 +36,7 @@
             vm.SetBaseUnit(settings.Kilograms);
             var expected = new[]
             {
+                PrefixConversionVm.Create(settings.Grams, settings.Micro),
                 PrefixConversionVm.Create(settings.Grams, settings.Milli),
             };
 

@@ -15,8 +15,8 @@
             Assert.AreEqual(1E-9, conversionVm.Conversion.Factor);
             Assert.AreEqual(0, conversionVm.Conversion.Offset);
             Assert.AreEqual(false, conversionVm.Conversion.IsOffset);
-            Assert.AreEqual("1E-09*cubicMillimetres", conversionVm.Conversion.ToSi);
-            Assert.AreEqual("999999999.99999988*cubicMetres", conversionVm.Conversion.FromSi);
+            Assert.AreEqual("cubicMillimetres/1000000000", conversionVm.Conversion.ToSi);
+            Assert.AreEqual("1000000000*cubicMetres", conversionVm.Conversion.FromSi);
             Assert.AreEqual("1 mm³ = 1E-09 m³", conversionVm.Conversion.SymbolConversion);
             Assert.AreEqual(true, conversionVm.Conversion.CanRoundtrip);
         }
