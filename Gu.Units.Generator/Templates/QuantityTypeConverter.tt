@@ -4,6 +4,7 @@
 <#@ parameter name="QuantityTypeConverterData" type="Gu.Units.Generator.Quantity" #>
 <#@ output extension=".txt" #>
 <#
+var settings = Settings.Instance;
 // Template used by QuantityTypeConverterGenerator.tt
 Quantity quantity = null;
 if(QuantityTypeConverterData != null)
@@ -12,11 +13,7 @@ if(QuantityTypeConverterData != null)
 }
 else
 {
-    var unit = new BaseUnit("Metres", "m")
-                    {
-                        QuantityName = "Length"
-                    };
-    quantity = unit.Quantity;
+    quantity = settings.Quantities[0];
 }
 #>
 namespace <#= Settings.Namespace #>

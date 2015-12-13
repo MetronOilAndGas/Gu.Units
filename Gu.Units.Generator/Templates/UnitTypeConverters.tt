@@ -17,16 +17,16 @@ var session = ParamTextTemplate.GetSessionObject();
 var settings = Settings.Instance;
 this.WriteLine(string.Format("Read Settings found {0} units", settings.BaseUnits.Count));
 
-foreach (var unit in settings.BaseUnits.Concat<IUnit>(settings.DerivedUnits))
+foreach (var unit in settings.AllUnits)
 {
 	session["UnitTypeConverterData"] = unit;
 
-    var fileName = unit.UnitName + "TypeConverter.generated." + Settings.Extension;
-    fileManager.StartNewFile(fileName, Settings.ProjectName, Settings.FolderName, null);
+    var fileName = unit.ClassName + "TypeConverter.generated." + Settings.Extension;
+    fileManager.StartNewFile(fileName, Settings.ProjectName, null, null);
 	var output = paramTmpl.TransformText(session);
     if (output == "ErrorGeneratingOutput")
     {
-		this.WriteLine("Error transforming {0}", unit.UnitName);
+		this.WriteLine("Error transforming {0}", unit.ClassName);
         throw new InvalidOperationException("output");
     }
 

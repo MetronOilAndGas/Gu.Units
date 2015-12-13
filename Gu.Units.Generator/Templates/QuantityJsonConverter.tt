@@ -4,6 +4,7 @@
 <#@ parameter name="QuantityJsonData" type="Gu.Units.Generator.Quantity" #>
 <#@ output extension=".txt" #>
 <#
+var settings = Settings.Instance;
 // Template used by QuantityGenerator.tt
 Quantity quantity = null;
 if(QuantityJsonData != null)
@@ -12,10 +13,7 @@ if(QuantityJsonData != null)
 }
 else
 {
-    var unit = new BaseUnit("Metres", "m", "Length");
-    unit.PartConversions.Add(new PartConversion("Centimetres", "cm", 1E-2));
-    unit.PartConversions.Add(new PartConversion("Millimetres", "mm", 1E-3));
-    quantity = unit.Quantity;
+    quantity = settings.Quantities[0];
 }
 #>
 namespace Gu.Units.Json
