@@ -69,13 +69,7 @@
         /// <summary>
         /// The quantity in Degrees
         /// </summary>
-        public double Degrees
-        {
-            get
-            {
-                return AngleUnit.Degrees.FromSiUnit(this.radians);
-            }
-        }
+        public double Degrees => this.radians / 0.0174532925199433;
 
         /// <summary>
         /// Creates an instance of <see cref="Gu.Units.Angle"/> from its string representation
@@ -159,7 +153,7 @@
         /// <param name="degrees">The value in °</param>
         public static Angle FromDegrees(double degrees)
         {
-            return From(degrees, AngleUnit.Degrees);
+            return new Angle(0.0174532925199433 * degrees);
         }
 
         public static AngularSpeed operator /(Angle left, Time right)

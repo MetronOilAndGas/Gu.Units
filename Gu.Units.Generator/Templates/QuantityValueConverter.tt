@@ -1,21 +1,13 @@
 ﻿<#@ template debug="false" hostspecific="false" language="C#" #>
 <#@ assembly name="$(TargetPath)" #>
 <#@ import namespace="Gu.Units.Generator" #>
-<#@ parameter name="QuantityValueConverterData" type="Gu.Units.Generator.Quantity" #>
+<#@ parameter name="QuantityName" type="System.String" #>
 <#@ output extension=".txt" #>
 <#
 
 var settings = Settings.Instance;
 // Template used by QuantityValueConverters.tt
-Quantity quantity = null;
-if(QuantityValueConverterData != null)
-{
-    quantity = QuantityValueConverterData;
-}
-else
-{
-    quantity = settings.Quantities[0];
-}
+var quantity = settings.GetQuantityByName(QuantityName ?? settings.Quantities[0].Name);
 #>
 using System.Runtime.CompilerServices;
 using Gu.Units;

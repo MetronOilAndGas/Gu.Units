@@ -69,57 +69,42 @@
         /// <summary>
         /// The quantity in Litres
         /// </summary>
-        public double Litres
-        {
-            get
-            {
-                return VolumeUnit.Litres.FromSiUnit(this.cubicMetres);
-            }
-        }
+        public double Litres => 1000 * this.cubicMetres;
+
+        /// <summary>
+        /// The quantity in Millilitres
+        /// </summary>
+        public double Millilitres => 1000000 * this.cubicMetres;
+
+        /// <summary>
+        /// The quantity in Centilitres
+        /// </summary>
+        public double Centilitres => 100000 * this.cubicMetres;
+
+        /// <summary>
+        /// The quantity in Decilitres
+        /// </summary>
+        public double Decilitres => 10000 * this.cubicMetres;
 
         /// <summary>
         /// The quantity in CubicCentimetres
         /// </summary>
-        public double CubicCentimetres
-        {
-            get
-            {
-                return VolumeUnit.CubicCentimetres.FromSiUnit(this.cubicMetres);
-            }
-        }
+        public double CubicCentimetres => 1000000 * this.cubicMetres;
 
         /// <summary>
         /// The quantity in CubicMillimetres
         /// </summary>
-        public double CubicMillimetres
-        {
-            get
-            {
-                return VolumeUnit.CubicMillimetres.FromSiUnit(this.cubicMetres);
-            }
-        }
+        public double CubicMillimetres => 1000000000 * this.cubicMetres;
 
         /// <summary>
         /// The quantity in CubicInches
         /// </summary>
-        public double CubicInches
-        {
-            get
-            {
-                return VolumeUnit.CubicInches.FromSiUnit(this.cubicMetres);
-            }
-        }
+        public double CubicInches => this.cubicMetres / 1.6387064E-05;
 
         /// <summary>
         /// The quantity in CubicDecimetres
         /// </summary>
-        public double CubicDecimetres
-        {
-            get
-            {
-                return VolumeUnit.CubicDecimetres.FromSiUnit(this.cubicMetres);
-            }
-        }
+        public double CubicDecimetres => 1000 * this.cubicMetres;
 
         /// <summary>
         /// Creates an instance of <see cref="Gu.Units.Volume"/> from its string representation
@@ -203,7 +188,34 @@
         /// <param name="litres">The value in L</param>
         public static Volume FromLitres(double litres)
         {
-            return From(litres, VolumeUnit.Litres);
+            return new Volume(litres / 1000);
+        }
+
+        /// <summary>
+        /// Creates a new instance of <see cref="Gu.Units.Volume"/>.
+        /// </summary>
+        /// <param name="millilitres">The value in ml</param>
+        public static Volume FromMillilitres(double millilitres)
+        {
+            return new Volume(millilitres / 1000000);
+        }
+
+        /// <summary>
+        /// Creates a new instance of <see cref="Gu.Units.Volume"/>.
+        /// </summary>
+        /// <param name="centilitres">The value in cl</param>
+        public static Volume FromCentilitres(double centilitres)
+        {
+            return new Volume(centilitres / 100000);
+        }
+
+        /// <summary>
+        /// Creates a new instance of <see cref="Gu.Units.Volume"/>.
+        /// </summary>
+        /// <param name="decilitres">The value in dl</param>
+        public static Volume FromDecilitres(double decilitres)
+        {
+            return new Volume(decilitres / 10000);
         }
 
         /// <summary>
@@ -212,7 +224,7 @@
         /// <param name="cubicCentimetres">The value in cm³</param>
         public static Volume FromCubicCentimetres(double cubicCentimetres)
         {
-            return From(cubicCentimetres, VolumeUnit.CubicCentimetres);
+            return new Volume(cubicCentimetres / 1000000);
         }
 
         /// <summary>
@@ -221,7 +233,7 @@
         /// <param name="cubicMillimetres">The value in mm³</param>
         public static Volume FromCubicMillimetres(double cubicMillimetres)
         {
-            return From(cubicMillimetres, VolumeUnit.CubicMillimetres);
+            return new Volume(cubicMillimetres / 1000000000);
         }
 
         /// <summary>
@@ -230,7 +242,7 @@
         /// <param name="cubicInches">The value in in³</param>
         public static Volume FromCubicInches(double cubicInches)
         {
-            return From(cubicInches, VolumeUnit.CubicInches);
+            return new Volume(1.6387064E-05 * cubicInches);
         }
 
         /// <summary>
@@ -239,7 +251,12 @@
         /// <param name="cubicDecimetres">The value in dm³</param>
         public static Volume FromCubicDecimetres(double cubicDecimetres)
         {
-            return From(cubicDecimetres, VolumeUnit.CubicDecimetres);
+            return new Volume(cubicDecimetres / 1000);
+        }
+
+        public static SpecificVolume operator /(Volume left, Mass right)
+        {
+            return SpecificVolume.FromCubicMetresPerKilogram(left.cubicMetres / right.kilograms);
         }
 
         public static Area operator /(Volume left, Length right)
@@ -275,6 +292,16 @@
         public static Time operator /(Volume left, VolumetricFlow right)
         {
             return Time.FromSeconds(left.cubicMetres / right.cubicMetresPerSecond);
+        }
+
+        public static Area operator *(Volume left, Wavenumber right)
+        {
+            return Area.FromSquareMetres(left.cubicMetres * right.reciprocalMetres);
+        }
+
+        public static Mass operator /(Volume left, SpecificVolume right)
+        {
+            return Mass.FromKilograms(left.cubicMetres / right.cubicMetresPerKilogram);
         }
 
         public static double operator /(Volume left, Volume right)

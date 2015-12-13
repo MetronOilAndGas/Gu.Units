@@ -1,11 +1,13 @@
 ﻿namespace Gu.Units
 {
+    using System;
     using System.Collections;
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Linq;
 
     [DebuggerTypeProxy(typeof(CollectionDebugView<>))]
+    [Serializable]
     internal class ReadonlySet<T> : IReadOnlyCollection<T>
     {
         public static readonly ReadonlySet<T> Empty = new ReadonlySet<T>(Enumerable.Empty<T>());

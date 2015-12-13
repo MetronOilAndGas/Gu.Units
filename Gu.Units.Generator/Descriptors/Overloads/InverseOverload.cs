@@ -1,5 +1,8 @@
 ﻿namespace Gu.Units.Generator
 {
+    using System;
+
+    [Serializable]
     public class InverseOverload
     {
         public InverseOverload(Quantity original, Quantity inverted)

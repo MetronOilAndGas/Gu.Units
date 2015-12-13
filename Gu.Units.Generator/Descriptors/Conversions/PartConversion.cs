@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
 
+    [Serializable]
     public class PartConversion : IFactorConversion
     {
         private Unit unit;

@@ -11,9 +11,11 @@
     using Newtonsoft.Json;
     using Reactive;
 
+    [Serializable]
     public class Settings : INotifyPropertyChanged
     {
         internal static Settings InnerInstance; // huge hairy hack here for T4
+
         public static Settings Instance => InnerInstance ?? FromResource;
 
         public static Settings FromResource
@@ -76,6 +78,40 @@
         public static Settings CreateEmpty()
         {
             return new Settings(new ObservableCollection<Prefix>(), new ObservableCollection<BaseUnit>(), new ObservableCollection<DerivedUnit>());
+        }
+
+        public Unit GetUnitByName(string name)
+        {
+            try
+            {
+                var match = AllUnits.SingleOrDefault(x => x.Name == name);
+                if (match == null)
+                {
+                    throw new ArgumentOutOfRangeException($"Did not find a unit with name {name}");
+                }
+                return match;
+            }
+            catch (Exception e)
+            {
+                throw new ArgumentOutOfRangeException($"Found more than one unit with name {name}");
+            }
+        }
+
+        public Quantity GetQuantityByName(string name)
+        {
+            try
+            {
+                var match = Quantities.SingleOrDefault(x => x.Name == name);
+                if (match == null)
+                {
+                    throw new ArgumentOutOfRangeException($"Did not find a unit with name {name}");
+                }
+                return match;
+            }
+            catch (Exception e)
+            {
+                throw new ArgumentOutOfRangeException($"Found more than one unit with name {name}");
+            }
         }
 
         [NotifyPropertyChangedInvocator]

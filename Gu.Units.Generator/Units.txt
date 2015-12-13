@@ -1881,13 +1881,24 @@
           "Power": -1
         }
       ],
-      "Name": "KilogramsPerCubicMetre",
+      "Name": "CubicMetresPerKilogram",
       "Symbol": "m³/kg",
       "QuantityName": "SpecificVolume",
       "FactorConversions": [],
       "CustomConversions": [],
       "PrefixConversions": [],
-      "PartConversions": []
+      "PartConversions": [
+        {
+          "Name": "CubicMetresPerGram",
+          "Symbol": "m³/g",
+          "Factor": 1000.0
+        },
+        {
+          "Name": "CubicCentimetresPerGram",
+          "Symbol": "cm³/g",
+          "Factor": 0.0010000000000000002
+        }
+      ]
     }
   ]
 }

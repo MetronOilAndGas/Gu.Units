@@ -5,49 +5,38 @@
     using System.Diagnostics;
 
     /// <summary>
-    /// A type for the unit <see cref="Gu.Units.AngleUnit"/>.
-	/// Contains conversion logic.
+    /// A type for the unit <see cref="Gu.Units.Angle"/>.
+	/// Contains logic for conversion and formatting.
     /// </summary>
-    [Serializable, TypeConverter(typeof(AngleUnitTypeConverter)), DebuggerDisplay("1{symbol} == {ToSiUnit(1)}{Radians.symbol}")]
+    [Serializable, TypeConverter(typeof(AngleUnitTypeConverter)), DebuggerDisplay("1{symbol} == {ToSiUnit(1)}{AngleUnit.symbol}")]
     public struct AngleUnit : IUnit, IUnit<Angle>, IEquatable<AngleUnit>
     {
         /// <summary>
-        /// The Radians unit
-        /// Contains conversion logic to from and formatting.
+        /// The AngleUnit unit
+        /// Contains logic for conversion and formatting.
         /// </summary>
-        public static readonly AngleUnit Radians = new AngleUnit(1.0, "rad");
-
-        /// <summary>
-        /// The Radians unit
-        /// Contains conversion logic to from and formatting.
-        /// </summary>
-		public static readonly AngleUnit rad = Radians;
+        public static readonly AngleUnit Radians = new AngleUnit(radians => radians, radians => radians, "rad");
 
         /// <summary>
         /// The Degrees unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
-		public static readonly AngleUnit Degrees = new AngleUnit(0.017453292519943295, "°");
+        public static readonly AngleUnit Degrees = new AngleUnit(degrees => 0.0174532925199433 * degrees, radians => radians / 0.0174532925199433, "°");
 
-        private readonly double conversionFactor;
-        private readonly string symbol;
-
-        public AngleUnit(double conversionFactor, string symbol)
+        private readonly Func<double, double> toRadians;
+        private readonly Func<double, double> fromRadians;
+        internal readonly string symbol;
+        public AngleUnit(Func<double, double> toRadians, Func<double, double> fromRadians, string symbol)
         {
-            this.conversionFactor = conversionFactor;
+            this.toRadians = toRadians;
+            this.fromRadians = fromRadians;
             this.symbol = symbol;
         }
 
         /// <summary>
         /// The symbol for the <see cref="Gu.Units.AngleUnit"/>.
         /// </summary>
-        public string Symbol
-        {
-            get
-            {
-                return this.symbol;
-            }
-        }
+        public string Symbol => this.symbol;
 
         /// <summary>
         /// The default unit for <see cref="Gu.Units.AngleUnit"/>
@@ -91,7 +80,7 @@
         /// <returns>The converted value</returns>
         public double ToSiUnit(double value)
         {
-            return this.conversionFactor * value;
+            return this.toRadians(value);
         }
 
         /// <summary>
@@ -99,9 +88,9 @@
         /// </summary>
         /// <param name="value">The value in Radians</param>
         /// <returns>The converted value</returns>
-        public double FromSiUnit(double value)
+        public double FromSiUnit(double radians)
         {
-            return value / this.conversionFactor;
+            return this.fromRadians(radians);
         }
 
         /// <summary>
@@ -115,7 +104,7 @@
         }
 
         /// <summary>
-        /// Gets the scalar value of <paramref name="quantity"/> in Radians
+        /// Gets the scalar value of <paramref name="quantity"/> in AngleUnit
         /// </summary>
         /// <param name="quantity"></param>
         /// <returns></returns>

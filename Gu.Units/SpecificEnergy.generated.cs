@@ -152,6 +152,11 @@
             return Acceleration.FromMetresPerSecondSquared(left.joulesPerKilogram / right.metres);
         }
 
+        public static SpecificVolume operator /(SpecificEnergy left, Pressure right)
+        {
+            return SpecificVolume.FromCubicMetresPerKilogram(left.joulesPerKilogram / right.pascals);
+        }
+
         public static Pressure operator *(SpecificEnergy left, Density right)
         {
             return Pressure.FromPascals(left.joulesPerKilogram * right.kilogramsPerCubicMetre);
@@ -165,6 +170,21 @@
         public static Length operator /(SpecificEnergy left, Acceleration right)
         {
             return Length.FromMetres(left.joulesPerKilogram / right.metresPerSecondSquared);
+        }
+
+        public static Acceleration operator *(SpecificEnergy left, Wavenumber right)
+        {
+            return Acceleration.FromMetresPerSecondSquared(left.joulesPerKilogram * right.reciprocalMetres);
+        }
+
+        public static Stiffness operator *(SpecificEnergy left, AreaDensity right)
+        {
+            return Stiffness.FromNewtonsPerMetre(left.joulesPerKilogram * right.kilogramsPerSquareMetre);
+        }
+
+        public static Pressure operator /(SpecificEnergy left, SpecificVolume right)
+        {
+            return Pressure.FromPascals(left.joulesPerKilogram / right.cubicMetresPerKilogram);
         }
 
         public static double operator /(SpecificEnergy left, SpecificEnergy right)

@@ -1,21 +1,13 @@
-﻿<#@ template debug="false" hostspecific="false" language="C#" #>
-<#@ import namespace="System.Globalization" #>
+﻿<#@ template debug="true" hostspecific="false" language="C#" #>
 <#@ assembly name="$(TargetPath)" #>
+<#@ import namespace="Gu.Units" #>
 <#@ import namespace="Gu.Units.Generator" #>
-<#@ parameter name="UnitData" type="Gu.Units.Generator.Unit" #>
+<#@ parameter name="UnitName" type="System.String" #>
 <#@ output extension=".txt" #>
 <#
 // Template used by UnitGenerator.tt
 var settings = Settings.Instance;
-Unit unit;
-if(UnitData != null)
-{
-    unit = UnitData;
-}
-else
-{
-    unit = settings.BaseUnits[0];
-}
+var unit = settings.GetUnitByName(UnitName ?? settings.AllUnits[0].Name);
 #>
 namespace <#= Settings.Namespace #>
 {
@@ -24,7 +16,7 @@ namespace <#= Settings.Namespace #>
     using System.Diagnostics;
 
     /// <summary>
-    /// A type for the unit <see cref="<#= Settings.Namespace #>.<#= unit.Name #>"/>.
+    /// A type for the unit <see cref="<#= Settings.Namespace #>.<#= unit.QuantityName #>"/>.
 	/// Contains logic for conversion and formatting.
     /// </summary>
     [Serializable, TypeConverter(typeof(<#= unit.ClassName #>TypeConverter)), DebuggerDisplay("1{symbol} == {ToSiUnit(1)}{<#= unit.ClassName #>.symbol}")]
@@ -49,13 +41,13 @@ namespace <#= Settings.Namespace #>
         }
         #>
 
-		private readonly Func<double, double> from<#= unit.Name #>;
 		private readonly Func<double, double> to<#= unit.Name #>;
+		private readonly Func<double, double> from<#= unit.Name #>;
         internal readonly string symbol;
-        public <#= unit.ClassName #>(Func<double, double> from<#= unit.Name #>, Func<double, double> to<#= unit.Name #>, string symbol)
+        public <#= unit.ClassName #>(Func<double, double> to<#= unit.Name #>, Func<double, double> from<#= unit.Name #>, string symbol)
         {
-            this.from<#= unit.Name #> = from<#= unit.Name #>;
 			this.to<#= unit.Name #> = to<#= unit.Name #>;
+            this.from<#= unit.Name #> = from<#= unit.Name #>;
             this.symbol = symbol;
         }
 

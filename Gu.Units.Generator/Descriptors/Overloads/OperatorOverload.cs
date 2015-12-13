@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
 
+    [Serializable]
     public class OperatorOverload
     {
         public static readonly string Divide = "/";

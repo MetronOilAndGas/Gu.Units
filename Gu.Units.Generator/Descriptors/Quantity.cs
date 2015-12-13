@@ -8,6 +8,7 @@
     using JetBrains.Annotations;
 
     [DebuggerDisplay("{Name}")]
+    [Serializable]
     public class Quantity : MarshalByRefObject, INotifyPropertyChanged
     {
         private InverseOverload inverse;

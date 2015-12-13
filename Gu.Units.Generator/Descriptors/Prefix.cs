@@ -1,5 +1,6 @@
 ﻿namespace Gu.Units.Generator
 {
+    using System;
     using System.ComponentModel;
     using System.Diagnostics;
     using System.Runtime.CompilerServices;
@@ -9,6 +10,7 @@
     /// http://physics.nist.gov/cuu/Units/prefixes.html
     /// </summary>
     [DebuggerDisplay("Prefix{Name} ({Symbol}) 1E{Power}")]
+    [Serializable]
     public class Prefix : INotifyPropertyChanged
     {
         private string name;

@@ -6,6 +6,7 @@
     using System.Runtime.CompilerServices;
     using JetBrains.Annotations;
 
+    [Serializable]
     public class PrefixConversion : IFactorConversion
     {
         private string name;

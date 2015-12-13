@@ -5,6 +5,7 @@
     using System.Runtime.CompilerServices;
     using JetBrains.Annotations;
 
+    [Serializable]
     public class CustomConversion : IConversion, INotifyPropertyChanged
     {
         private string name;

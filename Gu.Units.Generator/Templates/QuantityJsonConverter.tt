@@ -1,20 +1,12 @@
 ﻿<#@ template debug="false" hostspecific="false" language="C#" #>
 <#@ assembly name="$(TargetPath)" #>
 <#@ import namespace="Gu.Units.Generator" #>
-<#@ parameter name="QuantityJsonData" type="Gu.Units.Generator.Quantity" #>
+<#@ parameter name="QuantityName" type="System.String" #>
 <#@ output extension=".txt" #>
 <#
 var settings = Settings.Instance;
 // Template used by QuantityGenerator.tt
-Quantity quantity = null;
-if(QuantityJsonData != null)
-{
-    quantity = QuantityJsonData;
-}
-else
-{
-    quantity = settings.Quantities[0];
-}
+var quantity = settings.GetQuantityByName(QuantityName ?? settings.Quantities[0].Name);
 #>
 namespace Gu.Units.Json
 {

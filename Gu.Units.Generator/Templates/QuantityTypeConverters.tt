@@ -13,13 +13,13 @@ fileManager.CanOverwriteExistingFile = true;
 // init handling for parameter templates
 var paramTmpl = ParamTextTemplate.Create(this.Host, "QuantityTypeConverter.tt");
 var session = ParamTextTemplate.GetSessionObject();
-var settings = Settings.FromResource;
-this.Write(string.Format("Read Settings found {0} units", settings.Quantities.Count));
+var settings = Settings.Instance;
+WriteLine("Read Settings found {0} units", settings.Quantities.Count);
 foreach (var quantity in settings.Quantities)
 {
     var fileName = quantity.Name + "TypeConverter.generated." + Settings.Extension;
     fileManager.StartNewFile(fileName , Settings.ProjectName, null, null);
-	session["QuantityTypeConverterData"] = quantity;
+	session["QuantityName"] = quantity.Name;
 	string output = paramTmpl.TransformText(session);
 	if (output == "ErrorGeneratingOutput")
     {

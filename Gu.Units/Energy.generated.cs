@@ -69,79 +69,37 @@
         /// <summary>
         /// The quantity in Nanojoules
         /// </summary>
-        public double Nanojoules
-        {
-            get
-            {
-                return EnergyUnit.Nanojoules.FromSiUnit(this.joules);
-            }
-        }
+        public double Nanojoules => 1000000000 * this.joules;
 
         /// <summary>
         /// The quantity in Microjoules
         /// </summary>
-        public double Microjoules
-        {
-            get
-            {
-                return EnergyUnit.Microjoules.FromSiUnit(this.joules);
-            }
-        }
+        public double Microjoules => 1000000 * this.joules;
 
         /// <summary>
         /// The quantity in Millijoules
         /// </summary>
-        public double Millijoules
-        {
-            get
-            {
-                return EnergyUnit.Millijoules.FromSiUnit(this.joules);
-            }
-        }
+        public double Millijoules => 1000 * this.joules;
 
         /// <summary>
         /// The quantity in Kilojoules
         /// </summary>
-        public double Kilojoules
-        {
-            get
-            {
-                return EnergyUnit.Kilojoules.FromSiUnit(this.joules);
-            }
-        }
+        public double Kilojoules => this.joules / 1000;
 
         /// <summary>
         /// The quantity in Megajoules
         /// </summary>
-        public double Megajoules
-        {
-            get
-            {
-                return EnergyUnit.Megajoules.FromSiUnit(this.joules);
-            }
-        }
+        public double Megajoules => this.joules / 1000000;
 
         /// <summary>
         /// The quantity in Gigajoules
         /// </summary>
-        public double Gigajoules
-        {
-            get
-            {
-                return EnergyUnit.Gigajoules.FromSiUnit(this.joules);
-            }
-        }
+        public double Gigajoules => this.joules / 1000000000;
 
         /// <summary>
         /// The quantity in KilowattHours
         /// </summary>
-        public double KilowattHours
-        {
-            get
-            {
-                return EnergyUnit.KilowattHours.FromSiUnit(this.joules);
-            }
-        }
+        public double KilowattHours => this.joules / 3600000;
 
         /// <summary>
         /// Creates an instance of <see cref="Gu.Units.Energy"/> from its string representation
@@ -225,7 +183,7 @@
         /// <param name="nanojoules">The value in nJ</param>
         public static Energy FromNanojoules(double nanojoules)
         {
-            return From(nanojoules, EnergyUnit.Nanojoules);
+            return new Energy(nanojoules / 1000000000);
         }
 
         /// <summary>
@@ -234,7 +192,7 @@
         /// <param name="microjoules">The value in µJ</param>
         public static Energy FromMicrojoules(double microjoules)
         {
-            return From(microjoules, EnergyUnit.Microjoules);
+            return new Energy(microjoules / 1000000);
         }
 
         /// <summary>
@@ -243,7 +201,7 @@
         /// <param name="millijoules">The value in mJ</param>
         public static Energy FromMillijoules(double millijoules)
         {
-            return From(millijoules, EnergyUnit.Millijoules);
+            return new Energy(millijoules / 1000);
         }
 
         /// <summary>
@@ -252,7 +210,7 @@
         /// <param name="kilojoules">The value in kJ</param>
         public static Energy FromKilojoules(double kilojoules)
         {
-            return From(kilojoules, EnergyUnit.Kilojoules);
+            return new Energy(1000 * kilojoules);
         }
 
         /// <summary>
@@ -261,7 +219,7 @@
         /// <param name="megajoules">The value in MJ</param>
         public static Energy FromMegajoules(double megajoules)
         {
-            return From(megajoules, EnergyUnit.Megajoules);
+            return new Energy(1000000 * megajoules);
         }
 
         /// <summary>
@@ -270,7 +228,7 @@
         /// <param name="gigajoules">The value in GJ</param>
         public static Energy FromGigajoules(double gigajoules)
         {
-            return From(gigajoules, EnergyUnit.Gigajoules);
+            return new Energy(1000000000 * gigajoules);
         }
 
         /// <summary>
@@ -279,7 +237,7 @@
         /// <param name="kilowattHours">The value in kWh</param>
         public static Energy FromKilowattHours(double kilowattHours)
         {
-            return From(kilowattHours, EnergyUnit.KilowattHours);
+            return new Energy(3600000 * kilowattHours);
         }
 
         public static SpecificEnergy operator /(Energy left, Mass right)
@@ -300,6 +258,11 @@
         public static Torque operator /(Energy left, Angle right)
         {
             return Torque.FromNewtonMetres(left.joules / right.radians);
+        }
+
+        public static MagneticFlux operator /(Energy left, Current right)
+        {
+            return MagneticFlux.FromWebers(left.joules / right.amperes);
         }
 
         public static Stiffness operator /(Energy left, Area right)
@@ -325,6 +288,11 @@
         public static Time operator /(Energy left, Power right)
         {
             return Time.FromSeconds(left.joules / right.watts);
+        }
+
+        public static Momentum operator /(Energy left, Speed right)
+        {
+            return Momentum.FromNewtonSecond(left.joules / right.metresPerSecond);
         }
 
         public static Power operator *(Energy left, Frequency right)
@@ -360,6 +328,21 @@
         public static Area operator *(Energy left, Flexibility right)
         {
             return Area.FromSquareMetres(left.joules * right.metresPerNewton);
+        }
+
+        public static Current operator /(Energy left, MagneticFlux right)
+        {
+            return Current.FromAmperes(left.joules / right.webers);
+        }
+
+        public static Speed operator /(Energy left, Momentum right)
+        {
+            return Speed.FromMetresPerSecond(left.joules / right.newtonSecond);
+        }
+
+        public static Force operator *(Energy left, Wavenumber right)
+        {
+            return Force.FromNewtons(left.joules * right.reciprocalMetres);
         }
 
         public static double operator /(Energy left, Energy right)

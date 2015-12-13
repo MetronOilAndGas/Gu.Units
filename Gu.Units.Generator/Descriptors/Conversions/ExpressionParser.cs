@@ -3,7 +3,7 @@
     using System.Globalization;
     using Microsoft.CodeAnalysis.CSharp.Scripting;
 
-    internal class ExpressionParser
+    internal static class ExpressionParser
     {
         internal static double Evaluate(double value, string parameter, string expression)
         {

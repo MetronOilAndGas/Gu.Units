@@ -1,8 +1,10 @@
 ﻿namespace Gu.Units.Generator
 {
+    using System;
     using System.ComponentModel;
     using System.Linq;
 
+    [Serializable]
     public class UnitAndPower : INotifyPropertyChanged
     {
         private Unit unit;

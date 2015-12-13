@@ -14,7 +14,6 @@
                           {
                               Length.FromCentimetres(Centimetres),
                               new Length(Centimetres, LengthUnit.Centimetres),
-                              Length.From(Centimetres, LengthUnit.cm)
                           };
             foreach (var cm in cms)
             {
@@ -32,7 +31,6 @@
                           {
                               Length.FromCentimetres(Centimetres),
                               new Length(Centimetres, LengthUnit.Centimetres),
-                              Length.From(Centimetres, LengthUnit.cm)
                           };
             foreach (var cm in cms)
             {
