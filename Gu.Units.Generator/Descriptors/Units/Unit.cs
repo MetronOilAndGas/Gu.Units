@@ -37,6 +37,8 @@ namespace Gu.Units.Generator
             }
         }
 
+        public string ClassName => QuantityName + "Unit";
+
         public string ParameterName => Name.ToParameterName();
 
         public string Symbol

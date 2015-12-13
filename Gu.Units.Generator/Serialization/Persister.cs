@@ -6,7 +6,7 @@
 
     public static class Persister
     {
-        private static readonly JsonSerializerSettings SerializerSettings = CreateSettings();
+        public static readonly JsonSerializerSettings SerializerSettings = CreateSettings();
         public static string SettingsFileName
         {
             get
@@ -37,7 +37,7 @@
             if (Settings.Instance == null)
             {
                 var json = File.ReadAllText(SettingsFileName);
-                Settings.Instance = JsonConvert.DeserializeObject<Settings>(json, SerializerSettings);
+                Settings.InnerInstance = JsonConvert.DeserializeObject<Settings>(json, SerializerSettings);
             }
             return Settings.Instance;
         }

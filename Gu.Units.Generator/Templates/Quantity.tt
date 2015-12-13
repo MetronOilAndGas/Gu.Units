@@ -4,6 +4,8 @@
 <#@ parameter name="QuantityData" type="Gu.Units.Generator.Quantity" #>
 <#@ output extension=".txt" #>
 <#
+
+var settings = Settings.Instance;
 // Template used by QuantityGenerator.tt
 Quantity quantity = null;
 if(QuantityData != null)
@@ -12,10 +14,7 @@ if(QuantityData != null)
 }
 else
 {
-    var unit = new BaseUnit("Metres", "m","Length");
-    unit.PartConversions.Add(new PartConversion("Centimetres", "cm", 1E-2));
-    unit.PartConversions.Add(new PartConversion("Millimetres", "mm", 1E-3));
-    quantity = unit.Quantity;
+    quantity = settings.Quantities[0];
 }
 #>
 namespace <#= Settings.Namespace #>
@@ -89,17 +88,12 @@ namespace <#= Settings.Namespace #>
 <#
 		foreach(var unit in quantity.Unit.AllConversions)
 		{
+		var fromSi = unit.FromSi.Replace(quantity.Unit.ParameterName, "this." + quantity.Unit.ParameterName);
 		#>
         /// <summary>
         /// The quantity in <#= unit.Name #>
         /// </summary>
-        public double <#= unit.Name #>
-        {
-            get
-            {
-                return <#= quantity.UnitName #>.<#= unit.Name #>.<#= Names.FromSiUnit #>(this.<#= quantity.Unit.ParameterName #>);
-            }
-        }
+        public double <#= unit.Name #> => <#= fromSi #>;
 
 <#
 		} 
@@ -182,6 +176,7 @@ namespace <#= Settings.Namespace #>
 <#
 		foreach(var su in quantity.Unit.AllConversions)
 		{
+		    var toSi = su.ToSi;
 		#>
 
         /// <summary>
@@ -190,7 +185,7 @@ namespace <#= Settings.Namespace #>
         /// <param name="<#= su.ParameterName #>">The value in <#= su.Symbol #></param>
         public static <#= quantity.Name #> From<#= su.Name #>(double <#= su.ParameterName #>)
         {
-            return From(<#= su.ParameterName #>, <#= quantity.UnitName #>.<#= su.Name #>);
+            return new <#= quantity.Name #>(<#= toSi #>);
         }
 <#
 		} 

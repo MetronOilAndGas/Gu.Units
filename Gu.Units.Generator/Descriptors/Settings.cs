@@ -13,9 +13,17 @@
 
     public class Settings : INotifyPropertyChanged
     {
-        public static Settings Instance;
+        internal static Settings InnerInstance; // huge hairy hack here for T4
+        public static Settings Instance => InnerInstance ?? FromResource;
 
-        public static Settings FromResource => JsonConvert.DeserializeObject<Settings>(Properties.Resources.Units);
+        public static Settings FromResource
+        {
+            get
+            {
+                InnerInstance = JsonConvert.DeserializeObject<Settings>(Properties.Resources.Units, Persister.SerializerSettings);
+                return InnerInstance;
+            }
+        }
 
         private Settings()
         {
@@ -23,7 +31,7 @@
 
         public Settings(ObservableCollection<Prefix> prefixes, ObservableCollection<BaseUnit> baseUnits, ObservableCollection<DerivedUnit> derivedUnits)
         {
-            if (Instance != null)
+            if (InnerInstance != null)
             {
                 throw new InvalidOperationException("This is nasty design but there can only be one read from file. Reason is resolving units and prefixes by key.");
             }
@@ -31,7 +39,7 @@
             Prefixes = prefixes;
             BaseUnits = baseUnits;
             DerivedUnits = derivedUnits;
-            Instance = this;
+            InnerInstance = this;
 
             Observable.Merge(BaseUnits.ObserveCollectionChangedSlim(true),
                              DerivedUnits.ObserveCollectionChangedSlim(true))

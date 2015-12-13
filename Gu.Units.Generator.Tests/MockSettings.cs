@@ -171,7 +171,7 @@
 
         public static MockSettings Create()
         {
-            Instance = null;
+            InnerInstance = null;
             return new MockSettings();
         }
     }
