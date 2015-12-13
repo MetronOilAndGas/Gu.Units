@@ -296,7 +296,35 @@
       "Name": "Bits",
       "Symbol": "bit",
       "QuantityName": "Data",
-      "FactorConversions": [],
+      "FactorConversions": [
+        {
+          "Name": "Byte",
+          "Symbol": "B",
+          "Factor": 8.0,
+          "PrefixConversions": [
+            {
+              "Name": "Kilobyte",
+              "Symbol": "kB",
+              "PrefixName": "Kilo"
+            },
+            {
+              "Name": "Megabyte",
+              "Symbol": "MB",
+              "PrefixName": "Mega"
+            },
+            {
+              "Name": "Gigabyte",
+              "Symbol": "GB",
+              "PrefixName": "Giga"
+            },
+            {
+              "Name": "Terabyte",
+              "Symbol": "TB",
+              "PrefixName": "Tera"
+            }
+          ]
+        }
+      ],
       "CustomConversions": [],
       "PrefixConversions": [
         {
@@ -315,6 +343,24 @@
           "PrefixName": "Kilo"
         }
       ],
+      "PartConversions": []
+    },
+    {
+      "Name": "Moles",
+      "Symbol": "mol",
+      "QuantityName": "AmountOfSubstance",
+      "FactorConversions": [],
+      "CustomConversions": [],
+      "PrefixConversions": [],
+      "PartConversions": []
+    },
+    {
+      "Name": "Steradians",
+      "Symbol": "sr",
+      "QuantityName": "SolidAngle",
+      "FactorConversions": [],
+      "CustomConversions": [],
+      "PrefixConversions": [],
       "PartConversions": []
     }
   ],
@@ -1652,6 +1698,196 @@
           "Factor": 100000000000.0
         }
       ]
+    },
+    {
+      "Parts": [
+        {
+          "UnitName": "Candelas",
+          "Power": 1
+        },
+        {
+          "UnitName": "Steradians",
+          "Power": 1
+        }
+      ],
+      "Name": "Lumens",
+      "Symbol": "lm",
+      "QuantityName": "LuminousFlux",
+      "FactorConversions": [],
+      "CustomConversions": [],
+      "PrefixConversions": [],
+      "PartConversions": []
+    },
+    {
+      "Parts": [
+        {
+          "UnitName": "Lumens",
+          "Power": 1
+        },
+        {
+          "UnitName": "Metres",
+          "Power": -2
+        }
+      ],
+      "Name": "Lux",
+      "Symbol": "lx",
+      "QuantityName": "Illuminance",
+      "FactorConversions": [],
+      "CustomConversions": [],
+      "PrefixConversions": [],
+      "PartConversions": []
+    },
+    {
+      "Parts": [
+        {
+          "UnitName": "Joules",
+          "Power": 1
+        },
+        {
+          "UnitName": "Amperes",
+          "Power": -1
+        }
+      ],
+      "Name": "Webers",
+      "Symbol": "Wb",
+      "QuantityName": "MagneticFlux",
+      "FactorConversions": [],
+      "CustomConversions": [],
+      "PrefixConversions": [],
+      "PartConversions": []
+    },
+    {
+      "Parts": [
+        {
+          "UnitName": "Amperes",
+          "Power": 1
+        },
+        {
+          "UnitName": "Volts",
+          "Power": -1
+        }
+      ],
+      "Name": "Siemens",
+      "Symbol": "S",
+      "QuantityName": "ElectricalConductance",
+      "FactorConversions": [],
+      "CustomConversions": [],
+      "PrefixConversions": [],
+      "PartConversions": []
+    },
+    {
+      "Parts": [
+        {
+          "UnitName": "Volts",
+          "Power": 1
+        },
+        {
+          "UnitName": "Seconds",
+          "Power": 1
+        },
+        {
+          "UnitName": "Metres",
+          "Power": -2
+        }
+      ],
+      "Name": "Teslas",
+      "Symbol": "T",
+      "QuantityName": "MagneticFieldStrength",
+      "FactorConversions": [],
+      "CustomConversions": [],
+      "PrefixConversions": [],
+      "PartConversions": []
+    },
+    {
+      "Parts": [
+        {
+          "UnitName": "Moles",
+          "Power": 1
+        },
+        {
+          "UnitName": "Seconds",
+          "Power": -1
+        }
+      ],
+      "Name": "Katals",
+      "Symbol": "kat",
+      "QuantityName": "CatalyticActivity",
+      "FactorConversions": [],
+      "CustomConversions": [],
+      "PrefixConversions": [],
+      "PartConversions": []
+    },
+    {
+      "Parts": [
+        {
+          "UnitName": "Newtons",
+          "Power": 1
+        },
+        {
+          "UnitName": "Seconds",
+          "Power": 1
+        }
+      ],
+      "Name": "NewtonSecond",
+      "Symbol": "N⋅s",
+      "QuantityName": "Momentum",
+      "FactorConversions": [],
+      "CustomConversions": [],
+      "PrefixConversions": [],
+      "PartConversions": []
+    },
+    {
+      "Parts": [
+        {
+          "UnitName": "Metres",
+          "Power": -1
+        }
+      ],
+      "Name": "ReciprocalMetres",
+      "Symbol": "m⁻¹",
+      "QuantityName": "Wavenumber",
+      "FactorConversions": [],
+      "CustomConversions": [],
+      "PrefixConversions": [],
+      "PartConversions": []
+    },
+    {
+      "Parts": [
+        {
+          "UnitName": "Kilograms",
+          "Power": 1
+        },
+        {
+          "UnitName": "Metres",
+          "Power": -2
+        }
+      ],
+      "Name": "KilogramsPerSquareMetre",
+      "Symbol": "kg/m²",
+      "QuantityName": "AreaDensity",
+      "FactorConversions": [],
+      "CustomConversions": [],
+      "PrefixConversions": [],
+      "PartConversions": []
+    },
+    {
+      "Parts": [
+        {
+          "UnitName": "Metres",
+          "Power": 3
+        },
+        {
+          "UnitName": "Kilograms",
+          "Power": -1
+        }
+      ],
+      "Name": "KilogramsPerCubicMetre",
+      "Symbol": "m³/kg",
+      "QuantityName": "SpecificVolume",
+      "FactorConversions": [],
+      "CustomConversions": [],
+      "PrefixConversions": [],
+      "PartConversions": []
     }
   ]
 }

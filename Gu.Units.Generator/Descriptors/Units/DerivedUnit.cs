@@ -1,10 +1,12 @@
 ﻿namespace Gu.Units.Generator
 {
     using System.Collections.Generic;
+    using System.Diagnostics;
 
     /// <summary>
     /// http://en.wikipedia.org/wiki/SI_derived_unit
     /// </summary>
+    [DebuggerDisplay("{Name} {Symbol} {QuantityName}")]
     public class DerivedUnit : Unit
     {
         public DerivedUnit(string name, string symbol, string quantityName, IReadOnlyList<UnitAndPower> parts)

@@ -40,7 +40,7 @@
             }
         }
 
-        public string ParameterName => Name.ToFirstCharLower();
+        public string ParameterName => Name.ToParameterName();
 
         public string Symbol
         {
@@ -107,7 +107,7 @@
 
         private static PrefixConversion Create(INameAndSymbol nas, Prefix prefix)
         {
-            return new PrefixConversion(prefix.Name + nas.ParameterName, prefix.Symbol + nas.Symbol, prefix.Name);
+            return new PrefixConversion(prefix.Name + nas.ParameterName.TrimStart('@'), prefix.Symbol + nas.Symbol, prefix.Name);
         }
 
         [NotifyPropertyChangedInvocator]

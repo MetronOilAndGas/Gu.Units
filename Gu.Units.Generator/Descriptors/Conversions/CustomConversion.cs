@@ -44,7 +44,7 @@
             }
         }
 
-        public string ParameterName => Name.ToFirstCharLower();
+        public string ParameterName => Name.ToParameterName();
 
         public string Symbol
         {

@@ -53,7 +53,7 @@
                     this.unit.FactorConversions.Add(args.NewItems.Single().Conversion);
                     break;
                 case NotifyCollectionChangedAction.Remove:
-                    this.unit.FactorConversions.Remove(args.NewItems.Single().Conversion);
+                    this.unit.FactorConversions.Remove(args.OldItems.Single().Conversion);
                     break;
                 case NotifyCollectionChangedAction.Replace:
                 case NotifyCollectionChangedAction.Move:

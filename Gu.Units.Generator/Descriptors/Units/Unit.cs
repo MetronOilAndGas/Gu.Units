@@ -13,7 +13,7 @@ namespace Gu.Units.Generator
         private string symbol;
         private string quantityName;
 
-        public Unit(string name,
+        protected Unit(string name,
             string symbol,
             string quantityName)
         {
@@ -37,7 +37,7 @@ namespace Gu.Units.Generator
             }
         }
 
-        public string ParameterName => Name.ToFirstCharLower();
+        public string ParameterName => Name.ToParameterName();
 
         public string Symbol
         {

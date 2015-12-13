@@ -213,7 +213,7 @@
 //                {
 //                    if (factor != Math.Pow(10, prefix.Power))
 //                    {
-//                        var match = unit.FactorConversions.SingleOrDefault(x => name == prefix.Name + x.Name.ToFirstCharLower());
+//                        var match = unit.FactorConversions.SingleOrDefault(x => name == prefix.Name + x.Name.ToParameterName());
 //                        if (match != null)
 //                        {
 //                            if (factor == match.Factor * Math.Pow(10, prefix.Power))
@@ -232,7 +232,7 @@
 //                    {
 //                        throw new InvalidOperationException();
 //                    }
-//                    if (name == prefix.Name + unit.Name.ToFirstCharLower())
+//                    if (name == prefix.Name + unit.Name.ToParameterName())
 //                    {
 //                        unit.PrefixConversions.Add(PrefixConversion.Create(unit, prefix));
 //                        continue;

@@ -5,6 +5,7 @@
 
     public class UnitAndPower : INotifyPropertyChanged
     {
+        private Unit unit;
         public UnitAndPower(string unitName, int power)
         {
             UnitName = unitName;
@@ -15,7 +16,7 @@
 
         public string UnitName { get; }
 
-        public Unit Unit => Settings.Instance.AllUnits.Single(x => x.Name == UnitName);
+        public Unit Unit => this.unit ?? (this.unit = Settings.Instance.AllUnits.Single(x => x.Name == UnitName));
 
         public int Power { get; }
 
@@ -32,14 +33,14 @@
         public static UnitAndPower Create(Unit unit)
         {
             Ensure.NotNull(unit, nameof(unit));
-            return new UnitAndPower(unit.Name, 1);
+            return new UnitAndPower(unit.Name, 1) { unit = unit };
         }
 
         public static UnitAndPower Create(Unit unit, int power)
         {
             Ensure.NotNull(unit, nameof(unit));
             Ensure.NotEqual(power, 0, nameof(power));
-            return new UnitAndPower(unit.Name, power);
+            return new UnitAndPower(unit.Name, power) { unit = unit };
         }
 
         public override string ToString()

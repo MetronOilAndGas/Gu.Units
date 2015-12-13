@@ -17,7 +17,7 @@
 
         public string Name { get; }
 
-        public string ParameterName => Name.ToFirstCharLower();
+        public string ParameterName => Name.ToParameterName();
 
         public string Symbol { get; }
 
@@ -108,6 +108,7 @@
 
             private static string CreateName(int power, string name, bool isLength)
             {
+                name = name.TrimStart('@');
                 power = Math.Abs(power);
                 if (isLength)
                 {
@@ -179,7 +180,7 @@
 
             public string Name => Unit.Name;
 
-            public string ParameterName => Name.ToFirstCharLower();
+            public string ParameterName => Name.ToParameterName();
 
             public string Symbol => Unit.Symbol;
 

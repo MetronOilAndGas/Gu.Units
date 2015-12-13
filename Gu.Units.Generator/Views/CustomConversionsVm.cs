@@ -10,6 +10,7 @@
     {
         private Unit unit;
         private bool isUpdating;
+
         public CustomConversionsVm()
         {
             Conversions.ObserveCollectionChangedSlim(false)
@@ -53,7 +54,7 @@
                     this.unit.CustomConversions.Add(args.NewItems.Single().Conversion);
                     break;
                 case NotifyCollectionChangedAction.Remove:
-                    this.unit.CustomConversions.Remove(args.NewItems.Single().Conversion);
+                    this.unit.CustomConversions.Remove(args.OldItems.Single().Conversion);
                     break;
                 case NotifyCollectionChangedAction.Replace:
                 case NotifyCollectionChangedAction.Move:

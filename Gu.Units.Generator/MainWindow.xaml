@@ -15,10 +15,6 @@
             <MenuItem Header="_File">
                 <MenuItem Command="Save" />
             </MenuItem>
-            <!--<MenuItem Header="_Edit" />
-            <MenuItem Header="_View" />
-            <MenuItem Header="_Window" />
-            <MenuItem Header="_Help" />-->
         </Menu>
 
         <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
@@ -96,8 +92,8 @@
                                 </DataGridTemplateColumn>
                                 <DataGridTextColumn Binding="{Binding Unit.QuantityName}" Header="Quantity" />
                                 <DataGridTextColumn Binding="{Binding Unit.Name}" Header="Unit" />
-                                <DataGridTextColumn Binding="{Binding Unit.Parts}" Header="Parts" />
                                 <DataGridTextColumn Binding="{Binding Unit.Symbol}" Header="Symbol" />
+                                <DataGridTextColumn Binding="{Binding UnitParts}" Header="Parts" />
                                 <DataGridTextColumn Binding="{Binding Unit.Parts.BaseUnitSymbol}"
                                                     Header="In base Units"
                                                     IsReadOnly="True" />

@@ -5,6 +5,7 @@
     using System.Collections.ObjectModel;
     using System.ComponentModel;
     using System.Linq;
+    using System.Reactive.Disposables;
     using System.Runtime.CompilerServices;
     using ChangeTracking;
     using JetBrains.Annotations;
@@ -13,21 +14,17 @@
     public abstract class UnitViewModel<TUnit> : INotifyPropertyChanged
         where TUnit : Unit
     {
+        private static readonly ChangeTrackerSettings ChangeTrackerSettings = CreateChangeTrackerSettings();
+        private readonly SerialDisposable subscription = new SerialDisposable();
+        private TUnit unit;
+
         protected const string UnknownName = "Unknown";
         protected const string UnknownSymbol = "??";
 
-        public UnitViewModel(TUnit unit)
+        protected UnitViewModel(TUnit unit)
         {
-            Unit = unit;
-            var settings = ChangeTrackerSettings.Default;
-            settings.AddImmutableType<UnitParts>();
-            settings.AddImmutableType<Quantity>();
-            settings.AddImmutableType<OperatorOverload>();
-            settings.AddImmutableType<InverseOverload>();
-            settings.AddExplicitType<IEnumerable<IConversion>>();
-            settings.AddExplicitProperty<IConversion>(x => x.Unit);
-
-            ChangeTracker.Track(unit, settings)
+            this.unit = unit;
+            this.subscription.Disposable = ChangeTracker.Track(unit, ChangeTrackerSettings)
                 .ObservePropertyChangedSlim()
                 .Subscribe(_ =>
                 {
@@ -38,12 +35,32 @@
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public TUnit Unit { get; }
+        public TUnit Unit
+        {
+            get { return this.unit; }
+            protected set
+            {
+                if (Equals(value, this.unit))
+                {
+                    return;
+                }
+                this.unit = value;
+                this.subscription.Disposable = ChangeTracker.Track(this.unit, ChangeTrackerSettings)
+                    .ObservePropertyChangedSlim()
+                    .Subscribe(_ =>
+                    {
+                        OnPropertyChanged(nameof(IsUnknown));
+                        OnPropertyChanged(nameof(IsOk));
+                    });
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(IsUnknown));
+            }
+        }
 
         public bool IsUnknown => Unit.Name == UnknownName ||
                                  Unit.QuantityName == UnknownName ||
                                  Unit.Symbol == UnknownSymbol ||
-                                 Unit.Parts.Count == 0;
+                                 Unit.Parts.Any(p => p.UnitName.Contains("?"));
 
         public bool IsOk => IsEverythingOk();
 
@@ -74,6 +91,18 @@
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        private static ChangeTrackerSettings CreateChangeTrackerSettings()
+        {
+            var settings = ChangeTrackerSettings.Default;
+            settings.AddImmutableType<UnitParts>();
+            settings.AddImmutableType<Quantity>();
+            settings.AddImmutableType<OperatorOverload>();
+            settings.AddImmutableType<InverseOverload>();
+            settings.AddExplicitType<IEnumerable<IConversion>>();
+            settings.AddExplicitProperty<IConversion>(x => x.Unit);
+            return settings;
         }
     }
 }

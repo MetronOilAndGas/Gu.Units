@@ -25,7 +25,7 @@
 
         public string UnitName => Unit.QuantityName + "Unit";
 
-        public string ParameterName => Name.ToFirstCharLower();
+        public string ParameterName => Name.ToParameterName();
 
         public ObservableCollection<OperatorOverload> OperatorOverloads { get; } = new ObservableCollection<OperatorOverload>();
 
