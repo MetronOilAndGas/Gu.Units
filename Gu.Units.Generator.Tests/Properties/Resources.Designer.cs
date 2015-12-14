@@ -59,27 +59,5 @@ namespace Gu.Units.Generator.Tests.Properties {
                 resourceCulture = value;
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
-        ///&lt;Settings xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;
-        ///  &lt;DerivedUnits&gt;
-        ///    &lt;DerivedUnit&gt;
-        ///      &lt;ClassName&gt;SquareMetres&lt;/ClassName&gt;
-        ///      &lt;Symbol&gt;m²&lt;/Symbol&gt;
-        ///      &lt;QuantityName&gt;Area&lt;/QuantityName&gt;
-        ///      &lt;Conversions&gt;
-        ///        &lt;Conversion&gt;
-        ///          &lt;ClassName&gt;SquareMillimetres&lt;/ClassName&gt;
-        ///          &lt;Symbol&gt;mm²&lt;/Symbol&gt;
-        ///          &lt;Formula&gt;
-        ///            &lt;ConversionFactor&gt;1E-06&lt;/ConversionFactor&gt;
-        ///          [rest of string was truncated]&quot;;.
-        /// </summary>
-        internal static string GeneratorSettings {
-            get {
-                return ResourceManager.GetString("GeneratorSettings", resourceCulture);
-            }
-        }
     }
 }

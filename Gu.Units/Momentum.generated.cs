@@ -147,6 +147,11 @@
             return Speed.FromMetresPerSecond(left.newtonSecond / right.kilograms);
         }
 
+        public static MassFlow operator /(Momentum left, Length right)
+        {
+            return MassFlow.FromKilogramsPerSecond(left.newtonSecond / right.metres);
+        }
+
         public static Force operator /(Momentum left, Time right)
         {
             return Force.FromNewtons(left.newtonSecond / right.seconds);
@@ -182,9 +187,19 @@
             return AreaDensity.FromKilogramsPerSquareMetre(left.newtonSecond / right.cubicMetresPerSecond);
         }
 
+        public static MassFlow operator *(Momentum left, Wavenumber right)
+        {
+            return MassFlow.FromKilogramsPerSecond(left.newtonSecond * right.reciprocalMetres);
+        }
+
         public static VolumetricFlow operator /(Momentum left, AreaDensity right)
         {
             return VolumetricFlow.FromCubicMetresPerSecond(left.newtonSecond / right.kilogramsPerSquareMetre);
+        }
+
+        public static Length operator /(Momentum left, MassFlow right)
+        {
+            return Length.FromMetres(left.newtonSecond / right.kilogramsPerSecond);
         }
 
         public static double operator /(Momentum left, Momentum right)

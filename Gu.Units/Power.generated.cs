@@ -276,6 +276,11 @@
             return AngularSpeed.FromRadiansPerSecond(left.watts / right.newtonMetres);
         }
 
+        public static KinematicViscosity operator /(Power left, Stiffness right)
+        {
+            return KinematicViscosity.FromSquareMetresPerSecond(left.watts / right.newtonsPerMetre);
+        }
+
         public static Pressure operator /(Power left, VolumetricFlow right)
         {
             return Pressure.FromPascals(left.watts / right.cubicMetresPerSecond);
@@ -286,9 +291,29 @@
             return Current.FromAmperes(left.watts / right.volts);
         }
 
+        public static MassFlow operator /(Power left, SpecificEnergy right)
+        {
+            return MassFlow.FromKilogramsPerSecond(left.watts / right.joulesPerKilogram);
+        }
+
+        public static KinematicViscosity operator *(Power left, Flexibility right)
+        {
+            return KinematicViscosity.FromSquareMetresPerSecond(left.watts * right.metresPerNewton);
+        }
+
         public static Acceleration operator /(Power left, Momentum right)
         {
             return Acceleration.FromMetresPerSecondSquared(left.watts / right.newtonSecond);
+        }
+
+        public static SpecificEnergy operator /(Power left, MassFlow right)
+        {
+            return SpecificEnergy.FromJoulesPerKilogram(left.watts / right.kilogramsPerSecond);
+        }
+
+        public static Stiffness operator /(Power left, KinematicViscosity right)
+        {
+            return Stiffness.FromNewtonsPerMetre(left.watts / right.squareMetresPerSecond);
         }
 
         public static double operator /(Power left, Power right)

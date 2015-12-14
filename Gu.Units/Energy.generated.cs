@@ -345,6 +345,16 @@
             return Force.FromNewtons(left.joules * right.reciprocalMetres);
         }
 
+        public static KinematicViscosity operator /(Energy left, MassFlow right)
+        {
+            return KinematicViscosity.FromSquareMetresPerSecond(left.joules / right.kilogramsPerSecond);
+        }
+
+        public static MassFlow operator /(Energy left, KinematicViscosity right)
+        {
+            return MassFlow.FromKilogramsPerSecond(left.joules / right.squareMetresPerSecond);
+        }
+
         public static double operator /(Energy left, Energy right)
         {
             return left.joules / right.joules;

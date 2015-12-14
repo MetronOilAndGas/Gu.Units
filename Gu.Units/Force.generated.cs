@@ -271,6 +271,11 @@
             return Power.FromWatts(left.newtons * right.metresPerSecond);
         }
 
+        public static MassFlow operator /(Force left, Speed right)
+        {
+            return MassFlow.FromKilogramsPerSecond(left.newtons / right.metresPerSecond);
+        }
+
         public static Momentum operator /(Force left, Frequency right)
         {
             return Momentum.FromNewtonSecond(left.newtons / right.hertz);
@@ -309,6 +314,11 @@
         public static Energy operator /(Force left, Wavenumber right)
         {
             return Energy.FromJoules(left.newtons / right.reciprocalMetres);
+        }
+
+        public static Speed operator /(Force left, MassFlow right)
+        {
+            return Speed.FromMetresPerSecond(left.newtons / right.kilogramsPerSecond);
         }
 
         public static double operator /(Force left, Force right)

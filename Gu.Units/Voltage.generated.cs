@@ -271,6 +271,16 @@
             return Current.FromAmperes(left.volts * right.siemens);
         }
 
+        public static KinematicViscosity operator /(Voltage left, MagneticFieldStrength right)
+        {
+            return KinematicViscosity.FromSquareMetresPerSecond(left.volts / right.teslas);
+        }
+
+        public static MagneticFieldStrength operator /(Voltage left, KinematicViscosity right)
+        {
+            return MagneticFieldStrength.FromTeslas(left.volts / right.squareMetresPerSecond);
+        }
+
         public static double operator /(Voltage left, Voltage right)
         {
             return left.volts / right.volts;

@@ -15,6 +15,7 @@
     public class Settings : INotifyPropertyChanged
     {
         internal static Settings InnerInstance; // huge hairy hack here for T4
+        private IReadOnlyList<MissingOverloads> missing;
 
         public static Settings Instance => InnerInstance ?? FromResource;
 
@@ -47,7 +48,8 @@
                              DerivedUnits.ObserveCollectionChangedSlim(true))
                 .Subscribe(_ =>
                 {
-                    OverloadFinder.Find(AllUnits);
+                    this.missing = OverloadFinder.Find(AllUnits);
+                    OnPropertyChanged(nameof(Missing));
                     OnPropertyChanged(nameof(AllUnits));
                     OnPropertyChanged(nameof(Quantities));
                 });
@@ -74,6 +76,8 @@
         public IReadOnlyList<Unit> AllUnits => BaseUnits.Concat<Unit>(DerivedUnits).ToList();
 
         public IReadOnlyList<Quantity> Quantities => AllUnits.Select(x => x.Quantity).ToList();
+
+        public IReadOnlyList<MissingOverloads> Missing => this.missing; 
 
         public static Settings CreateEmpty()
         {

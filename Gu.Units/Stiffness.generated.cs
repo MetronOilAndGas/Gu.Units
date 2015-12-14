@@ -306,6 +306,11 @@
             return Pressure.FromPascals(left.newtonsPerMetre / right.metres);
         }
 
+        public static MassFlow operator *(Stiffness left, Time right)
+        {
+            return MassFlow.FromKilogramsPerSecond(left.newtonsPerMetre * right.seconds);
+        }
+
         public static MagneticFieldStrength operator /(Stiffness left, Current right)
         {
             return MagneticFieldStrength.FromTeslas(left.newtonsPerMetre / right.amperes);
@@ -324,6 +329,11 @@
         public static Length operator /(Stiffness left, Pressure right)
         {
             return Length.FromMetres(left.newtonsPerMetre / right.pascals);
+        }
+
+        public static MassFlow operator /(Stiffness left, Frequency right)
+        {
+            return MassFlow.FromKilogramsPerSecond(left.newtonsPerMetre / right.hertz);
         }
 
         public static AreaDensity operator /(Stiffness left, SpecificEnergy right)
@@ -354,6 +364,16 @@
         public static SpecificEnergy operator /(Stiffness left, AreaDensity right)
         {
             return SpecificEnergy.FromJoulesPerKilogram(left.newtonsPerMetre / right.kilogramsPerSquareMetre);
+        }
+
+        public static Frequency operator /(Stiffness left, MassFlow right)
+        {
+            return Frequency.FromHertz(left.newtonsPerMetre / right.kilogramsPerSecond);
+        }
+
+        public static Power operator *(Stiffness left, KinematicViscosity right)
+        {
+            return Power.FromWatts(left.newtonsPerMetre * right.squareMetresPerSecond);
         }
 
         public static Flexibility operator /(double left, Stiffness right)

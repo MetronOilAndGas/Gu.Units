@@ -2,9 +2,11 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Linq;
 
     [Serializable]
+    [DebuggerDisplay("{Left.Name}{Operator}{Right.Name} = {Result.Name}")]
     public class OperatorOverload
     {
         public static readonly string Divide = "/";

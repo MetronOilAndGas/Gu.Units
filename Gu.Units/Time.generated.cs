@@ -242,6 +242,11 @@
             return Speed.FromMetresPerSecond(left.seconds * right.metresPerSecondSquared);
         }
 
+        public static MassFlow operator *(Time left, Stiffness right)
+        {
+            return MassFlow.FromKilogramsPerSecond(left.seconds * right.newtonsPerMetre);
+        }
+
         public static Volume operator *(Time left, VolumetricFlow right)
         {
             return Volume.FromCubicMetres(left.seconds * right.cubicMetresPerSecond);
@@ -262,6 +267,11 @@
             return Capacitance.FromFarads(left.seconds / right.ohm);
         }
 
+        public static KinematicViscosity operator *(Time left, SpecificEnergy right)
+        {
+            return KinematicViscosity.FromSquareMetresPerSecond(left.seconds * right.joulesPerKilogram);
+        }
+
         public static ElectricalConductance operator /(Time left, Inductance right)
         {
             return ElectricalConductance.FromSiemens(left.seconds / right.henrys);
@@ -270,6 +280,11 @@
         public static Resistance operator /(Time left, Capacitance right)
         {
             return Resistance.FromOhm(left.seconds / right.farads);
+        }
+
+        public static MassFlow operator /(Time left, Flexibility right)
+        {
+            return MassFlow.FromKilogramsPerSecond(left.seconds / right.metresPerNewton);
         }
 
         public static AngularSpeed operator *(Time left, AngularAcceleration right)
@@ -300,6 +315,21 @@
         public static AmountOfSubstance operator *(Time left, CatalyticActivity right)
         {
             return AmountOfSubstance.FromMoles(left.seconds * right.katals);
+        }
+
+        public static Mass operator *(Time left, MassFlow right)
+        {
+            return Mass.FromKilograms(left.seconds * right.kilogramsPerSecond);
+        }
+
+        public static Flexibility operator /(Time left, MassFlow right)
+        {
+            return Flexibility.FromMetresPerNewton(left.seconds / right.kilogramsPerSecond);
+        }
+
+        public static Area operator *(Time left, KinematicViscosity right)
+        {
+            return Area.FromSquareMetres(left.seconds * right.squareMetresPerSecond);
         }
 
         public static Frequency operator /(double left, Time right)

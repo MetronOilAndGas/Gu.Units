@@ -152,6 +152,11 @@
             return Acceleration.FromMetresPerSecondSquared(left.joulesPerKilogram / right.metres);
         }
 
+        public static KinematicViscosity operator *(SpecificEnergy left, Time right)
+        {
+            return KinematicViscosity.FromSquareMetresPerSecond(left.joulesPerKilogram * right.seconds);
+        }
+
         public static SpecificVolume operator /(SpecificEnergy left, Pressure right)
         {
             return SpecificVolume.FromCubicMetresPerKilogram(left.joulesPerKilogram / right.pascals);
@@ -165,6 +170,11 @@
         public static Speed operator /(SpecificEnergy left, Speed right)
         {
             return Speed.FromMetresPerSecond(left.joulesPerKilogram / right.metresPerSecond);
+        }
+
+        public static KinematicViscosity operator /(SpecificEnergy left, Frequency right)
+        {
+            return KinematicViscosity.FromSquareMetresPerSecond(left.joulesPerKilogram / right.hertz);
         }
 
         public static Length operator /(SpecificEnergy left, Acceleration right)
@@ -185,6 +195,16 @@
         public static Pressure operator /(SpecificEnergy left, SpecificVolume right)
         {
             return Pressure.FromPascals(left.joulesPerKilogram / right.cubicMetresPerKilogram);
+        }
+
+        public static Power operator *(SpecificEnergy left, MassFlow right)
+        {
+            return Power.FromWatts(left.joulesPerKilogram * right.kilogramsPerSecond);
+        }
+
+        public static Frequency operator /(SpecificEnergy left, KinematicViscosity right)
+        {
+            return Frequency.FromHertz(left.joulesPerKilogram / right.squareMetresPerSecond);
         }
 
         public static double operator /(SpecificEnergy left, SpecificEnergy right)

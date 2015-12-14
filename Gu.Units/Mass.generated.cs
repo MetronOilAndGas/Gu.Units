@@ -184,6 +184,11 @@
             return new Mass(micrograms / 1000000000);
         }
 
+        public static MassFlow operator /(Mass left, Time right)
+        {
+            return MassFlow.FromKilogramsPerSecond(left.kilograms / right.seconds);
+        }
+
         public static AreaDensity operator /(Mass left, Area right)
         {
             return AreaDensity.FromKilogramsPerSquareMetre(left.kilograms / right.squareMetres);
@@ -204,6 +209,11 @@
             return Momentum.FromNewtonSecond(left.kilograms * right.metresPerSecond);
         }
 
+        public static MassFlow operator *(Mass left, Frequency right)
+        {
+            return MassFlow.FromKilogramsPerSecond(left.kilograms * right.hertz);
+        }
+
         public static Force operator *(Mass left, Acceleration right)
         {
             return Force.FromNewtons(left.kilograms * right.metresPerSecondSquared);
@@ -222,6 +232,11 @@
         public static Volume operator *(Mass left, SpecificVolume right)
         {
             return Volume.FromCubicMetres(left.kilograms * right.cubicMetresPerKilogram);
+        }
+
+        public static Time operator /(Mass left, MassFlow right)
+        {
+            return Time.FromSeconds(left.kilograms / right.kilogramsPerSecond);
         }
 
         public static double operator /(Mass left, Mass right)

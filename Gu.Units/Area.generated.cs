@@ -264,6 +264,11 @@
             return Length.FromMetres(left.squareMetres / right.metres);
         }
 
+        public static KinematicViscosity operator /(Area left, Time right)
+        {
+            return KinematicViscosity.FromSquareMetresPerSecond(left.squareMetres / right.seconds);
+        }
+
         public static Wavenumber operator /(Area left, Volume right)
         {
             return Wavenumber.FromReciprocalMetres(left.squareMetres / right.cubicMetres);
@@ -282,6 +287,11 @@
         public static VolumetricFlow operator *(Area left, Speed right)
         {
             return VolumetricFlow.FromCubicMetresPerSecond(left.squareMetres * right.metresPerSecond);
+        }
+
+        public static KinematicViscosity operator *(Area left, Frequency right)
+        {
+            return KinematicViscosity.FromSquareMetresPerSecond(left.squareMetres * right.hertz);
         }
 
         public static Energy operator *(Area left, Stiffness right)
@@ -317,6 +327,11 @@
         public static Mass operator *(Area left, AreaDensity right)
         {
             return Mass.FromKilograms(left.squareMetres * right.kilogramsPerSquareMetre);
+        }
+
+        public static Time operator /(Area left, KinematicViscosity right)
+        {
+            return Time.FromSeconds(left.squareMetres / right.squareMetresPerSecond);
         }
 
         public static double operator /(Area left, Area right)

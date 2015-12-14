@@ -143,6 +143,8 @@
     <Compile Include="..\Gu.Units\SuperScript.cs">
       <Link>Imports\SuperScript.cs</Link>
     </Compile>
+    <Compile Include="Descriptors\Overloads\MissingOverload.cs" />
+    <Compile Include="Descriptors\Overloads\MissingOverloads.cs" />
     <Compile Include="Views\CustomConversionsView.xaml.cs">
       <DependentUpon>CustomConversionsView.xaml</DependentUpon>
     </Compile>
@@ -289,11 +291,6 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="GeneratorSettings.xml">
-      <SubType>Designer</SubType>
-    </Resource>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5">

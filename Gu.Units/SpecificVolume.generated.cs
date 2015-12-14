@@ -185,6 +185,11 @@
             return Length.FromMetres(left.cubicMetresPerKilogram * right.kilogramsPerSquareMetre);
         }
 
+        public static VolumetricFlow operator *(SpecificVolume left, MassFlow right)
+        {
+            return VolumetricFlow.FromCubicMetresPerSecond(left.cubicMetresPerKilogram * right.kilogramsPerSecond);
+        }
+
         public static Density operator /(double left, SpecificVolume right)
         {
             return Density.FromKilogramsPerCubicMetre(left / right.cubicMetresPerKilogram);

@@ -199,9 +199,19 @@
             return Area.FromSquareMetres(left.metresPerNewton * right.joules);
         }
 
+        public static KinematicViscosity operator *(Flexibility left, Power right)
+        {
+            return KinematicViscosity.FromSquareMetresPerSecond(left.metresPerNewton * right.watts);
+        }
+
         public static LengthPerUnitless operator *(Flexibility left, ForcePerUnitless right)
         {
             return LengthPerUnitless.FromMetresPerUnitless(left.metresPerNewton * right.newtonsPerUnitless);
+        }
+
+        public static Time operator *(Flexibility left, MassFlow right)
+        {
+            return Time.FromSeconds(left.metresPerNewton * right.kilogramsPerSecond);
         }
 
         public static Stiffness operator /(double left, Flexibility right)

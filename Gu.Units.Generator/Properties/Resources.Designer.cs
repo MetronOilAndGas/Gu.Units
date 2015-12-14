@@ -61,60 +61,40 @@ namespace Gu.Units.Generator.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
-        ///&lt;Settings xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;
-        ///  &lt;DerivedUnits&gt;
-        ///    &lt;DerivedUnit&gt;
-        ///      &lt;ClassName&gt;SquareMetres&lt;/ClassName&gt;
-        ///      &lt;Symbol&gt;m²&lt;/Symbol&gt;
-        ///      &lt;QuantityName&gt;Area&lt;/QuantityName&gt;
-        ///      &lt;Conversions&gt;
-        ///        &lt;Conversion&gt;
-        ///          &lt;ClassName&gt;SquareMillimetres&lt;/ClassName&gt;
-        ///          &lt;Symbol&gt;mm²&lt;/Symbol&gt;
-        ///          &lt;Formula&gt;
-        ///            &lt;ConversionFactor&gt;1E-06&lt;/ConversionFactor&gt;
-        ///          [rest of string was truncated]&quot;;.
-        /// </summary>
-        internal static string GeneratorSettings {
-            get {
-                return ResourceManager.GetString("GeneratorSettings", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to {
-        ///  &quot;$id&quot;: &quot;1&quot;,
         ///  &quot;Prefixes&quot;: [
         ///    {
-        ///      &quot;$id&quot;: &quot;2&quot;,
         ///      &quot;Name&quot;: &quot;Nano&quot;,
         ///      &quot;Symbol&quot;: &quot;n&quot;,
         ///      &quot;Power&quot;: -9
         ///    },
         ///    {
-        ///      &quot;$id&quot;: &quot;3&quot;,
         ///      &quot;Name&quot;: &quot;Micro&quot;,
         ///      &quot;Symbol&quot;: &quot;µ&quot;,
         ///      &quot;Power&quot;: -6
         ///    },
         ///    {
-        ///      &quot;$id&quot;: &quot;4&quot;,
         ///      &quot;Name&quot;: &quot;Milli&quot;,
         ///      &quot;Symbol&quot;: &quot;m&quot;,
         ///      &quot;Power&quot;: -3
         ///    },
         ///    {
-        ///      &quot;$id&quot;: &quot;5&quot;,
         ///      &quot;Name&quot;: &quot;Centi&quot;,
         ///      &quot;Symbol&quot;: &quot;c&quot;,
         ///      &quot;Power&quot;: -2
         ///    },
         ///    {
-        ///      &quot;$id&quot;: &quot;6&quot;,
         ///      &quot;Name&quot;: &quot;Deci&quot;,
         ///      &quot;Symbol&quot;: &quot;d&quot;,
-        ///      &quot;Powe [rest of string was truncated]&quot;;.
+        ///      &quot;Power&quot;: -1
+        ///    },
+        ///    {
+        ///      &quot;Name&quot;: &quot;Kilo&quot;,
+        ///      &quot;Symbol&quot;: &quot;k&quot;,
+        ///      &quot;Power&quot;: 3
+        ///    },
+        ///    {
+        ///      &quot;Na [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Units {
             get {

@@ -327,6 +327,11 @@
             return AreaDensity.FromKilogramsPerSquareMetre(left.metres * right.kilogramsPerCubicMetre);
         }
 
+        public static KinematicViscosity operator *(Length left, Speed right)
+        {
+            return KinematicViscosity.FromSquareMetresPerSecond(left.metres * right.metresPerSecond);
+        }
+
         public static Time operator /(Length left, Speed right)
         {
             return Time.FromSeconds(left.metres / right.metresPerSecond);
@@ -357,11 +362,6 @@
             return Unitless.FromScalar(left.metres / right.metresPerUnitless);
         }
 
-        public static Area operator /(Length left, Wavenumber right)
-        {
-            return Area.FromSquareMetres(left.metres / right.reciprocalMetres);
-        }
-
         public static SpecificVolume operator /(Length left, AreaDensity right)
         {
             return SpecificVolume.FromCubicMetresPerKilogram(left.metres / right.kilogramsPerSquareMetre);
@@ -370,6 +370,16 @@
         public static AreaDensity operator /(Length left, SpecificVolume right)
         {
             return AreaDensity.FromKilogramsPerSquareMetre(left.metres / right.cubicMetresPerKilogram);
+        }
+
+        public static Momentum operator *(Length left, MassFlow right)
+        {
+            return Momentum.FromNewtonSecond(left.metres * right.kilogramsPerSecond);
+        }
+
+        public static VolumetricFlow operator *(Length left, KinematicViscosity right)
+        {
+            return VolumetricFlow.FromCubicMetresPerSecond(left.metres * right.squareMetresPerSecond);
         }
 
         public static Wavenumber operator /(double left, Length right)

@@ -85,6 +85,27 @@
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
+        protected bool Equals(UnitParts other)
+        {
+            return BaseParts.Equals(other.BaseParts);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj))
+                return false;
+            if (ReferenceEquals(this, obj))
+                return true;
+            if (obj.GetType() != this.GetType())
+                return false;
+            return Equals((UnitParts) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return BaseParts.GetHashCode();
+        }
+
         public override string ToString()
         {
             return this.Symbol;
@@ -100,7 +121,7 @@
 
             var distinct = all.Select(x => x.Unit).Distinct().ToArray();
             var summed = new List<UnitAndPower>();
-            foreach (BaseUnit unit in distinct)
+            foreach (var unit in distinct)
             {
                 var sum = all.Where(x => x.Unit.Name == unit.Name).Sum(x => x.Power);
                 if (sum != 0)

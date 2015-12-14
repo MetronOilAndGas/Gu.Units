@@ -177,6 +177,11 @@
             return Pressure.FromPascals(left.reciprocalMetres * right.newtonsPerMetre);
         }
 
+        public static KinematicViscosity operator *(Wavenumber left, VolumetricFlow right)
+        {
+            return KinematicViscosity.FromSquareMetresPerSecond(left.reciprocalMetres * right.cubicMetresPerSecond);
+        }
+
         public static Acceleration operator *(Wavenumber left, SpecificEnergy right)
         {
             return Acceleration.FromMetresPerSecondSquared(left.reciprocalMetres * right.joulesPerKilogram);
@@ -187,9 +192,19 @@
             return Pressure.FromPascals(left.reciprocalMetres / right.metresPerNewton);
         }
 
+        public static MassFlow operator *(Wavenumber left, Momentum right)
+        {
+            return MassFlow.FromKilogramsPerSecond(left.reciprocalMetres * right.newtonSecond);
+        }
+
         public static Density operator *(Wavenumber left, AreaDensity right)
         {
             return Density.FromKilogramsPerCubicMetre(left.reciprocalMetres * right.kilogramsPerSquareMetre);
+        }
+
+        public static Speed operator *(Wavenumber left, KinematicViscosity right)
+        {
+            return Speed.FromMetresPerSecond(left.reciprocalMetres * right.squareMetresPerSecond);
         }
 
         public static Length operator /(double left, Wavenumber right)

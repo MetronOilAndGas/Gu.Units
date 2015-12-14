@@ -182,6 +182,11 @@
             return Length.FromMetres(left.kilogramsPerSquareMetre * right.cubicMetresPerKilogram);
         }
 
+        public static MassFlow operator *(AreaDensity left, KinematicViscosity right)
+        {
+            return MassFlow.FromKilogramsPerSecond(left.kilogramsPerSquareMetre * right.squareMetresPerSecond);
+        }
+
         public static double operator /(AreaDensity left, AreaDensity right)
         {
             return left.kilogramsPerSquareMetre / right.kilogramsPerSquareMetre;

@@ -222,6 +222,11 @@
             return Mass.FromKilograms(left.kilogramsPerCubicMetre * right.cubicMetres);
         }
 
+        public static MassFlow operator *(Density left, VolumetricFlow right)
+        {
+            return MassFlow.FromKilogramsPerSecond(left.kilogramsPerCubicMetre * right.cubicMetresPerSecond);
+        }
+
         public static Pressure operator *(Density left, SpecificEnergy right)
         {
             return Pressure.FromPascals(left.kilogramsPerCubicMetre * right.joulesPerKilogram);

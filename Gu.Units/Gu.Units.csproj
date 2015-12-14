@@ -335,6 +335,18 @@
     <Compile Include="JerkUnitTypeConverter.generated.cs">
       <DependentUpon>UnitTypeConverters.txt4</DependentUpon>
     </Compile>
+    <Compile Include="KinematicViscosity.generated.cs">
+      <DependentUpon>Quantties.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="KinematicViscosityTypeConverter.generated.cs">
+      <DependentUpon>QuantityTypeConverters.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="KinematicViscosityUnit.generated.cs">
+      <DependentUpon>Units.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="KinematicViscosityUnitTypeConverter.generated.cs">
+      <DependentUpon>UnitTypeConverters.txt4</DependentUpon>
+    </Compile>
     <Compile Include="Length.generated.cs">
       <DependentUpon>Quantties.txt4</DependentUpon>
     </Compile>
@@ -403,6 +415,18 @@
     </Compile>
     <Compile Include="Mass.generated.cs">
       <DependentUpon>Quantties.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="MassFlow.generated.cs">
+      <DependentUpon>Quantties.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="MassFlowTypeConverter.generated.cs">
+      <DependentUpon>QuantityTypeConverters.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="MassFlowUnit.generated.cs">
+      <DependentUpon>Units.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="MassFlowUnitTypeConverter.generated.cs">
+      <DependentUpon>UnitTypeConverters.txt4</DependentUpon>
     </Compile>
     <Compile Include="MassTypeConverter.generated.cs">
       <DependentUpon>QuantityTypeConverters.txt4</DependentUpon>

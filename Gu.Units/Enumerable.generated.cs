@@ -917,6 +917,44 @@
             return SpecificVolume.FromCubicMetresPerKilogram(sum);
         }
 
+        public static MassFlow Sum(this IEnumerable<MassFlow> source)
+        {
+            if (source == null)
+            {
+                throw new ArgumentNullException("source");
+            }
+
+            double sum = 0;
+            checked
+            {
+                foreach (var v in source)
+                {
+                    sum += v.kilogramsPerSecond;
+                }
+            }
+
+            return MassFlow.FromKilogramsPerSecond(sum);
+        }
+
+        public static KinematicViscosity Sum(this IEnumerable<KinematicViscosity> source)
+        {
+            if (source == null)
+            {
+                throw new ArgumentNullException("source");
+            }
+
+            double sum = 0;
+            checked
+            {
+                foreach (var v in source)
+                {
+                    sum += v.squareMetresPerSecond;
+                }
+            }
+
+            return KinematicViscosity.FromSquareMetresPerSecond(sum);
+        }
+
         public static Mass? Sum(this IEnumerable<Mass?> source)
         {
             if (source == null)
@@ -1875,6 +1913,46 @@
                 }
             }
             return SpecificVolume.FromCubicMetresPerKilogram(sum);
+        }
+
+        public static MassFlow? Sum(this IEnumerable<MassFlow?> source)
+        {
+            if (source == null)
+            {
+                throw new ArgumentNullException("source");
+            }
+            double sum = 0;
+            checked
+            {
+                foreach (var v in source)
+                {
+                    if (v != null)
+                    {
+                        sum += v.Value.kilogramsPerSecond;
+                    }
+                }
+            }
+            return MassFlow.FromKilogramsPerSecond(sum);
+        }
+
+        public static KinematicViscosity? Sum(this IEnumerable<KinematicViscosity?> source)
+        {
+            if (source == null)
+            {
+                throw new ArgumentNullException("source");
+            }
+            double sum = 0;
+            checked
+            {
+                foreach (var v in source)
+                {
+                    if (v != null)
+                    {
+                        sum += v.Value.squareMetresPerSecond;
+                    }
+                }
+            }
+            return KinematicViscosity.FromSquareMetresPerSecond(sum);
         }
 
         public static Mass Min(this IEnumerable<Mass> source)
@@ -3365,6 +3443,68 @@
             throw new ArgumentException("No elements", "source");
         }
 
+        public static MassFlow Min(this IEnumerable<MassFlow> source)
+        {
+            if (source == null)
+            {
+                throw new ArgumentNullException("source");
+            }
+            var value = default(MassFlow);
+            bool hasValue = false;
+            foreach (var x in source)
+            {
+                if (System.Double.IsNaN(x.kilogramsPerSecond))
+                {
+                    return x;
+                }
+                if (hasValue)
+                {
+                    if (x.kilogramsPerSecond < value.kilogramsPerSecond)
+                    {
+                        value = x;
+                    }
+                }
+                else
+                {
+                    value = x;
+                    hasValue = true;
+                }
+            }
+            if (hasValue) return value;
+            throw new ArgumentException("No elements", "source");
+        }
+
+        public static KinematicViscosity Min(this IEnumerable<KinematicViscosity> source)
+        {
+            if (source == null)
+            {
+                throw new ArgumentNullException("source");
+            }
+            var value = default(KinematicViscosity);
+            bool hasValue = false;
+            foreach (var x in source)
+            {
+                if (System.Double.IsNaN(x.squareMetresPerSecond))
+                {
+                    return x;
+                }
+                if (hasValue)
+                {
+                    if (x.squareMetresPerSecond < value.squareMetresPerSecond)
+                    {
+                        value = x;
+                    }
+                }
+                else
+                {
+                    value = x;
+                    hasValue = true;
+                }
+            }
+            if (hasValue) return value;
+            throw new ArgumentException("No elements", "source");
+        }
+
         public static Mass? Min(this IEnumerable<Mass?> source)
         {
             if (source == null)
@@ -4558,6 +4698,56 @@
                     return x;
                 }
                 if (value == null || x.Value.cubicMetresPerKilogram < value.Value.cubicMetresPerKilogram)
+                {
+                    value = x;
+                }
+            }
+            return value;
+        }
+
+        public static MassFlow? Min(this IEnumerable<MassFlow?> source)
+        {
+            if (source == null)
+            {
+                throw new ArgumentNullException("source");
+            }
+            MassFlow? value = null;
+            foreach (var x in source)
+            {
+                if (x == null)
+                {
+                    continue;
+                }
+                if (System.Double.IsNaN(x.Value.kilogramsPerSecond))
+                {
+                    return x;
+                }
+                if (value == null || x.Value.kilogramsPerSecond < value.Value.kilogramsPerSecond)
+                {
+                    value = x;
+                }
+            }
+            return value;
+        }
+
+        public static KinematicViscosity? Min(this IEnumerable<KinematicViscosity?> source)
+        {
+            if (source == null)
+            {
+                throw new ArgumentNullException("source");
+            }
+            KinematicViscosity? value = null;
+            foreach (var x in source)
+            {
+                if (x == null)
+                {
+                    continue;
+                }
+                if (System.Double.IsNaN(x.Value.squareMetresPerSecond))
+                {
+                    return x;
+                }
+                if (value == null || x.Value.squareMetresPerSecond < value.Value.squareMetresPerSecond)
                 {
                     value = x;
                 }
@@ -6053,6 +6243,68 @@
             throw new ArgumentException("No elements", "source");
         }
 
+        public static MassFlow Max(this IEnumerable<MassFlow> source)
+        {
+            if (source == null)
+            {
+                throw new ArgumentNullException("source");
+            }
+            MassFlow value = default(MassFlow);
+            bool hasValue = false;
+            foreach (MassFlow x in source)
+            {
+                if (System.Double.IsNaN(x.kilogramsPerSecond))
+                {
+                    return x;
+                }
+                if (hasValue)
+                {
+                    if (x.kilogramsPerSecond > value.kilogramsPerSecond)
+                    {
+                        value = x;
+                    }
+                }
+                else
+                {
+                    value = x;
+                    hasValue = true;
+                }
+            }
+            if (hasValue) return value;
+            throw new ArgumentException("No elements", "source");
+        }
+
+        public static KinematicViscosity Max(this IEnumerable<KinematicViscosity> source)
+        {
+            if (source == null)
+            {
+                throw new ArgumentNullException("source");
+            }
+            KinematicViscosity value = default(KinematicViscosity);
+            bool hasValue = false;
+            foreach (KinematicViscosity x in source)
+            {
+                if (System.Double.IsNaN(x.squareMetresPerSecond))
+                {
+                    return x;
+                }
+                if (hasValue)
+                {
+                    if (x.squareMetresPerSecond > value.squareMetresPerSecond)
+                    {
+                        value = x;
+                    }
+                }
+                else
+                {
+                    value = x;
+                    hasValue = true;
+                }
+            }
+            if (hasValue) return value;
+            throw new ArgumentException("No elements", "source");
+        }
+
         public static Mass? Max(this IEnumerable<Mass?> source)
         {
             if (source == null)
@@ -7253,6 +7505,56 @@
             return value;
         }
 
+        public static MassFlow? Max(this IEnumerable<MassFlow?> source)
+        {
+            if (source == null)
+            {
+                throw new ArgumentNullException("source");
+            }
+            MassFlow? value = null;
+            foreach (var x in source)
+            {
+                if (x == null)
+                {
+                    continue;
+                }
+                if (System.Double.IsNaN(x.Value.kilogramsPerSecond))
+                {
+                    return x;
+                }
+                if (value == null || x.Value.kilogramsPerSecond > value.Value.kilogramsPerSecond)
+                {
+                    value = x;
+                }
+            }
+            return value;
+        }
+
+        public static KinematicViscosity? Max(this IEnumerable<KinematicViscosity?> source)
+        {
+            if (source == null)
+            {
+                throw new ArgumentNullException("source");
+            }
+            KinematicViscosity? value = null;
+            foreach (var x in source)
+            {
+                if (x == null)
+                {
+                    continue;
+                }
+                if (System.Double.IsNaN(x.Value.squareMetresPerSecond))
+                {
+                    return x;
+                }
+                if (value == null || x.Value.squareMetresPerSecond > value.Value.squareMetresPerSecond)
+                {
+                    value = x;
+                }
+            }
+            return value;
+        }
+
         public static Mass Average(this IEnumerable<Mass> source)
         {
             if (source == null)
@@ -8353,6 +8655,52 @@
             if (count > 0)
             {
                 return SpecificVolume.FromCubicMetresPerKilogram(sum / count);
+            }
+            throw new ArgumentException("No elements", "source");
+        }
+
+        public static MassFlow Average(this IEnumerable<MassFlow> source)
+        {
+            if (source == null)
+            {
+                throw new ArgumentNullException("source");
+            }
+            double sum = 0;
+            long count = 0;
+            checked
+            {
+                foreach (var v in source)
+                {
+                    sum += v.kilogramsPerSecond;
+                    count++;
+                }
+            }
+            if (count > 0)
+            {
+                return MassFlow.FromKilogramsPerSecond(sum / count);
+            }
+            throw new ArgumentException("No elements", "source");
+        }
+
+        public static KinematicViscosity Average(this IEnumerable<KinematicViscosity> source)
+        {
+            if (source == null)
+            {
+                throw new ArgumentNullException("source");
+            }
+            double sum = 0;
+            long count = 0;
+            checked
+            {
+                foreach (var v in source)
+                {
+                    sum += v.squareMetresPerSecond;
+                    count++;
+                }
+            }
+            if (count > 0)
+            {
+                return KinematicViscosity.FromSquareMetresPerSecond(sum / count);
             }
             throw new ArgumentException("No elements", "source");
         }
@@ -9602,6 +9950,58 @@
             if (count > 0)
             {
                 return SpecificVolume.FromCubicMetresPerKilogram(sum / count);
+            }
+            return null;
+        }
+
+        public static MassFlow? Average(this IEnumerable<MassFlow?> source)
+        {
+            if (source == null)
+            {
+                throw new ArgumentNullException("source");
+            }
+            double sum = 0;
+            long count = 0;
+            checked
+            {
+                foreach (var v in source)
+                {
+                    if (v != null)
+                    {
+                        sum += v.Value.kilogramsPerSecond;
+                        count++;
+                    }
+                }
+            }
+            if (count > 0)
+            {
+                return MassFlow.FromKilogramsPerSecond(sum / count);
+            }
+            return null;
+        }
+
+        public static KinematicViscosity? Average(this IEnumerable<KinematicViscosity?> source)
+        {
+            if (source == null)
+            {
+                throw new ArgumentNullException("source");
+            }
+            double sum = 0;
+            long count = 0;
+            checked
+            {
+                foreach (var v in source)
+                {
+                    if (v != null)
+                    {
+                        sum += v.Value.squareMetresPerSecond;
+                        count++;
+                    }
+                }
+            }
+            if (count > 0)
+            {
+                return KinematicViscosity.FromSquareMetresPerSecond(sum / count);
             }
             return null;
         }

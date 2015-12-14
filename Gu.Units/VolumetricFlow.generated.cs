@@ -296,6 +296,11 @@
             return new VolumetricFlow(centilitresPerMinute / 6000000);
         }
 
+        public static KinematicViscosity operator /(VolumetricFlow left, Length right)
+        {
+            return KinematicViscosity.FromSquareMetresPerSecond(left.cubicMetresPerSecond / right.metres);
+        }
+
         public static Volume operator *(VolumetricFlow left, Time right)
         {
             return Volume.FromCubicMetres(left.cubicMetresPerSecond * right.seconds);
@@ -316,6 +321,11 @@
             return Power.FromWatts(left.cubicMetresPerSecond * right.pascals);
         }
 
+        public static MassFlow operator *(VolumetricFlow left, Density right)
+        {
+            return MassFlow.FromKilogramsPerSecond(left.cubicMetresPerSecond * right.kilogramsPerCubicMetre);
+        }
+
         public static Area operator /(VolumetricFlow left, Speed right)
         {
             return Area.FromSquareMetres(left.cubicMetresPerSecond / right.metresPerSecond);
@@ -326,9 +336,29 @@
             return Volume.FromCubicMetres(left.cubicMetresPerSecond / right.hertz);
         }
 
+        public static KinematicViscosity operator *(VolumetricFlow left, Wavenumber right)
+        {
+            return KinematicViscosity.FromSquareMetresPerSecond(left.cubicMetresPerSecond * right.reciprocalMetres);
+        }
+
         public static Momentum operator *(VolumetricFlow left, AreaDensity right)
         {
             return Momentum.FromNewtonSecond(left.cubicMetresPerSecond * right.kilogramsPerSquareMetre);
+        }
+
+        public static MassFlow operator /(VolumetricFlow left, SpecificVolume right)
+        {
+            return MassFlow.FromKilogramsPerSecond(left.cubicMetresPerSecond / right.cubicMetresPerKilogram);
+        }
+
+        public static SpecificVolume operator /(VolumetricFlow left, MassFlow right)
+        {
+            return SpecificVolume.FromCubicMetresPerKilogram(left.cubicMetresPerSecond / right.kilogramsPerSecond);
+        }
+
+        public static Length operator /(VolumetricFlow left, KinematicViscosity right)
+        {
+            return Length.FromMetres(left.cubicMetresPerSecond / right.squareMetresPerSecond);
         }
 
         public static double operator /(VolumetricFlow left, VolumetricFlow right)

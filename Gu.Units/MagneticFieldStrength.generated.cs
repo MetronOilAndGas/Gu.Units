@@ -152,6 +152,16 @@
             return MagneticFlux.FromWebers(left.teslas * right.squareMetres);
         }
 
+        public static MassFlow operator *(MagneticFieldStrength left, ElectricCharge right)
+        {
+            return MassFlow.FromKilogramsPerSecond(left.teslas * right.coulombs);
+        }
+
+        public static Voltage operator *(MagneticFieldStrength left, KinematicViscosity right)
+        {
+            return Voltage.FromVolts(left.teslas * right.squareMetresPerSecond);
+        }
+
         public static double operator /(MagneticFieldStrength left, MagneticFieldStrength right)
         {
             return left.teslas / right.teslas;

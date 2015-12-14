@@ -198,6 +198,11 @@
             return new Frequency(1000000000 * gigahertz);
         }
 
+        public static MassFlow operator *(Frequency left, Mass right)
+        {
+            return MassFlow.FromKilogramsPerSecond(left.hertz * right.kilograms);
+        }
+
         public static Speed operator *(Frequency left, Length right)
         {
             return Speed.FromMetresPerSecond(left.hertz * right.metres);
@@ -211,6 +216,11 @@
         public static CatalyticActivity operator *(Frequency left, AmountOfSubstance right)
         {
             return CatalyticActivity.FromKatals(left.hertz * right.moles);
+        }
+
+        public static KinematicViscosity operator *(Frequency left, Area right)
+        {
+            return KinematicViscosity.FromSquareMetresPerSecond(left.hertz * right.squareMetres);
         }
 
         public static VolumetricFlow operator *(Frequency left, Volume right)
@@ -276,6 +286,16 @@
         public static Speed operator /(Frequency left, Wavenumber right)
         {
             return Speed.FromMetresPerSecond(left.hertz / right.reciprocalMetres);
+        }
+
+        public static Stiffness operator *(Frequency left, MassFlow right)
+        {
+            return Stiffness.FromNewtonsPerMetre(left.hertz * right.kilogramsPerSecond);
+        }
+
+        public static SpecificEnergy operator *(Frequency left, KinematicViscosity right)
+        {
+            return SpecificEnergy.FromJoulesPerKilogram(left.hertz * right.squareMetresPerSecond);
         }
 
         public static Time operator /(double left, Frequency right)

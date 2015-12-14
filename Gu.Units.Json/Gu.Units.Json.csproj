@@ -107,6 +107,9 @@
     <Compile Include="JerkJsonConverter.generated.cs">
       <DependentUpon>QuantityJsonConverters.txt4</DependentUpon>
     </Compile>
+    <Compile Include="KinematicViscosityJsonConverter.generated.cs">
+      <DependentUpon>QuantityJsonConverters.txt4</DependentUpon>
+    </Compile>
     <Compile Include="LengthJsonConverter.generated.cs">
       <DependentUpon>QuantityJsonConverters.txt4</DependentUpon>
     </Compile>
@@ -123,6 +126,9 @@
       <DependentUpon>QuantityJsonConverters.txt4</DependentUpon>
     </Compile>
     <Compile Include="MagneticFluxJsonConverter.generated.cs">
+      <DependentUpon>QuantityJsonConverters.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="MassFlowJsonConverter.generated.cs">
       <DependentUpon>QuantityJsonConverters.txt4</DependentUpon>
     </Compile>
     <Compile Include="MassJsonConverter.generated.cs">

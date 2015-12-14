@@ -273,6 +273,11 @@
             return Momentum.FromNewtonSecond(left.metresPerSecond * right.kilograms);
         }
 
+        public static KinematicViscosity operator *(Speed left, Length right)
+        {
+            return KinematicViscosity.FromSquareMetresPerSecond(left.metresPerSecond * right.metres);
+        }
+
         public static Frequency operator /(Speed left, Length right)
         {
             return Frequency.FromHertz(left.metresPerSecond / right.metres);
@@ -326,6 +331,21 @@
         public static Frequency operator *(Speed left, Wavenumber right)
         {
             return Frequency.FromHertz(left.metresPerSecond * right.reciprocalMetres);
+        }
+
+        public static KinematicViscosity operator /(Speed left, Wavenumber right)
+        {
+            return KinematicViscosity.FromSquareMetresPerSecond(left.metresPerSecond / right.reciprocalMetres);
+        }
+
+        public static Force operator *(Speed left, MassFlow right)
+        {
+            return Force.FromNewtons(left.metresPerSecond * right.kilogramsPerSecond);
+        }
+
+        public static Wavenumber operator /(Speed left, KinematicViscosity right)
+        {
+            return Wavenumber.FromReciprocalMetres(left.metresPerSecond / right.squareMetresPerSecond);
         }
 
         public static double operator /(Speed left, Speed right)

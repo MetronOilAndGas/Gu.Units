@@ -5,15 +5,20 @@
 
     public static class OverloadFinder
     {
-        public static void Find(IReadOnlyList<Unit> units)
+        public static IReadOnlyList<MissingOverloads> Find(IReadOnlyList<Unit> units)
         {
+
             var quantities = units.Select(u => u.Quantity).ToList();
-            FindOperatorOverloads(units.ToList(), quantities);
             FindInverseOverloads(quantities);
+            return FindOperatorOverloads(units.ToList(), quantities)
+                .Select(x => new MissingOverloads(x.Key, x.Value))
+                .OrderByDescending(x => x.Missing.Count)
+                .ToList();
         }
 
-        private static void FindOperatorOverloads(IReadOnlyList<Unit> units, IReadOnlyList<Quantity> quantities)
+        private static Dictionary<UnitParts, List<MissingOverload>> FindOperatorOverloads(IReadOnlyList<Unit> units, IReadOnlyList<Quantity> quantities)
         {
+            var missing = new Dictionary<UnitParts, List<MissingOverload>>();
             foreach (var left in quantities)
             {
                 left.OperatorOverloads.Clear();
@@ -25,13 +30,49 @@
                     {
                         left.OperatorOverloads.Add(overload);
                     }
+                    else
+                    {
+                        var result = left.Unit.Parts * right.Unit.Parts;
+                        if (result.Count == 0)
+                        {
+                            continue;
+                        }
+
+                        List<MissingOverload> list;
+                        if (!missing.TryGetValue(result, out list))
+                        {
+                            list = new List<MissingOverload>();
+                            missing[result] = list;
+                        }
+
+                        list.Add(new MissingOverload(left, OperatorOverload.Multiply, right, result));
+                    }
 
                     if (OperatorOverload.TryCreateDivision(left, right, units, out overload))
                     {
                         left.OperatorOverloads.Add(overload);
                     }
+                    else
+                    {
+                        var result = left.Unit.Parts / right.Unit.Parts;
+                        if (result.Count == 0)
+                        {
+                            continue;
+                        }
+
+                        List<MissingOverload> list;
+                        if (!missing.TryGetValue(result, out list))
+                        {
+                            list = new List<MissingOverload>();
+                            missing[result] = list;
+                        }
+
+                        list.Add(new MissingOverload(left, OperatorOverload.Divide, right, result));
+                    }
                 }
             }
+
+            return missing;
         }
 
         private static void FindInverseOverloads(IReadOnlyList<Quantity> quantities)

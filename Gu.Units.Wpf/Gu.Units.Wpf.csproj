@@ -111,6 +111,9 @@
     <Compile Include="JerkConverter.generated.cs">
       <DependentUpon>QuantityValueConverters.txt4</DependentUpon>
     </Compile>
+    <Compile Include="KinematicViscosityConverter.generated.cs">
+      <DependentUpon>QuantityValueConverters.txt4</DependentUpon>
+    </Compile>
     <Compile Include="LengthConverter.generated.cs">
       <DependentUpon>QuantityValueConverters.txt4</DependentUpon>
     </Compile>
@@ -130,6 +133,9 @@
       <DependentUpon>QuantityValueConverters.txt4</DependentUpon>
     </Compile>
     <Compile Include="MassConverter.generated.cs">
+      <DependentUpon>QuantityValueConverters.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="MassFlowConverter.generated.cs">
       <DependentUpon>QuantityValueConverters.txt4</DependentUpon>
     </Compile>
     <Compile Include="MomentumConverter.generated.cs">

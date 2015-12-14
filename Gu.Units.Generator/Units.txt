@@ -205,13 +205,13 @@
       "QuantityName": "Angle",
       "FactorConversions": [],
       "CustomConversions": [
-	    {
+        {
           "Name": "Degrees",
           "Symbol": "°",
           "ToSi": "degrees/57.295779513082323",
           "FromSi": "57.295779513082323*radians"
         }
-	  ],
+      ],
       "PrefixConversions": [],
       "PartConversions": []
     },
@@ -1899,6 +1899,44 @@
           "Factor": 0.0010000000000000002
         }
       ]
+    },
+    {
+      "Parts": [
+        {
+          "UnitName": "Kilograms",
+          "Power": 1
+        },
+        {
+          "UnitName": "Seconds",
+          "Power": -1
+        }
+      ],
+      "Name": "KilogramsPerSecond",
+      "Symbol": "kg/s",
+      "QuantityName": "MassFlow",
+      "FactorConversions": [],
+      "CustomConversions": [],
+      "PrefixConversions": [],
+      "PartConversions": []
+    },
+    {
+      "Parts": [
+        {
+          "UnitName": "Metres",
+          "Power": 2
+        },
+        {
+          "UnitName": "Seconds",
+          "Power": -1
+        }
+      ],
+      "Name": "SquareMetresPerSecond",
+      "Symbol": "m²/s",
+      "QuantityName": "KinematicViscosity",
+      "FactorConversions": [],
+      "CustomConversions": [],
+      "PrefixConversions": [],
+      "PartConversions": []
     }
   ]
 }
