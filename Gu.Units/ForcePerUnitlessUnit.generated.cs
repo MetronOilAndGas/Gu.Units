@@ -44,6 +44,7 @@
         private readonly Func<double, double> toNewtonsPerUnitless;
         private readonly Func<double, double> fromNewtonsPerUnitless;
         internal readonly string symbol;
+
         public ForcePerUnitlessUnit(Func<double, double> toNewtonsPerUnitless, Func<double, double> fromNewtonsPerUnitless, string symbol)
         {
             this.toNewtonsPerUnitless = toNewtonsPerUnitless;
@@ -59,12 +60,12 @@
         /// <summary>
         /// The default unit for <see cref="Gu.Units.ForcePerUnitlessUnit"/>
         /// </summary>
-        public ForcePerUnitlessUnit SiUnit => ForcePerUnitlessUnit.NewtonsPerUnitless;
+        public ForcePerUnitlessUnit SiUnit => NewtonsPerUnitless;
 
         /// <summary>
         /// The default <see cref="Gu.Units.IUnit"/> for <see cref="Gu.Units.ForcePerUnitlessUnit"/>
         /// </summary>
-        IUnit IUnit.SiUnit => ForcePerUnitlessUnit.NewtonsPerUnitless;
+        IUnit IUnit.SiUnit => NewtonsPerUnitless;
 
         public static ForcePerUnitless operator *(double left, ForcePerUnitlessUnit right)
         {

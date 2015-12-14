@@ -21,11 +21,12 @@
         /// The Degrees unit
         /// Contains conversion logic to from and formatting.
         /// </summary>
-        public static readonly AngleUnit Degrees = new AngleUnit(degrees => 0.0174532925199433 * degrees, radians => radians / 0.0174532925199433, "°");
+        public static readonly AngleUnit Degrees = new AngleUnit(degrees => degrees / 57.295779513082323, radians => 57.295779513082323 * radians, "°");
 
         private readonly Func<double, double> toRadians;
         private readonly Func<double, double> fromRadians;
         internal readonly string symbol;
+
         public AngleUnit(Func<double, double> toRadians, Func<double, double> fromRadians, string symbol)
         {
             this.toRadians = toRadians;
@@ -41,12 +42,12 @@
         /// <summary>
         /// The default unit for <see cref="Gu.Units.AngleUnit"/>
         /// </summary>
-        public AngleUnit SiUnit => AngleUnit.Radians;
+        public AngleUnit SiUnit => Radians;
 
         /// <summary>
         /// The default <see cref="Gu.Units.IUnit"/> for <see cref="Gu.Units.AngleUnit"/>
         /// </summary>
-        IUnit IUnit.SiUnit => AngleUnit.Radians;
+        IUnit IUnit.SiUnit => Radians;
 
         public static Angle operator *(double left, AngleUnit right)
         {

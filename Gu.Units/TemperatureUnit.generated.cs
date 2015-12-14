@@ -32,6 +32,7 @@
         private readonly Func<double, double> toKelvin;
         private readonly Func<double, double> fromKelvin;
         internal readonly string symbol;
+
         public TemperatureUnit(Func<double, double> toKelvin, Func<double, double> fromKelvin, string symbol)
         {
             this.toKelvin = toKelvin;
@@ -47,12 +48,12 @@
         /// <summary>
         /// The default unit for <see cref="Gu.Units.TemperatureUnit"/>
         /// </summary>
-        public TemperatureUnit SiUnit => TemperatureUnit.Kelvin;
+        public TemperatureUnit SiUnit => Kelvin;
 
         /// <summary>
         /// The default <see cref="Gu.Units.IUnit"/> for <see cref="Gu.Units.TemperatureUnit"/>
         /// </summary>
-        IUnit IUnit.SiUnit => TemperatureUnit.Kelvin;
+        IUnit IUnit.SiUnit => Kelvin;
 
         public static Temperature operator *(double left, TemperatureUnit right)
         {

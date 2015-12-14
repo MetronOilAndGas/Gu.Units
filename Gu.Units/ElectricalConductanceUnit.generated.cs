@@ -20,6 +20,7 @@
         private readonly Func<double, double> toSiemens;
         private readonly Func<double, double> fromSiemens;
         internal readonly string symbol;
+
         public ElectricalConductanceUnit(Func<double, double> toSiemens, Func<double, double> fromSiemens, string symbol)
         {
             this.toSiemens = toSiemens;
@@ -35,12 +36,12 @@
         /// <summary>
         /// The default unit for <see cref="Gu.Units.ElectricalConductanceUnit"/>
         /// </summary>
-        public ElectricalConductanceUnit SiUnit => ElectricalConductanceUnit.Siemens;
+        public ElectricalConductanceUnit SiUnit => Siemens;
 
         /// <summary>
         /// The default <see cref="Gu.Units.IUnit"/> for <see cref="Gu.Units.ElectricalConductanceUnit"/>
         /// </summary>
-        IUnit IUnit.SiUnit => ElectricalConductanceUnit.Siemens;
+        IUnit IUnit.SiUnit => Siemens;
 
         public static ElectricalConductance operator *(double left, ElectricalConductanceUnit right)
         {

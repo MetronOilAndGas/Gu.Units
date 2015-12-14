@@ -38,6 +38,7 @@
         private readonly Func<double, double> toMetresPerNewton;
         private readonly Func<double, double> fromMetresPerNewton;
         internal readonly string symbol;
+
         public FlexibilityUnit(Func<double, double> toMetresPerNewton, Func<double, double> fromMetresPerNewton, string symbol)
         {
             this.toMetresPerNewton = toMetresPerNewton;
@@ -53,12 +54,12 @@
         /// <summary>
         /// The default unit for <see cref="Gu.Units.FlexibilityUnit"/>
         /// </summary>
-        public FlexibilityUnit SiUnit => FlexibilityUnit.MetresPerNewton;
+        public FlexibilityUnit SiUnit => MetresPerNewton;
 
         /// <summary>
         /// The default <see cref="Gu.Units.IUnit"/> for <see cref="Gu.Units.FlexibilityUnit"/>
         /// </summary>
-        IUnit IUnit.SiUnit => FlexibilityUnit.MetresPerNewton;
+        IUnit IUnit.SiUnit => MetresPerNewton;
 
         public static Flexibility operator *(double left, FlexibilityUnit right)
         {

@@ -86,6 +86,7 @@
         private readonly Func<double, double> toPascals;
         private readonly Func<double, double> fromPascals;
         internal readonly string symbol;
+
         public PressureUnit(Func<double, double> toPascals, Func<double, double> fromPascals, string symbol)
         {
             this.toPascals = toPascals;
@@ -101,12 +102,12 @@
         /// <summary>
         /// The default unit for <see cref="Gu.Units.PressureUnit"/>
         /// </summary>
-        public PressureUnit SiUnit => PressureUnit.Pascals;
+        public PressureUnit SiUnit => Pascals;
 
         /// <summary>
         /// The default <see cref="Gu.Units.IUnit"/> for <see cref="Gu.Units.PressureUnit"/>
         /// </summary>
-        IUnit IUnit.SiUnit => PressureUnit.Pascals;
+        IUnit IUnit.SiUnit => Pascals;
 
         public static Pressure operator *(double left, PressureUnit right)
         {

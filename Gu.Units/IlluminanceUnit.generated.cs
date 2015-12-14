@@ -20,6 +20,7 @@
         private readonly Func<double, double> toLux;
         private readonly Func<double, double> fromLux;
         internal readonly string symbol;
+
         public IlluminanceUnit(Func<double, double> toLux, Func<double, double> fromLux, string symbol)
         {
             this.toLux = toLux;
@@ -35,12 +36,12 @@
         /// <summary>
         /// The default unit for <see cref="Gu.Units.IlluminanceUnit"/>
         /// </summary>
-        public IlluminanceUnit SiUnit => IlluminanceUnit.Lux;
+        public IlluminanceUnit SiUnit => Lux;
 
         /// <summary>
         /// The default <see cref="Gu.Units.IUnit"/> for <see cref="Gu.Units.IlluminanceUnit"/>
         /// </summary>
-        IUnit IUnit.SiUnit => IlluminanceUnit.Lux;
+        IUnit IUnit.SiUnit => Lux;
 
         public static Illuminance operator *(double left, IlluminanceUnit right)
         {

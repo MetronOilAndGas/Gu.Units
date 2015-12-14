@@ -68,6 +68,7 @@
         private readonly Func<double, double> toBits;
         private readonly Func<double, double> fromBits;
         internal readonly string symbol;
+
         public DataUnit(Func<double, double> toBits, Func<double, double> fromBits, string symbol)
         {
             this.toBits = toBits;
@@ -83,12 +84,12 @@
         /// <summary>
         /// The default unit for <see cref="Gu.Units.DataUnit"/>
         /// </summary>
-        public DataUnit SiUnit => DataUnit.Bits;
+        public DataUnit SiUnit => Bits;
 
         /// <summary>
         /// The default <see cref="Gu.Units.IUnit"/> for <see cref="Gu.Units.DataUnit"/>
         /// </summary>
-        IUnit IUnit.SiUnit => DataUnit.Bits;
+        IUnit IUnit.SiUnit => Bits;
 
         public static Data operator *(double left, DataUnit right)
         {

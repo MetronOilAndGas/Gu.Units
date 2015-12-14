@@ -68,6 +68,7 @@
         private readonly Func<double, double> toSquareMetres;
         private readonly Func<double, double> fromSquareMetres;
         internal readonly string symbol;
+
         public AreaUnit(Func<double, double> toSquareMetres, Func<double, double> fromSquareMetres, string symbol)
         {
             this.toSquareMetres = toSquareMetres;
@@ -83,12 +84,12 @@
         /// <summary>
         /// The default unit for <see cref="Gu.Units.AreaUnit"/>
         /// </summary>
-        public AreaUnit SiUnit => AreaUnit.SquareMetres;
+        public AreaUnit SiUnit => SquareMetres;
 
         /// <summary>
         /// The default <see cref="Gu.Units.IUnit"/> for <see cref="Gu.Units.AreaUnit"/>
         /// </summary>
-        IUnit IUnit.SiUnit => AreaUnit.SquareMetres;
+        IUnit IUnit.SiUnit => SquareMetres;
 
         public static Area operator *(double left, AreaUnit right)
         {

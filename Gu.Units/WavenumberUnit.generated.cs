@@ -20,6 +20,7 @@
         private readonly Func<double, double> toReciprocalMetres;
         private readonly Func<double, double> fromReciprocalMetres;
         internal readonly string symbol;
+
         public WavenumberUnit(Func<double, double> toReciprocalMetres, Func<double, double> fromReciprocalMetres, string symbol)
         {
             this.toReciprocalMetres = toReciprocalMetres;
@@ -35,12 +36,12 @@
         /// <summary>
         /// The default unit for <see cref="Gu.Units.WavenumberUnit"/>
         /// </summary>
-        public WavenumberUnit SiUnit => WavenumberUnit.ReciprocalMetres;
+        public WavenumberUnit SiUnit => ReciprocalMetres;
 
         /// <summary>
         /// The default <see cref="Gu.Units.IUnit"/> for <see cref="Gu.Units.WavenumberUnit"/>
         /// </summary>
-        IUnit IUnit.SiUnit => WavenumberUnit.ReciprocalMetres;
+        IUnit IUnit.SiUnit => ReciprocalMetres;
 
         public static Wavenumber operator *(double left, WavenumberUnit right)
         {

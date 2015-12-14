@@ -38,6 +38,7 @@
         private readonly Func<double, double> toKilograms;
         private readonly Func<double, double> fromKilograms;
         internal readonly string symbol;
+
         public MassUnit(Func<double, double> toKilograms, Func<double, double> fromKilograms, string symbol)
         {
             this.toKilograms = toKilograms;
@@ -53,12 +54,12 @@
         /// <summary>
         /// The default unit for <see cref="Gu.Units.MassUnit"/>
         /// </summary>
-        public MassUnit SiUnit => MassUnit.Kilograms;
+        public MassUnit SiUnit => Kilograms;
 
         /// <summary>
         /// The default <see cref="Gu.Units.IUnit"/> for <see cref="Gu.Units.MassUnit"/>
         /// </summary>
-        IUnit IUnit.SiUnit => MassUnit.Kilograms;
+        IUnit IUnit.SiUnit => Kilograms;
 
         public static Mass operator *(double left, MassUnit right)
         {

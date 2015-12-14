@@ -50,6 +50,7 @@
         private readonly Func<double, double> toKilogramsPerCubicMetre;
         private readonly Func<double, double> fromKilogramsPerCubicMetre;
         internal readonly string symbol;
+
         public DensityUnit(Func<double, double> toKilogramsPerCubicMetre, Func<double, double> fromKilogramsPerCubicMetre, string symbol)
         {
             this.toKilogramsPerCubicMetre = toKilogramsPerCubicMetre;
@@ -65,12 +66,12 @@
         /// <summary>
         /// The default unit for <see cref="Gu.Units.DensityUnit"/>
         /// </summary>
-        public DensityUnit SiUnit => DensityUnit.KilogramsPerCubicMetre;
+        public DensityUnit SiUnit => KilogramsPerCubicMetre;
 
         /// <summary>
         /// The default <see cref="Gu.Units.IUnit"/> for <see cref="Gu.Units.DensityUnit"/>
         /// </summary>
-        IUnit IUnit.SiUnit => DensityUnit.KilogramsPerCubicMetre;
+        IUnit IUnit.SiUnit => KilogramsPerCubicMetre;
 
         public static Density operator *(double left, DensityUnit right)
         {

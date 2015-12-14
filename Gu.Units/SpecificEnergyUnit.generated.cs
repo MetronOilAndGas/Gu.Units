@@ -20,6 +20,7 @@
         private readonly Func<double, double> toJoulesPerKilogram;
         private readonly Func<double, double> fromJoulesPerKilogram;
         internal readonly string symbol;
+
         public SpecificEnergyUnit(Func<double, double> toJoulesPerKilogram, Func<double, double> fromJoulesPerKilogram, string symbol)
         {
             this.toJoulesPerKilogram = toJoulesPerKilogram;
@@ -35,12 +36,12 @@
         /// <summary>
         /// The default unit for <see cref="Gu.Units.SpecificEnergyUnit"/>
         /// </summary>
-        public SpecificEnergyUnit SiUnit => SpecificEnergyUnit.JoulesPerKilogram;
+        public SpecificEnergyUnit SiUnit => JoulesPerKilogram;
 
         /// <summary>
         /// The default <see cref="Gu.Units.IUnit"/> for <see cref="Gu.Units.SpecificEnergyUnit"/>
         /// </summary>
-        IUnit IUnit.SiUnit => SpecificEnergyUnit.JoulesPerKilogram;
+        IUnit IUnit.SiUnit => JoulesPerKilogram;
 
         public static SpecificEnergy operator *(double left, SpecificEnergyUnit right)
         {

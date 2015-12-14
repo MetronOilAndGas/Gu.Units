@@ -32,6 +32,7 @@
         private readonly Func<double, double> toCubicMetresPerKilogram;
         private readonly Func<double, double> fromCubicMetresPerKilogram;
         internal readonly string symbol;
+
         public SpecificVolumeUnit(Func<double, double> toCubicMetresPerKilogram, Func<double, double> fromCubicMetresPerKilogram, string symbol)
         {
             this.toCubicMetresPerKilogram = toCubicMetresPerKilogram;
@@ -47,12 +48,12 @@
         /// <summary>
         /// The default unit for <see cref="Gu.Units.SpecificVolumeUnit"/>
         /// </summary>
-        public SpecificVolumeUnit SiUnit => SpecificVolumeUnit.CubicMetresPerKilogram;
+        public SpecificVolumeUnit SiUnit => CubicMetresPerKilogram;
 
         /// <summary>
         /// The default <see cref="Gu.Units.IUnit"/> for <see cref="Gu.Units.SpecificVolumeUnit"/>
         /// </summary>
-        IUnit IUnit.SiUnit => SpecificVolumeUnit.CubicMetresPerKilogram;
+        IUnit IUnit.SiUnit => CubicMetresPerKilogram;
 
         public static SpecificVolume operator *(double left, SpecificVolumeUnit right)
         {

@@ -50,6 +50,7 @@
         private readonly Func<double, double> toRadiansPerSecondCubed;
         private readonly Func<double, double> fromRadiansPerSecondCubed;
         internal readonly string symbol;
+
         public AngularJerkUnit(Func<double, double> toRadiansPerSecondCubed, Func<double, double> fromRadiansPerSecondCubed, string symbol)
         {
             this.toRadiansPerSecondCubed = toRadiansPerSecondCubed;
@@ -65,12 +66,12 @@
         /// <summary>
         /// The default unit for <see cref="Gu.Units.AngularJerkUnit"/>
         /// </summary>
-        public AngularJerkUnit SiUnit => AngularJerkUnit.RadiansPerSecondCubed;
+        public AngularJerkUnit SiUnit => RadiansPerSecondCubed;
 
         /// <summary>
         /// The default <see cref="Gu.Units.IUnit"/> for <see cref="Gu.Units.AngularJerkUnit"/>
         /// </summary>
-        IUnit IUnit.SiUnit => AngularJerkUnit.RadiansPerSecondCubed;
+        IUnit IUnit.SiUnit => RadiansPerSecondCubed;
 
         public static AngularJerk operator *(double left, AngularJerkUnit right)
         {

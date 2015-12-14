@@ -86,6 +86,7 @@
         private readonly Func<double, double> toNewtonsPerMetre;
         private readonly Func<double, double> fromNewtonsPerMetre;
         internal readonly string symbol;
+
         public StiffnessUnit(Func<double, double> toNewtonsPerMetre, Func<double, double> fromNewtonsPerMetre, string symbol)
         {
             this.toNewtonsPerMetre = toNewtonsPerMetre;
@@ -101,12 +102,12 @@
         /// <summary>
         /// The default unit for <see cref="Gu.Units.StiffnessUnit"/>
         /// </summary>
-        public StiffnessUnit SiUnit => StiffnessUnit.NewtonsPerMetre;
+        public StiffnessUnit SiUnit => NewtonsPerMetre;
 
         /// <summary>
         /// The default <see cref="Gu.Units.IUnit"/> for <see cref="Gu.Units.StiffnessUnit"/>
         /// </summary>
-        IUnit IUnit.SiUnit => StiffnessUnit.NewtonsPerMetre;
+        IUnit IUnit.SiUnit => NewtonsPerMetre;
 
         public static Stiffness operator *(double left, StiffnessUnit right)
         {

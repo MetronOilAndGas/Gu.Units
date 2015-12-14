@@ -20,6 +20,7 @@
         private readonly Func<double, double> toKatals;
         private readonly Func<double, double> fromKatals;
         internal readonly string symbol;
+
         public CatalyticActivityUnit(Func<double, double> toKatals, Func<double, double> fromKatals, string symbol)
         {
             this.toKatals = toKatals;
@@ -35,12 +36,12 @@
         /// <summary>
         /// The default unit for <see cref="Gu.Units.CatalyticActivityUnit"/>
         /// </summary>
-        public CatalyticActivityUnit SiUnit => CatalyticActivityUnit.Katals;
+        public CatalyticActivityUnit SiUnit => Katals;
 
         /// <summary>
         /// The default <see cref="Gu.Units.IUnit"/> for <see cref="Gu.Units.CatalyticActivityUnit"/>
         /// </summary>
-        IUnit IUnit.SiUnit => CatalyticActivityUnit.Katals;
+        IUnit IUnit.SiUnit => Katals;
 
         public static CatalyticActivity operator *(double left, CatalyticActivityUnit right)
         {

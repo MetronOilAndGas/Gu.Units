@@ -62,6 +62,7 @@
         private readonly Func<double, double> toJoules;
         private readonly Func<double, double> fromJoules;
         internal readonly string symbol;
+
         public EnergyUnit(Func<double, double> toJoules, Func<double, double> fromJoules, string symbol)
         {
             this.toJoules = toJoules;
@@ -77,12 +78,12 @@
         /// <summary>
         /// The default unit for <see cref="Gu.Units.EnergyUnit"/>
         /// </summary>
-        public EnergyUnit SiUnit => EnergyUnit.Joules;
+        public EnergyUnit SiUnit => Joules;
 
         /// <summary>
         /// The default <see cref="Gu.Units.IUnit"/> for <see cref="Gu.Units.EnergyUnit"/>
         /// </summary>
-        IUnit IUnit.SiUnit => EnergyUnit.Joules;
+        IUnit IUnit.SiUnit => Joules;
 
         public static Energy operator *(double left, EnergyUnit right)
         {

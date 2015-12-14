@@ -38,6 +38,7 @@
         private readonly Func<double, double> toMetresPerUnitless;
         private readonly Func<double, double> fromMetresPerUnitless;
         internal readonly string symbol;
+
         public LengthPerUnitlessUnit(Func<double, double> toMetresPerUnitless, Func<double, double> fromMetresPerUnitless, string symbol)
         {
             this.toMetresPerUnitless = toMetresPerUnitless;
@@ -53,12 +54,12 @@
         /// <summary>
         /// The default unit for <see cref="Gu.Units.LengthPerUnitlessUnit"/>
         /// </summary>
-        public LengthPerUnitlessUnit SiUnit => LengthPerUnitlessUnit.MetresPerUnitless;
+        public LengthPerUnitlessUnit SiUnit => MetresPerUnitless;
 
         /// <summary>
         /// The default <see cref="Gu.Units.IUnit"/> for <see cref="Gu.Units.LengthPerUnitlessUnit"/>
         /// </summary>
-        IUnit IUnit.SiUnit => LengthPerUnitlessUnit.MetresPerUnitless;
+        IUnit IUnit.SiUnit => MetresPerUnitless;
 
         public static LengthPerUnitless operator *(double left, LengthPerUnitlessUnit right)
         {

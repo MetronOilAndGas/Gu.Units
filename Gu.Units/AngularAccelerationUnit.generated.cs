@@ -50,6 +50,7 @@
         private readonly Func<double, double> toRadiansPerSecondSquared;
         private readonly Func<double, double> fromRadiansPerSecondSquared;
         internal readonly string symbol;
+
         public AngularAccelerationUnit(Func<double, double> toRadiansPerSecondSquared, Func<double, double> fromRadiansPerSecondSquared, string symbol)
         {
             this.toRadiansPerSecondSquared = toRadiansPerSecondSquared;
@@ -65,12 +66,12 @@
         /// <summary>
         /// The default unit for <see cref="Gu.Units.AngularAccelerationUnit"/>
         /// </summary>
-        public AngularAccelerationUnit SiUnit => AngularAccelerationUnit.RadiansPerSecondSquared;
+        public AngularAccelerationUnit SiUnit => RadiansPerSecondSquared;
 
         /// <summary>
         /// The default <see cref="Gu.Units.IUnit"/> for <see cref="Gu.Units.AngularAccelerationUnit"/>
         /// </summary>
-        IUnit IUnit.SiUnit => AngularAccelerationUnit.RadiansPerSecondSquared;
+        IUnit IUnit.SiUnit => RadiansPerSecondSquared;
 
         public static AngularAcceleration operator *(double left, AngularAccelerationUnit right)
         {

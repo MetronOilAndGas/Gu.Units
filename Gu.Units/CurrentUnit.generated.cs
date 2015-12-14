@@ -56,6 +56,7 @@
         private readonly Func<double, double> toAmperes;
         private readonly Func<double, double> fromAmperes;
         internal readonly string symbol;
+
         public CurrentUnit(Func<double, double> toAmperes, Func<double, double> fromAmperes, string symbol)
         {
             this.toAmperes = toAmperes;
@@ -71,12 +72,12 @@
         /// <summary>
         /// The default unit for <see cref="Gu.Units.CurrentUnit"/>
         /// </summary>
-        public CurrentUnit SiUnit => CurrentUnit.Amperes;
+        public CurrentUnit SiUnit => Amperes;
 
         /// <summary>
         /// The default <see cref="Gu.Units.IUnit"/> for <see cref="Gu.Units.CurrentUnit"/>
         /// </summary>
-        IUnit IUnit.SiUnit => CurrentUnit.Amperes;
+        IUnit IUnit.SiUnit => Amperes;
 
         public static Current operator *(double left, CurrentUnit right)
         {

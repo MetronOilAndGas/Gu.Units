@@ -56,6 +56,7 @@
         private readonly Func<double, double> toVolts;
         private readonly Func<double, double> fromVolts;
         internal readonly string symbol;
+
         public VoltageUnit(Func<double, double> toVolts, Func<double, double> fromVolts, string symbol)
         {
             this.toVolts = toVolts;
@@ -71,12 +72,12 @@
         /// <summary>
         /// The default unit for <see cref="Gu.Units.VoltageUnit"/>
         /// </summary>
-        public VoltageUnit SiUnit => VoltageUnit.Volts;
+        public VoltageUnit SiUnit => Volts;
 
         /// <summary>
         /// The default <see cref="Gu.Units.IUnit"/> for <see cref="Gu.Units.VoltageUnit"/>
         /// </summary>
-        IUnit IUnit.SiUnit => VoltageUnit.Volts;
+        IUnit IUnit.SiUnit => Volts;
 
         public static Voltage operator *(double left, VoltageUnit right)
         {

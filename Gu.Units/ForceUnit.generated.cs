@@ -56,6 +56,7 @@
         private readonly Func<double, double> toNewtons;
         private readonly Func<double, double> fromNewtons;
         internal readonly string symbol;
+
         public ForceUnit(Func<double, double> toNewtons, Func<double, double> fromNewtons, string symbol)
         {
             this.toNewtons = toNewtons;
@@ -71,12 +72,12 @@
         /// <summary>
         /// The default unit for <see cref="Gu.Units.ForceUnit"/>
         /// </summary>
-        public ForceUnit SiUnit => ForceUnit.Newtons;
+        public ForceUnit SiUnit => Newtons;
 
         /// <summary>
         /// The default <see cref="Gu.Units.IUnit"/> for <see cref="Gu.Units.ForceUnit"/>
         /// </summary>
-        IUnit IUnit.SiUnit => ForceUnit.Newtons;
+        IUnit IUnit.SiUnit => Newtons;
 
         public static Force operator *(double left, ForceUnit right)
         {

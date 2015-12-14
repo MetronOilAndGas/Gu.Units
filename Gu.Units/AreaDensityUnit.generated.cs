@@ -20,6 +20,7 @@
         private readonly Func<double, double> toKilogramsPerSquareMetre;
         private readonly Func<double, double> fromKilogramsPerSquareMetre;
         internal readonly string symbol;
+
         public AreaDensityUnit(Func<double, double> toKilogramsPerSquareMetre, Func<double, double> fromKilogramsPerSquareMetre, string symbol)
         {
             this.toKilogramsPerSquareMetre = toKilogramsPerSquareMetre;
@@ -35,12 +36,12 @@
         /// <summary>
         /// The default unit for <see cref="Gu.Units.AreaDensityUnit"/>
         /// </summary>
-        public AreaDensityUnit SiUnit => AreaDensityUnit.KilogramsPerSquareMetre;
+        public AreaDensityUnit SiUnit => KilogramsPerSquareMetre;
 
         /// <summary>
         /// The default <see cref="Gu.Units.IUnit"/> for <see cref="Gu.Units.AreaDensityUnit"/>
         /// </summary>
-        IUnit IUnit.SiUnit => AreaDensityUnit.KilogramsPerSquareMetre;
+        IUnit IUnit.SiUnit => KilogramsPerSquareMetre;
 
         public static AreaDensity operator *(double left, AreaDensityUnit right)
         {

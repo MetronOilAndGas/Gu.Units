@@ -44,6 +44,7 @@
         private readonly Func<double, double> toOhm;
         private readonly Func<double, double> fromOhm;
         internal readonly string symbol;
+
         public ResistanceUnit(Func<double, double> toOhm, Func<double, double> fromOhm, string symbol)
         {
             this.toOhm = toOhm;
@@ -59,12 +60,12 @@
         /// <summary>
         /// The default unit for <see cref="Gu.Units.ResistanceUnit"/>
         /// </summary>
-        public ResistanceUnit SiUnit => ResistanceUnit.Ohm;
+        public ResistanceUnit SiUnit => Ohm;
 
         /// <summary>
         /// The default <see cref="Gu.Units.IUnit"/> for <see cref="Gu.Units.ResistanceUnit"/>
         /// </summary>
-        IUnit IUnit.SiUnit => ResistanceUnit.Ohm;
+        IUnit IUnit.SiUnit => Ohm;
 
         public static Resistance operator *(double left, ResistanceUnit right)
         {

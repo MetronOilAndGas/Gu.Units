@@ -68,6 +68,7 @@
         private readonly Func<double, double> toMetresPerSecondCubed;
         private readonly Func<double, double> fromMetresPerSecondCubed;
         internal readonly string symbol;
+
         public JerkUnit(Func<double, double> toMetresPerSecondCubed, Func<double, double> fromMetresPerSecondCubed, string symbol)
         {
             this.toMetresPerSecondCubed = toMetresPerSecondCubed;
@@ -83,12 +84,12 @@
         /// <summary>
         /// The default unit for <see cref="Gu.Units.JerkUnit"/>
         /// </summary>
-        public JerkUnit SiUnit => JerkUnit.MetresPerSecondCubed;
+        public JerkUnit SiUnit => MetresPerSecondCubed;
 
         /// <summary>
         /// The default <see cref="Gu.Units.IUnit"/> for <see cref="Gu.Units.JerkUnit"/>
         /// </summary>
-        IUnit IUnit.SiUnit => JerkUnit.MetresPerSecondCubed;
+        IUnit IUnit.SiUnit => MetresPerSecondCubed;
 
         public static Jerk operator *(double left, JerkUnit right)
         {

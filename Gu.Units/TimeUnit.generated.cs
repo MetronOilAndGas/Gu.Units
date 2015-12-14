@@ -50,6 +50,7 @@
         private readonly Func<double, double> toSeconds;
         private readonly Func<double, double> fromSeconds;
         internal readonly string symbol;
+
         public TimeUnit(Func<double, double> toSeconds, Func<double, double> fromSeconds, string symbol)
         {
             this.toSeconds = toSeconds;
@@ -65,12 +66,12 @@
         /// <summary>
         /// The default unit for <see cref="Gu.Units.TimeUnit"/>
         /// </summary>
-        public TimeUnit SiUnit => TimeUnit.Seconds;
+        public TimeUnit SiUnit => Seconds;
 
         /// <summary>
         /// The default <see cref="Gu.Units.IUnit"/> for <see cref="Gu.Units.TimeUnit"/>
         /// </summary>
-        IUnit IUnit.SiUnit => TimeUnit.Seconds;
+        IUnit IUnit.SiUnit => Seconds;
 
         public static Time operator *(double left, TimeUnit right)
         {

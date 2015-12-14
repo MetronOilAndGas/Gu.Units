@@ -20,6 +20,7 @@
         private readonly Func<double, double> toMoles;
         private readonly Func<double, double> fromMoles;
         internal readonly string symbol;
+
         public AmountOfSubstanceUnit(Func<double, double> toMoles, Func<double, double> fromMoles, string symbol)
         {
             this.toMoles = toMoles;
@@ -35,12 +36,12 @@
         /// <summary>
         /// The default unit for <see cref="Gu.Units.AmountOfSubstanceUnit"/>
         /// </summary>
-        public AmountOfSubstanceUnit SiUnit => AmountOfSubstanceUnit.Moles;
+        public AmountOfSubstanceUnit SiUnit => Moles;
 
         /// <summary>
         /// The default <see cref="Gu.Units.IUnit"/> for <see cref="Gu.Units.AmountOfSubstanceUnit"/>
         /// </summary>
-        IUnit IUnit.SiUnit => AmountOfSubstanceUnit.Moles;
+        IUnit IUnit.SiUnit => Moles;
 
         public static AmountOfSubstance operator *(double left, AmountOfSubstanceUnit right)
         {

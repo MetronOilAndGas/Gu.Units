@@ -20,6 +20,7 @@
         private readonly Func<double, double> toWebers;
         private readonly Func<double, double> fromWebers;
         internal readonly string symbol;
+
         public MagneticFluxUnit(Func<double, double> toWebers, Func<double, double> fromWebers, string symbol)
         {
             this.toWebers = toWebers;
@@ -35,12 +36,12 @@
         /// <summary>
         /// The default unit for <see cref="Gu.Units.MagneticFluxUnit"/>
         /// </summary>
-        public MagneticFluxUnit SiUnit => MagneticFluxUnit.Webers;
+        public MagneticFluxUnit SiUnit => Webers;
 
         /// <summary>
         /// The default <see cref="Gu.Units.IUnit"/> for <see cref="Gu.Units.MagneticFluxUnit"/>
         /// </summary>
-        IUnit IUnit.SiUnit => MagneticFluxUnit.Webers;
+        IUnit IUnit.SiUnit => Webers;
 
         public static MagneticFlux operator *(double left, MagneticFluxUnit right)
         {

@@ -44,6 +44,7 @@ namespace <#= Settings.Namespace #>
 		private readonly Func<double, double> to<#= unit.Name #>;
 		private readonly Func<double, double> from<#= unit.Name #>;
         internal readonly string symbol;
+
         public <#= unit.ClassName #>(Func<double, double> to<#= unit.Name #>, Func<double, double> from<#= unit.Name #>, string symbol)
         {
 			this.to<#= unit.Name #> = to<#= unit.Name #>;
@@ -59,12 +60,12 @@ namespace <#= Settings.Namespace #>
 		/// <summary>
         /// The default unit for <see cref="<#= Settings.Namespace #>.<#= unit.ClassName #>"/>
         /// </summary>
-        public <#= unit.ClassName #> SiUnit => <#= unit.ClassName #>.<#= unit.Name #>;
+        public <#= unit.ClassName #> SiUnit => <#= unit.Name #>;
 
 		/// <summary>
         /// The default <see cref="<#= Settings.Namespace #>.IUnit"/> for <see cref="<#= Settings.Namespace #>.<#= unit.ClassName #>"/>
         /// </summary>
-        IUnit IUnit.SiUnit => <#= unit.ClassName #>.<#= unit.Name #>;
+        IUnit IUnit.SiUnit => <#= unit.Name #>;
 
         public static <#= unit.QuantityName #> operator *(double left, <#= unit.ClassName #> right)
         {

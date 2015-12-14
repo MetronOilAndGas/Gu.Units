@@ -38,6 +38,7 @@
         private readonly Func<double, double> toScalar;
         private readonly Func<double, double> fromScalar;
         internal readonly string symbol;
+
         public UnitlessUnit(Func<double, double> toScalar, Func<double, double> fromScalar, string symbol)
         {
             this.toScalar = toScalar;
@@ -53,12 +54,12 @@
         /// <summary>
         /// The default unit for <see cref="Gu.Units.UnitlessUnit"/>
         /// </summary>
-        public UnitlessUnit SiUnit => UnitlessUnit.Scalar;
+        public UnitlessUnit SiUnit => Scalar;
 
         /// <summary>
         /// The default <see cref="Gu.Units.IUnit"/> for <see cref="Gu.Units.UnitlessUnit"/>
         /// </summary>
-        IUnit IUnit.SiUnit => UnitlessUnit.Scalar;
+        IUnit IUnit.SiUnit => Scalar;
 
         public static Unitless operator *(double left, UnitlessUnit right)
         {

@@ -74,6 +74,7 @@
         private readonly Func<double, double> toMetresPerSecond;
         private readonly Func<double, double> fromMetresPerSecond;
         internal readonly string symbol;
+
         public SpeedUnit(Func<double, double> toMetresPerSecond, Func<double, double> fromMetresPerSecond, string symbol)
         {
             this.toMetresPerSecond = toMetresPerSecond;
@@ -89,12 +90,12 @@
         /// <summary>
         /// The default unit for <see cref="Gu.Units.SpeedUnit"/>
         /// </summary>
-        public SpeedUnit SiUnit => SpeedUnit.MetresPerSecond;
+        public SpeedUnit SiUnit => MetresPerSecond;
 
         /// <summary>
         /// The default <see cref="Gu.Units.IUnit"/> for <see cref="Gu.Units.SpeedUnit"/>
         /// </summary>
-        IUnit IUnit.SiUnit => SpeedUnit.MetresPerSecond;
+        IUnit IUnit.SiUnit => MetresPerSecond;
 
         public static Speed operator *(double left, SpeedUnit right)
         {

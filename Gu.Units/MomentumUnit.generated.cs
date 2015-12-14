@@ -20,6 +20,7 @@
         private readonly Func<double, double> toNewtonSecond;
         private readonly Func<double, double> fromNewtonSecond;
         internal readonly string symbol;
+
         public MomentumUnit(Func<double, double> toNewtonSecond, Func<double, double> fromNewtonSecond, string symbol)
         {
             this.toNewtonSecond = toNewtonSecond;
@@ -35,12 +36,12 @@
         /// <summary>
         /// The default unit for <see cref="Gu.Units.MomentumUnit"/>
         /// </summary>
-        public MomentumUnit SiUnit => MomentumUnit.NewtonSecond;
+        public MomentumUnit SiUnit => NewtonSecond;
 
         /// <summary>
         /// The default <see cref="Gu.Units.IUnit"/> for <see cref="Gu.Units.MomentumUnit"/>
         /// </summary>
-        IUnit IUnit.SiUnit => MomentumUnit.NewtonSecond;
+        IUnit IUnit.SiUnit => NewtonSecond;
 
         public static Momentum operator *(double left, MomentumUnit right)
         {

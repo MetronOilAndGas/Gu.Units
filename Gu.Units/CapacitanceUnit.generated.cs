@@ -56,6 +56,7 @@
         private readonly Func<double, double> toFarads;
         private readonly Func<double, double> fromFarads;
         internal readonly string symbol;
+
         public CapacitanceUnit(Func<double, double> toFarads, Func<double, double> fromFarads, string symbol)
         {
             this.toFarads = toFarads;
@@ -71,12 +72,12 @@
         /// <summary>
         /// The default unit for <see cref="Gu.Units.CapacitanceUnit"/>
         /// </summary>
-        public CapacitanceUnit SiUnit => CapacitanceUnit.Farads;
+        public CapacitanceUnit SiUnit => Farads;
 
         /// <summary>
         /// The default <see cref="Gu.Units.IUnit"/> for <see cref="Gu.Units.CapacitanceUnit"/>
         /// </summary>
-        IUnit IUnit.SiUnit => CapacitanceUnit.Farads;
+        IUnit IUnit.SiUnit => Farads;
 
         public static Capacitance operator *(double left, CapacitanceUnit right)
         {

@@ -203,15 +203,15 @@
       "Name": "Radians",
       "Symbol": "rad",
       "QuantityName": "Angle",
-      "FactorConversions": [
-        {
+      "FactorConversions": [],
+      "CustomConversions": [
+	    {
           "Name": "Degrees",
           "Symbol": "°",
-          "Factor": 0.017453292519943295,
-          "PrefixConversions": []
+          "ToSi": "degrees/57.295779513082323",
+          "FromSi": "57.295779513082323*radians"
         }
-      ],
-      "CustomConversions": [],
+	  ],
       "PrefixConversions": [],
       "PartConversions": []
     },

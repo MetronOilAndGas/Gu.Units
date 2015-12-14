@@ -80,6 +80,7 @@
         private readonly Func<double, double> toMetres;
         private readonly Func<double, double> fromMetres;
         internal readonly string symbol;
+
         public LengthUnit(Func<double, double> toMetres, Func<double, double> fromMetres, string symbol)
         {
             this.toMetres = toMetres;
@@ -95,12 +96,12 @@
         /// <summary>
         /// The default unit for <see cref="Gu.Units.LengthUnit"/>
         /// </summary>
-        public LengthUnit SiUnit => LengthUnit.Metres;
+        public LengthUnit SiUnit => Metres;
 
         /// <summary>
         /// The default <see cref="Gu.Units.IUnit"/> for <see cref="Gu.Units.LengthUnit"/>
         /// </summary>
-        IUnit IUnit.SiUnit => LengthUnit.Metres;
+        IUnit IUnit.SiUnit => Metres;
 
         public static Length operator *(double left, LengthUnit right)
         {

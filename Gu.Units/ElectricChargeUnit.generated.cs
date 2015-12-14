@@ -56,6 +56,7 @@
         private readonly Func<double, double> toCoulombs;
         private readonly Func<double, double> fromCoulombs;
         internal readonly string symbol;
+
         public ElectricChargeUnit(Func<double, double> toCoulombs, Func<double, double> fromCoulombs, string symbol)
         {
             this.toCoulombs = toCoulombs;
@@ -71,12 +72,12 @@
         /// <summary>
         /// The default unit for <see cref="Gu.Units.ElectricChargeUnit"/>
         /// </summary>
-        public ElectricChargeUnit SiUnit => ElectricChargeUnit.Coulombs;
+        public ElectricChargeUnit SiUnit => Coulombs;
 
         /// <summary>
         /// The default <see cref="Gu.Units.IUnit"/> for <see cref="Gu.Units.ElectricChargeUnit"/>
         /// </summary>
-        IUnit IUnit.SiUnit => ElectricChargeUnit.Coulombs;
+        IUnit IUnit.SiUnit => Coulombs;
 
         public static ElectricCharge operator *(double left, ElectricChargeUnit right)
         {

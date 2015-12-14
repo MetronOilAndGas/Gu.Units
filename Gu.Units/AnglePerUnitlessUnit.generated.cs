@@ -32,6 +32,7 @@
         private readonly Func<double, double> toRadiansPerUnitless;
         private readonly Func<double, double> fromRadiansPerUnitless;
         internal readonly string symbol;
+
         public AnglePerUnitlessUnit(Func<double, double> toRadiansPerUnitless, Func<double, double> fromRadiansPerUnitless, string symbol)
         {
             this.toRadiansPerUnitless = toRadiansPerUnitless;
@@ -47,12 +48,12 @@
         /// <summary>
         /// The default unit for <see cref="Gu.Units.AnglePerUnitlessUnit"/>
         /// </summary>
-        public AnglePerUnitlessUnit SiUnit => AnglePerUnitlessUnit.RadiansPerUnitless;
+        public AnglePerUnitlessUnit SiUnit => RadiansPerUnitless;
 
         /// <summary>
         /// The default <see cref="Gu.Units.IUnit"/> for <see cref="Gu.Units.AnglePerUnitlessUnit"/>
         /// </summary>
-        IUnit IUnit.SiUnit => AnglePerUnitlessUnit.RadiansPerUnitless;
+        IUnit IUnit.SiUnit => RadiansPerUnitless;
 
         public static AnglePerUnitless operator *(double left, AnglePerUnitlessUnit right)
         {

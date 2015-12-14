@@ -86,6 +86,7 @@
         private readonly Func<double, double> toCubicMetresPerSecond;
         private readonly Func<double, double> fromCubicMetresPerSecond;
         internal readonly string symbol;
+
         public VolumetricFlowUnit(Func<double, double> toCubicMetresPerSecond, Func<double, double> fromCubicMetresPerSecond, string symbol)
         {
             this.toCubicMetresPerSecond = toCubicMetresPerSecond;
@@ -101,12 +102,12 @@
         /// <summary>
         /// The default unit for <see cref="Gu.Units.VolumetricFlowUnit"/>
         /// </summary>
-        public VolumetricFlowUnit SiUnit => VolumetricFlowUnit.CubicMetresPerSecond;
+        public VolumetricFlowUnit SiUnit => CubicMetresPerSecond;
 
         /// <summary>
         /// The default <see cref="Gu.Units.IUnit"/> for <see cref="Gu.Units.VolumetricFlowUnit"/>
         /// </summary>
-        IUnit IUnit.SiUnit => VolumetricFlowUnit.CubicMetresPerSecond;
+        IUnit IUnit.SiUnit => CubicMetresPerSecond;
 
         public static VolumetricFlow operator *(double left, VolumetricFlowUnit right)
         {

@@ -68,6 +68,7 @@
         private readonly Func<double, double> toCubicMetres;
         private readonly Func<double, double> fromCubicMetres;
         internal readonly string symbol;
+
         public VolumeUnit(Func<double, double> toCubicMetres, Func<double, double> fromCubicMetres, string symbol)
         {
             this.toCubicMetres = toCubicMetres;
@@ -83,12 +84,12 @@
         /// <summary>
         /// The default unit for <see cref="Gu.Units.VolumeUnit"/>
         /// </summary>
-        public VolumeUnit SiUnit => VolumeUnit.CubicMetres;
+        public VolumeUnit SiUnit => CubicMetres;
 
         /// <summary>
         /// The default <see cref="Gu.Units.IUnit"/> for <see cref="Gu.Units.VolumeUnit"/>
         /// </summary>
-        IUnit IUnit.SiUnit => VolumeUnit.CubicMetres;
+        IUnit IUnit.SiUnit => CubicMetres;
 
         public static Volume operator *(double left, VolumeUnit right)
         {

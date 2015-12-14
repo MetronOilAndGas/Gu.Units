@@ -20,6 +20,7 @@
         private readonly Func<double, double> toTeslas;
         private readonly Func<double, double> fromTeslas;
         internal readonly string symbol;
+
         public MagneticFieldStrengthUnit(Func<double, double> toTeslas, Func<double, double> fromTeslas, string symbol)
         {
             this.toTeslas = toTeslas;
@@ -35,12 +36,12 @@
         /// <summary>
         /// The default unit for <see cref="Gu.Units.MagneticFieldStrengthUnit"/>
         /// </summary>
-        public MagneticFieldStrengthUnit SiUnit => MagneticFieldStrengthUnit.Teslas;
+        public MagneticFieldStrengthUnit SiUnit => Teslas;
 
         /// <summary>
         /// The default <see cref="Gu.Units.IUnit"/> for <see cref="Gu.Units.MagneticFieldStrengthUnit"/>
         /// </summary>
-        IUnit IUnit.SiUnit => MagneticFieldStrengthUnit.Teslas;
+        IUnit IUnit.SiUnit => Teslas;
 
         public static MagneticFieldStrength operator *(double left, MagneticFieldStrengthUnit right)
         {

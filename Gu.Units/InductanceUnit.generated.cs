@@ -56,6 +56,7 @@
         private readonly Func<double, double> toHenrys;
         private readonly Func<double, double> fromHenrys;
         internal readonly string symbol;
+
         public InductanceUnit(Func<double, double> toHenrys, Func<double, double> fromHenrys, string symbol)
         {
             this.toHenrys = toHenrys;
@@ -71,12 +72,12 @@
         /// <summary>
         /// The default unit for <see cref="Gu.Units.InductanceUnit"/>
         /// </summary>
-        public InductanceUnit SiUnit => InductanceUnit.Henrys;
+        public InductanceUnit SiUnit => Henrys;
 
         /// <summary>
         /// The default <see cref="Gu.Units.IUnit"/> for <see cref="Gu.Units.InductanceUnit"/>
         /// </summary>
-        IUnit IUnit.SiUnit => InductanceUnit.Henrys;
+        IUnit IUnit.SiUnit => Henrys;
 
         public static Inductance operator *(double left, InductanceUnit right)
         {

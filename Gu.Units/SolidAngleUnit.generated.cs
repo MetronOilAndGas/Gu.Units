@@ -20,6 +20,7 @@
         private readonly Func<double, double> toSteradians;
         private readonly Func<double, double> fromSteradians;
         internal readonly string symbol;
+
         public SolidAngleUnit(Func<double, double> toSteradians, Func<double, double> fromSteradians, string symbol)
         {
             this.toSteradians = toSteradians;
@@ -35,12 +36,12 @@
         /// <summary>
         /// The default unit for <see cref="Gu.Units.SolidAngleUnit"/>
         /// </summary>
-        public SolidAngleUnit SiUnit => SolidAngleUnit.Steradians;
+        public SolidAngleUnit SiUnit => Steradians;
 
         /// <summary>
         /// The default <see cref="Gu.Units.IUnit"/> for <see cref="Gu.Units.SolidAngleUnit"/>
         /// </summary>
-        IUnit IUnit.SiUnit => SolidAngleUnit.Steradians;
+        IUnit IUnit.SiUnit => Steradians;
 
         public static SolidAngle operator *(double left, SolidAngleUnit right)
         {

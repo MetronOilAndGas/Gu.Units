@@ -20,6 +20,7 @@
         private readonly Func<double, double> toNewtonMetres;
         private readonly Func<double, double> fromNewtonMetres;
         internal readonly string symbol;
+
         public TorqueUnit(Func<double, double> toNewtonMetres, Func<double, double> fromNewtonMetres, string symbol)
         {
             this.toNewtonMetres = toNewtonMetres;
@@ -35,12 +36,12 @@
         /// <summary>
         /// The default unit for <see cref="Gu.Units.TorqueUnit"/>
         /// </summary>
-        public TorqueUnit SiUnit => TorqueUnit.NewtonMetres;
+        public TorqueUnit SiUnit => NewtonMetres;
 
         /// <summary>
         /// The default <see cref="Gu.Units.IUnit"/> for <see cref="Gu.Units.TorqueUnit"/>
         /// </summary>
-        IUnit IUnit.SiUnit => TorqueUnit.NewtonMetres;
+        IUnit IUnit.SiUnit => NewtonMetres;
 
         public static Torque operator *(double left, TorqueUnit right)
         {

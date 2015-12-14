@@ -56,6 +56,7 @@
         private readonly Func<double, double> toMetresPerSecondSquared;
         private readonly Func<double, double> fromMetresPerSecondSquared;
         internal readonly string symbol;
+
         public AccelerationUnit(Func<double, double> toMetresPerSecondSquared, Func<double, double> fromMetresPerSecondSquared, string symbol)
         {
             this.toMetresPerSecondSquared = toMetresPerSecondSquared;
@@ -71,12 +72,12 @@
         /// <summary>
         /// The default unit for <see cref="Gu.Units.AccelerationUnit"/>
         /// </summary>
-        public AccelerationUnit SiUnit => AccelerationUnit.MetresPerSecondSquared;
+        public AccelerationUnit SiUnit => MetresPerSecondSquared;
 
         /// <summary>
         /// The default <see cref="Gu.Units.IUnit"/> for <see cref="Gu.Units.AccelerationUnit"/>
         /// </summary>
-        IUnit IUnit.SiUnit => AccelerationUnit.MetresPerSecondSquared;
+        IUnit IUnit.SiUnit => MetresPerSecondSquared;
 
         public static Acceleration operator *(double left, AccelerationUnit right)
         {
