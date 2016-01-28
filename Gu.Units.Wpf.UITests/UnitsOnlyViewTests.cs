@@ -67,16 +67,22 @@
                 var window = app.GetWindow(AutomationIds.MainWindow, InitializeOption.NoCache);
                 var page = window.Get<TabPage>(TabId);
                 page.Select();
-                var cmBox = page.Get<TextBox>(AutomationIds.CentimetresStringCtor);
-                var mBox = page.Get<TextBox>(AutomationIds.MetresCtor);
                 var mmBox = page.Get<TextBox>(AutomationIds.MillimetresProp);
                 var mmDoubleBox = (TextBox)page.Get<UIItem>(AutomationIds.DoubleBoxMillimetresStringCtor).Get(SearchCriteria.ByControlType(typeof(TextBox), WindowsFramework.Wpf));
 
                 mmDoubleBox.Enter("6789");
                 mmBox.Click();
-                Assert.AreEqual("6789", mmBox.Text);
-                Assert.AreEqual("678.9", cmBox.Text);
-                Assert.AreEqual("6.789", mBox.Text);
+                Assert.AreEqual("678.9", page.Get<TextBox>(AutomationIds.CentimetresStringCtor).Text);
+                Assert.AreEqual("1200", page.Get<TextBox>(AutomationIds.MillimetresPerSecondStringProp).Text);
+                Assert.AreEqual("6.789", page.Get<TextBox>(AutomationIds.MetresCtor).Text);
+                Assert.AreEqual("6789", page.Get<TextBox>(AutomationIds.MillimetresProp).Text);
+                Assert.AreEqual("6789", page.Get<TextBox>(AutomationIds.DoubleBoxMillimetresStringCtor).Text);
+                Assert.AreEqual("6789", page.Get<TextBox>(AutomationIds.DoubleBoxNullableMillimetresStringCtor).Text);
+                Assert.AreEqual("6789", page.Get<TextBox>(AutomationIds.DoubleControlNewtonsPerSquareMillimetreStringCtor).Text);
+                Assert.AreEqual("6789", page.Get<TextBox>(AutomationIds.DoubleControlMPaStringCtor).Text);
+
+                Assert.AreEqual("678.90", page.Get<TextBox>(AutomationIds.F2CmBindingStringFormatInControlTemplate).Text);
+                Assert.AreEqual("678.9", page.Get<TextBox>(AutomationIds.NullableLengthCm).Text);
             }
         }
     }

@@ -154,6 +154,5 @@
                  Text="{Binding NullableLength,
                                 Converter={units:LengthConverter cm},
                                 TargetNullValue=''}" />
-
     </Grid>
 </UserControl>
