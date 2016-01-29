@@ -249,7 +249,6 @@
                         {
                             return new Length(d, this.unit.Value);
                         }
-
                         Length result;
                         if (Length.TryParse(text, NumberStyles.Float, culture, out result))
                         {
